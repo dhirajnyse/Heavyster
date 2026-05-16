@@ -77,6 +77,41 @@
 - enquiry_status
 - created_at
 
+## DemandSignal
+
+Use this when a buyer search has no exact match or when a buyer saves an unmet rental need.
+
+- id
+- requested_equipment
+- category_hint
+- region
+- urgency
+- requested_duration
+- source
+- signal_count
+- status
+- created_at
+- updated_at
+
+## SupplierHunt
+
+Use this to convert a demand signal into a founder-led supplier recruitment play.
+
+- id
+- demand_signal_id
+- target_persona
+- target_category
+- priority_score
+- visible_supply_count
+- target_listing_count
+- projected_monthly_listing_revenue
+- projected_annual_listing_revenue
+- required_proof_items
+- outreach_copy
+- hunt_status
+- created_at
+- updated_at
+
 ## ConfirmedBookingFuture
 
 This belongs to phase two or later.

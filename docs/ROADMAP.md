@@ -5,6 +5,9 @@
 - Supplier signup and company profile
 - Equipment categories and listing pages
 - Compact catalog UI for thousands of listings
+- Smart empty-state recovery and shortlist comparison
+- Demand request capture for zero-result searches
+- Supplier hunt autopilot for demand-led supplier acquisition
 - Photo upload slots
 - License, insurance, inspection, and operator document fields
 - Availability status per listing
@@ -17,7 +20,8 @@
 - Supplier lead inbox
 - Quote templates
 - Response time scoring
-- Category demand heatmaps
+- Category demand heatmaps from demand radar
+- Supplier acquisition scoring by region, equipment, and listing revenue
 - Saved renter requirements
 - CRM export
 - Featured listing upgrades

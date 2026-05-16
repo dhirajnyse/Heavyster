@@ -26,6 +26,8 @@ Add these only after basic supplier onboarding works:
 - Verified supplier badge
 - Extra regions or branch pages
 - Lead response analytics
+- Demand radar showing unmet buyer searches by equipment and region
+- Supplier hunt tools that prove where a fleet owner can earn demand
 - WhatsApp/email enquiry routing
 - CSV import for larger fleets
 

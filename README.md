@@ -17,6 +17,11 @@ This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
 - Compact catalog row view for large inventory UX
+- Smart no-results recovery with nearby matches and one-click filter relaxation
+- Buyer shortlist and comparison tray
+- Demand request capture for unmet searches
+- Founder demand radar for supplier acquisition signals
+- Supplier hunt growth engine with revenue math and copy-ready outreach
 - Supplier SaaS workspace preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

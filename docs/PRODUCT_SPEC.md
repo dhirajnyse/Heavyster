@@ -37,6 +37,9 @@ Marketplace:
 - Search by equipment, region, category, availability
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
+- Smart no-results recovery with nearby matches
+- Shortlist and comparison tray
+- Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
 - Direct enquiry packet
@@ -59,6 +62,9 @@ Founder Admin:
 
 - Supplier intake queue
 - Verification queue
+- Demand radar from saved renter requests
+- Supplier hunt autopilot that converts demand into recruitment targets
+- Copy-ready supplier outreach packet with listing revenue estimate
 - Launch health metrics
 - Category inventory planning
 
@@ -76,6 +82,10 @@ Founder Admin:
 - Active paid listings
 - Verified listings
 - Direct enquiries sent
+- Unmet demand signals captured
+- Supplier gaps closed from demand radar
+- Supplier outreach packets copied
+- Paid listings recruited from demand gaps
 - Supplier response time
 - Listing renewal rate
 - Enquiries per active listing

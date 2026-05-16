@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260516-floating-actions" />
+    <link rel="stylesheet" href="styles.css?v=20260516-growth-engine" />
   </head>
   <body>
     <div class="app-shell">
@@ -42,6 +42,7 @@
           <a href="#marketplace">Marketplace</a>
           <a href="#studio">Supplier Studio</a>
           <a href="#categories">Categories</a>
+          <a href="#growth">Growth</a>
           <a href="#pricing">Pricing</a>
           <a href="#admin">Admin</a>
           <a href="#roadmap">Roadmap</a>
@@ -174,6 +175,49 @@
             </div>
             <div id="leadPacket" class="lead-packet"></div>
             <div id="equipmentDetail" class="equipment-detail"></div>
+            <div class="lead-actions">
+              <button type="button" class="ghost-button" id="shortlistToggleButton">Save to shortlist</button>
+              <button type="button" class="ghost-button" id="compareShortlistButton">Compare shortlist</button>
+            </div>
+            <div id="shortlistTray" class="shortlist-tray" aria-label="Shortlisted equipment"></div>
+            <div class="demand-request" id="demandRequest">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Demand request</p>
+                  <h3>Capture unmet rental need</h3>
+                </div>
+                <span class="pill" id="demandSignalCount">0 signals</span>
+              </div>
+              <div class="demand-grid">
+                <label>
+                  Needed equipment
+                  <input id="demandEquipment" type="text" placeholder="Crawler crane, grader, generator" />
+                </label>
+                <label>
+                  Region
+                  <select id="demandRegion">
+                    <option>UAE</option>
+                    <option>USA</option>
+                    <option>India</option>
+                    <option>UK</option>
+                  </select>
+                </label>
+                <label>
+                  Urgency
+                  <select id="demandUrgency">
+                    <option>This week</option>
+                    <option>Next week</option>
+                    <option>This month</option>
+                    <option>Planning stage</option>
+                  </select>
+                </label>
+                <label>
+                  Duration
+                  <input id="demandDuration" type="text" placeholder="5 days, 2 weeks, 1 month" />
+                </label>
+              </div>
+              <button type="button" class="ghost-button full-width" id="saveDemandButton">Save demand signal</button>
+            </div>
             <label class="note-box">
               Project note
               <textarea id="projectNote" rows="4" placeholder="Need machine with operator for 5 days near Jebel Ali"></textarea>
@@ -296,6 +340,55 @@
               <h3>Launch health</h3>
               <div id="launchMetrics"></div>
             </article>
+            <article class="admin-card">
+              <h3>Demand radar</h3>
+              <div id="demandRadar"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="growth-section" id="growth">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Growth engine</p>
+              <h2>Turn every unmet search into a supplier recruitment play.</h2>
+            </div>
+            <span class="pill dark">Supplier hunt autopilot</span>
+          </div>
+
+          <div class="hunt-grid">
+            <article class="hunt-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Demand queue</p>
+                  <h3>Choose the signal to attack</h3>
+                </div>
+                <span class="pill" id="huntPriority">Priority</span>
+              </div>
+              <div class="hunt-signal-list" id="huntSignalList"></div>
+            </article>
+
+            <article class="hunt-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Supplier target</p>
+                  <h3 id="huntPersona">Recruit matching fleet owners</h3>
+                </div>
+              </div>
+              <div class="hunt-metrics" id="huntMetrics"></div>
+              <div class="hunt-proof" id="huntProof"></div>
+            </article>
+
+            <article class="hunt-card outreach-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Outreach packet</p>
+                  <h3>Founder message ready to send</h3>
+                </div>
+                <button type="button" class="ghost-button" id="copyHuntButton">Copy pitch</button>
+              </div>
+              <div class="outreach-script" id="outreachScript"></div>
+            </article>
           </div>
         </section>
 
@@ -408,6 +501,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260516-floating-actions" defer></script>
+    <script src="app.js?v=20260516-growth-engine" defer></script>
   </body>
 </html>

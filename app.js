@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260516-heavyster-supplier-studio-v2";
+const DATA_VERSION = "20260516-heavyster-growth-engine-v5";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -116,6 +116,55 @@ const adminQueue = [
   { supplier: "Prime Road Rentals", region: "India", listings: 17, status: "Review photos" }
 ];
 
+const seedDemandSignals = [
+  { equipment: "Crawler crane", region: "UAE", urgency: "This week", duration: "7 days", source: "Buyer search", count: 4 },
+  { equipment: "Motor grader", region: "India", urgency: "This month", duration: "12 days", source: "Category gap", count: 3 },
+  { equipment: "250 kVA generator", region: "USA", urgency: "Next week", duration: "Weekend", source: "Project note", count: 2 }
+];
+
+const huntBlueprints = [
+  {
+    keywords: ["crane", "lifting", "telehandler"],
+    persona: "Crane and lifting fleet owners",
+    category: "Lifting",
+    starterListings: 18,
+    proof: ["Load test certificate", "Operator license", "Lift capacity chart", "Insurance cover"],
+    hook: "buyers are searching for certified lifting capacity, not casual equipment photos"
+  },
+  {
+    keywords: ["grader", "roller", "road", "compactor"],
+    persona: "Roadwork and civil plant suppliers",
+    category: "Roadwork",
+    starterListings: 14,
+    proof: ["Recent service log", "Site-ready photos", "Compaction or blade specs", "Operator option"],
+    hook: "contractors need roadwork machines with availability and service proof"
+  },
+  {
+    keywords: ["generator", "power", "kva"],
+    persona: "Temporary power rental companies",
+    category: "Power",
+    starterListings: 22,
+    proof: ["Load bank test", "Fuel terms", "Cable and distribution notes", "Delivery area"],
+    hook: "event and site teams need fast power availability by region"
+  },
+  {
+    keywords: ["trailer", "lowbed", "transport"],
+    persona: "Equipment transport and lowbed operators",
+    category: "Transport",
+    starterListings: 10,
+    proof: ["Trailer capacity", "Permit support", "Driver coverage", "Service radius"],
+    hook: "equipment movement demand follows every heavy rental search"
+  },
+  {
+    keywords: ["excavator", "loader", "dozer", "earth"],
+    persona: "Earthmoving rental yards",
+    category: "Earthmoving",
+    starterListings: 20,
+    proof: ["Machine photos", "Attachment list", "Service record", "Operator availability"],
+    hook: "earthmoving buyers compare availability, attachments, and local support first"
+  }
+];
+
 let state = loadState();
 let toastTimer = 0;
 
@@ -133,6 +182,7 @@ function defaultState() {
     sort: "available",
     compactView: false,
     selectedListingId: "HY-EX-001",
+    shortlistIds: ["HY-EX-001"],
     projectNote: "Need equipment for next week. Please confirm rental terms, operator option, delivery, and documents.",
     listingCount: 12,
     bookingValue: 8500,
@@ -141,6 +191,12 @@ function defaultState() {
     builderModel: "Cat 320 Excavator",
     builderRegion: "UAE",
     builderAvailability: "available",
+    demandEquipment: "Crawler crane",
+    demandRegion: "UAE",
+    demandUrgency: "This week",
+    demandDuration: "5 days",
+    demandSignals: seedDemandSignals.map((signal) => ({ ...signal })),
+    activeDemandKey: "",
     supplierView: false,
     trustChecked: [true, true, true, false, false, false]
   };
@@ -149,7 +205,11 @@ function defaultState() {
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    return { ...defaultState(), ...(saved || {}) };
+    const base = defaultState();
+    const merged = { ...base, ...(saved || {}) };
+    if (!Array.isArray(merged.demandSignals)) merged.demandSignals = base.demandSignals;
+    if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
+    return merged;
   } catch {
     return defaultState();
   }
@@ -172,6 +232,10 @@ function bindControls() {
   const builderModel = document.querySelector("#builderModel");
   const builderRegion = document.querySelector("#builderRegion");
   const builderAvailability = document.querySelector("#builderAvailability");
+  const demandEquipment = document.querySelector("#demandEquipment");
+  const demandRegion = document.querySelector("#demandRegion");
+  const demandUrgency = document.querySelector("#demandUrgency");
+  const demandDuration = document.querySelector("#demandDuration");
 
   search.value = state.search;
   region.value = state.region;
@@ -185,6 +249,10 @@ function bindControls() {
   builderModel.value = state.builderModel;
   builderRegion.value = state.builderRegion;
   builderAvailability.value = state.builderAvailability;
+  demandEquipment.value = state.demandEquipment;
+  demandRegion.value = state.demandRegion;
+  demandUrgency.value = state.demandUrgency;
+  demandDuration.value = state.demandDuration;
 
   search.addEventListener("input", (event) => {
     state.search = event.target.value.trim();
@@ -246,6 +314,15 @@ function bindControls() {
     input.addEventListener("change", updateBuilderState);
   });
 
+  [demandEquipment, demandRegion, demandUrgency, demandDuration].forEach((input) => {
+    input.addEventListener("input", updateDemandState);
+    input.addEventListener("change", updateDemandState);
+  });
+
+  document.querySelector("#saveDemandButton").addEventListener("click", () => {
+    saveDemandSignal("Buyer request");
+  });
+
   document.querySelectorAll(".category-button").forEach((button) => {
     button.addEventListener("click", () => {
       state.category = button.dataset.category;
@@ -261,6 +338,24 @@ function bindControls() {
     } catch {
       showToast("Copy is blocked here, but the enquiry packet is visible.");
     }
+  });
+
+  document.querySelector("#copyHuntButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierHuntText());
+      showToast("Supplier hunt pitch copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier pitch is visible.");
+    }
+  });
+
+  document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
+    toggleShortlist(getSelectedListing().id);
+  });
+
+  document.querySelector("#compareShortlistButton").addEventListener("click", () => {
+    renderShortlistTray(true);
+    showToast(state.shortlistIds.length ? "Shortlist comparison is ready." : "Save equipment first to compare.");
   });
 
   document.querySelector("#quickSearchButton").addEventListener("click", () => {
@@ -308,22 +403,38 @@ function updateBuilderState() {
   renderBuilderSummary();
 }
 
+function updateDemandState() {
+  state.demandEquipment = document.querySelector("#demandEquipment").value.trim();
+  state.demandRegion = document.querySelector("#demandRegion").value;
+  state.demandUrgency = document.querySelector("#demandUrgency").value;
+  state.demandDuration = document.querySelector("#demandDuration").value.trim();
+  saveState();
+}
+
 function render() {
   reconcileSelectedListing();
+  reconcileShortlist();
   renderCategoryButtons();
   renderMarketplaceStats();
   renderCatalog();
   renderLeadPacket();
   renderEquipmentDetail();
+  renderShortlistTray();
+  renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
   renderOnboardingFlow();
   renderBuilderSummary();
   renderCategoryDirectory();
   renderAdminBoard();
+  renderSupplierHunt();
   renderPricingCalculator();
   renderCommissionCalculator();
   document.body.classList.toggle("supplier-view", state.supplierView);
+}
+
+function reconcileShortlist() {
+  state.shortlistIds = (state.shortlistIds || []).filter((id) => listings.some((listing) => listing.id === id));
 }
 
 function getFilteredListings() {
@@ -365,6 +476,12 @@ function reconcileSelectedListing() {
   if (filtered.length && !filtered.some((listing) => listing.id === state.selectedListingId)) {
     state.selectedListingId = filtered[0].id;
   }
+  if (!filtered.length) {
+    const nearby = getNearbyListings();
+    if (nearby.length && !nearby.some((listing) => listing.id === state.selectedListingId)) {
+      state.selectedListingId = nearby[0].id;
+    }
+  }
 }
 
 function getSelectedListing() {
@@ -384,6 +501,89 @@ function renderMarketplaceStats() {
   setText("#verifiedCount", String(verifiedSuppliers.size));
 }
 
+function getNearbyListings() {
+  const query = state.search.toLowerCase();
+  return listings
+    .map((listing) => {
+      const searchable = [listing.name, listing.category, listing.supplier, listing.region, listing.city, listing.specs].join(" ").toLowerCase();
+      let score = 0;
+      if (query && searchable.includes(query)) score += 6;
+      if (state.region !== "all" && listing.region === state.region) score += 4;
+      if (state.category !== "all" && listing.category === state.category) score += 3;
+      if (state.availability !== "all" && listing.availability === state.availability) score += 2;
+      if (listing.verified) score += 1;
+      return { listing, score };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.listing.name.localeCompare(b.listing.name))
+    .slice(0, 3)
+    .map((item) => item.listing);
+}
+
+function renderNoResultsAdvisor() {
+  const nearby = getNearbyListings();
+  const searchLabel = state.search ? ` for "${escapeHtml(state.search)}"` : "";
+  return `
+    <div class="empty-advisor">
+      <div>
+        <p class="eyebrow">No exact match</p>
+        <h3>No listings match${searchLabel} with the current filters.</h3>
+        <p>Heavyster should help buyers recover instead of ending the search. Try nearby matches or relax one filter.</p>
+      </div>
+      <div class="empty-actions">
+        <button type="button" data-empty-action="request">Save this demand</button>
+        <button type="button" data-empty-action="availability">Show any availability</button>
+        <button type="button" data-empty-action="region">Show all regions</button>
+        <button type="button" data-empty-action="clear">Clear search</button>
+      </div>
+      <div class="nearby-list">
+        ${nearby.length ? nearby.map((listing) => `
+          <button type="button" data-nearby-id="${escapeHtml(listing.id)}">
+            <strong>${escapeHtml(listing.name)}</strong>
+            <span>${escapeHtml(listing.city)}, ${escapeHtml(listing.region)} - ${listing.availability === "available" ? "Available" : "Available soon"}</span>
+          </button>
+        `).join("") : "<span>No nearby demo listings yet. Add more supplier inventory to improve recovery.</span>"}
+      </div>
+    </div>
+  `;
+}
+
+function bindNoResultsAdvisor(container) {
+  container.querySelectorAll("[data-empty-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.emptyAction === "request") {
+        prepareDemandFromSearch();
+        saveDemandSignal("No-result search", false);
+        document.querySelector("#demandRequest").scrollIntoView({ behavior: "smooth", block: "center" });
+        window.setTimeout(() => document.querySelector("#demandEquipment").focus(), 260);
+        return;
+      }
+      if (button.dataset.emptyAction === "availability") state.availability = "all";
+      if (button.dataset.emptyAction === "region") state.region = "all";
+      if (button.dataset.emptyAction === "clear") state.search = "";
+      saveState();
+      syncFilterInputs();
+      render();
+    });
+  });
+
+  container.querySelectorAll("[data-nearby-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.selectedListingId = button.dataset.nearbyId;
+      state.availability = "all";
+      saveState();
+      syncFilterInputs();
+      render();
+    });
+  });
+}
+
+function syncFilterInputs() {
+  document.querySelector("#equipmentSearch").value = state.search;
+  document.querySelector("#regionFilter").value = state.region;
+  document.querySelector("#availabilityFilter").value = state.availability;
+}
+
 function renderCatalog() {
   renderListings();
   renderCompactCatalog();
@@ -397,7 +597,8 @@ function renderListings() {
   const grid = document.querySelector("#listingGrid");
 
   if (!filtered.length) {
-    grid.innerHTML = `<div class="listing-card"><h3>No matching equipment yet</h3><p>Try another region, category, or availability view.</p></div>`;
+    grid.innerHTML = renderNoResultsAdvisor();
+    bindNoResultsAdvisor(grid);
     return;
   }
 
@@ -432,7 +633,8 @@ function renderCompactCatalog() {
   const filtered = getFilteredListings();
   const rows = document.querySelector("#compactCatalog");
   if (!filtered.length) {
-    rows.innerHTML = `<div class="compact-row empty-row">No matching rows.</div>`;
+    rows.innerHTML = renderNoResultsAdvisor();
+    bindNoResultsAdvisor(rows);
     return;
   }
 
@@ -505,6 +707,116 @@ function renderEquipmentDetail() {
       <span><strong>Verification</strong>${listing.verified ? "Supplier verified" : "Founder review needed"}</span>
     </div>
   `;
+}
+
+function toggleShortlist(id) {
+  const exists = state.shortlistIds.includes(id);
+  state.shortlistIds = exists ? state.shortlistIds.filter((listingId) => listingId !== id) : [...state.shortlistIds, id];
+  saveState();
+  renderShortlistTray();
+  renderLeadPacket();
+  showToast(exists ? "Removed from shortlist." : "Saved to shortlist.");
+}
+
+function renderShortlistTray(expanded = false) {
+  const selected = getSelectedListing();
+  const shortlisted = state.shortlistIds
+    .map((id) => listings.find((listing) => listing.id === id))
+    .filter(Boolean);
+  const isSaved = state.shortlistIds.includes(selected.id);
+  const toggle = document.querySelector("#shortlistToggleButton");
+  toggle.textContent = isSaved ? "Remove from shortlist" : "Save to shortlist";
+
+  document.querySelector("#shortlistTray").innerHTML = `
+    <div class="shortlist-head">
+      <strong>${shortlisted.length} shortlisted</strong>
+      <span>${expanded ? "Comparison mode" : "Buyer memory"}</span>
+    </div>
+    ${shortlisted.length ? shortlisted.map((listing) => `
+      <button type="button" class="shortlist-item ${listing.id === selected.id ? "is-selected" : ""}" data-shortlist-id="${escapeHtml(listing.id)}">
+        <span><strong>${escapeHtml(listing.name)}</strong>${escapeHtml(listing.city)}, ${escapeHtml(listing.region)}</span>
+        <em>${listing.availability === "available" ? "Now" : "Soon"}</em>
+      </button>
+    `).join("") : `<p>No saved machines yet. Select a listing and save it for comparison.</p>`}
+  `;
+
+  document.querySelectorAll("[data-shortlist-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.selectedListingId = button.dataset.shortlistId;
+      saveState();
+      render();
+    });
+  });
+}
+
+function prepareDemandFromSearch() {
+  state.demandEquipment = getDemandEquipmentFromSearch();
+  state.demandRegion = state.region === "all" ? getSelectedListing().region : state.region;
+  state.demandUrgency = state.availability === "soon" ? "Next week" : "This week";
+  state.demandDuration = state.demandDuration || "5 days";
+}
+
+function getDemandEquipmentFromSearch() {
+  const query = state.search.trim();
+  if (query) return toTitleCase(query);
+  if (state.category !== "all") return `${state.category} equipment`;
+  return getSelectedListing().name;
+}
+
+function renderDemandCapture() {
+  const totalDemand = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
+  document.querySelector("#demandEquipment").value = state.demandEquipment || "";
+  document.querySelector("#demandRegion").value = state.demandRegion || "UAE";
+  document.querySelector("#demandUrgency").value = state.demandUrgency || "This week";
+  document.querySelector("#demandDuration").value = state.demandDuration || "";
+  setText("#demandSignalCount", `${totalDemand} signals`);
+}
+
+function saveDemandSignal(source = "Buyer request", readInputs = true) {
+  if (readInputs) updateDemandState();
+
+  const equipment = normalizeDemandEquipment(state.demandEquipment || getDemandEquipmentFromSearch());
+  const region = state.demandRegion || "UAE";
+  const urgency = state.demandUrgency || "This week";
+  const duration = state.demandDuration || "5 days";
+  const signals = getDemandSignals();
+  const existing = signals.find((signal) =>
+    signal.equipment.toLowerCase() === equipment.toLowerCase()
+    && signal.region === region
+    && signal.urgency === urgency
+  );
+
+  if (existing) {
+    existing.count = Number(existing.count || 1) + 1;
+    existing.duration = duration;
+    existing.source = source;
+  } else {
+    signals.unshift({ equipment, region, urgency, duration, source, count: 1 });
+  }
+
+  state.demandEquipment = equipment;
+  state.demandRegion = region;
+  state.demandUrgency = urgency;
+  state.demandDuration = duration;
+  state.demandSignals = signals.slice(0, 8);
+  state.activeDemandKey = getDemandKey({ equipment, region, urgency });
+  saveState();
+  renderDemandCapture();
+  renderDemandRadar();
+  renderSupplierHunt();
+  showToast(`${equipment} demand saved for ${region}.`);
+}
+
+function getDemandSignals() {
+  if (!Array.isArray(state.demandSignals)) {
+    state.demandSignals = seedDemandSignals.map((signal) => ({ ...signal }));
+  }
+  return state.demandSignals;
+}
+
+function normalizeDemandEquipment(value) {
+  const cleaned = String(value || "").trim().replace(/\s+/g, " ");
+  return cleaned ? toTitleCase(cleaned) : "Heavy equipment";
 }
 
 function renderSupplierTable() {
@@ -600,6 +912,131 @@ function renderAdminBoard() {
       <strong>${escapeHtml(value)}</strong>
     </div>
   `).join("");
+
+  renderDemandRadar();
+}
+
+function renderDemandRadar() {
+  const signals = [...getDemandSignals()]
+    .sort((a, b) => Number(b.count || 1) - Number(a.count || 1) || a.equipment.localeCompare(b.equipment))
+    .slice(0, 4);
+
+  document.querySelector("#demandRadar").innerHTML = signals.length ? signals.map((signal) => `
+    <button type="button" class="admin-row demand-row ${getDemandKey(signal) === state.activeDemandKey ? "is-active" : ""}" data-demand-key="${escapeHtml(getDemandKey(signal))}">
+      <span><strong>${escapeHtml(signal.equipment)}</strong>${escapeHtml(signal.region)} - ${escapeHtml(signal.duration)} - ${escapeHtml(signal.source)}</span>
+      <em>${Number(signal.count || 1)}x ${escapeHtml(signal.urgency)}</em>
+    </button>
+  `).join("") : `
+    <div class="admin-row">
+      <span><strong>No demand saved</strong>Buyer requests will appear here.</span>
+      <em>Listen</em>
+    </div>
+  `;
+
+  document.querySelectorAll("[data-demand-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeDemandKey = button.dataset.demandKey;
+      saveState();
+      renderDemandRadar();
+      renderSupplierHunt();
+      document.querySelector("#growth").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function renderSupplierHunt() {
+  const signals = getDemandSignals();
+  if (!signals.length) return;
+
+  const active = getActiveDemandSignal();
+  const plan = getHuntPlan(active);
+  setText("#huntPriority", plan.priority);
+  setText("#huntPersona", plan.persona);
+
+  document.querySelector("#huntSignalList").innerHTML = signals
+    .slice(0, 6)
+    .map((signal) => `
+      <button type="button" class="hunt-signal ${getDemandKey(signal) === state.activeDemandKey ? "is-active" : ""}" data-hunt-key="${escapeHtml(getDemandKey(signal))}">
+        <span><strong>${escapeHtml(signal.equipment)}</strong>${escapeHtml(signal.region)} - ${Number(signal.count || 1)} signals</span>
+        <em>${escapeHtml(signal.urgency)}</em>
+      </button>
+    `).join("");
+
+  document.querySelector("#huntMetrics").innerHTML = [
+    ["Demand pressure", `${plan.score}/100`],
+    ["Visible supply gap", getVisibleSupplyLabel(plan.visibleSupply)],
+    ["Recruit target", `${plan.starterListings} paid listings`],
+    ["Listing ARR", `USD ${plan.annualRevenue.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#huntProof").innerHTML = `
+    <strong>Trust proof to request</strong>
+    <div>
+      ${plan.proof.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+    </div>
+  `;
+
+  document.querySelector("#outreachScript").innerHTML = buildSupplierHuntText(plan)
+    .split("\n")
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-hunt-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeDemandKey = button.dataset.huntKey;
+      saveState();
+      renderDemandRadar();
+      renderSupplierHunt();
+    });
+  });
+}
+
+function getActiveDemandSignal() {
+  const signals = getDemandSignals();
+  const active = signals.find((signal) => getDemandKey(signal) === state.activeDemandKey) || signals[0];
+  state.activeDemandKey = getDemandKey(active);
+  return active;
+}
+
+function getDemandKey(signal) {
+  return [signal.equipment, signal.region, signal.urgency].join("::");
+}
+
+function getVisibleSupplyLabel(count) {
+  return count === 1 ? "1 matching listing" : `${count} matching listings`;
+}
+
+function getHuntPlan(signal) {
+  const equipment = signal.equipment.toLowerCase();
+  const blueprint = huntBlueprints.find((item) =>
+    item.keywords.some((keyword) => equipment.includes(keyword))
+  ) || huntBlueprints[huntBlueprints.length - 1];
+  const visibleSupply = listings.filter((listing) => {
+    const haystack = [listing.name, listing.category, listing.specs].join(" ").toLowerCase();
+    return listing.region === signal.region && (haystack.includes(equipment) || listing.category === blueprint.category);
+  }).length;
+  const urgencyScore = signal.urgency === "This week" ? 28 : signal.urgency === "Next week" ? 20 : signal.urgency === "This month" ? 12 : 6;
+  const gapScore = visibleSupply === 0 ? 28 : visibleSupply < 2 ? 16 : 8;
+  const countScore = Math.min(34, Number(signal.count || 1) * 8);
+  const score = Math.min(100, urgencyScore + gapScore + countScore);
+  const starterListings = blueprint.starterListings + Math.min(6, Number(signal.count || 1));
+  const priority = score >= 72 ? "Attack now" : score >= 45 ? "Warm lead" : "Watch";
+
+  return {
+    signal,
+    persona: blueprint.persona,
+    category: blueprint.category,
+    proof: blueprint.proof,
+    hook: blueprint.hook,
+    visibleSupply,
+    score,
+    starterListings,
+    monthlyRevenue: starterListings * 9,
+    annualRevenue: starterListings * 99,
+    priority
+  };
 }
 
 
@@ -637,6 +1074,18 @@ function buildLeadText() {
   ].join("\n");
 }
 
+function buildSupplierHuntText(plan = getHuntPlan(getActiveDemandSignal())) {
+  const signal = plan.signal;
+  const supplyLabel = plan.visibleSupply === 1 ? "1 matching listing is" : `${plan.visibleSupply} matching listings are`;
+  return [
+    `Hi, we are opening verified ${plan.category.toLowerCase()} listings for ${signal.region} on Heavyster.`,
+    `Buyers are already asking for ${signal.equipment} with ${signal.urgency.toLowerCase()} urgency and ${signal.duration} duration.`,
+    `The gap is clear: ${supplyLabel} visible in this prototype, and ${plan.hook}.`,
+    `We want to onboard ${plan.starterListings} paid listings from a strong supplier at USD 9 monthly or USD 99 yearly per active listing.`,
+    `If your fleet can provide ${plan.proof.join(", ").toLowerCase()}, we can build your supplier page and route direct enquiries to you without touching the rental payment.`
+  ].join("\n");
+}
+
 function setText(selector, value) {
   document.querySelector(selector).textContent = value;
 }
@@ -648,6 +1097,12 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function toTitleCase(value) {
+  return String(value).replace(/\w\S*/g, (word) =>
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
 }
 
 function showToast(message) {
