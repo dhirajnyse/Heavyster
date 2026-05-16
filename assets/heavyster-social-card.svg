@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f4f1e8"/>
+  <path d="M0 510h1200" stroke="#d8d3c5" stroke-width="2"/>
+  <path d="M0 408h1200" stroke="#d8d3c5" stroke-width="2"/>
+  <rect x="72" y="74" width="1056" height="482" rx="22" fill="#fff" stroke="#d8d3c5"/>
+  <rect x="112" y="116" width="86" height="86" rx="18" fill="#252a31"/>
+  <rect x="132" y="139" width="48" height="10" rx="4" fill="#f7c548"/>
+  <rect x="132" y="160" width="38" height="10" rx="4" fill="#50b0a7"/>
+  <rect x="132" y="181" width="28" height="10" rx="4" fill="#d87642"/>
+  <text x="226" y="155" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" fill="#1d252c">Heavyster</text>
+  <text x="226" y="198" font-family="Inter, Arial, sans-serif" font-size="24" fill="#68717b">Heavy equipment command desk</text>
+  <text x="112" y="312" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="800" fill="#1d252c">Dispatch, permits, route risk, and fleet readiness.</text>
+  <rect x="112" y="384" width="238" height="92" rx="12" fill="#e5f2e9"/>
+  <rect x="386" y="384" width="238" height="92" rx="12" fill="#fff1cf"/>
+  <rect x="660" y="384" width="238" height="92" rx="12" fill="#e6eef5"/>
+  <text x="138" y="424" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#287a4d">FLEET READY</text>
+  <text x="138" y="460" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" fill="#1d252c">86%</text>
+  <text x="412" y="424" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#ad7418">TONNES MOVING</text>
+  <text x="412" y="460" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" fill="#1d252c">438 t</text>
+  <text x="686" y="424" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#285d86">PERMIT WATCH</text>
+  <text x="686" y="460" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" fill="#1d252c">2 gates</text>
+</svg>
