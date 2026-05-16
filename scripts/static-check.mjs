@@ -47,6 +47,7 @@ assert(index.includes('id="adminSupplierQueue"'), "index.html is missing the fou
 assert(index.includes('id="supplierTable"'), "index.html is missing the supplier workspace.");
 assert(index.includes('id="trustChecklist"'), "index.html is missing the verification checklist.");
 assert(index.includes('id="bookingFeeOutput"'), "index.html is missing the commission calculator.");
+assert(index.includes('id="quickSearchButton"') && index.includes('id="scrollTopButton"'), "index.html is missing floating quick actions.");
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
@@ -55,6 +56,7 @@ assert(app.includes("localStorage"), "app.js should persist prototype state loca
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderCompactCatalog") && app.includes("renderCategoryDirectory") && app.includes("renderAdminBoard"), "app.js is missing scalable UX renderers.");
 assert(app.includes("renderCommissionCalculator"), "app.js is missing the phase-two commission calculator.");
+assert(app.includes("quickSearchButton") && app.includes("scrollTopButton"), "app.js is missing floating quick action handlers.");
 assert(app.includes("navigator.clipboard.writeText"), "app.js is missing direct enquiry copy support.");
 assert(css.includes("letter-spacing: 0"), "styles.css should keep letter spacing neutral.");
 assert(!/letter-spacing:\s*-/i.test(css), "styles.css contains negative letter spacing.");

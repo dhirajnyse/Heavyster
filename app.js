@@ -263,6 +263,27 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#quickSearchButton").addEventListener("click", () => {
+    document.querySelector("#marketplace").scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      const search = document.querySelector("#equipmentSearch");
+      search.focus();
+      search.select();
+    }, 320);
+  });
+
+  document.querySelector("#scrollTopButton").addEventListener("click", () => {
+    const root = document.documentElement;
+    const previousBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.setTimeout(() => {
+      root.style.scrollBehavior = previousBehavior;
+    }, 0);
+  });
+
   document.querySelector("#supplierModeButton").addEventListener("click", () => {
     state.supplierView = !state.supplierView;
     saveState();
