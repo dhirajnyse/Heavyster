@@ -7,22 +7,22 @@
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
     />
-    <title>Heavyster | Heavy Equipment Command Desk</title>
+    <title>Heavyster | Heavy Equipment Rental Listings</title>
     <meta
       name="description"
-      content="Heavyster coordinates heavy-equipment dispatch, permits, route risk, maintenance readiness, and crew commitments from one operating desk."
+      content="Heavyster is a paid listing SaaS for heavy equipment rental companies. List equipment, manage availability, verify documents, and receive direct rental enquiries."
     />
-    <meta name="theme-color" content="#252a31" />
+    <meta name="theme-color" content="#20262d" />
     <meta name="application-name" content="Heavyster" />
     <meta name="apple-mobile-web-app-title" content="Heavyster" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="assets/favicon.svg" />
     <link rel="manifest" href="site.webmanifest" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Heavyster | Heavy Equipment Command Desk" />
+    <meta property="og:title" content="Heavyster | Heavy Equipment Rental Listings" />
     <meta
       property="og:description"
-      content="Dispatch, route, permits, maintenance, and crew readiness for heavy equipment moves."
+      content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
     <link rel="stylesheet" href="styles.css" />
@@ -30,182 +30,271 @@
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#dispatch" aria-label="Heavyster home">
-          <span class="brand-mark" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
+        <a class="brand" href="#marketplace" aria-label="Heavyster home">
+          <img src="assets/heavyster-logo-3d.svg" alt="" />
           <span>
             <strong>Heavyster</strong>
-            <small>Equipment command desk</small>
+            <small>Heavy equipment rental listings</small>
           </span>
         </a>
 
-        <label class="search-box">
-          <span aria-hidden="true">/</span>
-          <input id="searchInput" type="search" placeholder="Search job, site, asset, route" autocomplete="off" />
-        </label>
+        <nav class="topnav" aria-label="Primary">
+          <a href="#marketplace">Marketplace</a>
+          <a href="#supplier">Supplier SaaS</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#commission">Commission</a>
+          <a href="#roadmap">Roadmap</a>
+        </nav>
 
-        <div class="top-actions" aria-label="Desk controls">
-          <button class="icon-button" type="button" id="refreshButton" aria-label="Refresh dispatch" title="Refresh dispatch">
-            <span aria-hidden="true">R</span>
-          </button>
-          <label class="switch-control">
-            <input id="stormHoldToggle" type="checkbox" />
-            <span>Storm hold</span>
-          </label>
-          <div class="shift-select">
-            <label for="shiftSelect">Shift</label>
-            <select id="shiftSelect">
-              <option value="day">Day</option>
-              <option value="swing">Swing</option>
-              <option value="night">Night</option>
-            </select>
-          </div>
+        <div class="top-actions">
+          <button type="button" class="ghost-button" id="supplierModeButton">Supplier view</button>
+          <a class="solid-button" href="#supplier">List equipment</a>
         </div>
       </header>
 
-      <div class="layout">
-        <aside class="sidebar" aria-label="Workspace">
-          <nav class="nav-list">
-            <a href="#dispatch" class="nav-item is-active">Dispatch</a>
-            <a href="#route" class="nav-item">Route</a>
-            <a href="#fleet" class="nav-item">Fleet</a>
-            <a href="#permits" class="nav-item">Permits</a>
-            <a href="#handoff" class="nav-item">Handoff</a>
-          </nav>
-          <div class="sidebar-meter">
-            <span>Readiness</span>
-            <strong id="sidebarReadiness">0%</strong>
-            <div class="meter-track"><span id="sidebarReadinessBar"></span></div>
+      <main>
+        <section class="hero" id="marketplace">
+          <div class="hero-copy">
+            <p class="eyebrow">Phase one thesis</p>
+            <h1>Let rental companies list heavy equipment online without Heavyster touching the rental payment.</h1>
+            <p class="hero-lede">
+              Heavyster starts as a focused paid-listing SaaS: verified rental companies publish machines, documents,
+              photos, rates, locations, and availability. Renters contact the rental company directly.
+            </p>
+            <div class="hero-actions">
+              <a class="solid-button" href="#supplier">Build supplier workspace</a>
+              <a class="ghost-button" href="#pricing">See pricing model</a>
+            </div>
           </div>
-        </aside>
 
-        <main class="main">
-          <section class="command-strip" aria-labelledby="deskTitle">
-            <div>
-              <p class="eyebrow">Live operating board</p>
-              <h1 id="deskTitle">Heavy moves, route windows, and machine readiness.</h1>
-            </div>
-            <div class="status-stack" aria-label="Current operating status">
-              <span id="clockBadge">Shift 00:00</span>
-              <span id="weatherBadge">Wind 18 km/h</span>
-              <span id="planBadge">Plan normal</span>
-            </div>
-          </section>
-
-          <section class="metrics-grid" aria-label="Operating metrics" id="dispatch">
-            <article class="metric-card">
-              <span>Active moves</span>
-              <strong id="activeMovesMetric">0</strong>
-              <small id="activeMovesDelta">0 critical</small>
-            </article>
-            <article class="metric-card">
-              <span>Fleet ready</span>
-              <strong id="fleetReadyMetric">0%</strong>
-              <small id="fleetReadyDelta">0 assets live</small>
-            </article>
-            <article class="metric-card">
-              <span>Permit clearance</span>
-              <strong id="permitMetric">0%</strong>
-              <small id="permitDelta">0 pending</small>
-            </article>
-            <article class="metric-card">
-              <span>Tonnes moving</span>
-              <strong id="tonnageMetric">0 t</strong>
-              <small id="tonnageDelta">0 routes watched</small>
-            </article>
-          </section>
-
-          <section class="workspace-grid">
-            <section class="panel dispatch-panel" aria-labelledby="dispatchTitle">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Dispatch queue</p>
-                  <h2 id="dispatchTitle">Priority moves</h2>
-                </div>
-                <div class="segmented-control" aria-label="Dispatch filter">
-                  <button type="button" class="filter-button is-active" data-filter="all">All</button>
-                  <button type="button" class="filter-button" data-filter="critical">Critical</button>
-                  <button type="button" class="filter-button" data-filter="permits">Permits</button>
-                  <button type="button" class="filter-button" data-filter="crew">Crew</button>
-                </div>
+          <div class="hero-panel" aria-label="Heavyster marketplace search">
+            <div class="hero-snapshot">
+              <img src="assets/heavyster-logo-3d.svg" alt="Heavyster 3D corporate logo" />
+              <div>
+                <strong>Verified listing network</strong>
+                <p>Supplier profile, equipment pages, documents, availability, and direct enquiry routing.</p>
               </div>
-              <div class="job-table" id="jobTable" role="list"></div>
-            </section>
-
-            <section class="panel route-panel" aria-labelledby="routeTitle" id="route">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Route load</p>
-                  <h2 id="routeTitle">Site corridor</h2>
-                </div>
-                <span class="chip" id="routeRiskChip">Risk steady</span>
-              </div>
-              <img class="yard-map" src="assets/heavyster-yard.svg" alt="Yard route map showing crane pad, bridge limit, city permit gate, and site access lane" />
-              <div class="route-controls">
-                <label for="marginSlider">
-                  Bridge margin
-                  <output id="marginOutput" for="marginSlider">18%</output>
+            </div>
+            <div class="search-card">
+              <div class="search-grid">
+                <label>
+                  Equipment
+                  <input id="equipmentSearch" type="search" placeholder="Excavator, crane, loader" autocomplete="off" />
                 </label>
-                <input id="marginSlider" type="range" min="5" max="34" step="1" value="18" />
+                <label>
+                  Region
+                  <select id="regionFilter">
+                    <option value="all">All regions</option>
+                    <option value="UAE">UAE</option>
+                    <option value="USA">USA</option>
+                    <option value="India">India</option>
+                    <option value="UK">UK</option>
+                  </select>
+                </label>
+                <label>
+                  Availability
+                  <select id="availabilityFilter">
+                    <option value="all">Any availability</option>
+                    <option value="available">Available now</option>
+                    <option value="soon">Available soon</option>
+                  </select>
+                </label>
               </div>
-              <div class="route-facts" id="routeFacts"></div>
-            </section>
+              <div class="market-stats">
+                <span><strong id="resultCount">0</strong> matching listings</span>
+                <span><strong id="verifiedCount">0</strong> verified suppliers</span>
+                <span><strong>0%</strong> rental commission</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <section class="panel detail-panel" aria-labelledby="detailTitle">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Selected move</p>
-                  <h2 id="detailTitle">Move detail</h2>
-                </div>
-                <span class="chip strong" id="selectedStatusChip">Ready</span>
-              </div>
-              <div id="moveDetail"></div>
-            </section>
+        <section class="metrics-strip" aria-label="Heavyster operating model">
+          <article>
+            <span>Launch model</span>
+            <strong>Paid listings</strong>
+            <small>USD 9 monthly or USD 99 yearly per active equipment listing.</small>
+          </article>
+          <article>
+            <span>Payment flow</span>
+            <strong>Direct rental</strong>
+            <small>Customers pay rental companies directly in phase one.</small>
+          </article>
+          <article>
+            <span>Core moat</span>
+            <strong>Verified inventory</strong>
+            <small>Documents, availability, photos, location, and lead response history.</small>
+          </article>
+          <article>
+            <span>First buyer</span>
+            <strong>Rental yards</strong>
+            <small>Independent operators who need a simple digital storefront.</small>
+          </article>
+        </section>
 
-            <section class="panel fleet-panel" aria-labelledby="fleetTitle" id="fleet">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Fleet board</p>
-                  <h2 id="fleetTitle">Machine readiness</h2>
-                </div>
-                <button type="button" class="text-button" id="rebalanceButton">Rebalance crews</button>
+        <section class="section-grid">
+          <section class="panel catalog-panel" aria-labelledby="catalogTitle">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Browseable marketplace</p>
+                <h2 id="catalogTitle">Featured equipment listings</h2>
               </div>
-              <div class="asset-list" id="assetList"></div>
-            </section>
-
-            <section class="panel permit-panel" aria-labelledby="permitTitle" id="permits">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Permit desk</p>
-                  <h2 id="permitTitle">Clearance gates</h2>
-                </div>
-                <span class="chip" id="permitClock">Next cut 15:40</span>
+              <div class="segmented-control" aria-label="Category filter">
+                <button type="button" class="category-button is-active" data-category="all">All</button>
+                <button type="button" class="category-button" data-category="Earthmoving">Earthmoving</button>
+                <button type="button" class="category-button" data-category="Lifting">Lifting</button>
+                <button type="button" class="category-button" data-category="Roadwork">Roadwork</button>
               </div>
-              <div class="permit-grid" id="permitGrid"></div>
-            </section>
-
-            <section class="panel handoff-panel" aria-labelledby="handoffTitle" id="handoff">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Shift packet</p>
-                  <h2 id="handoffTitle">Supervisor handoff</h2>
-                </div>
-                <button type="button" class="icon-button" id="copySummaryButton" aria-label="Copy handoff summary" title="Copy handoff summary">
-                  <span aria-hidden="true">C</span>
-                </button>
-              </div>
-              <div id="handoffSummary" class="handoff-summary"></div>
-              <div class="note-composer">
-                <label for="noteInput">Shift note</label>
-                <textarea id="noteInput" rows="3" placeholder="Add a short supervisor note"></textarea>
-              </div>
-            </section>
+            </div>
+            <div class="listing-grid" id="listingGrid"></div>
           </section>
-        </main>
-      </div>
+
+          <aside class="panel lead-panel" aria-labelledby="leadTitle">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Lead preview</p>
+                <h2 id="leadTitle">Direct enquiry packet</h2>
+              </div>
+              <span class="pill" id="selectedListingStatus">Ready</span>
+            </div>
+            <div id="leadPacket" class="lead-packet"></div>
+            <label class="note-box">
+              Project note
+              <textarea id="projectNote" rows="4" placeholder="Need machine with operator for 5 days near Jebel Ali"></textarea>
+            </label>
+            <button type="button" class="solid-button full-width" id="copyLeadButton">Copy enquiry</button>
+          </aside>
+        </section>
+
+        <section class="section-grid supplier-section" id="supplier">
+          <section class="panel supplier-panel" aria-labelledby="supplierTitle">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Supplier SaaS</p>
+                <h2 id="supplierTitle">Rental company workspace</h2>
+              </div>
+              <span class="pill dark">MVP scope</span>
+            </div>
+            <div class="workspace-preview">
+              <div class="workspace-rail">
+                <span class="is-active">Listings</span>
+                <span>Availability</span>
+                <span>Documents</span>
+                <span>Enquiries</span>
+                <span>Billing</span>
+              </div>
+              <div class="workspace-main">
+                <div class="workspace-toolbar">
+                  <strong>Al Noor Heavy Rentals</strong>
+                  <button type="button" id="addListingButton">Add listing</button>
+                </div>
+                <div class="supplier-table" id="supplierTable"></div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="panel checklist-panel" aria-labelledby="checklistTitle">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Verification</p>
+                <h2 id="checklistTitle">Trust checklist</h2>
+              </div>
+            </div>
+            <div class="checklist" id="trustChecklist"></div>
+          </aside>
+        </section>
+
+        <section class="pricing-section" id="pricing">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Monetization ladder</p>
+              <h2>Listing revenue first, success fees later once Heavyster earns the booking workflow.</h2>
+            </div>
+          </div>
+
+          <div class="pricing-grid">
+            <article class="price-card">
+              <span>Monthly</span>
+              <strong>USD 9</strong>
+              <small>per active equipment listing</small>
+              <ul>
+                <li>Company profile</li>
+                <li>Equipment page with photos</li>
+                <li>Availability and location</li>
+                <li>Direct enquiry button</li>
+              </ul>
+            </article>
+            <article class="price-card featured">
+              <span>Annual</span>
+              <strong>USD 99</strong>
+              <small>per active equipment listing</small>
+              <ul>
+                <li>Two months saved versus monthly</li>
+                <li>Verified supplier badge</li>
+                <li>Lead response dashboard</li>
+                <li>Priority category placement</li>
+              </ul>
+            </article>
+            <article class="calculator-card">
+              <label for="listingCount">Active listings</label>
+              <input id="listingCount" type="range" min="1" max="80" value="12" />
+              <div class="calc-output">
+                <span><strong id="listingCountOutput">12</strong> listings</span>
+                <span><strong id="monthlyRevenueOutput">USD 108</strong> per month</span>
+                <span><strong id="annualRevenueOutput">USD 1,188</strong> per year</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="commission-lab" id="commission">
+            <div>
+              <p class="eyebrow">Phase two option</p>
+              <h3>1% confirmed-booking success fee</h3>
+              <p>
+                Keep basic listings subscription-based. Add a 1% success fee only when Heavyster provides a confirmed
+                booking trail, quote acceptance, enquiry history, or payment/deposit workflow.
+              </p>
+            </div>
+            <div class="commission-controls">
+              <label for="bookingValue">Average rental booking value</label>
+              <input id="bookingValue" type="range" min="1000" max="50000" step="500" value="8500" />
+              <label for="confirmedBookings">Confirmed bookings per month</label>
+              <input id="confirmedBookings" type="range" min="1" max="50" step="1" value="6" />
+            </div>
+            <div class="calc-output">
+              <span><strong id="bookingValueOutput">USD 8,500</strong> avg booking</span>
+              <span><strong id="bookingFeeOutput">USD 510</strong> monthly success fee</span>
+              <span><strong id="supplierKeepOutput">USD 50,490</strong> supplier keeps</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="roadmap-section" id="roadmap">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Build path</p>
+              <h2>Start narrow, earn trust, then expand only where the market pulls.</h2>
+            </div>
+          </div>
+          <div class="roadmap-grid">
+            <article>
+              <span>Phase 1</span>
+              <strong>Listing SaaS</strong>
+              <p>Supplier accounts, paid equipment listings, document upload fields, availability, direct enquiries.</p>
+            </article>
+            <article>
+              <span>Phase 2</span>
+              <strong>Lead intelligence</strong>
+              <p>Response scoring, quote templates, category demand heatmaps, supplier CRM, and optional 1% confirmed-booking fee.</p>
+            </article>
+            <article>
+              <span>Phase 3</span>
+              <strong>Optional transaction rails</strong>
+              <p>Only if suppliers ask: deposits, insurance partners, escrow, logistics, operator scheduling.</p>
+            </article>
+          </div>
+        </section>
+      </main>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

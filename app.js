@@ -1,132 +1,94 @@
-const DATA_VERSION = "20260516-heavyster-v1";
-const STORAGE_KEY = "heavyster.commandDesk.v1";
+const DATA_VERSION = "20260516-heavyster-marketplace-v1";
+const STORAGE_KEY = "heavyster.marketplace.v1";
 
-const jobs = [
+const listings = [
   {
-    id: "HX-2407",
-    site: "North Quay Lift Pad",
-    move: "Crawler crane main boom transfer",
-    asset: "Liebherr LR 1300",
-    crew: "Rigging A",
-    route: "Yard 3 to Quay B",
-    window: "14:20",
-    eta: "16:05",
-    weight: 148,
-    bridge: 162,
-    risk: "high",
-    permit: "escort pending",
-    status: "critical",
-    blocker: "Police escort not confirmed",
-    timeline: [
-      ["13:50", "Counterweight load checked at Yard 3"],
-      ["14:20", "Escort gate call due"],
-      ["15:05", "Bridge A7 crossing slot"],
-      ["16:05", "Pad arrival and mat walkdown"]
-    ]
+    id: "HY-EX-001",
+    name: "Cat 320 Excavator",
+    category: "Earthmoving",
+    supplier: "Al Noor Heavy Rentals",
+    region: "UAE",
+    city: "Dubai",
+    rate: "Quote direct",
+    availability: "available",
+    verified: true,
+    documents: ["Trade license", "Insurance", "Inspection"],
+    specs: "22 ton, bucket set, optional breaker, operator on request"
   },
   {
-    id: "HX-2412",
-    site: "Metro Vent Shaft",
-    move: "Excavator lowbed dispatch",
-    asset: "Cat 352F",
-    crew: "Lowbed 2",
-    route: "Workshop to Shaft 4",
-    window: "15:10",
-    eta: "17:00",
-    weight: 54,
-    bridge: 70,
-    risk: "medium",
-    permit: "clear",
-    status: "ready",
-    blocker: "Lane marshal handoff",
-    timeline: [
-      ["14:40", "Hydraulic inspection closes"],
-      ["15:10", "Lowbed lock and chain"],
-      ["16:15", "City lane closure active"],
-      ["17:00", "Shaft 4 unload"]
-    ]
+    id: "HY-CR-014",
+    name: "Liebherr 130T Mobile Crane",
+    category: "Lifting",
+    supplier: "Gulf Lift Services",
+    region: "UAE",
+    city: "Abu Dhabi",
+    rate: "Quote direct",
+    availability: "soon",
+    verified: true,
+    documents: ["Trade license", "Load test", "Operator license"],
+    specs: "130 ton class, certified operator, city permit support"
   },
   {
-    id: "HX-2419",
-    site: "South Port Laydown",
-    move: "Telehandler swap",
-    asset: "Merlo P72.10",
-    crew: "Site support",
-    route: "Laydown loop",
-    window: "16:30",
-    eta: "17:20",
-    weight: 18,
-    bridge: 44,
-    risk: "low",
-    permit: "clear",
-    status: "ready",
-    blocker: "None",
-    timeline: [
-      ["16:05", "Fork carriage check"],
-      ["16:30", "Operator changeover"],
-      ["17:05", "Laydown north gate"],
-      ["17:20", "Handover to steel crew"]
-    ]
+    id: "HY-LD-022",
+    name: "Komatsu WA380 Wheel Loader",
+    category: "Earthmoving",
+    supplier: "Desertline Equipment",
+    region: "USA",
+    city: "Houston",
+    rate: "Quote direct",
+    availability: "available",
+    verified: false,
+    documents: ["Insurance pending", "Inspection"],
+    specs: "3.5 cubic yard bucket, quarry and yard work ready"
   },
   {
-    id: "HX-2423",
-    site: "Airport Apron East",
-    move: "Pile rig demob",
-    asset: "Soilmec SR-75",
-    crew: "Rig Move C",
-    route: "Apron East to Holding Bay",
-    window: "18:15",
-    eta: "21:30",
-    weight: 92,
-    bridge: 98,
-    risk: "high",
-    permit: "route variance",
-    status: "blocked",
-    blocker: "Variance needs client signature",
-    timeline: [
-      ["17:10", "Tool string split"],
-      ["18:15", "Apron access opens"],
-      ["19:30", "Security convoy meet"],
-      ["21:30", "Holding Bay stand-down"]
-    ]
+    id: "HY-TL-030",
+    name: "JCB Telehandler 540-170",
+    category: "Lifting",
+    supplier: "Metro Plant Hire",
+    region: "UK",
+    city: "Birmingham",
+    rate: "Quote direct",
+    availability: "available",
+    verified: true,
+    documents: ["Company registry", "Insurance", "Service record"],
+    specs: "17 m reach, forks and bucket, weekly hire available"
   },
   {
-    id: "HX-2431",
-    site: "District Cooling Plant",
-    move: "Chiller module receiving",
-    asset: "Goldhofer PST",
-    crew: "Heavy haul A",
-    route: "Port Gate 6 to Plant 2",
-    window: "22:40",
-    eta: "02:10",
-    weight: 126,
-    bridge: 150,
-    risk: "medium",
-    permit: "night clear",
-    status: "ready",
-    blocker: "Final utility spotter call",
-    timeline: [
-      ["21:35", "Port gate documents"],
-      ["22:40", "Night clear window"],
-      ["00:20", "Utility corridor crawl"],
-      ["02:10", "Plant 2 receiving"]
-    ]
+    id: "HY-RD-042",
+    name: "Dynapac CA250 Roller",
+    category: "Roadwork",
+    supplier: "Prime Road Rentals",
+    region: "India",
+    city: "Pune",
+    rate: "Quote direct",
+    availability: "soon",
+    verified: true,
+    documents: ["GST", "Insurance", "Maintenance log"],
+    specs: "10 ton soil compactor, fuel and operator terms direct"
+  },
+  {
+    id: "HY-DZ-055",
+    name: "D6 Dozer",
+    category: "Earthmoving",
+    supplier: "Frontier Civil Rentals",
+    region: "USA",
+    city: "Phoenix",
+    rate: "Quote direct",
+    availability: "available",
+    verified: true,
+    documents: ["Business license", "Insurance", "Inspection"],
+    specs: "LGP track option, GPS-ready blade control"
   }
 ];
 
-const assets = [
-  { id: "A-17", name: "Liebherr LR 1300", type: "Crawler crane", readiness: 82, status: "Watched", note: "Boom dolly sensor due" },
-  { id: "A-22", name: "Cat 352F", type: "Excavator", readiness: 91, status: "Ready", note: "Service clear" },
-  { id: "A-34", name: "Merlo P72.10", type: "Telehandler", readiness: 88, status: "Ready", note: "Operator assigned" },
-  { id: "A-41", name: "Soilmec SR-75", type: "Pile rig", readiness: 63, status: "Hold", note: "Travel variance open" },
-  { id: "A-52", name: "Goldhofer PST", type: "Modular trailer", readiness: 76, status: "Watched", note: "Hydraulic bank 2 warm" }
-];
-
-const permitGates = [
-  { gate: "Escort desk", owner: "Municipality", due: "14:20", state: "Pending", count: 1 },
-  { gate: "Bridge A7", owner: "Road authority", due: "15:05", state: "Watched", count: 2 },
-  { gate: "Airport access", owner: "Client security", due: "18:15", state: "Signature", count: 1 },
-  { gate: "Night haul", owner: "Traffic control", due: "22:40", state: "Clear", count: 3 }
+const trustItems = [
+  ["Company profile", "Legal name, service regions, contact desk, and fleet categories."],
+  ["Equipment proof", "Photos, serial-friendly internal ID, make, model, specs, and attachments."],
+  ["Documents", "License, insurance, inspection, operator certificate, and optional permit notes."],
+  ["Availability", "Available now, available soon, or call-to-confirm status for each listing."],
+  ["Lead routing", "Phone, WhatsApp, email, and enquiry packet copied to supplier CRM."],
+  ["Billing", "USD 9 monthly or USD 99 yearly per active listing, no rental commission."]
 ];
 
 let state = loadState();
@@ -139,13 +101,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function defaultState() {
   return {
-    filter: "all",
-    selectedJobId: "HX-2407",
     search: "",
-    stormHold: false,
-    shift: "day",
-    routeMargin: 18,
-    note: "Confirm escort desk before Bridge A7 slot. Keep Rig Move C on signature watch."
+    region: "all",
+    availability: "all",
+    category: "all",
+    selectedListingId: "HY-EX-001",
+    projectNote: "Need equipment for next week. Please confirm rental terms, operator option, delivery, and documents.",
+    listingCount: 12,
+    bookingValue: 8500,
+    confirmedBookings: 6,
+    supplierView: false,
+    trustChecked: [true, true, true, false, false, false]
   };
 }
 
@@ -163,343 +129,284 @@ function saveState() {
 }
 
 function bindControls() {
-  const searchInput = document.querySelector("#searchInput");
-  const stormHoldToggle = document.querySelector("#stormHoldToggle");
-  const shiftSelect = document.querySelector("#shiftSelect");
-  const marginSlider = document.querySelector("#marginSlider");
-  const noteInput = document.querySelector("#noteInput");
+  const search = document.querySelector("#equipmentSearch");
+  const region = document.querySelector("#regionFilter");
+  const availability = document.querySelector("#availabilityFilter");
+  const note = document.querySelector("#projectNote");
+  const listingCount = document.querySelector("#listingCount");
+  const bookingValue = document.querySelector("#bookingValue");
+  const confirmedBookings = document.querySelector("#confirmedBookings");
 
-  searchInput.value = state.search;
-  stormHoldToggle.checked = state.stormHold;
-  shiftSelect.value = state.shift;
-  marginSlider.value = String(state.routeMargin);
-  noteInput.value = state.note;
+  search.value = state.search;
+  region.value = state.region;
+  availability.value = state.availability;
+  note.value = state.projectNote;
+  listingCount.value = String(state.listingCount);
+  bookingValue.value = String(state.bookingValue);
+  confirmedBookings.value = String(state.confirmedBookings);
 
-  searchInput.addEventListener("input", (event) => {
+  search.addEventListener("input", (event) => {
     state.search = event.target.value.trim();
     saveState();
     render();
   });
 
-  stormHoldToggle.addEventListener("change", (event) => {
-    state.stormHold = event.target.checked;
-    saveState();
-    render();
-    showToast(state.stormHold ? "Storm hold applied to route windows." : "Storm hold released.");
-  });
-
-  shiftSelect.addEventListener("change", (event) => {
-    state.shift = event.target.value;
+  region.addEventListener("change", (event) => {
+    state.region = event.target.value;
     saveState();
     render();
   });
 
-  marginSlider.addEventListener("input", (event) => {
-    state.routeMargin = Number(event.target.value);
+  availability.addEventListener("change", (event) => {
+    state.availability = event.target.value;
     saveState();
     render();
   });
 
-  noteInput.addEventListener("input", (event) => {
-    state.note = event.target.value;
+  note.addEventListener("input", (event) => {
+    state.projectNote = event.target.value;
     saveState();
-    renderHandoff();
+    renderLeadPacket();
   });
 
-  document.querySelector("#refreshButton").addEventListener("click", () => {
-    showToast("Dispatch refreshed. No new blockers.");
-    render();
-  });
-
-  document.querySelector("#rebalanceButton").addEventListener("click", () => {
-    state.filter = "crew";
+  listingCount.addEventListener("input", (event) => {
+    state.listingCount = Number(event.target.value);
     saveState();
-    showToast("Crew view opened for rebalance.");
-    render();
+    renderPricingCalculator();
   });
 
-  document.querySelector("#copySummaryButton").addEventListener("click", async () => {
-    const summary = buildHandoffText();
-    try {
-      await navigator.clipboard.writeText(summary);
-      showToast("Handoff summary copied.");
-    } catch {
-      showToast("Copy unavailable. Summary is ready on screen.");
-    }
+  bookingValue.addEventListener("input", (event) => {
+    state.bookingValue = Number(event.target.value);
+    saveState();
+    renderCommissionCalculator();
   });
 
-  document.querySelectorAll(".filter-button").forEach((button) => {
+  confirmedBookings.addEventListener("input", (event) => {
+    state.confirmedBookings = Number(event.target.value);
+    saveState();
+    renderCommissionCalculator();
+  });
+
+  document.querySelectorAll(".category-button").forEach((button) => {
     button.addEventListener("click", () => {
-      state.filter = button.dataset.filter;
+      state.category = button.dataset.category;
       saveState();
       render();
     });
   });
 
-  document.querySelectorAll(".nav-item").forEach((link) => {
-    link.addEventListener("click", () => {
-      document.querySelectorAll(".nav-item").forEach((item) => item.classList.remove("is-active"));
-      link.classList.add("is-active");
-    });
+  document.querySelector("#copyLeadButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLeadText());
+      showToast("Direct enquiry packet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the enquiry packet is visible.");
+    }
+  });
+
+  document.querySelector("#supplierModeButton").addEventListener("click", () => {
+    state.supplierView = !state.supplierView;
+    saveState();
+    document.body.classList.toggle("supplier-view", state.supplierView);
+    showToast(state.supplierView ? "Supplier view active." : "Marketplace view active.");
+  });
+
+  document.querySelector("#addListingButton").addEventListener("click", () => {
+    state.listingCount = Math.min(80, state.listingCount + 1);
+    saveState();
+    renderPricingCalculator();
+    showToast("Draft listing added to the supplier calculator.");
   });
 }
 
 function render() {
-  reconcileSelectedJob();
-  renderCommandStrip();
-  renderMetrics();
-  renderJobs();
-  renderRoute();
-  renderDetail();
-  renderAssets();
-  renderPermits();
-  renderHandoff();
+  reconcileSelectedListing();
+  renderCategoryButtons();
+  renderMarketplaceStats();
+  renderListings();
+  renderLeadPacket();
+  renderSupplierTable();
+  renderTrustChecklist();
+  renderPricingCalculator();
+  renderCommissionCalculator();
+  document.body.classList.toggle("supplier-view", state.supplierView);
 }
 
-function reconcileSelectedJob() {
-  const filtered = getFilteredJobs();
-  if (!jobs.some((job) => job.id === state.selectedJobId)) {
-    state.selectedJobId = jobs[0].id;
-  }
-  if (filtered.length && !filtered.some((job) => job.id === state.selectedJobId)) {
-    state.selectedJobId = filtered[0].id;
-  }
-}
-
-function getSelectedJob() {
-  return jobs.find((job) => job.id === state.selectedJobId) || jobs[0];
-}
-
-function getFilteredJobs() {
+function getFilteredListings() {
   const query = state.search.toLowerCase();
-  return jobs.filter((job) => {
-    const matchesQuery = !query || [
-      job.id,
-      job.site,
-      job.move,
-      job.asset,
-      job.route,
-      job.crew,
-      job.permit
-    ].join(" ").toLowerCase().includes(query);
+  return listings.filter((listing) => {
+    const searchable = [
+      listing.name,
+      listing.category,
+      listing.supplier,
+      listing.region,
+      listing.city,
+      listing.specs
+    ].join(" ").toLowerCase();
 
-    if (!matchesQuery) return false;
-    if (state.filter === "critical") return job.risk === "high" || job.status === "blocked";
-    if (state.filter === "permits") return job.permit !== "clear" && job.permit !== "night clear";
-    if (state.filter === "crew") return job.crew.toLowerCase().includes("rig") || job.blocker.toLowerCase().includes("marshal") || job.blocker.toLowerCase().includes("spotter");
-    return true;
+    return (!query || searchable.includes(query))
+      && (state.region === "all" || listing.region === state.region)
+      && (state.availability === "all" || listing.availability === state.availability)
+      && (state.category === "all" || listing.category === state.category);
   });
 }
 
-function renderCommandStrip() {
-  const now = new Date();
-  const clock = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  const shiftLabel = state.shift.charAt(0).toUpperCase() + state.shift.slice(1);
-  document.querySelector("#clockBadge").textContent = `${shiftLabel} ${clock}`;
-  document.querySelector("#weatherBadge").textContent = state.stormHold ? "Storm hold active" : "Wind 18 km/h";
-  document.querySelector("#planBadge").textContent = state.routeMargin < 12 ? "Plan tight" : "Plan normal";
+function reconcileSelectedListing() {
+  const filtered = getFilteredListings();
+  if (!listings.some((listing) => listing.id === state.selectedListingId)) {
+    state.selectedListingId = listings[0].id;
+  }
+  if (filtered.length && !filtered.some((listing) => listing.id === state.selectedListingId)) {
+    state.selectedListingId = filtered[0].id;
+  }
 }
 
-function renderMetrics() {
-  const activeMoves = jobs.filter((job) => job.status !== "complete").length;
-  const critical = jobs.filter((job) => job.risk === "high" || job.status === "blocked").length;
-  const readyAssets = Math.round(average(assets.map((asset) => asset.readiness)));
-  const liveAssets = assets.filter((asset) => asset.status !== "Hold").length;
-  const permitsReady = Math.round((jobs.filter((job) => job.permit === "clear" || job.permit === "night clear").length / jobs.length) * 100);
-  const pending = jobs.length - jobs.filter((job) => job.permit === "clear" || job.permit === "night clear").length;
-  const tonnes = jobs.reduce((total, job) => total + job.weight, 0);
-  const watchedRoutes = jobs.filter((job) => job.risk !== "low").length;
-
-  setText("#activeMovesMetric", String(activeMoves));
-  setText("#activeMovesDelta", `${critical} critical`);
-  setText("#fleetReadyMetric", `${readyAssets}%`);
-  setText("#fleetReadyDelta", `${liveAssets} assets live`);
-  setText("#permitMetric", `${permitsReady}%`);
-  setText("#permitDelta", `${pending} pending`);
-  setText("#tonnageMetric", `${tonnes} t`);
-  setText("#tonnageDelta", `${watchedRoutes} routes watched`);
-  setText("#sidebarReadiness", `${readyAssets}%`);
-  document.querySelector("#sidebarReadinessBar").style.width = `${readyAssets}%`;
+function getSelectedListing() {
+  return listings.find((listing) => listing.id === state.selectedListingId) || listings[0];
 }
 
-function renderJobs() {
-  const table = document.querySelector("#jobTable");
-  const filtered = getFilteredJobs();
-  document.querySelectorAll(".filter-button").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.filter === state.filter);
+function renderCategoryButtons() {
+  document.querySelectorAll(".category-button").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.category === state.category);
   });
+}
+
+function renderMarketplaceStats() {
+  const filtered = getFilteredListings();
+  const verifiedSuppliers = new Set(filtered.filter((listing) => listing.verified).map((listing) => listing.supplier));
+  setText("#resultCount", String(filtered.length));
+  setText("#verifiedCount", String(verifiedSuppliers.size));
+}
+
+function renderListings() {
+  const filtered = getFilteredListings();
+  const grid = document.querySelector("#listingGrid");
 
   if (!filtered.length) {
-    table.innerHTML = `<div class="timeline-item"><time>None</time><div>No moves match this view.</div></div>`;
+    grid.innerHTML = `<div class="listing-card"><h3>No matching equipment yet</h3><p>Try another region, category, or availability view.</p></div>`;
     return;
   }
 
-  table.innerHTML = filtered.map((job) => `
-    <button type="button" class="job-row ${job.id === state.selectedJobId ? "is-selected" : ""}" data-job-id="${escapeHtml(job.id)}" role="listitem">
-      <span class="job-main">
-        <strong>${escapeHtml(job.move)}</strong>
-        <span>${escapeHtml(job.id)} - ${escapeHtml(job.site)}</span>
-      </span>
-      <span class="job-time">${escapeHtml(job.window)}</span>
-      <span class="risk-pill ${escapeHtml(job.risk)}">${escapeHtml(job.risk)}</span>
-      <span class="job-weight">${job.weight} t</span>
-    </button>
-  `).join("");
+  grid.innerHTML = filtered.map((listing) => {
+    const pillClass = listing.availability === "available" ? "good" : "wait";
+    return `
+      <button type="button" class="listing-card ${listing.id === state.selectedListingId ? "is-selected" : ""}" data-listing-id="${escapeHtml(listing.id)}">
+        <span class="machine-art" aria-hidden="true"></span>
+        <span class="listing-top">
+          <span>
+            <strong>${escapeHtml(listing.name)}</strong>
+            <p>${escapeHtml(listing.supplier)} - ${escapeHtml(listing.city)}, ${escapeHtml(listing.region)}</p>
+          </span>
+          <span class="pill ${pillClass}">${listing.availability === "available" ? "Available" : "Soon"}</span>
+        </span>
+        <p>${escapeHtml(listing.specs)}</p>
+        <span class="pill">${escapeHtml(listing.category)} - ${escapeHtml(listing.rate)}</span>
+      </button>
+    `;
+  }).join("");
 
-  table.querySelectorAll(".job-row").forEach((row) => {
-    row.addEventListener("click", () => {
-      state.selectedJobId = row.dataset.jobId;
+  grid.querySelectorAll(".listing-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      state.selectedListingId = card.dataset.listingId;
       saveState();
       render();
     });
   });
 }
 
-function renderRoute() {
-  const job = getSelectedJob();
-  const requiredMargin = Math.round(((job.bridge - job.weight) / job.bridge) * 100);
-  const marginDelta = requiredMargin - state.routeMargin;
-  const safe = marginDelta >= 0 && !state.stormHold;
-  const riskLabel = safe ? "Route inside margin" : state.stormHold ? "Weather hold" : "Bridge margin tight";
+function renderLeadPacket() {
+  const listing = getSelectedListing();
+  const status = listing.verified ? "Verified supplier" : "Needs verification";
+  setText("#selectedListingStatus", status);
+  document.querySelector("#selectedListingStatus").classList.toggle("good", listing.verified);
+  document.querySelector("#selectedListingStatus").classList.toggle("wait", !listing.verified);
 
-  setText("#marginOutput", `${state.routeMargin}%`);
-  setText("#routeRiskChip", riskLabel);
-  document.querySelector("#routeRiskChip").classList.toggle("strong", !safe);
-
-  document.querySelector("#routeFacts").innerHTML = [
-    ["Selected load", `${job.weight} t`],
-    ["Bridge limit", `${job.bridge} t`],
-    ["Actual margin", `${requiredMargin}%`]
-  ].map(([label, value]) => `
+  document.querySelector("#leadPacket").innerHTML = `
     <div>
-      <span>${escapeHtml(label)}</span>
-      <strong>${escapeHtml(value)}</strong>
+      <span>Equipment</span>
+      <strong>${escapeHtml(listing.name)}</strong>
+    </div>
+    <div>
+      <span>Supplier</span>
+      <strong>${escapeHtml(listing.supplier)}</strong>
+    </div>
+    <div>
+      <span>Location</span>
+      <strong>${escapeHtml(listing.city)}, ${escapeHtml(listing.region)}</strong>
+    </div>
+    <div>
+      <span>Documents shown</span>
+      <strong>${escapeHtml(listing.documents.join(", "))}</strong>
+    </div>
+  `;
+}
+
+function renderSupplierTable() {
+  const owned = listings.slice(0, 4);
+  document.querySelector("#supplierTable").innerHTML = owned.map((listing, index) => `
+    <div class="supplier-row">
+      <div>
+        <strong>${escapeHtml(listing.name)}</strong>
+        <span>${escapeHtml(listing.category)} - ${escapeHtml(listing.city)}</span>
+      </div>
+      <span>${listing.availability === "available" ? "Available" : "Soon"}</span>
+      <em>${index < 3 ? "Paid" : "Draft"}</em>
     </div>
   `).join("");
 }
 
-function renderDetail() {
-  const job = getSelectedJob();
-  setText("#detailTitle", job.site);
-  setText("#selectedStatusChip", job.status);
-  document.querySelector("#selectedStatusChip").classList.toggle("strong", job.status !== "ready");
+function renderTrustChecklist() {
+  document.querySelector("#trustChecklist").innerHTML = trustItems.map(([title, detail], index) => `
+    <label class="check-item">
+      <input type="checkbox" data-check-index="${index}" ${state.trustChecked[index] ? "checked" : ""} />
+      <span><strong>${escapeHtml(title)}</strong><br />${escapeHtml(detail)}</span>
+    </label>
+  `).join("");
 
-  document.querySelector("#moveDetail").innerHTML = `
-    <div class="move-title">
-      <div>
-        <h3>${escapeHtml(job.move)}</h3>
-        <p class="detail-meta">${escapeHtml(job.asset)} - ${escapeHtml(job.route)}</p>
-      </div>
-      <span class="risk-pill ${escapeHtml(job.risk)}">${escapeHtml(job.risk)}</span>
-    </div>
-    <div class="detail-stats">
-      <div class="detail-stat"><span>Window</span><strong>${escapeHtml(job.window)}</strong></div>
-      <div class="detail-stat"><span>ETA</span><strong>${escapeHtml(job.eta)}</strong></div>
-      <div class="detail-stat"><span>Crew</span><strong>${escapeHtml(job.crew)}</strong></div>
-    </div>
-    <div class="detail-stats">
-      <div class="detail-stat"><span>Permit</span><strong>${escapeHtml(job.permit)}</strong></div>
-      <div class="detail-stat"><span>Blocker</span><strong>${escapeHtml(job.blocker)}</strong></div>
-      <div class="detail-stat"><span>Version</span><strong>${DATA_VERSION.slice(-2)}</strong></div>
-    </div>
-    <div class="action-row">
-      <button type="button" class="primary" data-action="clear">Clear permit</button>
-      <button type="button" data-action="escort">Assign escort</button>
-      <button type="button" data-action="hold">Route hold</button>
-    </div>
-    <div class="timeline">
-      ${job.timeline.map(([time, label]) => `
-        <div class="timeline-item">
-          <time>${escapeHtml(time)}</time>
-          <div>${escapeHtml(label)}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-
-  document.querySelectorAll("[data-action]").forEach((button) => {
-    button.addEventListener("click", () => handleMoveAction(button.dataset.action));
+  document.querySelectorAll("[data-check-index]").forEach((box) => {
+    box.addEventListener("change", () => {
+      state.trustChecked[Number(box.dataset.checkIndex)] = box.checked;
+      saveState();
+    });
   });
 }
 
-function handleMoveAction(action) {
-  const job = getSelectedJob();
-  if (action === "clear") {
-    job.permit = "clear";
-    job.status = job.risk === "high" ? "watched" : "ready";
-    job.blocker = job.risk === "high" ? "Keep supervisor signoff" : "None";
-    showToast(`${job.id} permit marked clear.`);
-  }
-  if (action === "escort") {
-    job.permit = "escort assigned";
-    job.blocker = "Escort assigned, arrival call pending";
-    showToast(`${job.id} escort assigned.`);
-  }
-  if (action === "hold") {
-    job.status = "blocked";
-    job.blocker = "Route hold set by supervisor";
-    showToast(`${job.id} moved to route hold.`);
-  }
-  saveState();
-  render();
+function renderPricingCalculator() {
+  const monthly = state.listingCount * 9;
+  const annual = state.listingCount * 99;
+  setText("#listingCountOutput", String(state.listingCount));
+  setText("#monthlyRevenueOutput", `USD ${monthly.toLocaleString()}`);
+  setText("#annualRevenueOutput", `USD ${annual.toLocaleString()}`);
+  document.querySelector("#listingCount").value = String(state.listingCount);
 }
 
-function renderAssets() {
-  document.querySelector("#assetList").innerHTML = assets.map((asset) => {
-    const tagClass = asset.status === "Hold" ? "stop" : asset.status === "Watched" ? "warn" : "";
-    return `
-      <div class="asset-row">
-        <span class="asset-main">
-          <strong>${escapeHtml(asset.name)}</strong>
-          <span>${escapeHtml(asset.type)} - ${escapeHtml(asset.note)}</span>
-        </span>
-        <span class="asset-bar" aria-label="${asset.readiness}% ready"><span style="width: ${asset.readiness}%"></span></span>
-        <span class="asset-tag ${tagClass}">${escapeHtml(asset.status)}</span>
-      </div>
-    `;
-  }).join("");
+function renderCommissionCalculator() {
+  const grossBookingValue = state.bookingValue * state.confirmedBookings;
+  const successFee = Math.round(grossBookingValue * 0.01);
+  const supplierKeeps = grossBookingValue - successFee;
+  setText("#bookingValueOutput", `USD ${state.bookingValue.toLocaleString()}`);
+  setText("#bookingFeeOutput", `USD ${successFee.toLocaleString()}`);
+  setText("#supplierKeepOutput", `USD ${supplierKeeps.toLocaleString()}`);
+  document.querySelector("#bookingValue").value = String(state.bookingValue);
+  document.querySelector("#confirmedBookings").value = String(state.confirmedBookings);
 }
 
-function renderPermits() {
-  document.querySelector("#permitGrid").innerHTML = permitGates.map((permit) => `
-    <div class="permit-card">
-      <span>${escapeHtml(permit.owner)} - ${escapeHtml(permit.due)}</span>
-      <strong>${escapeHtml(permit.gate)}</strong>
-      <em>${escapeHtml(permit.state)} - ${permit.count} move${permit.count === 1 ? "" : "s"}</em>
-    </div>
-  `).join("");
-}
-
-function renderHandoff() {
-  const selected = getSelectedJob();
-  const critical = jobs.filter((job) => job.risk === "high" || job.status === "blocked");
-  const note = state.note || "No supervisor note.";
-  document.querySelector("#handoffSummary").innerHTML = `
-    <p><strong>${critical.length} critical moves:</strong> ${critical.map((job) => job.id).join(", ")}</p>
-    <p><strong>Selected focus:</strong> ${escapeHtml(selected.id)} ${escapeHtml(selected.site)} at ${escapeHtml(selected.window)}.</p>
-    <p><strong>Route posture:</strong> ${state.stormHold ? "storm hold active" : "standard watch"} with ${state.routeMargin}% bridge margin target.</p>
-    <small>${escapeHtml(note)}</small>
-  `;
-}
-
-function buildHandoffText() {
-  const selected = getSelectedJob();
-  const critical = jobs.filter((job) => job.risk === "high" || job.status === "blocked");
+function buildLeadText() {
+  const listing = getSelectedListing();
   return [
-    "Heavyster shift handoff",
-    `Critical moves: ${critical.map((job) => job.id).join(", ") || "none"}`,
-    `Selected focus: ${selected.id} ${selected.site} at ${selected.window}`,
-    `Route posture: ${state.stormHold ? "storm hold active" : "standard watch"}, bridge margin ${state.routeMargin}%`,
-    `Supervisor note: ${state.note || "No supervisor note"}`
+    "Heavyster direct rental enquiry",
+    `Equipment: ${listing.name}`,
+    `Supplier: ${listing.supplier}`,
+    `Location: ${listing.city}, ${listing.region}`,
+    `Availability: ${listing.availability}`,
+    `Documents: ${listing.documents.join(", ")}`,
+    `Project note: ${state.projectNote || "No note provided"}`,
+    "Payment: customer and rental company arrange directly"
   ].join("\n");
 }
 
 function setText(selector, value) {
   document.querySelector(selector).textContent = value;
-}
-
-function average(values) {
-  return values.reduce((total, value) => total + value, 0) / values.length;
 }
 
 function escapeHtml(value) {
@@ -516,7 +423,5 @@ function showToast(message) {
   toast.textContent = message;
   toast.classList.add("is-visible");
   window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => {
-    toast.classList.remove("is-visible");
-  }, 2400);
+  toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2400);
 }

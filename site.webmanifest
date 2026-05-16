@@ -1,7 +1,7 @@
 {
   "name": "Heavyster",
   "short_name": "Heavyster",
-  "description": "Heavy equipment command desk for dispatch, routes, permits, and fleet readiness.",
+  "description": "Heavy equipment rental listing SaaS for verified suppliers and direct enquiries.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f1e8",
