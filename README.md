@@ -19,9 +19,11 @@ This folder contains a static product prototype with:
 - Compact catalog row view for large inventory UX
 - Smart no-results recovery with nearby matches and one-click filter relaxation
 - Buyer shortlist and comparison tray
+- Trust Passport with machine readiness score, proof stack, and buyer risk radar
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach
+- Market Maker Mode for region/category expansion scoring and launch briefs
 - Supplier SaaS workspace preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

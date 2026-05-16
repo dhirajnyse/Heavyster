@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260516-growth-engine" />
+    <link rel="stylesheet" href="styles.css?v=20260516-trust-passport" />
   </head>
   <body>
     <div class="app-shell">
@@ -40,9 +40,11 @@
 
         <nav class="topnav" aria-label="Primary">
           <a href="#marketplace">Marketplace</a>
+          <a href="#passport">Passport</a>
           <a href="#studio">Supplier Studio</a>
           <a href="#categories">Categories</a>
           <a href="#growth">Growth</a>
+          <a href="#market-maker">Market Map</a>
           <a href="#pricing">Pricing</a>
           <a href="#admin">Admin</a>
           <a href="#roadmap">Roadmap</a>
@@ -226,6 +228,42 @@
           </aside>
         </section>
 
+        <section class="passport-section" id="passport">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Trust Passport</p>
+              <h2>Turn each heavy machine into a buyer-confidence asset.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyPassportButton">Copy passport</button>
+          </div>
+
+          <div class="passport-grid">
+            <article class="passport-score-card">
+              <div>
+                <p class="eyebrow">Machine readiness</p>
+                <h3 id="passportMachine">Selected equipment</h3>
+              </div>
+              <strong id="passportScore">0</strong>
+              <span id="passportVerdict">Review</span>
+            </article>
+
+            <article class="passport-card">
+              <h3>Proof stack</h3>
+              <div class="passport-proof" id="passportProof"></div>
+            </article>
+
+            <article class="passport-card">
+              <h3>Buyer risk radar</h3>
+              <div class="passport-risk" id="passportRisk"></div>
+            </article>
+
+            <article class="passport-card passport-actions-card">
+              <h3>Next verification actions</h3>
+              <div class="passport-actions" id="passportActions"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="section-grid supplier-section" id="studio">
           <section class="panel supplier-panel" aria-labelledby="supplierTitle">
             <div class="section-header">
@@ -392,6 +430,51 @@
           </div>
         </section>
 
+        <section class="market-section" id="market-maker">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Market maker mode</p>
+              <h2>Pick the next region and category before competitors see the pull.</h2>
+            </div>
+            <span class="pill dark">Expansion brain</span>
+          </div>
+
+          <div class="market-maker-grid">
+            <article class="market-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Opportunity map</p>
+                  <h3>Where to open supply next</h3>
+                </div>
+              </div>
+              <div class="market-opportunity-list" id="marketOpportunityList"></div>
+            </article>
+
+            <article class="market-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Launch thesis</p>
+                  <h3 id="marketLaunchTitle">Select a market</h3>
+                </div>
+                <span class="pill" id="marketLaunchBadge">Score</span>
+              </div>
+              <div class="market-metrics" id="marketMetrics"></div>
+              <div class="market-steps" id="marketSteps"></div>
+            </article>
+
+            <article class="market-card market-page-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Instant market page</p>
+                  <h3>SEO and supplier launch brief</h3>
+                </div>
+                <button type="button" class="ghost-button" id="copyMarketButton">Copy brief</button>
+              </div>
+              <div class="market-page-brief" id="marketPageBrief"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="pricing-section" id="pricing">
           <div class="section-header wide">
             <div>
@@ -501,6 +584,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260516-growth-engine" defer></script>
+    <script src="app.js?v=20260516-trust-passport" defer></script>
   </body>
 </html>

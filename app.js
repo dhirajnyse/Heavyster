@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260516-heavyster-growth-engine-v5";
+const DATA_VERSION = "20260516-heavyster-trust-passport-v7";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -197,6 +197,7 @@ function defaultState() {
     demandDuration: "5 days",
     demandSignals: seedDemandSignals.map((signal) => ({ ...signal })),
     activeDemandKey: "",
+    activeMarketKey: "",
     supplierView: false,
     trustChecked: [true, true, true, false, false, false]
   };
@@ -209,6 +210,7 @@ function loadState() {
     const merged = { ...base, ...(saved || {}) };
     if (!Array.isArray(merged.demandSignals)) merged.demandSignals = base.demandSignals;
     if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
+    if (!merged.activeMarketKey) merged.activeMarketKey = getMarketKeyFromSignal(merged.demandSignals[0]);
     return merged;
   } catch {
     return defaultState();
@@ -340,12 +342,30 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyPassportButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildTrustPassportText());
+      showToast("Trust Passport copied.");
+    } catch {
+      showToast("Copy is blocked here, but the Trust Passport is visible.");
+    }
+  });
+
   document.querySelector("#copyHuntButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSupplierHuntText());
       showToast("Supplier hunt pitch copied.");
     } catch {
       showToast("Copy is blocked here, but the supplier pitch is visible.");
+    }
+  });
+
+  document.querySelector("#copyMarketButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildMarketBriefText());
+      showToast("Market launch brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the market brief is visible.");
     }
   });
 
@@ -419,6 +439,7 @@ function render() {
   renderCatalog();
   renderLeadPacket();
   renderEquipmentDetail();
+  renderTrustPassport();
   renderShortlistTray();
   renderDemandCapture();
   renderSupplierTable();
@@ -428,6 +449,7 @@ function render() {
   renderCategoryDirectory();
   renderAdminBoard();
   renderSupplierHunt();
+  renderMarketMaker();
   renderPricingCalculator();
   renderCommissionCalculator();
   document.body.classList.toggle("supplier-view", state.supplierView);
@@ -709,6 +731,111 @@ function renderEquipmentDetail() {
   `;
 }
 
+function renderTrustPassport() {
+  const listing = getSelectedListing();
+  const passport = getTrustPassport(listing);
+  setText("#passportMachine", listing.name);
+  setText("#passportScore", `${passport.score}/100`);
+  setText("#passportVerdict", passport.verdict);
+  document.querySelector(".passport-score-card").classList.toggle("is-strong", passport.score >= 80);
+  document.querySelector(".passport-score-card").classList.toggle("is-watch", passport.score < 65);
+
+  document.querySelector("#passportProof").innerHTML = passport.proofItems.map((item) => `
+    <div class="passport-proof-row ${item.ready ? "is-ready" : "is-missing"}">
+      <span><strong>${escapeHtml(item.label)}</strong>${escapeHtml(item.detail)}</span>
+      <em>${item.ready ? "Ready" : "Need"}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#passportRisk").innerHTML = passport.risks.map((risk) => `
+    <div class="passport-risk-row ${risk.level}">
+      <strong>${escapeHtml(risk.label)}</strong>
+      <span>${escapeHtml(risk.detail)}</span>
+    </div>
+  `).join("");
+
+  document.querySelector("#passportActions").innerHTML = passport.actions.map((action, index) => `
+    <div>
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(action)}</span>
+    </div>
+  `).join("");
+}
+
+function getTrustPassport(listing) {
+  const docs = listing.documents.map((document) => document.toLowerCase());
+  const hasPending = docs.some((document) => document.includes("pending"));
+  const verifiedScore = listing.verified ? 30 : 8;
+  const availabilityScore = listing.availability === "available" ? 20 : listing.availability === "soon" ? 12 : 6;
+  const cleanDocCount = docs.filter((document) => !document.includes("pending")).length;
+  const documentScore = Math.min(24, cleanDocCount * 8);
+  const categoryProof = getCategoryProof(listing);
+  const proofScore = Math.round((categoryProof.filter((item) => item.ready).length / categoryProof.length) * 18);
+  const directEnquiryScore = 8;
+  const score = Math.min(100, verifiedScore + availabilityScore + documentScore + proofScore + directEnquiryScore);
+  const missingProof = categoryProof.filter((item) => !item.ready).map((item) => item.label.toLowerCase());
+  const verdict = score >= 84 ? "Enquiry-ready" : score >= 68 ? "Verify one gap" : "Founder review";
+
+  return {
+    score,
+    verdict,
+    proofItems: categoryProof,
+    risks: [
+      {
+        level: listing.verified ? "low" : "medium",
+        label: "Supplier identity",
+        detail: listing.verified ? "Verified supplier profile is visible." : "Supplier should be reviewed before badge."
+      },
+      {
+        level: hasPending ? "medium" : "low",
+        label: "Document freshness",
+        detail: hasPending ? "One or more documents are pending." : "Visible documents look clean in this prototype."
+      },
+      {
+        level: listing.availability === "available" ? "low" : "medium",
+        label: "Availability certainty",
+        detail: listing.availability === "available" ? "Machine is marked available now." : "Availability should be reconfirmed before enquiry."
+      }
+    ],
+    actions: missingProof.length ? [
+      `Request ${missingProof.slice(0, 2).join(" and ")} from the supplier.`,
+      "Confirm photos, serial-friendly internal ID, and current location.",
+      "Copy the passport into the direct enquiry packet before contacting supplier."
+    ] : [
+      "Keep document expiry tracking fresh.",
+      "Ask supplier to confirm current availability before dispatch.",
+      "Use this passport as the buyer confidence block on the listing page."
+    ]
+  };
+}
+
+function getCategoryProof(listing) {
+  const cleanDocuments = listing.documents.filter((document) => !document.toLowerCase().includes("pending"));
+  const text = [listing.category, listing.specs, ...cleanDocuments].join(" ").toLowerCase();
+  const base = [
+    { label: "Company document", terms: ["trade license", "business license", "company registry", "gst"] },
+    { label: "Insurance proof", terms: ["insurance"] },
+    { label: "Inspection or service proof", terms: ["inspection", "service", "maintenance", "load test"] },
+    { label: "Availability status", terms: ["available", "soon"] }
+  ];
+  const specialist = {
+    Lifting: { label: "Operator or load proof", terms: ["operator", "load test", "capacity"] },
+    Earthmoving: { label: "Attachment and job proof", terms: ["bucket", "breaker", "blade", "track", "inspection"] },
+    Roadwork: { label: "Roadwork service proof", terms: ["maintenance", "compactor", "soil", "service"] },
+    Power: { label: "Load bank proof", terms: ["load bank", "fuel", "power", "kva"] },
+    Transport: { label: "Permit or capacity proof", terms: ["permit", "capacity", "trailer", "driver"] }
+  };
+  const checks = [...base, specialist[listing.category] || specialist.Earthmoving];
+  return checks.map((check) => {
+    const ready = check.terms.some((term) => text.includes(term)) || (check.label === "Availability status" && listing.availability);
+    return {
+      label: check.label,
+      ready,
+      detail: ready ? "Evidence visible on the listing." : `Add ${check.label.toLowerCase()} before full confidence.`
+    };
+  });
+}
+
 function toggleShortlist(id) {
   const exists = state.shortlistIds.includes(id);
   state.shortlistIds = exists ? state.shortlistIds.filter((listingId) => listingId !== id) : [...state.shortlistIds, id];
@@ -800,10 +927,12 @@ function saveDemandSignal(source = "Buyer request", readInputs = true) {
   state.demandDuration = duration;
   state.demandSignals = signals.slice(0, 8);
   state.activeDemandKey = getDemandKey({ equipment, region, urgency });
+  state.activeMarketKey = getMarketKeyFromSignal({ equipment, region, urgency });
   saveState();
   renderDemandCapture();
   renderDemandRadar();
   renderSupplierHunt();
+  renderMarketMaker();
   showToast(`${equipment} demand saved for ${region}.`);
 }
 
@@ -936,9 +1065,11 @@ function renderDemandRadar() {
   document.querySelectorAll("[data-demand-key]").forEach((button) => {
     button.addEventListener("click", () => {
       state.activeDemandKey = button.dataset.demandKey;
+      state.activeMarketKey = getMarketKeyFromSignal(getActiveDemandSignal());
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketMaker();
       document.querySelector("#growth").scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -986,9 +1117,11 @@ function renderSupplierHunt() {
   document.querySelectorAll("[data-hunt-key]").forEach((button) => {
     button.addEventListener("click", () => {
       state.activeDemandKey = button.dataset.huntKey;
+      state.activeMarketKey = getMarketKeyFromSignal(getActiveDemandSignal());
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketMaker();
     });
   });
 }
@@ -1039,6 +1172,112 @@ function getHuntPlan(signal) {
   };
 }
 
+function renderMarketMaker() {
+  const opportunities = getMarketOpportunities();
+  if (!opportunities.length) return;
+
+  const active = getActiveMarketOpportunity(opportunities);
+  setText("#marketLaunchTitle", `${active.region} ${active.category} launch`);
+  setText("#marketLaunchBadge", active.score >= 78 ? "Open now" : active.score >= 58 ? "Prepare" : "Watch");
+
+  document.querySelector("#marketOpportunityList").innerHTML = opportunities.map((opportunity) => `
+    <button type="button" class="market-opportunity ${opportunity.key === active.key ? "is-active" : ""}" data-market-key="${escapeHtml(opportunity.key)}">
+      <span><strong>${escapeHtml(opportunity.region)} ${escapeHtml(opportunity.category)}</strong>${opportunity.demandCount} demand signals - ${opportunity.visibleSupply} live supply</span>
+      <em>${opportunity.score}/100</em>
+    </button>
+  `).join("");
+
+  document.querySelector("#marketMetrics").innerHTML = [
+    ["Launch score", `${active.score}/100`],
+    ["Demand captured", `${active.demandCount} signals`],
+    ["Supply gap", `${active.supplyGap} listings`],
+    ["First-year ARR", `USD ${active.annualRevenue.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#marketSteps").innerHTML = active.steps.map((step, index) => `
+    <div>
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(step)}</span>
+    </div>
+  `).join("");
+
+  document.querySelector("#marketPageBrief").innerHTML = buildMarketBriefText(active)
+    .split("\n")
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-market-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeMarketKey = button.dataset.marketKey;
+      const selected = getMarketOpportunities().find((item) => item.key === state.activeMarketKey);
+      if (selected?.signalKey) state.activeDemandKey = selected.signalKey;
+      saveState();
+      renderDemandRadar();
+      renderSupplierHunt();
+      renderMarketMaker();
+    });
+  });
+}
+
+function getMarketOpportunities() {
+  const grouped = new Map();
+  getDemandSignals().forEach((signal) => {
+    const plan = getHuntPlan(signal);
+    const key = `${signal.region}::${plan.category}`;
+    const existing = grouped.get(key) || {
+      key,
+      region: signal.region,
+      category: plan.category,
+      persona: plan.persona,
+      proof: plan.proof,
+      hook: plan.hook,
+      demandCount: 0,
+      urgencyHits: 0,
+      starterListings: 0,
+      signalKey: getDemandKey(signal)
+    };
+    existing.demandCount += Number(signal.count || 1);
+    existing.urgencyHits += signal.urgency === "This week" || signal.urgency === "Next week" ? 1 : 0;
+    existing.starterListings = Math.max(existing.starterListings, plan.starterListings);
+    grouped.set(key, existing);
+  });
+
+  return [...grouped.values()].map((item) => {
+    const visibleSupply = listings.filter((listing) => listing.region === item.region && listing.category === item.category).length;
+    const supplyGap = Math.max(0, item.starterListings - visibleSupply);
+    const score = Math.min(100, 34 + Math.min(30, item.demandCount * 6) + Math.min(24, supplyGap * 2) + item.urgencyHits * 6);
+    const launchListings = Math.max(item.starterListings, visibleSupply + supplyGap);
+    return {
+      ...item,
+      visibleSupply,
+      supplyGap,
+      score,
+      launchListings,
+      annualRevenue: launchListings * 99,
+      slug: `${item.region}-${item.category}-equipment-rental`.toLowerCase().replace(/\s+/g, "-"),
+      steps: [
+        `Publish a ${item.category.toLowerCase()} rental page for ${item.region} with demand proof.`,
+        `Recruit ${supplyGap || item.starterListings} verified listings from ${item.persona.toLowerCase()}.`,
+        `Ask for ${item.proof.slice(0, 3).join(", ").toLowerCase()} before showing a verified badge.`,
+        "Route enquiries direct to suppliers and measure response speed before adding booking rails."
+      ]
+    };
+  }).sort((a, b) => b.score - a.score || b.demandCount - a.demandCount);
+}
+
+function getActiveMarketOpportunity(opportunities = getMarketOpportunities()) {
+  const active = opportunities.find((opportunity) => opportunity.key === state.activeMarketKey) || opportunities[0];
+  state.activeMarketKey = active.key;
+  return active;
+}
+
+function getMarketKeyFromSignal(signal) {
+  if (!signal) return "";
+  return `${signal.region}::${getHuntPlan(signal).category}`;
+}
+
 
 function renderPricingCalculator() {
   const monthly = state.listingCount * 9;
@@ -1074,6 +1313,23 @@ function buildLeadText() {
   ].join("\n");
 }
 
+function buildTrustPassportText() {
+  const listing = getSelectedListing();
+  const passport = getTrustPassport(listing);
+  return [
+    "Heavyster Trust Passport",
+    `Equipment: ${listing.name}`,
+    `Supplier: ${listing.supplier}`,
+    `Location: ${listing.city}, ${listing.region}`,
+    `Readiness: ${passport.score}/100 - ${passport.verdict}`,
+    `Documents: ${listing.documents.join(", ")}`,
+    `Proof stack: ${passport.proofItems.map((item) => `${item.label}: ${item.ready ? "ready" : "needed"}`).join("; ")}`,
+    `Risk radar: ${passport.risks.map((risk) => `${risk.label}: ${risk.detail}`).join(" | ")}`,
+    `Next actions: ${passport.actions.join(" | ")}`,
+    "Payment: buyer and rental company arrange directly in phase one"
+  ].join("\n");
+}
+
 function buildSupplierHuntText(plan = getHuntPlan(getActiveDemandSignal())) {
   const signal = plan.signal;
   const supplyLabel = plan.visibleSupply === 1 ? "1 matching listing is" : `${plan.visibleSupply} matching listings are`;
@@ -1083,6 +1339,17 @@ function buildSupplierHuntText(plan = getHuntPlan(getActiveDemandSignal())) {
     `The gap is clear: ${supplyLabel} visible in this prototype, and ${plan.hook}.`,
     `We want to onboard ${plan.starterListings} paid listings from a strong supplier at USD 9 monthly or USD 99 yearly per active listing.`,
     `If your fleet can provide ${plan.proof.join(", ").toLowerCase()}, we can build your supplier page and route direct enquiries to you without touching the rental payment.`
+  ].join("\n");
+}
+
+function buildMarketBriefText(opportunity = getActiveMarketOpportunity()) {
+  return [
+    `Page title: ${opportunity.category} equipment rental in ${opportunity.region}`,
+    `Slug: /${opportunity.slug}/`,
+    `Opening thesis: Heavyster is seeing ${opportunity.demandCount} demand signals for ${opportunity.category.toLowerCase()} equipment in ${opportunity.region}, with only ${opportunity.visibleSupply} matching supply visible in the current marketplace.`,
+    `Supplier target: recruit ${opportunity.launchListings} paid listings from ${opportunity.persona.toLowerCase()} for first-year listing ARR of USD ${opportunity.annualRevenue.toLocaleString()}.`,
+    `Trust proof: ${opportunity.proof.join(", ")}.`,
+    `Founder action: launch the page, invite suppliers, verify documents, then route direct enquiries without touching rental payments.`
   ].join("\n");
 }
 

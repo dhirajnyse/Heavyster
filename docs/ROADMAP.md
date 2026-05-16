@@ -6,8 +6,10 @@
 - Equipment categories and listing pages
 - Compact catalog UI for thousands of listings
 - Smart empty-state recovery and shortlist comparison
+- Trust Passport for every active machine
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
+- Market Maker Mode for choosing the next region/category launch
 - Photo upload slots
 - License, insurance, inspection, and operator document fields
 - Availability status per listing
@@ -18,10 +20,12 @@
 ## Phase 2: Lead Intelligence
 
 - Supplier lead inbox
+- Trust Passport expiry and confidence history
 - Quote templates
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue
+- Automated market launch briefs for category pages
 - Saved renter requirements
 - CRM export
 - Featured listing upgrades

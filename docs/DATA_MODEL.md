@@ -61,6 +61,21 @@
 - notes
 - created_at
 
+## TrustPassport
+
+Use this to explain why a machine is ready, risky, or still needs verification before a buyer sends an enquiry.
+
+- id
+- listing_id
+- readiness_score
+- verdict
+- proof_items
+- risk_items
+- next_actions
+- copied_at
+- created_at
+- updated_at
+
 ## Enquiry
 
 - id
@@ -109,6 +124,26 @@ Use this to convert a demand signal into a founder-led supplier recruitment play
 - required_proof_items
 - outreach_copy
 - hunt_status
+- created_at
+- updated_at
+
+## MarketOpportunity
+
+Use this to decide which region and equipment category deserves a launch page and supplier push.
+
+- id
+- region
+- category
+- demand_signal_count
+- visible_supply_count
+- supply_gap_count
+- launch_score
+- target_listing_count
+- projected_annual_listing_revenue
+- page_slug
+- launch_steps
+- launch_brief
+- opportunity_status
 - created_at
 - updated_at
 

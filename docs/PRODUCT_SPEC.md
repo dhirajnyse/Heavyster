@@ -39,6 +39,7 @@ Marketplace:
 - Compact row view for large catalogs
 - Smart no-results recovery with nearby matches
 - Shortlist and comparison tray
+- Trust Passport with readiness score, document proof, risk radar, and next verification actions
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -65,6 +66,8 @@ Founder Admin:
 - Demand radar from saved renter requests
 - Supplier hunt autopilot that converts demand into recruitment targets
 - Copy-ready supplier outreach packet with listing revenue estimate
+- Market Maker Mode for region/category expansion scoring
+- Copy-ready market launch page brief
 - Launch health metrics
 - Category inventory planning
 
@@ -81,11 +84,14 @@ Founder Admin:
 - Suppliers onboarded
 - Active paid listings
 - Verified listings
+- Trust Passport copy events
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar
 - Supplier outreach packets copied
 - Paid listings recruited from demand gaps
+- Region/category launch briefs copied
+- Category pages launched from demand signals
 - Supplier response time
 - Listing renewal rate
 - Enquiries per active listing

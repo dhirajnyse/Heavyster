@@ -842,6 +842,170 @@ button.compact-row.is-selected {
   color: var(--ink);
 }
 
+.passport-section {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: var(--surface);
+  box-shadow: 0 10px 26px rgba(42, 38, 30, 0.07);
+}
+
+.passport-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.85fr) minmax(260px, 1fr) minmax(260px, 1fr) minmax(300px, 1.1fr);
+  gap: 12px;
+}
+
+.passport-score-card,
+.passport-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.passport-score-card {
+  display: grid;
+  align-content: space-between;
+  min-height: 230px;
+  background: #fffaf0;
+}
+
+.passport-score-card.is-strong {
+  border-color: #b9d9c1;
+  background: var(--green-soft);
+}
+
+.passport-score-card.is-watch {
+  border-color: #e8cd8e;
+}
+
+.passport-score-card > strong {
+  display: block;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.passport-score-card > span {
+  color: var(--ink-2);
+  font-weight: 900;
+}
+
+.passport-card h3 {
+  margin-bottom: 12px;
+}
+
+.passport-proof,
+.passport-risk,
+.passport-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.passport-proof-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.passport-proof-row.is-ready {
+  border-color: #b9d9c1;
+  background: var(--green-soft);
+}
+
+.passport-proof-row.is-missing {
+  border-color: #e8cd8e;
+  background: #fffaf0;
+}
+
+.passport-proof-row span,
+.passport-proof-row strong {
+  display: block;
+}
+
+.passport-proof-row span {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.passport-proof-row strong {
+  margin-bottom: 3px;
+  color: var(--ink);
+}
+
+.passport-proof-row em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.passport-proof-row.is-missing em {
+  color: var(--amber);
+}
+
+.passport-risk-row {
+  min-height: 62px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.passport-risk-row.low {
+  border-color: #b9d9c1;
+}
+
+.passport-risk-row.medium {
+  border-color: #e8cd8e;
+  background: #fffaf0;
+}
+
+.passport-risk-row strong,
+.passport-risk-row span {
+  display: block;
+}
+
+.passport-risk-row span {
+  margin-top: 4px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.passport-actions div {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 52px;
+  padding: 9px;
+  border: 1px solid #c6d8d5;
+  border-radius: var(--radius);
+  background: #f5fbfa;
+}
+
+.passport-actions strong {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--teal);
+  color: #ffffff;
+}
+
+.passport-actions span {
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+
 .note-box {
   margin-top: 12px;
 }
@@ -1045,6 +1209,7 @@ button.compact-row.is-selected {
 .directory-section,
 .admin-section,
 .growth-section,
+.market-section,
 .pricing-section,
 .roadmap-section {
   margin-top: 14px;
@@ -1315,6 +1480,139 @@ button.admin-row {
   line-height: 1.48;
 }
 
+.market-maker-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(330px, 1fr) minmax(360px, 1.15fr);
+  gap: 12px;
+}
+
+.market-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.market-opportunity-list,
+.market-steps,
+.market-page-brief {
+  display: grid;
+  gap: 8px;
+}
+
+.market-opportunity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+
+.market-opportunity:hover,
+.market-opportunity.is-active {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+}
+
+.market-opportunity strong,
+.market-opportunity span {
+  display: block;
+}
+
+.market-opportunity span {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.market-opportunity strong {
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.market-opportunity em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.market-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.market-metrics span {
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.market-metrics strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.market-steps {
+  margin-top: 10px;
+}
+
+.market-steps div {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 52px;
+  padding: 9px;
+  border: 1px solid #c6d8d5;
+  border-radius: var(--radius);
+  background: #f5fbfa;
+}
+
+.market-steps strong {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--teal);
+  color: #ffffff;
+}
+
+.market-steps span {
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+
+.market-page-card {
+  background: #f5fbfa;
+}
+
+.market-page-brief {
+  padding: 12px;
+  border: 1px solid #b7d0cc;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.market-page-brief p {
+  margin-bottom: 0;
+  color: var(--ink-2);
+  line-height: 1.48;
+}
+
 .pricing-grid {
   display: grid;
   grid-template-columns: minmax(230px, 0.8fr) minmax(260px, 0.95fr) minmax(320px, 1.15fr);
@@ -1506,7 +1804,8 @@ button.admin-row {
   }
 
   .pricing-grid,
-  .hunt-grid {
+  .hunt-grid,
+  .market-maker-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1516,7 +1815,8 @@ button.admin-row {
 
   .category-directory,
   .admin-grid,
-  .studio-builder {
+  .studio-builder,
+  .passport-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -1556,9 +1856,10 @@ button.admin-row {
   .market-stats,
   .metrics-strip,
   .listing-grid,
-  .roadmap-grid,
-  .category-directory,
-  .admin-grid,
+    .roadmap-grid,
+    .category-directory,
+    .admin-grid,
+    .passport-grid,
     .studio-builder,
     .builder-grid,
     .builder-summary,
@@ -1567,11 +1868,14 @@ button.admin-row {
     .demand-grid,
     .hunt-metrics,
     .hunt-signal,
+    .market-metrics,
+    .market-opportunity,
     .lead-actions {
     grid-template-columns: 1fr;
   }
 
-  .hunt-signal em {
+  .hunt-signal em,
+  .market-opportunity em {
     text-align: left;
   }
 

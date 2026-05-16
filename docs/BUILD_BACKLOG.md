@@ -11,8 +11,10 @@
 - Compact catalog rows for large inventory UX
 - Category directory and founder admin board
 - Smart no-results guidance and shortlist comparison
+- Trust Passport for buyer confidence and verification gaps
 - Demand request capture and founder demand radar
 - Supplier hunt growth engine and copy-ready outreach packet
+- Market Maker Mode with expansion scoring and launch page brief
 
 ## Sprint 2: Repository Foundation
 
@@ -40,6 +42,7 @@
 - Compact list/table view for large catalogs
 - Helpful empty state that suggests near matches
 - Buyer shortlist and comparison tray
+- Trust Passport block on every listing page
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form
@@ -61,4 +64,5 @@
 - SEO pages for key categories and regions
 - Launch supplier invite list
 - Demand-led supplier recruitment queue
+- Market expansion scoring board
 - First 25 supplier onboarding playbook
