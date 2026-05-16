@@ -35,6 +35,8 @@ Equipment listing:
 Marketplace:
 
 - Search by equipment, region, category, availability
+- Sort by availability, verification, region, or equipment name
+- Compact row view for large catalogs
 - Supplier card
 - Equipment detail page
 - Direct enquiry packet
@@ -44,6 +46,21 @@ Billing:
 - USD 9 monthly per active listing
 - USD 99 yearly per active listing
 - Listing status: draft, active, paused, expired
+
+Supplier Studio:
+
+- Onboarding flow
+- Listing builder
+- Fleet table
+- Verification checklist
+- Billing readiness preview
+
+Founder Admin:
+
+- Supplier intake queue
+- Verification queue
+- Launch health metrics
+- Category inventory planning
 
 ## Phase 1 Non-Goals
 

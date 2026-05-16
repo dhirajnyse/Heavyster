@@ -40,15 +40,16 @@
 
         <nav class="topnav" aria-label="Primary">
           <a href="#marketplace">Marketplace</a>
-          <a href="#supplier">Supplier SaaS</a>
+          <a href="#studio">Supplier Studio</a>
+          <a href="#categories">Categories</a>
           <a href="#pricing">Pricing</a>
-          <a href="#commission">Commission</a>
+          <a href="#admin">Admin</a>
           <a href="#roadmap">Roadmap</a>
         </nav>
 
         <div class="top-actions">
           <button type="button" class="ghost-button" id="supplierModeButton">Supplier view</button>
-          <a class="solid-button" href="#supplier">List equipment</a>
+          <a class="solid-button" href="#studio">List equipment</a>
         </div>
       </header>
 
@@ -62,7 +63,7 @@
               photos, rates, locations, and availability. Renters contact the rental company directly.
             </p>
             <div class="hero-actions">
-              <a class="solid-button" href="#supplier">Build supplier workspace</a>
+              <a class="solid-button" href="#studio">Build supplier workspace</a>
               <a class="ghost-button" href="#pricing">See pricing model</a>
             </div>
           </div>
@@ -146,7 +147,21 @@
                 <button type="button" class="category-button" data-category="Roadwork">Roadwork</button>
               </div>
             </div>
+            <div class="catalog-tools" aria-label="Catalog controls">
+              <label>
+                Sort
+                <select id="sortFilter">
+                  <option value="available">Available first</option>
+                  <option value="verified">Verified first</option>
+                  <option value="region">Region A-Z</option>
+                  <option value="name">Equipment A-Z</option>
+                </select>
+              </label>
+              <button type="button" class="ghost-button" id="viewToggleButton">Compact rows</button>
+              <span id="catalogSummary">0 listings loaded</span>
+            </div>
             <div class="listing-grid" id="listingGrid"></div>
+            <div class="compact-catalog" id="compactCatalog" aria-label="Compact equipment rows"></div>
           </section>
 
           <aside class="panel lead-panel" aria-labelledby="leadTitle">
@@ -158,6 +173,7 @@
               <span class="pill" id="selectedListingStatus">Ready</span>
             </div>
             <div id="leadPacket" class="lead-packet"></div>
+            <div id="equipmentDetail" class="equipment-detail"></div>
             <label class="note-box">
               Project note
               <textarea id="projectNote" rows="4" placeholder="Need machine with operator for 5 days near Jebel Ali"></textarea>
@@ -166,7 +182,7 @@
           </aside>
         </section>
 
-        <section class="section-grid supplier-section" id="supplier">
+        <section class="section-grid supplier-section" id="studio">
           <section class="panel supplier-panel" aria-labelledby="supplierTitle">
             <div class="section-header">
               <div>
@@ -191,6 +207,51 @@
                 <div class="supplier-table" id="supplierTable"></div>
               </div>
             </div>
+            <div class="studio-builder">
+              <div class="onboarding-flow" id="onboardingFlow"></div>
+              <form class="listing-builder" id="listingBuilder">
+                <div class="section-header compact">
+                  <div>
+                    <p class="eyebrow">Listing builder</p>
+                    <h3>Add a machine in minutes</h3>
+                  </div>
+                </div>
+                <div class="builder-grid">
+                  <label>
+                    Category
+                    <select id="builderCategory">
+                      <option>Earthmoving</option>
+                      <option>Lifting</option>
+                      <option>Roadwork</option>
+                      <option>Power</option>
+                      <option>Transport</option>
+                    </select>
+                  </label>
+                  <label>
+                    Make and model
+                    <input id="builderModel" type="text" value="Cat 320 Excavator" />
+                  </label>
+                  <label>
+                    Region
+                    <select id="builderRegion">
+                      <option>UAE</option>
+                      <option>USA</option>
+                      <option>India</option>
+                      <option>UK</option>
+                    </select>
+                  </label>
+                  <label>
+                    Availability
+                    <select id="builderAvailability">
+                      <option value="available">Available now</option>
+                      <option value="soon">Available soon</option>
+                      <option value="call">Call to confirm</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="builder-summary" id="builderSummary"></div>
+              </form>
+            </div>
           </section>
 
           <aside class="panel checklist-panel" aria-labelledby="checklistTitle">
@@ -202,6 +263,40 @@
             </div>
             <div class="checklist" id="trustChecklist"></div>
           </aside>
+        </section>
+
+        <section class="directory-section" id="categories">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Scalable directory</p>
+              <h2>Category pages that can grow from 10 listings to 10,000.</h2>
+            </div>
+            <span class="pill dark">SEO-ready structure</span>
+          </div>
+          <div class="category-directory" id="categoryDirectory"></div>
+        </section>
+
+        <section class="admin-section" id="admin">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Founder admin</p>
+              <h2>A calm control board for supplier onboarding, verification, and launch health.</h2>
+            </div>
+          </div>
+          <div class="admin-grid">
+            <article class="admin-card">
+              <h3>Supplier intake</h3>
+              <div id="adminSupplierQueue"></div>
+            </article>
+            <article class="admin-card">
+              <h3>Verification queue</h3>
+              <div id="verificationBoard"></div>
+            </article>
+            <article class="admin-card">
+              <h3>Launch health</h3>
+              <div id="launchMetrics"></div>
+            </article>
+          </div>
         </section>
 
         <section class="pricing-section" id="pricing">

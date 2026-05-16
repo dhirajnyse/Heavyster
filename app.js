@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260516-heavyster-marketplace-v1";
+const DATA_VERSION = "20260516-heavyster-supplier-studio-v2";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -82,6 +82,17 @@ const listings = [
   }
 ];
 
+const categoryDirectory = [
+  { name: "Excavators", group: "Earthmoving", count: 248, regions: "UAE, USA, India", intent: "High-intent contractor search" },
+  { name: "Mobile cranes", group: "Lifting", count: 116, regions: "UAE, UK, USA", intent: "Permit and capacity driven" },
+  { name: "Wheel loaders", group: "Earthmoving", count: 184, regions: "USA, India, UAE", intent: "Quarry, yard, and bulk handling" },
+  { name: "Telehandlers", group: "Lifting", count: 139, regions: "UK, UAE, USA", intent: "Site logistics and material handling" },
+  { name: "Dozers", group: "Earthmoving", count: 91, regions: "USA, India", intent: "Civil and earthworks demand" },
+  { name: "Rollers", group: "Roadwork", count: 132, regions: "India, UAE, USA", intent: "Roadwork and compaction" },
+  { name: "Generators", group: "Power", count: 205, regions: "UAE, USA, UK", intent: "Event, backup, and site power" },
+  { name: "Lowbed trailers", group: "Transport", count: 77, regions: "UAE, India, USA", intent: "Equipment transport support" }
+];
+
 const trustItems = [
   ["Company profile", "Legal name, service regions, contact desk, and fleet categories."],
   ["Equipment proof", "Photos, serial-friendly internal ID, make, model, specs, and attachments."],
@@ -89,6 +100,20 @@ const trustItems = [
   ["Availability", "Available now, available soon, or call-to-confirm status for each listing."],
   ["Lead routing", "Phone, WhatsApp, email, and enquiry packet copied to supplier CRM."],
   ["Billing", "USD 9 monthly or USD 99 yearly per active listing, no rental commission."]
+];
+
+const onboardingSteps = [
+  ["Company", "Create supplier account and branch profile."],
+  ["Fleet", "Add equipment listings with photos and specs."],
+  ["Verify", "Attach license, insurance, inspection, and operator documents."],
+  ["Publish", "Choose monthly or annual listing plan and go live."]
+];
+
+const adminQueue = [
+  { supplier: "Al Noor Heavy Rentals", region: "UAE", listings: 14, status: "Ready to verify" },
+  { supplier: "Frontier Civil Rentals", region: "USA", listings: 22, status: "Docs pending" },
+  { supplier: "Metro Plant Hire", region: "UK", listings: 9, status: "Billing setup" },
+  { supplier: "Prime Road Rentals", region: "India", listings: 17, status: "Review photos" }
 ];
 
 let state = loadState();
@@ -105,11 +130,17 @@ function defaultState() {
     region: "all",
     availability: "all",
     category: "all",
+    sort: "available",
+    compactView: false,
     selectedListingId: "HY-EX-001",
     projectNote: "Need equipment for next week. Please confirm rental terms, operator option, delivery, and documents.",
     listingCount: 12,
     bookingValue: 8500,
     confirmedBookings: 6,
+    builderCategory: "Earthmoving",
+    builderModel: "Cat 320 Excavator",
+    builderRegion: "UAE",
+    builderAvailability: "available",
     supplierView: false,
     trustChecked: [true, true, true, false, false, false]
   };
@@ -136,6 +167,11 @@ function bindControls() {
   const listingCount = document.querySelector("#listingCount");
   const bookingValue = document.querySelector("#bookingValue");
   const confirmedBookings = document.querySelector("#confirmedBookings");
+  const sort = document.querySelector("#sortFilter");
+  const builderCategory = document.querySelector("#builderCategory");
+  const builderModel = document.querySelector("#builderModel");
+  const builderRegion = document.querySelector("#builderRegion");
+  const builderAvailability = document.querySelector("#builderAvailability");
 
   search.value = state.search;
   region.value = state.region;
@@ -144,6 +180,11 @@ function bindControls() {
   listingCount.value = String(state.listingCount);
   bookingValue.value = String(state.bookingValue);
   confirmedBookings.value = String(state.confirmedBookings);
+  sort.value = state.sort;
+  builderCategory.value = state.builderCategory;
+  builderModel.value = state.builderModel;
+  builderRegion.value = state.builderRegion;
+  builderAvailability.value = state.builderAvailability;
 
   search.addEventListener("input", (event) => {
     state.search = event.target.value.trim();
@@ -187,6 +228,24 @@ function bindControls() {
     renderCommissionCalculator();
   });
 
+  sort.addEventListener("change", (event) => {
+    state.sort = event.target.value;
+    saveState();
+    renderCatalog();
+  });
+
+  document.querySelector("#viewToggleButton").addEventListener("click", () => {
+    state.compactView = !state.compactView;
+    saveState();
+    renderCatalog();
+    showToast(state.compactView ? "Compact catalog rows enabled." : "Equipment cards enabled.");
+  });
+
+  [builderCategory, builderModel, builderRegion, builderAvailability].forEach((input) => {
+    input.addEventListener("input", updateBuilderState);
+    input.addEventListener("change", updateBuilderState);
+  });
+
   document.querySelectorAll(".category-button").forEach((button) => {
     button.addEventListener("click", () => {
       state.category = button.dataset.category;
@@ -219,14 +278,28 @@ function bindControls() {
   });
 }
 
+function updateBuilderState() {
+  state.builderCategory = document.querySelector("#builderCategory").value;
+  state.builderModel = document.querySelector("#builderModel").value.trim();
+  state.builderRegion = document.querySelector("#builderRegion").value;
+  state.builderAvailability = document.querySelector("#builderAvailability").value;
+  saveState();
+  renderBuilderSummary();
+}
+
 function render() {
   reconcileSelectedListing();
   renderCategoryButtons();
   renderMarketplaceStats();
-  renderListings();
+  renderCatalog();
   renderLeadPacket();
+  renderEquipmentDetail();
   renderSupplierTable();
   renderTrustChecklist();
+  renderOnboardingFlow();
+  renderBuilderSummary();
+  renderCategoryDirectory();
+  renderAdminBoard();
   renderPricingCalculator();
   renderCommissionCalculator();
   document.body.classList.toggle("supplier-view", state.supplierView);
@@ -234,7 +307,7 @@ function render() {
 
 function getFilteredListings() {
   const query = state.search.toLowerCase();
-  return listings.filter((listing) => {
+  const filtered = listings.filter((listing) => {
     const searchable = [
       listing.name,
       listing.category,
@@ -249,6 +322,18 @@ function getFilteredListings() {
       && (state.availability === "all" || listing.availability === state.availability)
       && (state.category === "all" || listing.category === state.category);
   });
+  return filtered.sort((a, b) => {
+    if (state.sort === "available") return availabilityScore(a) - availabilityScore(b) || a.name.localeCompare(b.name);
+    if (state.sort === "verified") return Number(b.verified) - Number(a.verified) || a.name.localeCompare(b.name);
+    if (state.sort === "region") return a.region.localeCompare(b.region) || a.city.localeCompare(b.city);
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function availabilityScore(listing) {
+  if (listing.availability === "available") return 0;
+  if (listing.availability === "soon") return 1;
+  return 2;
 }
 
 function reconcileSelectedListing() {
@@ -276,6 +361,14 @@ function renderMarketplaceStats() {
   const verifiedSuppliers = new Set(filtered.filter((listing) => listing.verified).map((listing) => listing.supplier));
   setText("#resultCount", String(filtered.length));
   setText("#verifiedCount", String(verifiedSuppliers.size));
+}
+
+function renderCatalog() {
+  renderListings();
+  renderCompactCatalog();
+  setText("#catalogSummary", `${getFilteredListings().length} listings loaded - ready for paged catalog growth`);
+  document.querySelector("#viewToggleButton").textContent = state.compactView ? "Card view" : "Compact rows";
+  document.querySelector(".catalog-panel").classList.toggle("is-compact", state.compactView);
 }
 
 function renderListings() {
@@ -314,6 +407,42 @@ function renderListings() {
   });
 }
 
+function renderCompactCatalog() {
+  const filtered = getFilteredListings();
+  const rows = document.querySelector("#compactCatalog");
+  if (!filtered.length) {
+    rows.innerHTML = `<div class="compact-row empty-row">No matching rows.</div>`;
+    return;
+  }
+
+  rows.innerHTML = `
+    <div class="compact-row compact-head">
+      <span>Equipment</span>
+      <span>Supplier</span>
+      <span>Region</span>
+      <span>Status</span>
+      <span>Action</span>
+    </div>
+    ${filtered.map((listing) => `
+      <button type="button" class="compact-row ${listing.id === state.selectedListingId ? "is-selected" : ""}" data-listing-id="${escapeHtml(listing.id)}">
+        <span><strong>${escapeHtml(listing.name)}</strong><small>${escapeHtml(listing.category)}</small></span>
+        <span>${escapeHtml(listing.supplier)}</span>
+        <span>${escapeHtml(listing.city)}, ${escapeHtml(listing.region)}</span>
+        <span>${listing.verified ? "Verified" : "Review"}</span>
+        <span>${listing.availability === "available" ? "Enquire" : "Watch"}</span>
+      </button>
+    `).join("")}
+  `;
+
+  rows.querySelectorAll("button.compact-row").forEach((row) => {
+    row.addEventListener("click", () => {
+      state.selectedListingId = row.dataset.listingId;
+      saveState();
+      render();
+    });
+  });
+}
+
 function renderLeadPacket() {
   const listing = getSelectedListing();
   const status = listing.verified ? "Verified supplier" : "Needs verification";
@@ -337,6 +466,22 @@ function renderLeadPacket() {
     <div>
       <span>Documents shown</span>
       <strong>${escapeHtml(listing.documents.join(", "))}</strong>
+    </div>
+  `;
+}
+
+function renderEquipmentDetail() {
+  const listing = getSelectedListing();
+  document.querySelector("#equipmentDetail").innerHTML = `
+    <div class="detail-title">
+      <strong>${escapeHtml(listing.id)}</strong>
+      <span>${escapeHtml(listing.category)}</span>
+    </div>
+    <div class="detail-spec-grid">
+      <span><strong>Specs</strong>${escapeHtml(listing.specs)}</span>
+      <span><strong>Commercial</strong>${escapeHtml(listing.rate)} - renter pays supplier direct</span>
+      <span><strong>Availability</strong>${listing.availability === "available" ? "Available now" : "Available soon"}</span>
+      <span><strong>Verification</strong>${listing.verified ? "Supplier verified" : "Founder review needed"}</span>
     </div>
   `;
 }
@@ -370,6 +515,72 @@ function renderTrustChecklist() {
     });
   });
 }
+
+function renderOnboardingFlow() {
+  document.querySelector("#onboardingFlow").innerHTML = onboardingSteps.map(([title, detail], index) => `
+    <div class="flow-step">
+      <span>${index + 1}</span>
+      <strong>${escapeHtml(title)}</strong>
+      <small>${escapeHtml(detail)}</small>
+    </div>
+  `).join("");
+}
+
+function renderBuilderSummary() {
+  const status = state.builderAvailability === "available" ? "can publish now" : state.builderAvailability === "soon" ? "can publish with soon badge" : "needs call-to-confirm badge";
+  document.querySelector("#builderSummary").innerHTML = `
+    <span><strong>${escapeHtml(state.builderModel || "New equipment")}</strong>${escapeHtml(state.builderCategory)} - ${escapeHtml(state.builderRegion)}</span>
+    <span><strong>Listing plan</strong>USD 9/month or USD 99/year once active</span>
+    <span><strong>Status</strong>${escapeHtml(status)}</span>
+  `;
+}
+
+function renderCategoryDirectory() {
+  document.querySelector("#categoryDirectory").innerHTML = categoryDirectory.map((category) => `
+    <article class="category-card">
+      <span>${escapeHtml(category.group)}</span>
+      <strong>${escapeHtml(category.name)}</strong>
+      <p>${escapeHtml(category.intent)}</p>
+      <small>${category.count.toLocaleString()} modeled listings - ${escapeHtml(category.regions)}</small>
+    </article>
+  `).join("");
+}
+
+function renderAdminBoard() {
+  const totalModeledListings = categoryDirectory.reduce((total, category) => total + category.count, 0);
+  const verified = listings.filter((listing) => listing.verified).length;
+  document.querySelector("#adminSupplierQueue").innerHTML = adminQueue.map((supplier) => `
+    <div class="admin-row">
+      <span><strong>${escapeHtml(supplier.supplier)}</strong>${escapeHtml(supplier.region)} - ${supplier.listings} listings</span>
+      <em>${escapeHtml(supplier.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#verificationBoard").innerHTML = [
+    ["Verified demo listings", `${verified}/${listings.length}`],
+    ["Document checks", "License, insurance, inspection"],
+    ["Founder review rule", "No badge without documents"],
+    ["Risk control", "Hide expired docs later"]
+  ].map(([label, value]) => `
+    <div class="admin-row">
+      <span><strong>${escapeHtml(label)}</strong>${escapeHtml(value)}</span>
+      <em>Track</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#launchMetrics").innerHTML = [
+    ["Modeled category inventory", totalModeledListings.toLocaleString()],
+    ["Launch target", "25 suppliers"],
+    ["First revenue target", "250 paid listings"],
+    ["Phase-two trigger", "100 confirmed enquiries"]
+  ].map(([label, value]) => `
+    <div class="metric-line">
+      <span>${escapeHtml(label)}</span>
+      <strong>${escapeHtml(value)}</strong>
+    </div>
+  `).join("");
+}
+
 
 function renderPricingCalculator() {
   const monthly = state.listingCount * 9;

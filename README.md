@@ -16,7 +16,10 @@ The first version is intentionally simple:
 This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
+- Compact catalog row view for large inventory UX
 - Supplier SaaS workspace preview
+- Supplier onboarding and listing builder preview
+- Category directory and founder admin board
 - Verification checklist for licenses, insurance, inspection, and lead routing
 - Pricing calculator for the listing model
 - Phase-two commission calculator for confirmed bookings

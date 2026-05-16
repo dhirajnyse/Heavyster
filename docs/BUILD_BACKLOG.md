@@ -8,6 +8,8 @@
 - 3D logo and brand system
 - Pricing calculator
 - Phase-two 1% success fee calculator
+- Compact catalog rows for large inventory UX
+- Category directory and founder admin board
 
 ## Sprint 2: Repository Foundation
 
@@ -23,6 +25,7 @@
 - Supplier signup screens
 - Company profile form
 - Equipment listing form
+- Simple listing builder flow
 - Listing status states
 - Document checklist
 - Photo upload placeholders
@@ -31,6 +34,7 @@
 
 - Category pages
 - Equipment detail page
+- Compact list/table view for large catalogs
 - Supplier profile page
 - Direct enquiry form
 - Enquiry confirmation screen

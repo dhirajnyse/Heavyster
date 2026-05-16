@@ -4,6 +4,7 @@
 
 - Supplier signup and company profile
 - Equipment categories and listing pages
+- Compact catalog UI for thousands of listings
 - Photo upload slots
 - License, insurance, inspection, and operator document fields
 - Availability status per listing
