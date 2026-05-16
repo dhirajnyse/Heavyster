@@ -40,6 +40,7 @@ Marketplace:
 - Smart no-results recovery with nearby matches
 - Shortlist and comparison tray
 - Trust Passport with readiness score, document proof, risk radar, and next verification actions
+- RFQ Command Room that turns a shortlist into a multi-supplier quote packet
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -85,6 +86,7 @@ Founder Admin:
 - Active paid listings
 - Verified listings
 - Trust Passport copy events
+- RFQ packets copied
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar

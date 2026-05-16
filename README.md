@@ -20,6 +20,7 @@ This folder contains a static product prototype with:
 - Smart no-results recovery with nearby matches and one-click filter relaxation
 - Buyer shortlist and comparison tray
 - Trust Passport with machine readiness score, proof stack, and buyer risk radar
+- RFQ Command Room for shortlist readiness and copy-ready supplier quote packets
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach

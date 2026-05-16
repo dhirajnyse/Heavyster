@@ -92,6 +92,21 @@ Use this to explain why a machine is ready, risky, or still needs verification b
 - enquiry_status
 - created_at
 
+## RfqPacket
+
+Use this when a buyer converts shortlisted machines into a controlled quote request.
+
+- id
+- buyer_project_note
+- listing_ids
+- average_readiness_score
+- verified_supplier_count
+- available_now_count
+- supplier_routes
+- quote_checklist
+- copied_at
+- created_at
+
 ## DemandSignal
 
 Use this when a buyer search has no exact match or when a buyer saves an unmet rental need.

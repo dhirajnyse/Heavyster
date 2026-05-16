@@ -7,6 +7,7 @@
 - Compact catalog UI for thousands of listings
 - Smart empty-state recovery and shortlist comparison
 - Trust Passport for every active machine
+- RFQ Command Room for shortlist-based quote packets
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
 - Market Maker Mode for choosing the next region/category launch
@@ -22,6 +23,7 @@
 - Supplier lead inbox
 - Trust Passport expiry and confidence history
 - Quote templates
+- RFQ response comparison and supplier reply scoring
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue

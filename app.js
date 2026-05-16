@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260516-heavyster-trust-passport-v7";
+const DATA_VERSION = "20260516-heavyster-rfq-room-v8";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -278,6 +278,7 @@ function bindControls() {
     state.projectNote = event.target.value;
     saveState();
     renderLeadPacket();
+    renderRfqRoom();
   });
 
   listingCount.addEventListener("input", (event) => {
@@ -351,6 +352,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyRfqButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildRfqText());
+      showToast("RFQ packet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the RFQ packet is visible.");
+    }
+  });
+
   document.querySelector("#copyHuntButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSupplierHuntText());
@@ -375,7 +385,8 @@ function bindControls() {
 
   document.querySelector("#compareShortlistButton").addEventListener("click", () => {
     renderShortlistTray(true);
-    showToast(state.shortlistIds.length ? "Shortlist comparison is ready." : "Save equipment first to compare.");
+    document.querySelector("#rfq").scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast(state.shortlistIds.length ? "RFQ room is ready." : "Save equipment first to build an RFQ.");
   });
 
   document.querySelector("#quickSearchButton").addEventListener("click", () => {
@@ -441,6 +452,7 @@ function render() {
   renderEquipmentDetail();
   renderTrustPassport();
   renderShortlistTray();
+  renderRfqRoom();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -842,6 +854,7 @@ function toggleShortlist(id) {
   saveState();
   renderShortlistTray();
   renderLeadPacket();
+  renderRfqRoom();
   showToast(exists ? "Removed from shortlist." : "Saved to shortlist.");
 }
 
@@ -874,6 +887,81 @@ function renderShortlistTray(expanded = false) {
       render();
     });
   });
+}
+
+function renderRfqRoom() {
+  const rfq = getRfqModel();
+  setText("#rfqTitle", rfq.title);
+  setText("#rfqBadge", rfq.badge);
+
+  document.querySelector("#rfqMetrics").innerHTML = [
+    ["Machines", String(rfq.listings.length)],
+    ["Avg readiness", `${rfq.averageScore}/100`],
+    ["Verified suppliers", String(rfq.verifiedCount)],
+    ["Available now", String(rfq.availableCount)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#rfqBrief").innerHTML = `
+    <p><strong>Project note</strong>${escapeHtml(state.projectNote || "No project note yet.")}</p>
+    <p><strong>Payment stance</strong>Buyer pays rental company directly. Heavyster routes the enquiry only.</p>
+    <p><strong>Control rule</strong>Attach Trust Passport details and request availability, operator, delivery, documents, and quote validity.</p>
+  `;
+
+  document.querySelector("#rfqRouteBoard").innerHTML = rfq.routes.map((route) => `
+    <div class="rfq-route ${route.ready ? "is-ready" : "needs-work"}">
+      <span><strong>${escapeHtml(route.listing.name)}</strong>${escapeHtml(route.listing.supplier)} - ${escapeHtml(route.listing.city)}, ${escapeHtml(route.listing.region)}</span>
+      <em>${route.score}/100</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#rfqChecklist").innerHTML = rfq.checklist.map((item, index) => `
+    <div>
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(item)}</span>
+    </div>
+  `).join("");
+}
+
+function getRfqModel() {
+  const listingsForRfq = getRfqListings();
+  const routes = listingsForRfq.map((listing) => {
+    const passport = getTrustPassport(listing);
+    return {
+      listing,
+      score: passport.score,
+      ready: passport.score >= 68 && listing.verified
+    };
+  });
+  const averageScore = Math.round(routes.reduce((total, route) => total + route.score, 0) / routes.length);
+  const verifiedCount = routes.filter((route) => route.listing.verified).length;
+  const availableCount = routes.filter((route) => route.listing.availability === "available").length;
+  const needsWork = routes.filter((route) => !route.ready).length;
+  const badge = routes.length >= 2 && needsWork === 0 ? "Send now" : routes.length >= 2 ? "Verify gaps" : "Add options";
+
+  return {
+    title: routes.length > 1 ? `${routes.length} supplier RFQ` : "Single supplier RFQ",
+    listings: listingsForRfq,
+    routes,
+    averageScore,
+    verifiedCount,
+    availableCount,
+    badge,
+    checklist: [
+      "Send the same project scope to every shortlisted supplier.",
+      "Ask each supplier to confirm availability, quote validity, operator option, delivery, and documents.",
+      "Compare replies by readiness score, response time, and document completeness.",
+      "Keep rental payment direct between buyer and supplier in phase one."
+    ]
+  };
+}
+
+function getRfqListings() {
+  const shortlisted = (state.shortlistIds || [])
+    .map((id) => listings.find((listing) => listing.id === id))
+    .filter(Boolean);
+  return shortlisted.length ? shortlisted : [getSelectedListing()];
 }
 
 function prepareDemandFromSearch() {
@@ -1327,6 +1415,24 @@ function buildTrustPassportText() {
     `Risk radar: ${passport.risks.map((risk) => `${risk.label}: ${risk.detail}`).join(" | ")}`,
     `Next actions: ${passport.actions.join(" | ")}`,
     "Payment: buyer and rental company arrange directly in phase one"
+  ].join("\n");
+}
+
+function buildRfqText() {
+  const rfq = getRfqModel();
+  return [
+    "Heavyster RFQ Command Room",
+    `RFQ status: ${rfq.badge}`,
+    `Project note: ${state.projectNote || "No project note provided"}`,
+    `Shortlisted machines: ${rfq.listings.map((listing) => listing.name).join(", ")}`,
+    `Average readiness: ${rfq.averageScore}/100`,
+    `Verified suppliers: ${rfq.verifiedCount}/${rfq.listings.length}`,
+    `Available now: ${rfq.availableCount}/${rfq.listings.length}`,
+    "Supplier routing:",
+    ...rfq.routes.map((route) => `- ${route.listing.supplier}: ${route.listing.name}, ${route.listing.city}, ${route.listing.region}, Trust Passport ${route.score}/100`),
+    "Quote request:",
+    "Please confirm availability, rental rate, operator option, delivery terms, quote validity, required documents, and best contact route.",
+    "Payment: buyer and rental company arrange directly in phase one. Heavyster is only routing the RFQ."
   ].join("\n");
 }
 

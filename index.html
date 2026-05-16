@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260516-trust-passport" />
+    <link rel="stylesheet" href="styles.css?v=20260516-rfq-room" />
   </head>
   <body>
     <div class="app-shell">
@@ -41,6 +41,7 @@
         <nav class="topnav" aria-label="Primary">
           <a href="#marketplace">Marketplace</a>
           <a href="#passport">Passport</a>
+          <a href="#rfq">RFQ Room</a>
           <a href="#studio">Supplier Studio</a>
           <a href="#categories">Categories</a>
           <a href="#growth">Growth</a>
@@ -260,6 +261,40 @@
             <article class="passport-card passport-actions-card">
               <h3>Next verification actions</h3>
               <div class="passport-actions" id="passportActions"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="rfq-section" id="rfq">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">RFQ Command Room</p>
+              <h2>Turn a shortlist into a professional multi-supplier quote packet.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyRfqButton">Copy RFQ</button>
+          </div>
+
+          <div class="rfq-grid">
+            <article class="rfq-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Quote readiness</p>
+                  <h3 id="rfqTitle">Shortlist RFQ</h3>
+                </div>
+                <span class="pill" id="rfqBadge">Draft</span>
+              </div>
+              <div class="rfq-metrics" id="rfqMetrics"></div>
+              <div class="rfq-brief" id="rfqBrief"></div>
+            </article>
+
+            <article class="rfq-card">
+              <h3>Supplier routing board</h3>
+              <div class="rfq-route-board" id="rfqRouteBoard"></div>
+            </article>
+
+            <article class="rfq-card rfq-packet-card">
+              <h3>Quote control checklist</h3>
+              <div class="rfq-checklist" id="rfqChecklist"></div>
             </article>
           </div>
         </section>
@@ -584,6 +619,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260516-trust-passport" defer></script>
+    <script src="app.js?v=20260516-rfq-room" defer></script>
   </body>
 </html>
