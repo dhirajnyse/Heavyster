@@ -16,6 +16,7 @@
 - Mobilization Control Tower for pre-dispatch buyer-supplier handoff
 - Yard Availability OS for supplier inventory freshness
 - Supplier Fleet Storefront for verified rental company mini-sites
+- Fleet Import Console for bulk machine intake and paid-listing validation
 - Supplier Studio 2.0 for profile readiness, storefront publishing, and supplier-specific fleet controls
 - Supplier Lead Desk for direct enquiry response workflow and lead quality scoring
 - Demand request capture for zero-result searches
@@ -41,6 +42,7 @@
 - Mobilization history, dispatch evidence, and site readiness memory
 - Availability history, stale listing prevention, and supplier refresh SLAs
 - Supplier storefront analytics, profile completion scoring, and branch pages
+- Fleet import templates, CSV/XLSX mapping, duplicate detection, and photo/document matching
 - Lead Desk analytics, response SLA scoring, and supplier reply templates
 - Response time scoring
 - Category demand heatmaps from demand radar

@@ -59,6 +59,7 @@ assert(index.includes('id="quoteGuardBoard"') && index.includes('id="copyQuoteBu
 assert(index.includes('id="mobilizeChecklist"') && index.includes('id="copyMobilizeButton"'), "index.html is missing Mobilization Control Tower controls.");
 assert(index.includes('id="yardBoard"') && index.includes('id="copyYardButton"'), "index.html is missing Yard Availability OS controls.");
 assert(index.includes('id="storefrontFleet"') && index.includes('id="copyStorefrontButton"'), "index.html is missing Supplier Fleet Storefront controls.");
+assert(index.includes('id="fleetImportQueue"') && index.includes('id="copyFleetImportButton"'), "index.html is missing Fleet Import Console controls.");
 assert(index.includes('id="leadDeskQueue"') && index.includes('id="copyLeadDeskButton"'), "index.html is missing Supplier Lead Desk controls.");
 assert(index.includes('id="demandRequest"') && index.includes('id="demandRadar"'), "index.html is missing demand capture or demand radar.");
 assert(index.includes('id="huntSignalList"') && index.includes('id="outreachScript"'), "index.html is missing the supplier hunt growth engine.");
@@ -66,9 +67,9 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260517-hash-stabilizer"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260517-hash-stabilizer"), "index.html is missing the JS cache-bust token.");
-assert(app.includes('const DATA_VERSION = "20260517-heavyster-hash-stabilizer-v20";'), "app.js DATA_VERSION is missing or changed.");
+assert(index.includes("styles.css?v=20260517-fleet-import"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260517-fleet-import"), "index.html is missing the JS cache-bust token.");
+assert(app.includes('const DATA_VERSION = "20260517-heavyster-fleet-import-v21";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderCompactCatalog") && app.includes("renderCategoryDirectory") && app.includes("renderAdminBoard"), "app.js is missing scalable UX renderers.");
@@ -84,6 +85,7 @@ assert(app.includes("renderQuoteGuard") && app.includes("buildQuoteGuardText"), 
 assert(app.includes("renderMobilizationTower") && app.includes("buildMobilizationText"), "app.js is missing Mobilization Control Tower rendering or copy text.");
 assert(app.includes("renderYardAvailability") && app.includes("buildYardUpdateText"), "app.js is missing Yard Availability OS rendering or copy text.");
 assert(app.includes("renderSupplierStorefront") && app.includes("buildSupplierStorefrontText"), "app.js is missing Supplier Fleet Storefront rendering or copy text.");
+assert(app.includes("renderFleetImport") && app.includes("buildFleetImportText"), "app.js is missing Fleet Import Console rendering or copy text.");
 assert(app.includes("renderLeadDesk") && app.includes("buildLeadDeskText"), "app.js is missing Supplier Lead Desk rendering or copy text.");
 assert(app.includes("saveDemandSignal") && app.includes("renderDemandRadar"), "app.js is missing demand signal capture or radar rendering.");
 assert(app.includes("renderSupplierHunt") && app.includes("buildSupplierHuntText"), "app.js is missing supplier hunt rendering or copy text.");

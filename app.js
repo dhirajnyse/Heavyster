@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-hash-stabilizer-v20";
+const DATA_VERSION = "20260517-heavyster-fleet-import-v21";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -437,10 +437,10 @@ const commandRoutes = [
     detail: "Turn a rental yard into a verified storefront, fresh fleet board, and direct lead response desk.",
     steps: [
       { label: "Storefront", anchor: "#storefront" },
+      { label: "Import", anchor: "#fleet-import" },
       { label: "Studio", anchor: "#studio" },
       { label: "Lead Desk", anchor: "#lead-desk" },
-      { label: "Yard", anchor: "#yard" },
-      { label: "Pricing", anchor: "#pricing" }
+      { label: "Yard", anchor: "#yard" }
     ]
   },
   {
@@ -467,6 +467,7 @@ const commandModules = [
   { role: "Buyer", label: "Quote Guard", anchor: "#quote-guard", signal: "Clean terms" },
   { role: "Buyer", label: "Mobilize", anchor: "#mobilize", signal: "Dispatch gate" },
   { role: "Supplier", label: "Storefront", anchor: "#storefront", signal: "Public profile" },
+  { role: "Supplier", label: "Fleet Import", anchor: "#fleet-import", signal: "Bulk upload" },
   { role: "Supplier", label: "Supplier Studio", anchor: "#studio", signal: "Manage fleet" },
   { role: "Supplier", label: "Lead Desk", anchor: "#lead-desk", signal: "Reply faster" },
   { role: "Supplier", label: "Yard Board", anchor: "#yard", signal: "Fresh stock" },
@@ -476,6 +477,93 @@ const commandModules = [
   { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" },
   { role: "Founder", label: "Categories", anchor: "#categories", signal: "Plan inventory" },
   { role: "Founder", label: "Roadmap", anchor: "#roadmap", signal: "Build sequence" }
+];
+
+const fleetImportRows = [
+  {
+    id: "FI-001",
+    supplier: "Al Noor Heavy Rentals",
+    source: "yard-sheet-dubai.csv",
+    equipment: "Cat 320 Excavator",
+    category: "Earthmoving",
+    region: "UAE",
+    count: 6,
+    photos: true,
+    documents: true,
+    availability: true,
+    rateTerms: false,
+    contact: true
+  },
+  {
+    id: "FI-002",
+    supplier: "Al Noor Heavy Rentals",
+    source: "yard-sheet-dubai.csv",
+    equipment: "Cat 330 Excavator",
+    category: "Earthmoving",
+    region: "UAE",
+    count: 4,
+    photos: true,
+    documents: false,
+    availability: true,
+    rateTerms: false,
+    contact: true
+  },
+  {
+    id: "FI-003",
+    supplier: "Al Noor Heavy Rentals",
+    source: "attachment-list.xlsx",
+    equipment: "Hydraulic breaker set",
+    category: "Earthmoving",
+    region: "UAE",
+    count: 9,
+    photos: false,
+    documents: true,
+    availability: true,
+    rateTerms: true,
+    contact: true
+  },
+  {
+    id: "FI-004",
+    supplier: "Gulf Lift Services",
+    source: "crane-fleet.csv",
+    equipment: "Liebherr 130T Mobile Crane",
+    category: "Lifting",
+    region: "UAE",
+    count: 3,
+    photos: true,
+    documents: true,
+    availability: false,
+    rateTerms: true,
+    contact: true
+  },
+  {
+    id: "FI-005",
+    supplier: "Gulf Lift Services",
+    source: "operator-certificates.xlsx",
+    equipment: "Lift supervisor crew",
+    category: "Lifting",
+    region: "UAE",
+    count: 7,
+    photos: false,
+    documents: true,
+    availability: true,
+    rateTerms: true,
+    contact: true
+  },
+  {
+    id: "FI-006",
+    supplier: "Desertline Equipment",
+    source: "houston-yard.csv",
+    equipment: "Komatsu WA380 Wheel Loader",
+    category: "Earthmoving",
+    region: "USA",
+    count: 5,
+    photos: true,
+    documents: false,
+    availability: false,
+    rateTerms: true,
+    contact: true
+  }
 ];
 
 let state = loadState();
@@ -777,6 +865,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyFleetImportButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildFleetImportText());
+      showToast("Fleet import plan copied.");
+    } catch {
+      showToast("Copy is blocked here, but the fleet import plan is visible.");
+    }
+  });
+
   document.querySelector("#openStorefrontButton").addEventListener("click", () => {
     renderSupplierStorefront();
     document.querySelector("#storefront").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -933,6 +1030,7 @@ function render() {
   renderMobilizationTower();
   renderYardAvailability();
   renderSupplierStorefront();
+  renderFleetImport();
   renderLeadDesk();
   renderDemandCapture();
   renderSupplierTable();
@@ -1040,6 +1138,7 @@ function getCommandCenterModel() {
   const mobilize = getMobilizationModel();
   const yard = getYardModel();
   const storefront = getSupplierStorefrontModel(selected);
+  const fleetImport = getFleetImportModel(selected);
   const leadDesk = getLeadDeskModel();
   const market = getActiveMarketOpportunity();
   const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
@@ -1057,6 +1156,7 @@ function getCommandCenterModel() {
     mobilize,
     yard,
     storefront,
+    fleetImport,
     leadDesk,
     market,
     demandCount,
@@ -1113,8 +1213,8 @@ function getCommandWorkspace(role, context) {
     return {
       title: `${context.leadDesk.profile.supplier} workspace`,
       score: `${context.supplierScore}/100 supplier readiness`,
-      detail: `${context.leadDesk.leads.length} open lead${context.leadDesk.leads.length === 1 ? "" : "s"}, USD ${context.leadDesk.totalBudget.toLocaleString()} pipeline, ${context.yard.reviewCount} listing${context.yard.reviewCount === 1 ? "" : "s"} need freshness review.`,
-      next: "Open Lead Desk first, then refresh Yard Board before pushing more paid listings."
+      detail: `${context.fleetImport.totalRows} import row${context.fleetImport.totalRows === 1 ? "" : "s"}, ${context.leadDesk.leads.length} open lead${context.leadDesk.leads.length === 1 ? "" : "s"}, USD ${context.leadDesk.totalBudget.toLocaleString()} pipeline, ${context.yard.reviewCount} listing${context.yard.reviewCount === 1 ? "" : "s"} need freshness review.`,
+      next: "Start with Fleet Import, publish clean rows into Studio, then use Lead Desk and Yard Board to keep the paid listings fresh."
     };
   }
 
@@ -2527,6 +2627,171 @@ function getSupplierStorefrontModel(listing = getSelectedListing()) {
   };
 }
 
+function renderFleetImport() {
+  const model = getFleetImportModel();
+  setText("#fleetImportTitle", model.profile.supplier);
+  setText("#fleetImportBadge", model.badge);
+
+  document.querySelector("#fleetImportScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${model.readyRows} clean row${model.readyRows === 1 ? "" : "s"} can become ${model.readyListings} paid listing${model.readyListings === 1 ? "" : "s"}.</span>
+  `;
+
+  document.querySelector("#fleetImportMetrics").innerHTML = [
+    ["Import rows", String(model.totalRows)],
+    ["Machine count", String(model.totalListings)],
+    ["Ready listings", String(model.readyListings)],
+    ["Annual ARR", `USD ${model.annualRevenue.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#fleetImportQueue").innerHTML = model.rows.map((row) => `
+    <button type="button" class="fleet-import-row ${row.statusClass}" data-import-listing="${escapeHtml(row.matchingListingId)}">
+      <span>
+        <strong>${escapeHtml(row.source.equipment)}</strong>
+        ${escapeHtml(row.source.count)} item${row.source.count === 1 ? "" : "s"} - ${escapeHtml(row.source.category)} - ${escapeHtml(row.source.region)}
+      </span>
+      <em>${row.score}/100</em>
+      <small>${escapeHtml(row.status)}</small>
+      <b>${escapeHtml(row.action)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#fleetImportGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="fleet-import-gate ${gate.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(gate.label)}<small>${escapeHtml(gate.detail)}</small></span>
+      <em>${escapeHtml(gate.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#fleetImportPlan").innerHTML = buildFleetImportText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-import-listing]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.importListing);
+      if (!listing) return;
+      state.selectedListingId = listing.id;
+      state.commandRole = "Supplier";
+      saveState();
+      render();
+      document.querySelector("#fleet-import").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Import row matched to supplier listing.");
+    });
+  });
+}
+
+function getFleetImportModel(listing = getSelectedListing()) {
+  const profile = getSupplierProfile(listing.supplier);
+  const supplierListings = listings.filter((item) => item.supplier === profile.supplier);
+  const sourceRows = fleetImportRows.filter((row) => row.supplier === profile.supplier);
+  const fallbackRows = sourceRows.length ? sourceRows : [{
+    id: `FI-${listing.id}`,
+    supplier: profile.supplier,
+    source: "starter-import.csv",
+    equipment: listing.name,
+    category: listing.category,
+    region: listing.region,
+    count: 1,
+    photos: true,
+    documents: listing.documents.length > 1,
+    availability: listing.availability === "available",
+    rateTerms: Boolean(listing.rate),
+    contact: true
+  }];
+  const rows = fallbackRows.map((row) => getFleetImportRow(row, supplierListings, listing));
+  const totalRows = rows.length;
+  const totalListings = rows.reduce((total, row) => total + row.source.count, 0);
+  const readyRows = rows.filter((row) => row.status === "Ready").length;
+  const readyListings = rows.filter((row) => row.score >= 78).reduce((total, row) => total + row.source.count, 0);
+  const gapRows = rows.filter((row) => row.status === "Gap").length;
+  const averageScore = Math.round(rows.reduce((total, row) => total + row.score, 0) / rows.length);
+  const score = Math.max(0, Math.min(100, Math.round(averageScore + Math.min(8, readyRows * 2) - gapRows * 4)));
+  const badge = score >= 84 ? "Import-ready" : score >= 64 ? "Clean gaps" : "Hold import";
+  const annualRevenue = readyListings * 99;
+  const gates = getFleetImportGates(rows, profile);
+
+  return {
+    profile,
+    rows,
+    totalRows,
+    totalListings,
+    readyRows,
+    readyListings,
+    gapRows,
+    score,
+    badge,
+    annualRevenue,
+    gates
+  };
+}
+
+function getFleetImportRow(row, supplierListings, selected) {
+  const matching = supplierListings.find((listing) =>
+    listing.name.toLowerCase().includes(row.equipment.toLowerCase().split(" ")[0])
+    || row.equipment.toLowerCase().includes(listing.name.toLowerCase().split(" ")[0])
+  ) || selected;
+  const checks = [
+    row.photos,
+    row.documents,
+    row.availability,
+    row.rateTerms,
+    row.contact
+  ];
+  const complete = checks.filter(Boolean).length;
+  const score = Math.round((complete / checks.length) * 100);
+  const missing = [
+    !row.photos ? "photos" : "",
+    !row.documents ? "documents" : "",
+    !row.availability ? "availability" : "",
+    !row.rateTerms ? "rate terms" : "",
+    !row.contact ? "contact route" : ""
+  ].filter(Boolean);
+  const status = score >= 80 ? "Ready" : score >= 60 ? "Review" : "Gap";
+  const action = status === "Ready" ? "Publish" : missing.length ? `Add ${missing[0]}` : "Review";
+
+  return {
+    source: row,
+    matchingListingId: matching.id,
+    score,
+    status,
+    statusClass: status.toLowerCase(),
+    missing,
+    action
+  };
+}
+
+function getFleetImportGates(rows, profile) {
+  const total = rows.length || 1;
+  const photoReady = rows.filter((row) => row.source.photos).length;
+  const documentReady = rows.filter((row) => row.source.documents).length;
+  const availabilityReady = rows.filter((row) => row.source.availability).length;
+  const termsReady = rows.filter((row) => row.source.rateTerms).length;
+  const contactReady = rows.filter((row) => row.source.contact).length;
+  const gates = [
+    ["Photos", photoReady, "Each machine needs at least one clear yard or site photo."],
+    ["Documents", documentReady, "License, insurance, inspection, load test, or operator proof should be linked where relevant."],
+    ["Availability", availabilityReady, "Rows need available now, available soon, or call-to-confirm status before publish."],
+    ["Rate terms", termsReady, "Direct quote is fine, but operator, transport, fuel, permit, and validity notes should be visible."],
+    ["Lead route", contactReady, "Phone, email, WhatsApp, or web enquiry route must be attached to the supplier profile."]
+  ];
+
+  return gates.map(([label, count, detail]) => {
+    const status = count === total ? "Ready" : count >= Math.ceil(total * 0.6) ? "Review" : "Gap";
+    return {
+      label,
+      detail: `${count}/${total} ${profile.supplier} row${total === 1 ? "" : "s"} pass. ${detail}`,
+      status,
+      statusClass: status.toLowerCase()
+    };
+  });
+}
+
 function getSupplierProfile(supplierName) {
   return supplierProfiles.find((profile) => profile.supplier === supplierName)
     || {
@@ -3417,6 +3682,25 @@ function buildSupplierStorefrontText(model = getSupplierStorefrontModel()) {
     "Proof stack:",
     ...model.profile.proof.map((proof) => `- ${proof}`),
     "Phase one rule: buyers contact the supplier directly and payment stays between buyer and rental company. Heavyster sells verified listing visibility and supplier storefront tools."
+  ].join("\n");
+}
+
+function buildFleetImportText(model = getFleetImportModel()) {
+  return [
+    "Heavyster Fleet Import Console",
+    `Supplier: ${model.profile.supplier}`,
+    `Import status: ${model.badge} - ${model.score}/100`,
+    `Import rows: ${model.totalRows}`,
+    `Modeled machine count: ${model.totalListings}`,
+    `Ready paid listings: ${model.readyListings}`,
+    `Annual listing ARR if published: USD ${model.annualRevenue.toLocaleString()}`,
+    "Import queue:",
+    ...model.rows.map((row) => `- ${row.source.equipment}: ${row.source.count} item${row.source.count === 1 ? "" : "s"}, ${row.status}, score ${row.score}/100, action ${row.action}, source ${row.source.source}`),
+    "Validation gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.label} - ${gate.detail}`),
+    "Supplier instruction:",
+    "Clean photos, documents, availability, rate-term notes, and contact routes before publishing rows as paid listings.",
+    "Phase one rule: Heavyster charges for active listings only. Rental payment stays direct between buyer and rental company."
   ].join("\n");
 }
 

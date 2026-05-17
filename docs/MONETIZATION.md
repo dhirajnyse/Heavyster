@@ -34,6 +34,7 @@ Add these only after basic supplier onboarding works:
 - Mobilization handoff tools for serious buyers and verified suppliers
 - Yard Availability OS for suppliers who want cleaner enquiry conversion
 - Supplier Fleet Storefronts that make the listing subscription feel like a real SaaS storefront
+- Fleet Import Console that helps a supplier convert an offline yard sheet into many paid listings faster
 - Supplier Studio readiness and revenue previews that show the supplier why more paid listings matter
 - Supplier Lead Desk that proves paid listings create actionable direct enquiries
 - Command Center supplier workspace that helps a supplier understand the full paid-listing workspace quickly

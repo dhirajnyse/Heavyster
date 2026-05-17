@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-hash-stabilizer" />
+    <link rel="stylesheet" href="styles.css?v=20260517-fleet-import" />
   </head>
   <body>
     <div class="app-shell">
@@ -702,6 +702,45 @@
           </aside>
         </section>
 
+        <section class="fleet-import-section" id="fleet-import">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Fleet Import Console</p>
+              <h2>Bring a rental yard online without typing every machine one by one.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyFleetImportButton">Copy import plan</button>
+          </div>
+
+          <div class="fleet-import-grid">
+            <article class="fleet-import-card fleet-import-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Bulk intake</p>
+                  <h3 id="fleetImportTitle">Supplier fleet import</h3>
+                </div>
+                <span class="pill" id="fleetImportBadge">Review</span>
+              </div>
+              <div class="fleet-import-score" id="fleetImportScore"></div>
+              <div class="fleet-import-metrics" id="fleetImportMetrics"></div>
+            </article>
+
+            <article class="fleet-import-card">
+              <h3>Import queue</h3>
+              <div class="fleet-import-queue" id="fleetImportQueue"></div>
+            </article>
+
+            <article class="fleet-import-card">
+              <h3>Validation gates</h3>
+              <div class="fleet-import-gates" id="fleetImportGates"></div>
+            </article>
+
+            <article class="fleet-import-card fleet-import-plan-card">
+              <h3>Publish plan</h3>
+              <div class="fleet-import-plan" id="fleetImportPlan"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="lead-desk-section" id="lead-desk">
           <div class="section-header wide">
             <div>
@@ -978,6 +1017,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-hash-stabilizer" defer></script>
+    <script src="app.js?v=20260517-fleet-import" defer></script>
   </body>
 </html>

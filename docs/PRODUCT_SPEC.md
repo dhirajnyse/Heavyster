@@ -49,6 +49,7 @@ Marketplace:
 - Mobilization Control Tower that checks dispatch readiness before the buyer calls the supplier
 - Yard Availability OS that flags stale supplier inventory before buyer trust is damaged
 - Supplier Fleet Storefront that gives each rental company a verified mini-site with fleet lanes, services, proof, and direct enquiry rules
+- Fleet Import Console that lets suppliers bulk intake machine rows, validate photos/documents/availability/rate terms, and preview paid-listing revenue
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -67,6 +68,7 @@ Supplier Studio:
 - Supplier-specific fleet table
 - Profile completion score
 - Storefront publishing readiness
+- Bulk fleet import validation
 - Listing revenue preview per supplier
 - Document gap and availability freshness board
 - Lead Desk with supplier-specific enquiry scoring, response urgency, and copy-ready replies
@@ -110,6 +112,8 @@ Founder Admin:
 - Yard availability update packets copied
 - Listings reconfirmed before enquiry routing
 - Supplier storefront packets copied
+- Fleet import plans copied
+- Bulk import rows converted into paid listings
 - Supplier profile page views and enquiry clicks
 - Supplier Studio profile readiness improved
 - Supplier listings published from Studio

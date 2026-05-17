@@ -91,6 +91,45 @@ Use this when a supplier tracks direct enquiries and response workflow without H
 - response_status
 - created_at
 
+## FleetImportBatch
+
+Use this when a supplier imports many machines before they become paid listings.
+
+- id
+- supplier_id
+- source_filename
+- row_count
+- modeled_machine_count
+- ready_listing_count
+- validation_score
+- projected_monthly_listing_revenue
+- projected_annual_listing_revenue
+- import_status
+- copy_ready_publish_plan
+- copied_at
+- created_at
+- updated_at
+
+## FleetImportRow
+
+- id
+- import_batch_id
+- supplier_id
+- equipment_name
+- category
+- region
+- quantity
+- has_photos
+- has_documents
+- has_availability
+- has_rate_terms
+- has_contact_route
+- validation_score
+- validation_status
+- publish_action
+- matching_listing_id
+- created_at
+
 ## CommandCenter
 
 Use this when Heavyster needs one simple control layer across buyer, supplier, and founder workflows.

@@ -22,6 +22,7 @@
 - Mobilization Control Tower for dispatch readiness handoff
 - Yard Availability OS for stale listing detection and supplier refresh queues
 - Supplier Fleet Storefront for verified mini-sites and copy-ready supplier profile packets
+- Fleet Import Console for bulk supplier intake, validation gates, and listing revenue preview
 - Demand request capture and founder demand radar
 - Supplier hunt growth engine and copy-ready outreach packet
 - Market Maker Mode with expansion scoring and launch page brief
@@ -62,6 +63,7 @@
 - Supplier availability freshness board
 - Supplier profile page with fleet lanes, proof stack, and direct enquiry rules
 - Supplier Studio publishing controls connected to the buyer-facing storefront
+- Bulk fleet import queue with validation gates before paid listing publish
 - Lead response desk connected to supplier listings and storefront proof
 - Command Center role launcher so large-feature UX stays simple as the marketplace grows
 - Saved demand request flow for zero-result searches

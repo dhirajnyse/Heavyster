@@ -2540,6 +2540,215 @@ button.compact-row.is-selected {
   line-height: 1.42;
 }
 
+.fleet-import-section {
+  margin-top: 14px;
+}
+
+.fleet-import-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(380px, 1.25fr) minmax(300px, 0.9fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.fleet-import-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 10px 26px rgba(42, 38, 30, 0.07);
+}
+
+.fleet-import-plan-card {
+  grid-column: 1 / -1;
+}
+
+.fleet-import-score {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 1px solid #c6d8d5;
+  border-radius: var(--radius);
+  background: #f5fbfa;
+}
+
+.fleet-import-score strong {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.fleet-import-score span {
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+.fleet-import-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.fleet-import-metrics span {
+  display: grid;
+  gap: 4px;
+  min-height: 74px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.fleet-import-metrics strong {
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.fleet-import-queue,
+.fleet-import-gates,
+.fleet-import-plan {
+  display: grid;
+  gap: 8px;
+}
+
+.fleet-import-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) 74px 82px 84px;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+
+.fleet-import-row:hover,
+.fleet-import-row.ready {
+  border-color: var(--teal);
+  background: #f5fbfa;
+}
+
+.fleet-import-row.review {
+  border-color: #d1a03f;
+  background: #fffaf0;
+}
+
+.fleet-import-row.gap {
+  border-color: #e5b39f;
+  background: var(--red-soft);
+}
+
+.fleet-import-row span,
+.fleet-import-row strong {
+  display: block;
+}
+
+.fleet-import-row span,
+.fleet-import-row small {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.fleet-import-row strong {
+  color: var(--ink);
+}
+
+.fleet-import-row em,
+.fleet-import-row b {
+  justify-self: end;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.fleet-import-row em {
+  color: var(--teal);
+}
+
+.fleet-import-row b {
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.fleet-import-gate {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 76px;
+  gap: 10px;
+  align-items: center;
+  min-height: 64px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.fleet-import-gate.ready {
+  border-color: #b9d9c1;
+  background: var(--green-soft);
+}
+
+.fleet-import-gate.review {
+  border-color: #d1a03f;
+  background: #fffaf0;
+}
+
+.fleet-import-gate.gap {
+  border-color: #e5b39f;
+  background: var(--red-soft);
+}
+
+.fleet-import-gate > strong {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--coal);
+  color: #ffffff;
+  font-size: 0.82rem;
+}
+
+.fleet-import-gate span,
+.fleet-import-gate small {
+  display: block;
+}
+
+.fleet-import-gate small {
+  margin-top: 3px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.fleet-import-gate em {
+  justify-self: end;
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.fleet-import-gate.review em {
+  color: var(--amber);
+}
+
+.fleet-import-gate.gap em {
+  color: var(--red);
+}
+
+.fleet-import-plan p {
+  margin-bottom: 0;
+  padding: 8px 10px;
+  border: 1px solid #c6d8d5;
+  border-radius: var(--radius);
+  background: #f5fbfa;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
 .note-box {
   margin-top: 12px;
 }
@@ -3705,6 +3914,7 @@ button.admin-row {
   .mobilize-grid,
   .yard-grid,
   .storefront-grid,
+  .fleet-import-grid,
   .lead-desk-grid,
   .market-maker-grid {
     grid-template-columns: 1fr;
@@ -3799,6 +4009,9 @@ button.admin-row {
   .storefront-metrics,
   .storefront-fleet-row,
   .storefront-proof div,
+  .fleet-import-metrics,
+  .fleet-import-row,
+  .fleet-import-gate,
   .lead-desk-metrics,
   .lead-desk-row,
   .lead-playbook-item,
