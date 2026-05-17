@@ -23,6 +23,7 @@ This folder contains a static product prototype with:
 - Trust Passport with machine readiness score, proof stack, and buyer risk radar
 - RFQ Command Room for shortlist readiness and copy-ready supplier quote packets
 - Award Intelligence for supplier ranking and copy-ready buyer award memos
+- Mobilization Control Tower for pre-dispatch readiness and buyer-supplier handoff
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach

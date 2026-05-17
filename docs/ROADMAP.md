@@ -10,6 +10,7 @@
 - Trust Passport for every active machine
 - RFQ Command Room for shortlist-based quote packets
 - Award Intelligence for shortlist ranking and buyer award memos
+- Mobilization Control Tower for pre-dispatch buyer-supplier handoff
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
 - Market Maker Mode for choosing the next region/category launch
@@ -28,6 +29,7 @@
 - Multi-machine package templates by jobsite type
 - RFQ response comparison and supplier reply scoring
 - Award history, decision audit trail, and post-award supplier scoring
+- Mobilization history, dispatch evidence, and site readiness memory
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue

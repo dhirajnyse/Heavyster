@@ -28,6 +28,7 @@ Add these only after basic supplier onboarding works:
 - Jobsite package planning for buyers with multi-machine needs
 - RFQ routing and quote packet tools for serious buyers
 - Award memo and decision support tools for serious buyers
+- Mobilization handoff tools for serious buyers and verified suppliers
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region

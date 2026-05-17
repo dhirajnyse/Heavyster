@@ -43,6 +43,7 @@ Marketplace:
 - Trust Passport with readiness score, document proof, risk radar, and next verification actions
 - RFQ Command Room that turns a shortlist into a multi-supplier quote packet
 - Award Intelligence that ranks shortlisted suppliers and creates a decision-ready award memo
+- Mobilization Control Tower that checks dispatch readiness before the buyer calls the supplier
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -92,6 +93,7 @@ Founder Admin:
 - Machines moved from Jobsite Planner to RFQ shortlist
 - RFQ packets copied
 - Award memos copied
+- Mobilization handoffs copied
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar

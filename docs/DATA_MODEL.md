@@ -142,6 +142,22 @@ Use this when a buyer compares shortlisted suppliers and records why one should 
 - copied_at
 - created_at
 
+## MobilizationHandoff
+
+Use this when the buyer needs a pre-dispatch control packet after award but before payment or site movement.
+
+- id
+- award_decision_id
+- listing_id
+- supplier_id
+- mobilization_score
+- dispatch_status
+- checklist_items
+- package_gap_summary
+- handoff_notes
+- copied_at
+- created_at
+
 ## DemandSignal
 
 Use this when a buyer search has no exact match or when a buyer saves an unmet rental need.

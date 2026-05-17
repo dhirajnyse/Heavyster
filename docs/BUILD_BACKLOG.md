@@ -15,6 +15,7 @@
 - Trust Passport for buyer confidence and verification gaps
 - RFQ Command Room for multi-supplier quote packets
 - Award Intelligence for supplier ranking and buyer award memos
+- Mobilization Control Tower for dispatch readiness handoff
 - Demand request capture and founder demand radar
 - Supplier hunt growth engine and copy-ready outreach packet
 - Market Maker Mode with expansion scoring and launch page brief
@@ -49,6 +50,7 @@
 - Trust Passport block on every listing page
 - RFQ packet builder from shortlisted machines
 - Award memo builder for shortlist decisions
+- Mobilization handoff checklist after award
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form
