@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-supplier-storefront-v15";
+const DATA_VERSION = "20260517-heavyster-command-center-v18";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -192,6 +192,105 @@ const supplierProfiles = [
   }
 ];
 
+const supplierLeadSeeds = [
+  {
+    id: "LD-001",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    buyer: "Delta Civil Works",
+    equipment: "Cat 320 Excavator",
+    project: "Trenching and backfill near Jebel Ali",
+    location: "Dubai Industrial City",
+    start: "Next week",
+    duration: "6 days",
+    budget: 8500,
+    channel: "WhatsApp",
+    ageMinutes: 18,
+    terms: ["Operator", "Breaker", "Delivery"],
+    note: "Need operator, breaker option, and delivery timing."
+  },
+  {
+    id: "LD-002",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    buyer: "Quay B Logistics",
+    equipment: "Liebherr 130T Mobile Crane",
+    project: "Crane pad lift and permit support",
+    location: "Abu Dhabi port zone",
+    start: "This week",
+    duration: "2 days",
+    budget: 18500,
+    channel: "Email",
+    ageMinutes: 42,
+    terms: ["Operator", "Permit", "Lift plan"],
+    note: "Buyer asked for capacity chart and city permit guidance."
+  },
+  {
+    id: "LD-003",
+    supplier: "Desertline Equipment",
+    listingId: "HY-LD-022",
+    buyer: "Gulf Coast Aggregates",
+    equipment: "Komatsu WA380 Wheel Loader",
+    project: "Yard loading and stockpile movement",
+    location: "Houston east yard",
+    start: "This month",
+    duration: "3 weeks",
+    budget: 12600,
+    channel: "Phone",
+    ageMinutes: 210,
+    terms: ["Bucket", "Insurance", "Fuel"],
+    note: "Buyer needs insurance proof before confirming."
+  },
+  {
+    id: "LD-004",
+    supplier: "Metro Plant Hire",
+    listingId: "HY-TL-030",
+    buyer: "Midlands BuildCo",
+    equipment: "JCB Telehandler 540-170",
+    project: "Material reach for warehouse fit-out",
+    location: "Birmingham logistics park",
+    start: "Next week",
+    duration: "10 days",
+    budget: 7200,
+    channel: "Web",
+    ageMinutes: 76,
+    terms: ["Forks", "Weekly hire", "Delivery"],
+    note: "Buyer wants forks, bucket option, and delivery window."
+  },
+  {
+    id: "LD-005",
+    supplier: "Prime Road Rentals",
+    listingId: "HY-RD-042",
+    buyer: "Pune Infra Works",
+    equipment: "Dynapac CA250 Roller",
+    project: "Industrial road compaction",
+    location: "Chakan industrial belt",
+    start: "This week",
+    duration: "8 days",
+    budget: 5100,
+    channel: "WhatsApp",
+    ageMinutes: 33,
+    terms: ["Operator", "Fuel terms", "Maintenance log"],
+    note: "Buyer needs operator terms and current maintenance log."
+  },
+  {
+    id: "LD-006",
+    supplier: "Frontier Civil Rentals",
+    listingId: "HY-DZ-055",
+    buyer: "Sonoran Site Prep",
+    equipment: "D6 Dozer",
+    project: "Site prep and grading support",
+    location: "Phoenix north corridor",
+    start: "Planning stage",
+    duration: "1 month",
+    budget: 24000,
+    channel: "Email",
+    ageMinutes: 160,
+    terms: ["GPS blade", "LGP track", "Inspection"],
+    note: "Buyer wants GPS-ready blade availability and inspection proof."
+  }
+];
+
 const trustItems = [
   ["Company profile", "Legal name, service regions, contact desk, and fleet categories."],
   ["Equipment proof", "Photos, serial-friendly internal ID, make, model, specs, and attachments."],
@@ -313,6 +412,63 @@ const jobsiteBlueprints = [
       { role: "Delivery support", category: "Transport", keywords: ["lowbed", "transport", "trailer"], target: "Transport partner" }
     ]
   }
+];
+
+const commandRoutes = [
+  {
+    role: "Buyer",
+    label: "Buyer decision flow",
+    anchor: "#jobsite",
+    detail: "Move from equipment search to RFQ, award, quote clarity, and mobilization without losing control.",
+    steps: [
+      { label: "Search", anchor: "#marketplace" },
+      { label: "Jobsite", anchor: "#jobsite" },
+      { label: "RFQ", anchor: "#rfq" },
+      { label: "Award", anchor: "#award" },
+      { label: "Mobilize", anchor: "#mobilize" }
+    ]
+  },
+  {
+    role: "Supplier",
+    label: "Supplier revenue flow",
+    anchor: "#studio",
+    detail: "Turn a rental yard into a verified storefront, fresh fleet board, and direct lead response desk.",
+    steps: [
+      { label: "Storefront", anchor: "#storefront" },
+      { label: "Studio", anchor: "#studio" },
+      { label: "Lead Desk", anchor: "#lead-desk" },
+      { label: "Yard", anchor: "#yard" },
+      { label: "Pricing", anchor: "#pricing" }
+    ]
+  },
+  {
+    role: "Founder",
+    label: "Founder growth flow",
+    anchor: "#growth",
+    detail: "Use missing demand to recruit suppliers, launch category pages, and keep phase-one monetization clean.",
+    steps: [
+      { label: "Demand", anchor: "#admin" },
+      { label: "Hunt", anchor: "#growth" },
+      { label: "Market Map", anchor: "#market-maker" },
+      { label: "Categories", anchor: "#categories" },
+      { label: "Roadmap", anchor: "#roadmap" }
+    ]
+  }
+];
+
+const commandModules = [
+  { role: "Buyer", label: "Marketplace", anchor: "#marketplace", signal: "Find equipment" },
+  { role: "Buyer", label: "Trust Passport", anchor: "#passport", signal: "Check proof" },
+  { role: "Buyer", label: "RFQ Room", anchor: "#rfq", signal: "Ask suppliers" },
+  { role: "Buyer", label: "Award Room", anchor: "#award", signal: "Choose supplier" },
+  { role: "Buyer", label: "Quote Guard", anchor: "#quote-guard", signal: "Clean terms" },
+  { role: "Buyer", label: "Mobilize", anchor: "#mobilize", signal: "Dispatch gate" },
+  { role: "Supplier", label: "Storefront", anchor: "#storefront", signal: "Public profile" },
+  { role: "Supplier", label: "Supplier Studio", anchor: "#studio", signal: "Manage fleet" },
+  { role: "Supplier", label: "Lead Desk", anchor: "#lead-desk", signal: "Reply faster" },
+  { role: "Supplier", label: "Yard Board", anchor: "#yard", signal: "Fresh stock" },
+  { role: "Founder", label: "Growth", anchor: "#growth", signal: "Recruit supply" },
+  { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" }
 ];
 
 let state = loadState();
@@ -610,6 +766,21 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#openStorefrontButton").addEventListener("click", () => {
+    renderSupplierStorefront();
+    document.querySelector("#storefront").scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Opening buyer-facing supplier storefront.");
+  });
+
+  document.querySelector("#copyLeadDeskButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLeadDeskText());
+      showToast("Lead reply packet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the lead reply is visible.");
+    }
+  });
+
   document.querySelector("#applyJobsiteButton").addEventListener("click", () => {
     renderJobsitePlanner();
     renderMobilizationTower();
@@ -736,6 +907,7 @@ function updateDemandState() {
 function render() {
   reconcileSelectedListing();
   reconcileShortlist();
+  renderCommandCenter();
   renderCategoryButtons();
   renderMarketplaceStats();
   renderCatalog();
@@ -750,6 +922,7 @@ function render() {
   renderMobilizationTower();
   renderYardAvailability();
   renderSupplierStorefront();
+  renderLeadDesk();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -762,6 +935,104 @@ function render() {
   renderPricingCalculator();
   renderCommissionCalculator();
   document.body.classList.toggle("supplier-view", state.supplierView);
+}
+
+function renderCommandCenter() {
+  const model = getCommandCenterModel();
+  setText("#commandBadge", model.badge);
+
+  document.querySelector("#commandPulse").innerHTML = model.pulse.map((item) => `
+    <span>
+      <strong>${escapeHtml(item.value)}</strong>
+      <em>${escapeHtml(item.label)}</em>
+      <small>${escapeHtml(item.detail)}</small>
+    </span>
+  `).join("");
+
+  document.querySelector("#commandRoutes").innerHTML = model.routes.map((route) => `
+    <button type="button" class="command-route" data-command-anchor="${escapeHtml(route.anchor)}" data-command-label="${escapeHtml(route.label)}">
+      <span>
+        <em>${escapeHtml(route.role)}</em>
+        <strong>${escapeHtml(route.label)}</strong>
+        <small>${escapeHtml(route.detail)}</small>
+      </span>
+      <b>${escapeHtml(route.score)}</b>
+      <i>${route.steps.map((step) => escapeHtml(step.label)).join(" / ")}</i>
+    </button>
+  `).join("");
+
+  document.querySelector("#commandModuleRail").innerHTML = model.modules.map((module) => `
+    <button type="button" class="command-module ${module.isActive ? "is-active" : ""}" data-command-anchor="${escapeHtml(module.anchor)}" data-command-label="${escapeHtml(module.label)}">
+      <span>${escapeHtml(module.role)}</span>
+      <strong>${escapeHtml(module.label)}</strong>
+      <small>${escapeHtml(module.signal)}</small>
+    </button>
+  `).join("");
+
+  document.querySelectorAll("[data-command-anchor]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.commandAnchor);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(`${button.dataset.commandLabel || "Module"} opened.`);
+    });
+  });
+}
+
+function getCommandCenterModel() {
+  const selected = getSelectedListing();
+  const passport = getTrustPassport(selected);
+  const rfq = getRfqModel();
+  const award = getAwardModel();
+  const quote = getQuoteGuardModel();
+  const mobilize = getMobilizationModel();
+  const yard = getYardModel();
+  const storefront = getSupplierStorefrontModel(selected);
+  const leadDesk = getLeadDeskModel();
+  const market = getActiveMarketOpportunity();
+  const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
+  const buyerScore = Math.round((passport.score + rfq.averageScore + award.winner.total + quote.score + mobilize.score) / 5);
+  const supplierScore = Math.round((storefront.score + yard.score + leadDesk.active.score) / 3);
+  const founderScore = market.score;
+  const badge = buyerScore >= 82 && supplierScore >= 82 ? "Ready to demo" : "Focused build";
+
+  return {
+    badge,
+    pulse: [
+      {
+        label: "Buyer readiness",
+        value: `${buyerScore}/100`,
+        detail: `${selected.name} has ${passport.verdict.toLowerCase()} proof and ${quote.badge.toLowerCase()} quote status.`
+      },
+      {
+        label: "Supplier pipeline",
+        value: `USD ${leadDesk.totalBudget.toLocaleString()}`,
+        detail: `${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"} for ${leadDesk.profile.supplier}.`
+      },
+      {
+        label: "Founder demand",
+        value: `${demandCount} signals`,
+        detail: `${market.region} ${market.category} is the current expansion page.`
+      },
+      {
+        label: "Phase-one money",
+        value: "0% rental take",
+        detail: "Heavyster monetizes listings first and keeps rental payment direct."
+      }
+    ],
+    routes: commandRoutes.map((route) => ({
+      ...route,
+      score: route.role === "Buyer"
+        ? `${buyerScore}/100`
+        : route.role === "Supplier"
+          ? `${supplierScore}/100`
+          : `${founderScore}/100`
+    })),
+    modules: commandModules.map((module) => ({
+      ...module,
+      isActive: module.anchor === "#marketplace" || module.anchor === "#studio" && state.supplierView
+    }))
+  };
 }
 
 function reconcileShortlist() {
@@ -2245,17 +2516,324 @@ function normalizeDemandEquipment(value) {
 }
 
 function renderSupplierTable() {
-  const owned = listings.slice(0, 4);
-  document.querySelector("#supplierTable").innerHTML = owned.map((listing, index) => `
-    <div class="supplier-row">
-      <div>
-        <strong>${escapeHtml(listing.name)}</strong>
-        <span>${escapeHtml(listing.category)} - ${escapeHtml(listing.city)}</span>
-      </div>
-      <span>${listing.availability === "available" ? "Available" : "Soon"}</span>
-      <em>${index < 3 ? "Paid" : "Draft"}</em>
+  const model = getSupplierStudioModel();
+  setText("#studioSupplierName", model.profile.supplier);
+
+  document.querySelector("#studioHealth").innerHTML = [
+    ["Profile", `${model.profileCompletion}/100`, model.profileCompletion >= 82 ? "Ready" : "Improve"],
+    ["Storefront", `${model.storefront.score}/100`, model.storefront.badge],
+    ["Listing revenue", `USD ${model.monthlyRevenue}/mo`, `USD ${model.annualRevenue}/yr`],
+    ["Freshness", `${model.yardScore}/100`, model.freshnessLabel]
+  ].map(([label, value, detail]) => `
+    <span>
+      <strong>${escapeHtml(value)}</strong>
+      ${escapeHtml(label)}
+      <small>${escapeHtml(detail)}</small>
+    </span>
+  `).join("");
+
+  document.querySelector("#studioOps").innerHTML = model.ops.map((item) => `
+    <div class="studio-op ${item.statusClass}">
+      <span>
+        <strong>${escapeHtml(item.label)}</strong>
+        ${escapeHtml(item.detail)}
+      </span>
+      <em>${escapeHtml(item.status)}</em>
     </div>
   `).join("");
+
+  document.querySelector("#supplierTable").innerHTML = model.listings.map((listing) => {
+    const passport = getTrustPassport(listing);
+    const yardRow = getYardRow(listing, listings.findIndex((item) => item.id === listing.id));
+    return `
+    <button type="button" class="supplier-row ${listing.id === state.selectedListingId ? "is-active" : ""}" data-studio-listing-id="${escapeHtml(listing.id)}">
+      <div>
+        <strong>${escapeHtml(listing.name)}</strong>
+        <span>${escapeHtml(listing.category)} - ${escapeHtml(listing.city)} - Trust ${passport.score}/100</span>
+      </div>
+      <span>${listing.availability === "available" ? "Available" : "Soon"} - ${yardRow.action}</span>
+      <em>${listing.verified ? "Paid" : "Draft"}</em>
+    </button>
+  `;
+  }).join("");
+
+  document.querySelectorAll("[data-studio-listing-id]").forEach((row) => {
+    row.addEventListener("click", () => {
+      state.selectedListingId = row.dataset.studioListingId;
+      saveState();
+      render();
+      showToast("Supplier listing selected.");
+    });
+  });
+}
+
+function getSupplierStudioModel() {
+  const selected = getSelectedListing();
+  const storefront = getSupplierStorefrontModel(selected);
+  const profile = storefront.profile;
+  const supplierListings = listings.filter((listing) => listing.supplier === profile.supplier);
+  const visibleListings = supplierListings.length ? supplierListings : [selected];
+  const yardRows = visibleListings.map((listing) => getYardRow(listing, listings.findIndex((item) => item.id === listing.id)));
+  const docGaps = visibleListings.reduce((total, listing) => (
+    total
+    + (listing.verified ? 0 : 1)
+    + listing.documents.filter((document) => document.toLowerCase().includes("pending")).length
+  ), 0);
+  const availabilityGaps = visibleListings.filter((listing) => listing.availability !== "available").length;
+  const completedSignals = [
+    Boolean(profile.headline),
+    Boolean(profile.branch),
+    Boolean(profile.serviceArea),
+    profile.services.length >= 3,
+    profile.proof.length >= 3,
+    visibleListings.length > 0,
+    docGaps === 0,
+    availabilityGaps === 0
+  ].filter(Boolean).length;
+  const profileCompletion = Math.round((completedSignals / 8) * 100);
+  const yardScore = yardRows.length
+    ? Math.round(yardRows.reduce((total, row) => total + row.score, 0) / yardRows.length)
+    : storefront.yardScore;
+  const monthlyRevenue = visibleListings.length * 9;
+  const annualRevenue = visibleListings.length * 99;
+  const modeledListings = profile.fleet.reduce((total, lane) => total + lane.count, 0);
+  const modeledAnnualRevenue = modeledListings * 99;
+  const freshnessLabel = yardScore >= 82 ? "Fresh yard" : yardScore >= 64 ? "Refresh needed" : "Trust risk";
+  const publishReady = profileCompletion >= 82 && storefront.score >= 72 && docGaps === 0;
+
+  return {
+    profile,
+    storefront,
+    listings: visibleListings,
+    profileCompletion,
+    yardScore,
+    freshnessLabel,
+    monthlyRevenue,
+    annualRevenue,
+    modeledListings,
+    modeledAnnualRevenue,
+    docGaps,
+    availabilityGaps,
+    ops: [
+      {
+        label: "Publish storefront",
+        status: publishReady ? "Ready" : "Improve",
+        statusClass: publishReady ? "ready" : "confirm",
+        detail: publishReady
+          ? `/suppliers/${profile.slug}/ can be shown to buyers.`
+          : "Close profile, document, or freshness gaps before pushing hard."
+      },
+      {
+        label: "Document gaps",
+        status: docGaps ? "Gap" : "Ready",
+        statusClass: docGaps ? "gap" : "ready",
+        detail: docGaps ? `${docGaps} supplier or listing proof gap${docGaps === 1 ? "" : "s"} need review.` : "Visible supplier documents are clean for this prototype."
+      },
+      {
+        label: "Availability freshness",
+        status: yardScore >= 82 ? "Ready" : yardScore >= 64 ? "Confirm" : "Gap",
+        statusClass: yardScore >= 82 ? "ready" : yardScore >= 64 ? "confirm" : "gap",
+        detail: `${freshnessLabel}. Reconfirm machines before serious enquiries.`
+      },
+      {
+        label: "Revenue preview",
+        status: "Track",
+        statusClass: "direct",
+        detail: `${visibleListings.length} live demo listing${visibleListings.length === 1 ? "" : "s"} = USD ${annualRevenue}/yr. Modeled fleet upside: ${modeledListings} listings = USD ${modeledAnnualRevenue.toLocaleString()}/yr.`
+      }
+    ]
+  };
+}
+
+function renderLeadDesk() {
+  const model = getLeadDeskModel();
+  setText("#leadDeskTitle", model.profile.supplier);
+  setText("#leadDeskBadge", model.badge);
+
+  document.querySelector("#leadDeskScore").innerHTML = `
+    <strong>${model.active.score}/100</strong>
+    <span>${escapeHtml(model.active.lead.buyer)} - ${escapeHtml(model.active.lead.equipment)}</span>
+  `;
+
+  document.querySelector("#leadDeskMetrics").innerHTML = [
+    ["Open leads", String(model.leads.length)],
+    ["Pipeline", `USD ${model.totalBudget.toLocaleString()}`],
+    ["Hot leads", String(model.hotCount)],
+    ["Payment", "Direct"]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#leadDeskQueue").innerHTML = model.leads.map((item) => `
+    <button type="button" class="lead-desk-row ${item.lead.id === model.active.lead.id ? "is-active" : ""}" data-lead-id="${escapeHtml(item.lead.id)}">
+      <span>
+        <strong>${escapeHtml(item.lead.buyer)}</strong>
+        ${escapeHtml(item.lead.equipment)} - ${escapeHtml(item.lead.location)}
+      </span>
+      <em>${item.score}/100</em>
+      <small>${escapeHtml(item.ageLabel)}</small>
+      <b>${escapeHtml(item.priority)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#leadDeskPlaybook").innerHTML = model.playbook.map((item, index) => `
+    <div class="lead-playbook-item ${item.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(item.text)}</span>
+      <em>${escapeHtml(item.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#leadDeskReply").innerHTML = buildLeadDeskText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-lead-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const item = model.leads.find((leadItem) => leadItem.lead.id === button.dataset.leadId);
+      if (!item) return;
+      state.selectedListingId = item.listing.id;
+      saveState();
+      render();
+      document.querySelector("#lead-desk").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Lead opened for supplier follow-up.");
+    });
+  });
+}
+
+function getLeadDeskModel() {
+  const selected = getSelectedListing();
+  const studio = getSupplierStudioModel();
+  const profile = studio.profile;
+  const supplierListings = listings.filter((listing) => listing.supplier === profile.supplier);
+  const rawLeads = supplierLeadSeeds.filter((lead) => lead.supplier === profile.supplier);
+  const leads = (rawLeads.length ? rawLeads : [buildFallbackLead(profile, selected)])
+    .map((lead) => enrichLead(lead, supplierListings, selected))
+    .sort((a, b) => b.score - a.score || a.lead.ageMinutes - b.lead.ageMinutes);
+  const active = leads.find((item) => item.listing.id === selected.id) || leads[0];
+  const totalBudget = leads.reduce((total, item) => total + item.lead.budget, 0);
+  const hotCount = leads.filter((item) => item.priority === "Hot").length;
+  const badge = active.priority === "Hot" ? "Reply now" : active.priority === "Warm" ? "Reply today" : "Nurture";
+  const playbook = getLeadPlaybook(active, studio);
+
+  return {
+    profile,
+    studio,
+    leads,
+    active,
+    totalBudget,
+    hotCount,
+    badge,
+    playbook
+  };
+}
+
+function buildFallbackLead(profile, listing) {
+  return {
+    id: `LD-${listing.id}`,
+    supplier: profile.supplier,
+    listingId: listing.id,
+    buyer: "Qualified buyer",
+    equipment: listing.name,
+    project: `${listing.category} rental enquiry`,
+    location: `${listing.city}, ${listing.region}`,
+    start: "Next week",
+    duration: "5 days",
+    budget: 6500,
+    channel: "Web",
+    ageMinutes: 55,
+    terms: ["Availability", "Documents", "Quote validity"],
+    note: "Buyer needs direct supplier confirmation."
+  };
+}
+
+function enrichLead(lead, supplierListings, selected) {
+  const listing = listings.find((item) => item.id === lead.listingId)
+    || supplierListings.find((item) => item.name.toLowerCase().includes(lead.equipment.toLowerCase().split(" ")[0]))
+    || selected;
+  const passport = getTrustPassport(listing);
+  const rowIndex = Math.max(0, listings.findIndex((item) => item.id === listing.id));
+  const yard = getYardRow(listing, rowIndex);
+  const durationDays = parseDurationDays(lead.duration);
+  const dailyValue = Math.round(lead.budget / durationDays);
+  const band = getQuoteBand(listing);
+  const rateFit = dailyValue >= band.low && dailyValue <= band.high ? 12 : 6;
+  const ageScore = lead.ageMinutes <= 30 ? 18 : lead.ageMinutes <= 90 ? 14 : lead.ageMinutes <= 180 ? 9 : 4;
+  const startScore = lead.start === "This week" ? 12 : lead.start === "Next week" ? 8 : lead.start === "This month" ? 5 : 2;
+  const budgetScore = Math.min(18, Math.round(lead.budget / 1200));
+  const termsScore = Math.min(10, lead.terms.length * 3);
+  const score = Math.max(0, Math.min(100, Math.round(
+    passport.score * 0.32
+    + yard.score * 0.18
+    + ageScore
+    + startScore
+    + budgetScore
+    + termsScore
+    + rateFit
+  )));
+  const priority = score >= 84 ? "Hot" : score >= 68 ? "Warm" : "Nurture";
+
+  return {
+    lead,
+    listing,
+    passport,
+    yard,
+    durationDays,
+    dailyValue,
+    band,
+    score,
+    priority,
+    ageLabel: formatLeadAge(lead.ageMinutes)
+  };
+}
+
+function getLeadPlaybook(item, studio) {
+  const needsRefresh = item.yard.status !== "fresh";
+  const needsDocs = studio.docGaps > 0 || !item.listing.verified;
+  const quoteStatus = item.dailyValue >= item.band.low && item.dailyValue <= item.band.high ? "Ready" : "Confirm";
+
+  return [
+    {
+      text: `Reply by ${item.lead.channel} with availability, direct contact, and the next confirmation step.`,
+      status: item.lead.ageMinutes <= 60 ? "Now" : "Today",
+      statusClass: item.lead.ageMinutes <= 60 ? "hot" : "warm"
+    },
+    {
+      text: needsRefresh ? `Reconfirm ${item.listing.name} before promising the start window.` : `${item.listing.name} freshness is strong enough for routing.`,
+      status: needsRefresh ? "Confirm" : "Ready",
+      statusClass: needsRefresh ? "warm" : "ready"
+    },
+    {
+      text: needsDocs ? "Attach or refresh proof before sending the buyer a verified answer." : "Document stack is clean for this prototype.",
+      status: needsDocs ? "Gap" : "Ready",
+      statusClass: needsDocs ? "gap" : "ready"
+    },
+    {
+      text: `Normalize quote view: USD ${item.dailyValue.toLocaleString()} per day against modeled band USD ${item.band.low.toLocaleString()}-${item.band.high.toLocaleString()}.`,
+      status: quoteStatus,
+      statusClass: quoteStatus === "Ready" ? "ready" : "warm"
+    },
+    {
+      text: "Keep payment direct between buyer and rental company. Heavyster only supports lead clarity and response workflow.",
+      status: "Direct",
+      statusClass: "direct"
+    }
+  ];
+}
+
+function parseDurationDays(value) {
+  const match = String(value || "").match(/\d+/);
+  if (!match) return 5;
+  const number = Number(match[0]);
+  return String(value).toLowerCase().includes("month") ? Math.max(20, number * 20) : Math.max(1, number);
+}
+
+function formatLeadAge(minutes) {
+  if (minutes < 60) return `${minutes}m old`;
+  const hours = Math.round(minutes / 60);
+  return `${hours}h old`;
 }
 
 function renderTrustChecklist() {
@@ -2739,6 +3317,31 @@ function buildSupplierStorefrontText(model = getSupplierStorefrontModel()) {
     "Proof stack:",
     ...model.profile.proof.map((proof) => `- ${proof}`),
     "Phase one rule: buyers contact the supplier directly and payment stays between buyer and rental company. Heavyster sells verified listing visibility and supplier storefront tools."
+  ].join("\n");
+}
+
+function buildLeadDeskText(model = getLeadDeskModel()) {
+  const item = model.active;
+  return [
+    "Heavyster Lead Desk",
+    `Supplier: ${model.profile.supplier}`,
+    `Lead priority: ${item.priority} - ${item.score}/100`,
+    `Buyer: ${item.lead.buyer}`,
+    `Equipment: ${item.lead.equipment}`,
+    `Project: ${item.lead.project}`,
+    `Location: ${item.lead.location}`,
+    `Start: ${item.lead.start}`,
+    `Duration: ${item.lead.duration}`,
+    `Budget signal: USD ${item.lead.budget.toLocaleString()} total, about USD ${item.dailyValue.toLocaleString()} per day`,
+    `Channel: ${item.lead.channel}, received ${item.ageLabel}`,
+    `Buyer note: ${item.lead.note}`,
+    "Reply checklist:",
+    ...model.playbook.map((step) => `- ${step.status}: ${step.text}`),
+    "Suggested supplier reply:",
+    `Hi ${item.lead.buyer}, thanks for the ${item.lead.equipment} enquiry for ${item.lead.location}.`,
+    `We can confirm availability, operator/crew terms, delivery, documents, and quote validity for ${item.lead.start}.`,
+    `Please confirm site access, exact start date, working hours, and whether ${item.lead.terms.join(", ").toLowerCase()} should be included in the quote.`,
+    "Payment will be arranged directly between buyer and rental company. Heavyster is only supporting the listing and lead workflow."
   ].join("\n");
 }
 

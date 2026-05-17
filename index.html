@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-supplier-storefront" />
+    <link rel="stylesheet" href="styles.css?v=20260517-command-center" />
   </head>
   <body>
     <div class="app-shell">
@@ -40,20 +40,12 @@
 
         <nav class="topnav" aria-label="Primary">
           <a href="#marketplace">Marketplace</a>
+          <a href="#command-center">Command</a>
           <a href="#jobsite">Jobsite</a>
-          <a href="#passport">Passport</a>
-          <a href="#rfq">RFQ Room</a>
-          <a href="#award">Award Room</a>
-          <a href="#quote-guard">Quote Guard</a>
-          <a href="#mobilize">Mobilize</a>
-          <a href="#yard">Yard Board</a>
-          <a href="#storefront">Storefront</a>
           <a href="#studio">Supplier Studio</a>
-          <a href="#categories">Categories</a>
           <a href="#growth">Growth</a>
           <a href="#market-maker">Market Map</a>
           <a href="#pricing">Pricing</a>
-          <a href="#admin">Admin</a>
           <a href="#roadmap">Roadmap</a>
         </nav>
 
@@ -142,6 +134,30 @@
             <strong>Rental yards</strong>
             <small>Independent operators who need a simple digital storefront.</small>
           </article>
+        </section>
+
+        <section class="command-section" id="command-center">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Operating cockpit</p>
+              <h2>One simple command layer for buyer, supplier, and founder workflows.</h2>
+            </div>
+            <span class="pill" id="commandBadge">Live plan</span>
+          </div>
+          <div class="command-grid">
+            <article class="command-panel">
+              <h3>Live pulse</h3>
+              <div class="command-pulse" id="commandPulse"></div>
+            </article>
+            <article class="command-panel command-panel-wide">
+              <h3>Role paths</h3>
+              <div class="command-routes" id="commandRoutes"></div>
+            </article>
+            <article class="command-panel">
+              <h3>Module launcher</h3>
+              <div class="command-module-rail" id="commandModuleRail"></div>
+            </article>
+          </div>
         </section>
 
         <section class="section-grid">
@@ -615,9 +631,14 @@
               </div>
               <div class="workspace-main">
                 <div class="workspace-toolbar">
-                  <strong>Al Noor Heavy Rentals</strong>
-                  <button type="button" id="addListingButton">Add listing</button>
+                  <strong id="studioSupplierName">Supplier workspace</strong>
+                  <div class="workspace-actions">
+                    <button type="button" id="openStorefrontButton">View storefront</button>
+                    <button type="button" id="addListingButton">Add listing</button>
+                  </div>
                 </div>
+                <div class="studio-health" id="studioHealth"></div>
+                <div class="studio-ops" id="studioOps"></div>
                 <div class="supplier-table" id="supplierTable"></div>
               </div>
             </div>
@@ -677,6 +698,45 @@
             </div>
             <div class="checklist" id="trustChecklist"></div>
           </aside>
+        </section>
+
+        <section class="lead-desk-section" id="lead-desk">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Lead Desk</p>
+              <h2>Give suppliers a clean command center for direct enquiries and fast replies.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyLeadDeskButton">Copy lead reply</button>
+          </div>
+
+          <div class="lead-desk-grid">
+            <article class="lead-desk-card lead-desk-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Response priority</p>
+                  <h3 id="leadDeskTitle">Supplier lead desk</h3>
+                </div>
+                <span class="pill" id="leadDeskBadge">Review</span>
+              </div>
+              <div class="lead-desk-score" id="leadDeskScore"></div>
+              <div class="lead-desk-metrics" id="leadDeskMetrics"></div>
+            </article>
+
+            <article class="lead-desk-card">
+              <h3>Inbox queue</h3>
+              <div class="lead-desk-queue" id="leadDeskQueue"></div>
+            </article>
+
+            <article class="lead-desk-card">
+              <h3>Response playbook</h3>
+              <div class="lead-desk-playbook" id="leadDeskPlaybook"></div>
+            </article>
+
+            <article class="lead-desk-card lead-desk-reply-card">
+              <h3>Copy-ready supplier reply</h3>
+              <div class="lead-desk-reply" id="leadDeskReply"></div>
+            </article>
+          </div>
         </section>
 
         <section class="directory-section" id="categories">
@@ -916,6 +976,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-supplier-storefront" defer></script>
+    <script src="app.js?v=20260517-command-center" defer></script>
   </body>
 </html>

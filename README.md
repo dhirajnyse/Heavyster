@@ -16,6 +16,7 @@ The first version is intentionally simple:
 This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
+- Command Center that groups buyer, supplier, and founder workflows into one simple operating cockpit
 - Compact catalog row view for large inventory UX
 - Smart Match Rescue on the hero search for zero-result buyer recovery
 - Smart no-results recovery with nearby matches and one-click filter relaxation
@@ -28,11 +29,12 @@ This folder contains a static product prototype with:
 - Mobilization Control Tower for pre-dispatch readiness and buyer-supplier handoff
 - Yard Availability OS for supplier freshness scoring and copy-ready update queues
 - Supplier Fleet Storefront for verified supplier mini-sites, fleet lanes, proof stack, and buyer-ready profile packets
+- Supplier Lead Desk for direct enquiry scoring, response urgency, reply playbooks, and copy-ready supplier replies
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach
 - Market Maker Mode for region/category expansion scoring and launch briefs
-- Supplier SaaS workspace preview
+- Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board
 - Verification checklist for licenses, insurance, inspection, and lead routing

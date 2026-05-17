@@ -38,6 +38,75 @@ Use this to turn a rental company into a public verified fleet storefront.
 - created_at
 - updated_at
 
+## SupplierStudioWorkspace
+
+Use this when the supplier manages its fleet, profile readiness, storefront publishing, and listing revenue.
+
+- id
+- supplier_id
+- active_listing_ids
+- profile_completion_score
+- storefront_publish_status
+- document_gap_count
+- availability_freshness_score
+- current_monthly_listing_revenue
+- current_annual_listing_revenue
+- modeled_listing_revenue_upside
+- updated_at
+
+## SupplierLeadDesk
+
+Use this when a supplier tracks direct enquiries and response workflow without Heavyster collecting payment.
+
+- id
+- supplier_id
+- lead_ids
+- active_lead_id
+- open_lead_count
+- hot_lead_count
+- pipeline_value
+- response_priority_score
+- response_playbook
+- copy_ready_reply
+- copied_at
+- updated_at
+
+## SupplierLead
+
+- id
+- supplier_id
+- listing_id
+- buyer_name
+- requested_equipment
+- project_summary
+- project_location
+- requested_start_window
+- requested_duration
+- budget_signal
+- channel
+- received_at
+- requested_terms
+- lead_score
+- lead_priority
+- response_status
+- created_at
+
+## CommandCenter
+
+Use this when Heavyster needs one simple control layer across buyer, supplier, and founder workflows.
+
+- id
+- active_listing_id
+- buyer_readiness_score
+- supplier_pipeline_value
+- founder_demand_signal_count
+- active_market_opportunity_id
+- route_cards
+- module_launcher_items
+- last_opened_module
+- created_at
+- updated_at
+
 ## EquipmentListing
 
 - id

@@ -4,6 +4,7 @@
 
 - Supplier signup and company profile
 - Equipment categories and listing pages
+- Command Center for simple buyer, supplier, and founder navigation
 - Compact catalog UI for thousands of listings
 - Smart Match Rescue for zero-result searches
 - Smart empty-state recovery and shortlist comparison
@@ -15,6 +16,8 @@
 - Mobilization Control Tower for pre-dispatch buyer-supplier handoff
 - Yard Availability OS for supplier inventory freshness
 - Supplier Fleet Storefront for verified rental company mini-sites
+- Supplier Studio 2.0 for profile readiness, storefront publishing, and supplier-specific fleet controls
+- Supplier Lead Desk for direct enquiry response workflow and lead quality scoring
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
 - Market Maker Mode for choosing the next region/category launch
@@ -28,6 +31,7 @@
 ## Phase 2: Lead Intelligence
 
 - Supplier lead inbox
+- Command Center usage analytics and saved role-specific workspaces
 - Trust Passport expiry and confidence history
 - Quote templates
 - Multi-machine package templates by jobsite type
@@ -37,6 +41,7 @@
 - Mobilization history, dispatch evidence, and site readiness memory
 - Availability history, stale listing prevention, and supplier refresh SLAs
 - Supplier storefront analytics, profile completion scoring, and branch pages
+- Lead Desk analytics, response SLA scoring, and supplier reply templates
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue

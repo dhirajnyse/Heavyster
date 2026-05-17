@@ -35,6 +35,7 @@ Equipment listing:
 Marketplace:
 
 - Search by equipment, region, category, availability
+- Command Center that turns the growing product into three simple paths: buyer decision flow, supplier revenue flow, and founder growth flow
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Smart Match Rescue on the hero search when exact supply is unavailable
@@ -63,7 +64,12 @@ Supplier Studio:
 
 - Onboarding flow
 - Listing builder
-- Fleet table
+- Supplier-specific fleet table
+- Profile completion score
+- Storefront publishing readiness
+- Listing revenue preview per supplier
+- Document gap and availability freshness board
+- Lead Desk with supplier-specific enquiry scoring, response urgency, and copy-ready replies
 - Verification checklist
 - Billing readiness preview
 
@@ -105,6 +111,10 @@ Founder Admin:
 - Listings reconfirmed before enquiry routing
 - Supplier storefront packets copied
 - Supplier profile page views and enquiry clicks
+- Supplier Studio profile readiness improved
+- Supplier listings published from Studio
+- Supplier Lead Desk reply packets copied
+- Direct enquiry response time improved
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar
@@ -113,5 +123,6 @@ Founder Admin:
 - Region/category launch briefs copied
 - Category pages launched from demand signals
 - Supplier response time
+- Command Center module launches
 - Listing renewal rate
 - Enquiries per active listing

@@ -15,6 +15,7 @@ Recommended launch pricing:
 - No rental commission
 - Customer pays rental company directly
 - Heavyster provides equipment pages, supplier profiles, documents, availability, search visibility, and direct enquiries
+- Command Center makes the product easier to demo, sell, and expand without confusing suppliers with too many separate tools
 
 This is deliberately easy to understand. A supplier with 10 machines pays USD 90/month or USD 990/year. That is low enough for independent rental yards and still creates clean recurring revenue.
 
@@ -33,6 +34,9 @@ Add these only after basic supplier onboarding works:
 - Mobilization handoff tools for serious buyers and verified suppliers
 - Yard Availability OS for suppliers who want cleaner enquiry conversion
 - Supplier Fleet Storefronts that make the listing subscription feel like a real SaaS storefront
+- Supplier Studio readiness and revenue previews that show the supplier why more paid listings matter
+- Supplier Lead Desk that proves paid listings create actionable direct enquiries
+- Command Center role paths that help a supplier understand the full paid-listing workspace quickly
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region

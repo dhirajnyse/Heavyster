@@ -4,7 +4,9 @@
 
 - Landing page with clear phase-one thesis
 - Marketplace search prototype
-- Supplier workspace preview
+- Command Center for buyer, supplier, and founder workflow navigation
+- Supplier Studio 2.0 workspace with supplier-specific fleet, readiness, gaps, and revenue preview
+- Supplier Lead Desk with direct enquiry scoring, response urgency, and copy-ready replies
 - 3D logo and brand system
 - Pricing calculator
 - Phase-two 1% success fee calculator
@@ -59,6 +61,9 @@
 - Mobilization handoff checklist after award
 - Supplier availability freshness board
 - Supplier profile page with fleet lanes, proof stack, and direct enquiry rules
+- Supplier Studio publishing controls connected to the buyer-facing storefront
+- Lead response desk connected to supplier listings and storefront proof
+- Command Center launcher so large-feature UX stays simple as the marketplace grows
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form
