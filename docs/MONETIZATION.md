@@ -35,8 +35,11 @@ Add these only after basic supplier onboarding works:
 - Yard Availability OS for suppliers who want cleaner enquiry conversion
 - Supplier Fleet Storefronts that make the listing subscription feel like a real SaaS storefront
 - Fleet Import Console that helps a supplier convert an offline yard sheet into many paid listings faster
+- Proof Vault that protects verified listing value by keeping documents and inspection proof buyer-ready
+- Listing Revenue Desk that makes renewals, annual upsell, paused inventory, and phase-one ARR visible without collecting rental money
 - Supplier Studio readiness and revenue previews that show the supplier why more paid listings matter
 - Supplier Lead Desk that proves paid listings create actionable direct enquiries
+- Supplier Account Health Radar that helps save renewals, prove lead ROI, and surface expansion ARR before suppliers churn
 - Command Center supplier workspace that helps a supplier understand the full paid-listing workspace quickly
 - Extra regions or branch pages
 - Lead response analytics

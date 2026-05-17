@@ -17,8 +17,11 @@
 - Yard Availability OS for supplier inventory freshness
 - Supplier Fleet Storefront for verified rental company mini-sites
 - Fleet Import Console for bulk machine intake and paid-listing validation
+- Proof Vault for document expiry, missing proof, inspection/load-test evidence, and buyer-ready verification packets
+- Listing Revenue Desk for paid listings, renewal risk, annual upsell, paused inventory, and phase-one subscription control
 - Supplier Studio 2.0 for profile readiness, storefront publishing, and supplier-specific fleet controls
 - Supplier Lead Desk for direct enquiry response workflow and lead quality scoring
+- Supplier Account Health Radar for churn risk, renewal saves, account expansion, and next-best supplier actions
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
 - Market Maker Mode for choosing the next region/category launch
@@ -43,7 +46,10 @@
 - Availability history, stale listing prevention, and supplier refresh SLAs
 - Supplier storefront analytics, profile completion scoring, and branch pages
 - Fleet import templates, CSV/XLSX mapping, duplicate detection, and photo/document matching
+- Proof Vault reminders, expiry history, and supplier trust SLA
+- Listing Revenue Desk analytics, renewal history, annual-plan conversion, and supplier account health alerts
 - Lead Desk analytics, response SLA scoring, and supplier reply templates
+- Supplier Account Health history, retention playbooks, expansion triggers, and founder daily account queue
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue

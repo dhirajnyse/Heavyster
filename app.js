@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-fleet-import-v21";
+const DATA_VERSION = "20260517-heavyster-account-health-v24";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -438,6 +438,9 @@ const commandRoutes = [
     steps: [
       { label: "Storefront", anchor: "#storefront" },
       { label: "Import", anchor: "#fleet-import" },
+      { label: "Proof", anchor: "#proof-vault" },
+      { label: "Revenue", anchor: "#revenue-desk" },
+      { label: "Health", anchor: "#account-health" },
       { label: "Studio", anchor: "#studio" },
       { label: "Lead Desk", anchor: "#lead-desk" },
       { label: "Yard", anchor: "#yard" }
@@ -468,6 +471,9 @@ const commandModules = [
   { role: "Buyer", label: "Mobilize", anchor: "#mobilize", signal: "Dispatch gate" },
   { role: "Supplier", label: "Storefront", anchor: "#storefront", signal: "Public profile" },
   { role: "Supplier", label: "Fleet Import", anchor: "#fleet-import", signal: "Bulk upload" },
+  { role: "Supplier", label: "Proof Vault", anchor: "#proof-vault", signal: "Verify docs" },
+  { role: "Supplier", label: "Revenue Desk", anchor: "#revenue-desk", signal: "Renew listings" },
+  { role: "Supplier", label: "Account Health", anchor: "#account-health", signal: "Save account" },
   { role: "Supplier", label: "Supplier Studio", anchor: "#studio", signal: "Manage fleet" },
   { role: "Supplier", label: "Lead Desk", anchor: "#lead-desk", signal: "Reply faster" },
   { role: "Supplier", label: "Yard Board", anchor: "#yard", signal: "Fresh stock" },
@@ -563,6 +569,241 @@ const fleetImportRows = [
     availability: false,
     rateTerms: true,
     contact: true
+  }
+];
+
+const proofVaultRows = [
+  {
+    id: "PV-001",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    type: "Trade license",
+    target: "Company profile",
+    status: "ready",
+    expiresInDays: 210,
+    holder: "Operations desk",
+    action: "Keep live"
+  },
+  {
+    id: "PV-002",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    type: "Insurance",
+    target: "Cat 320 Excavator",
+    status: "expiring",
+    expiresInDays: 26,
+    holder: "Broker",
+    action: "Renew before routing major enquiries"
+  },
+  {
+    id: "PV-003",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    type: "Inspection",
+    target: "Cat 320 Excavator",
+    status: "ready",
+    expiresInDays: 92,
+    holder: "Workshop",
+    action: "Attach to listing"
+  },
+  {
+    id: "PV-004",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    type: "Trade license",
+    target: "Company profile",
+    status: "ready",
+    expiresInDays: 180,
+    holder: "Admin",
+    action: "Keep live"
+  },
+  {
+    id: "PV-005",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    type: "Load test",
+    target: "Liebherr 130T Mobile Crane",
+    status: "ready",
+    expiresInDays: 58,
+    holder: "Lifting engineer",
+    action: "Send with quote"
+  },
+  {
+    id: "PV-006",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    type: "Operator license",
+    target: "Lift supervisor crew",
+    status: "expiring",
+    expiresInDays: 19,
+    holder: "Crew coordinator",
+    action: "Renew before mobilization"
+  },
+  {
+    id: "PV-007",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    type: "City permit note",
+    target: "Abu Dhabi lifts",
+    status: "missing",
+    expiresInDays: null,
+    holder: "Permit desk",
+    action: "Add permit workflow note"
+  },
+  {
+    id: "PV-008",
+    supplier: "Desertline Equipment",
+    listingId: "HY-LD-022",
+    type: "Insurance",
+    target: "Komatsu WA380 Wheel Loader",
+    status: "missing",
+    expiresInDays: null,
+    holder: "Owner",
+    action: "Upload insurance before verified badge"
+  },
+  {
+    id: "PV-009",
+    supplier: "Metro Plant Hire",
+    listingId: "HY-TL-030",
+    type: "Service record",
+    target: "JCB Telehandler 540-170",
+    status: "ready",
+    expiresInDays: 74,
+    holder: "Workshop",
+    action: "Keep live"
+  },
+  {
+    id: "PV-010",
+    supplier: "Prime Road Rentals",
+    listingId: "HY-RD-042",
+    type: "Maintenance log",
+    target: "Dynapac CA250 Roller",
+    status: "ready",
+    expiresInDays: 45,
+    holder: "Yard admin",
+    action: "Attach to listing"
+  },
+  {
+    id: "PV-011",
+    supplier: "Frontier Civil Rentals",
+    listingId: "HY-DZ-055",
+    type: "Inspection",
+    target: "D6 Dozer",
+    status: "expiring",
+    expiresInDays: 22,
+    holder: "Service manager",
+    action: "Book inspection refresh"
+  }
+];
+
+const listingRevenueRows = [
+  {
+    id: "RD-001",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    package: "Cat 320 Excavator fleet",
+    plan: "annual",
+    status: "active",
+    listings: 6,
+    renewalDays: 74,
+    signal: "High-intent earthmoving page",
+    action: "Keep annual plan live"
+  },
+  {
+    id: "RD-002",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    package: "Cat 330 Excavator imports",
+    plan: "monthly",
+    status: "renewal-risk",
+    listings: 4,
+    renewalDays: 12,
+    signal: "Imported rows ready for annual upsell",
+    action: "Move to annual before expiry"
+  },
+  {
+    id: "RD-003",
+    supplier: "Al Noor Heavy Rentals",
+    listingId: "HY-EX-001",
+    package: "Hydraulic breaker set",
+    plan: "monthly",
+    status: "draft",
+    listings: 9,
+    renewalDays: null,
+    signal: "Attachment demand, photos missing",
+    action: "Publish after photos"
+  },
+  {
+    id: "RD-004",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    package: "Liebherr 130T crane listing",
+    plan: "annual",
+    status: "active",
+    listings: 3,
+    renewalDays: 48,
+    signal: "Crane demand from UAE searches",
+    action: "Keep proof attached"
+  },
+  {
+    id: "RD-005",
+    supplier: "Gulf Lift Services",
+    listingId: "HY-CR-014",
+    package: "Lift supervisor crew",
+    plan: "monthly",
+    status: "paused",
+    listings: 7,
+    renewalDays: null,
+    signal: "Crew availability not confirmed",
+    action: "Confirm availability then activate"
+  },
+  {
+    id: "RD-006",
+    supplier: "Desertline Equipment",
+    listingId: "HY-LD-022",
+    package: "Komatsu loader yard set",
+    plan: "monthly",
+    status: "renewal-risk",
+    listings: 5,
+    renewalDays: 9,
+    signal: "Insurance gap blocks verified badge",
+    action: "Renew billing after proof upload"
+  },
+  {
+    id: "RD-007",
+    supplier: "Metro Plant Hire",
+    listingId: "HY-TL-030",
+    package: "Telehandler weekly hire fleet",
+    plan: "annual",
+    status: "active",
+    listings: 9,
+    renewalDays: 96,
+    signal: "Stable UK site logistics demand",
+    action: "Invite branch expansion"
+  },
+  {
+    id: "RD-008",
+    supplier: "Prime Road Rentals",
+    listingId: "HY-RD-042",
+    package: "Compaction fleet",
+    plan: "annual",
+    status: "active",
+    listings: 17,
+    renewalDays: 33,
+    signal: "Roadwork category supply gap",
+    action: "Reconfirm soon status"
+  },
+  {
+    id: "RD-009",
+    supplier: "Frontier Civil Rentals",
+    listingId: "HY-DZ-055",
+    package: "Dozer civil fleet",
+    plan: "annual",
+    status: "active",
+    listings: 22,
+    renewalDays: 88,
+    signal: "US earthmoving page anchor",
+    action: "Keep annual renewal warm"
   }
 ];
 
@@ -874,6 +1115,24 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyProofVaultButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildProofVaultText());
+      showToast("Proof packet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the proof packet is visible.");
+    }
+  });
+
+  document.querySelector("#copyRevenueDeskButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildRevenueDeskText());
+      showToast("Listing revenue packet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the revenue packet is visible.");
+    }
+  });
+
   document.querySelector("#openStorefrontButton").addEventListener("click", () => {
     renderSupplierStorefront();
     document.querySelector("#storefront").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -886,6 +1145,15 @@ function bindControls() {
       showToast("Lead reply packet copied.");
     } catch {
       showToast("Copy is blocked here, but the lead reply is visible.");
+    }
+  });
+
+  document.querySelector("#copyAccountHealthButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildAccountHealthText());
+      showToast("Supplier health plan copied.");
+    } catch {
+      showToast("Copy is blocked here, but the health plan is visible.");
     }
   });
 
@@ -1031,7 +1299,10 @@ function render() {
   renderYardAvailability();
   renderSupplierStorefront();
   renderFleetImport();
+  renderProofVault();
+  renderRevenueDesk();
   renderLeadDesk();
+  renderAccountHealth();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -1139,11 +1410,14 @@ function getCommandCenterModel() {
   const yard = getYardModel();
   const storefront = getSupplierStorefrontModel(selected);
   const fleetImport = getFleetImportModel(selected);
+  const proofVault = getProofVaultModel(selected);
+  const revenueDesk = getRevenueDeskModel(selected);
   const leadDesk = getLeadDeskModel();
+  const accountHealth = getAccountHealthModel(selected);
   const market = getActiveMarketOpportunity();
   const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
   const buyerScore = Math.round((passport.score + rfq.averageScore + award.winner.total + quote.score + mobilize.score) / 5);
-  const supplierScore = Math.round((storefront.score + yard.score + leadDesk.active.score) / 3);
+  const supplierScore = Math.round((storefront.score + yard.score + leadDesk.active.score + proofVault.score + revenueDesk.score + accountHealth.score) / 6);
   const founderScore = market.score;
   const badge = buyerScore >= 82 && supplierScore >= 82 ? "Ready to demo" : "Focused build";
   const activeRole = commandRoles.includes(state.commandRole) ? state.commandRole : "Buyer";
@@ -1157,7 +1431,10 @@ function getCommandCenterModel() {
     yard,
     storefront,
     fleetImport,
+    proofVault,
+    revenueDesk,
     leadDesk,
+    accountHealth,
     market,
     demandCount,
     buyerScore,
@@ -1179,7 +1456,7 @@ function getCommandCenterModel() {
       {
         label: "Supplier pipeline",
         value: `USD ${leadDesk.totalBudget.toLocaleString()}`,
-        detail: `${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"} for ${leadDesk.profile.supplier}.`
+        detail: `${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"} and ${accountHealth.riskCount} risk signal${accountHealth.riskCount === 1 ? "" : "s"} for ${leadDesk.profile.supplier}.`
       },
       {
         label: "Founder demand",
@@ -1188,8 +1465,8 @@ function getCommandCenterModel() {
       },
       {
         label: "Phase-one money",
-        value: "0% rental take",
-        detail: "Heavyster monetizes listings first and keeps rental payment direct."
+        value: `USD ${revenueDesk.monthlyRevenue.toLocaleString()}/mo`,
+        detail: `${revenueDesk.paidListings} paid listing${revenueDesk.paidListings === 1 ? "" : "s"}, ${revenueDesk.renewalRiskCount} at renewal risk, 0% rental take.`
       }
     ],
     routes: commandRoutes.map((route) => ({
@@ -1213,8 +1490,8 @@ function getCommandWorkspace(role, context) {
     return {
       title: `${context.leadDesk.profile.supplier} workspace`,
       score: `${context.supplierScore}/100 supplier readiness`,
-      detail: `${context.fleetImport.totalRows} import row${context.fleetImport.totalRows === 1 ? "" : "s"}, ${context.leadDesk.leads.length} open lead${context.leadDesk.leads.length === 1 ? "" : "s"}, USD ${context.leadDesk.totalBudget.toLocaleString()} pipeline, ${context.yard.reviewCount} listing${context.yard.reviewCount === 1 ? "" : "s"} need freshness review.`,
-      next: "Start with Fleet Import, publish clean rows into Studio, then use Lead Desk and Yard Board to keep the paid listings fresh."
+      detail: `${context.fleetImport.totalRows} import row${context.fleetImport.totalRows === 1 ? "" : "s"}, ${context.accountHealth.riskCount} health risk signal${context.accountHealth.riskCount === 1 ? "" : "s"}, ${context.revenueDesk.paidListings} paid listing${context.revenueDesk.paidListings === 1 ? "" : "s"}, USD ${context.revenueDesk.annualRevenue.toLocaleString()} listing ARR, ${context.yard.reviewCount} listing${context.yard.reviewCount === 1 ? "" : "s"} need freshness review.`,
+      next: "Use Account Health to choose the save action, then protect renewals, proof, leads, and yard freshness in that order."
     };
   }
 
@@ -2792,6 +3069,345 @@ function getFleetImportGates(rows, profile) {
   });
 }
 
+function renderProofVault() {
+  const model = getProofVaultModel();
+  setText("#proofVaultTitle", model.profile.supplier);
+  setText("#proofVaultBadge", model.badge);
+
+  document.querySelector("#proofVaultScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${model.readyCount} buyer-ready proof item${model.readyCount === 1 ? "" : "s"}, ${model.expiringCount} expiring soon, ${model.missingCount} missing.</span>
+  `;
+
+  document.querySelector("#proofVaultMetrics").innerHTML = [
+    ["Proof items", String(model.rows.length)],
+    ["Buyer-ready", String(model.readyCount)],
+    ["Expiring", String(model.expiringCount)],
+    ["Blocked", String(model.missingCount)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#proofVaultQueue").innerHTML = model.rows.map((row) => `
+    <button type="button" class="proof-vault-row ${row.statusClass}" data-proof-listing="${escapeHtml(row.listingId)}">
+      <span>
+        <strong>${escapeHtml(row.type)}</strong>
+        ${escapeHtml(row.target)} - ${escapeHtml(row.holder)}
+      </span>
+      <em>${row.score}/100</em>
+      <small>${escapeHtml(row.expiryLabel)}</small>
+      <b>${escapeHtml(row.action)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#proofVaultGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="proof-vault-gate ${gate.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(gate.label)}<small>${escapeHtml(gate.detail)}</small></span>
+      <em>${escapeHtml(gate.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#proofVaultPacket").innerHTML = buildProofVaultText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-proof-listing]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.proofListing);
+      if (!listing) return;
+      state.selectedListingId = listing.id;
+      state.commandRole = "Supplier";
+      saveState();
+      render();
+      document.querySelector("#proof-vault").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Proof item matched to supplier listing.");
+    });
+  });
+}
+
+function getProofVaultModel(listing = getSelectedListing()) {
+  const profile = getSupplierProfile(listing.supplier);
+  const supplierListings = listings.filter((item) => item.supplier === profile.supplier);
+  const sourceRows = proofVaultRows.filter((row) => row.supplier === profile.supplier);
+  const fallbackRows = sourceRows.length ? sourceRows : listing.documents.map((document, index) => ({
+    id: `PV-${listing.id}-${index}`,
+    supplier: profile.supplier,
+    listingId: listing.id,
+    type: document,
+    target: listing.name,
+    status: document.toLowerCase().includes("pending") ? "missing" : "ready",
+    expiresInDays: document.toLowerCase().includes("pending") ? null : 75 + index * 18,
+    holder: "Supplier admin",
+    action: document.toLowerCase().includes("pending") ? "Upload before verified badge" : "Attach to listing"
+  }));
+  const rows = sourceRows.length ? sourceRows.map((row) => enrichProofVaultRow(row, supplierListings, listing)) : fallbackRows.map((row) => enrichProofVaultRow(row, supplierListings, listing));
+  const readyCount = rows.filter((row) => row.status === "Ready").length;
+  const expiringCount = rows.filter((row) => row.status === "Expiring").length;
+  const missingCount = rows.filter((row) => row.status === "Missing").length;
+  const averageScore = Math.round(rows.reduce((total, row) => total + row.score, 0) / rows.length);
+  const score = Math.max(0, Math.min(100, Math.round(averageScore + Math.min(8, readyCount) - expiringCount * 3 - missingCount * 8)));
+  const badge = score >= 86 && missingCount === 0 ? "Buyer-ready" : score >= 66 ? "Refresh proof" : "Hold badge";
+  const gates = getProofVaultGates(rows, profile);
+
+  return {
+    profile,
+    rows,
+    readyCount,
+    expiringCount,
+    missingCount,
+    score,
+    badge,
+    gates
+  };
+}
+
+function enrichProofVaultRow(row, supplierListings, selected) {
+  const listing = listings.find((item) => item.id === row.listingId)
+    || supplierListings.find((item) => item.name.toLowerCase().includes(row.target.toLowerCase().split(" ")[0]))
+    || selected;
+  const normalized = row.status === "ready" && row.expiresInDays !== null && row.expiresInDays <= 30 ? "expiring" : row.status;
+  const status = normalized === "ready" ? "Ready" : normalized === "expiring" ? "Expiring" : "Missing";
+  const score = status === "Ready" ? Math.min(100, 82 + Math.min(16, Math.floor((row.expiresInDays || 0) / 18))) : status === "Expiring" ? 58 : 24;
+  const expiryLabel = status === "Missing"
+    ? "Not uploaded"
+    : row.expiresInDays <= 0
+      ? "Expired"
+      : `${row.expiresInDays}d to expiry`;
+
+  return {
+    ...row,
+    listingId: listing.id,
+    status,
+    statusClass: status.toLowerCase(),
+    score,
+    expiryLabel,
+    action: row.action || (status === "Ready" ? "Attach" : status === "Expiring" ? "Renew" : "Upload")
+  };
+}
+
+function getProofVaultGates(rows, profile) {
+  const hasCompany = rows.some((row) => row.status !== "Missing" && /license|registry|gst|business/i.test(row.type));
+  const hasInsurance = rows.some((row) => row.status !== "Missing" && /insurance/i.test(row.type));
+  const hasInspection = rows.some((row) => row.status !== "Missing" && /inspection|load test|service|maintenance/i.test(row.type));
+  const hasOperator = rows.some((row) => row.status !== "Missing" && /operator|crew|permit/i.test(row.type));
+  const noUrgentExpiry = rows.every((row) => row.status !== "Expiring");
+  const gates = [
+    ["Company proof", hasCompany, `${profile.supplier} needs current legal or trade proof attached to the public profile.`],
+    ["Insurance proof", hasInsurance, "Insurance should be visible before buyers route serious enquiries."],
+    ["Machine proof", hasInspection, "Inspection, load test, service record, or maintenance evidence should support equipment pages."],
+    ["Operator or permit proof", hasOperator, "Operator license, crew proof, city permit note, or site access note should be visible when relevant."],
+    ["Expiry control", noUrgentExpiry, "No proof item should be inside a 30-day expiry window before high-value enquiries are routed."]
+  ];
+
+  return gates.map(([label, ready, detail]) => ({
+    label,
+    detail,
+    status: ready ? "Ready" : "Gap",
+    statusClass: ready ? "ready" : "gap"
+  }));
+}
+
+function renderRevenueDesk() {
+  const model = getRevenueDeskModel();
+  setText("#revenueDeskTitle", model.profile.supplier);
+  setText("#revenueDeskBadge", model.badge);
+
+  document.querySelector("#revenueDeskScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${model.paidListings} paid listing${model.paidListings === 1 ? "" : "s"}, USD ${model.monthlyRevenue.toLocaleString()} monthly SaaS revenue, USD ${model.annualRevenue.toLocaleString()} annualized listing revenue.</span>
+  `;
+
+  document.querySelector("#revenueDeskMetrics").innerHTML = [
+    ["Paid listings", String(model.paidListings)],
+    ["Monthly SaaS", `USD ${model.monthlyRevenue.toLocaleString()}`],
+    ["Annualized ARR", `USD ${model.annualRevenue.toLocaleString()}`],
+    ["Renewal risk", String(model.renewalRiskCount)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#revenueDeskQueue").innerHTML = model.rows.map((row) => `
+    <button type="button" class="revenue-desk-row ${row.statusClass}" data-revenue-listing="${escapeHtml(row.listingId)}">
+      <span>
+        <strong>${escapeHtml(row.package)}</strong>
+        ${row.listings} listing${row.listings === 1 ? "" : "s"} - ${escapeHtml(row.planLabel)}
+        <small>${escapeHtml(row.signal)} - ${escapeHtml(row.action)}</small>
+      </span>
+      <em>USD ${row.monthlyRevenue.toLocaleString()}/mo</em>
+      <small>${escapeHtml(row.renewalLabel)}</small>
+      <b>${escapeHtml(row.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#revenueDeskPlaybook").innerHTML = model.playbook.map((step, index) => `
+    <div class="revenue-desk-step ${step.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(step.label)}<small>${escapeHtml(step.detail)}</small></span>
+      <em>${escapeHtml(step.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#revenueDeskPacket").innerHTML = buildRevenueDeskText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-revenue-listing]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.revenueListing);
+      if (!listing) return;
+      state.selectedListingId = listing.id;
+      state.commandRole = "Supplier";
+      saveState();
+      render();
+      document.querySelector("#revenue-desk").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Revenue row matched to supplier listing.");
+    });
+  });
+}
+
+function getRevenueDeskModel(listing = getSelectedListing()) {
+  const profile = getSupplierProfile(listing.supplier);
+  const supplierListings = listings.filter((item) => item.supplier === profile.supplier);
+  const sourceRows = listingRevenueRows.filter((row) => row.supplier === profile.supplier);
+  const fallbackListings = supplierListings.length ? supplierListings : [listing];
+  const fallbackRows = fallbackListings.map((item, index) => ({
+    id: `RD-${item.id}-${index}`,
+    supplier: profile.supplier,
+    listingId: item.id,
+    package: item.name,
+    plan: index % 2 === 0 ? "annual" : "monthly",
+    status: item.availability === "available" ? "active" : "paused",
+    listings: 1,
+    renewalDays: item.availability === "available" ? 45 + index * 14 : null,
+    signal: `${item.category} listing in ${item.region}`,
+    action: "Confirm billing status"
+  }));
+  const rows = (sourceRows.length ? sourceRows : fallbackRows).map((row) => enrichRevenueDeskRow(row, supplierListings, listing));
+  const paidRows = rows.filter((row) => row.isPaid);
+  const paidListings = paidRows.reduce((total, row) => total + row.listings, 0);
+  const pendingListings = rows.filter((row) => !row.isPaid).reduce((total, row) => total + row.listings, 0);
+  const monthlyRevenue = paidRows.reduce((total, row) => total + row.monthlyRevenue, 0);
+  const annualRevenue = paidRows.reduce((total, row) => total + row.annualRevenue, 0);
+  const renewalRiskCount = rows.filter((row) => row.statusClass === "renewal-risk").reduce((total, row) => total + row.listings, 0);
+  const pausedCount = rows.filter((row) => row.statusClass === "paused").reduce((total, row) => total + row.listings, 0);
+  const draftCount = rows.filter((row) => row.statusClass === "draft").reduce((total, row) => total + row.listings, 0);
+  const annualListings = paidRows.filter((row) => row.plan === "annual").reduce((total, row) => total + row.listings, 0);
+  const annualShare = paidListings ? Math.round((annualListings / paidListings) * 100) : 0;
+  const score = Math.max(0, Math.min(100, Math.round(58 + Math.min(18, paidListings) + annualShare * 0.12 - renewalRiskCount * 3 - pausedCount * 4 - draftCount * 2)));
+  const badge = score >= 86 && renewalRiskCount === 0 ? "Revenue clean" : score >= 70 ? "Renewal focus" : "Activate listings";
+  const proofVault = getProofVaultModel(listing);
+  const playbook = getRevenueDeskPlaybook(rows, profile, proofVault);
+
+  return {
+    profile,
+    rows,
+    paidRows,
+    paidListings,
+    pendingListings,
+    monthlyRevenue,
+    annualRevenue,
+    renewalRiskCount,
+    pausedCount,
+    draftCount,
+    annualShare,
+    score,
+    badge,
+    playbook
+  };
+}
+
+function enrichRevenueDeskRow(row, supplierListings, selected) {
+  const listing = listings.find((item) => item.id === row.listingId)
+    || supplierListings.find((item) => String(row.package || "").toLowerCase().includes(item.name.toLowerCase().split(" ")[0]))
+    || selected;
+  const statusClass = ["active", "renewal-risk", "paused", "draft"].includes(row.status) ? row.status : "active";
+  const status = statusClass === "renewal-risk"
+    ? "Renewal risk"
+    : statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
+  const plan = row.plan === "annual" ? "annual" : "monthly";
+  const listingsCount = Math.max(1, Number(row.listings || 1));
+  const isPaid = statusClass === "active" || statusClass === "renewal-risk";
+  const monthlyRevenue = isPaid ? plan === "annual" ? Math.round((listingsCount * 99) / 12) : listingsCount * 9 : 0;
+  const annualRevenue = isPaid ? plan === "annual" ? listingsCount * 99 : listingsCount * 108 : 0;
+  const renewalDays = row.renewalDays === null ? null : Number(row.renewalDays || 0);
+  const renewalLabel = statusClass === "draft"
+    ? "Not live"
+    : statusClass === "paused"
+      ? "Paused"
+      : renewalDays <= 14
+        ? `Renew in ${renewalDays}d`
+        : `${renewalDays}d renewal`;
+  const planLabel = plan === "annual" ? "Annual USD 99" : "Monthly USD 9";
+  const score = statusClass === "active"
+    ? Math.min(100, (plan === "annual" ? 86 : 76) + Math.min(12, Math.floor((renewalDays || 45) / 10)))
+    : statusClass === "renewal-risk"
+      ? Math.max(42, 66 - Math.max(0, 14 - (renewalDays || 0)))
+      : statusClass === "draft"
+        ? 48
+        : 34;
+
+  return {
+    ...row,
+    listingId: listing.id,
+    plan,
+    listings: listingsCount,
+    status,
+    statusClass,
+    isPaid,
+    monthlyRevenue,
+    annualRevenue,
+    renewalLabel,
+    planLabel,
+    score,
+    action: row.action || (statusClass === "active" ? "Keep live" : statusClass === "renewal-risk" ? "Renew now" : statusClass === "draft" ? "Publish" : "Reactivate")
+  };
+}
+
+function getRevenueDeskPlaybook(rows, profile, proofVault) {
+  const renewalRisk = rows.filter((row) => row.statusClass === "renewal-risk").reduce((total, row) => total + row.listings, 0);
+  const monthlyPaid = rows.filter((row) => row.isPaid && row.plan === "monthly").reduce((total, row) => total + row.listings, 0);
+  const dormant = rows.filter((row) => row.statusClass === "paused" || row.statusClass === "draft").reduce((total, row) => total + row.listings, 0);
+  const proofRisk = proofVault.expiringCount + proofVault.missingCount;
+
+  return [
+    {
+      label: "Save renewals",
+      detail: renewalRisk ? `${renewalRisk} ${profile.supplier} paid listing${renewalRisk === 1 ? "" : "s"} need renewal attention before visibility drops.` : "No urgent renewal risk in this supplier workspace.",
+      status: renewalRisk ? "Action" : "Ready",
+      statusClass: renewalRisk ? "review" : "ready"
+    },
+    {
+      label: "Shift monthly to annual",
+      detail: monthlyPaid ? `${monthlyPaid} monthly listing${monthlyPaid === 1 ? "" : "s"} can move from USD 9 monthly to USD 99 yearly and reduce churn.` : "Paid listings are already mostly annual or clean.",
+      status: monthlyPaid ? "Upsell" : "Ready",
+      statusClass: monthlyPaid ? "review" : "ready"
+    },
+    {
+      label: "Activate dormant inventory",
+      detail: dormant ? `${dormant} paused or draft listing${dormant === 1 ? "" : "s"} can become new listing revenue after photos, proof, or availability are clean.` : "No dormant supplier rows are blocking paid-listing revenue.",
+      status: dormant ? "Open" : "Ready",
+      statusClass: dormant ? "gap" : "ready"
+    },
+    {
+      label: "Protect trust before billing",
+      detail: proofRisk ? `${proofRisk} proof item${proofRisk === 1 ? "" : "s"} should be refreshed so renewal feels tied to buyer trust, not only a bill.` : "Proof Vault is clean enough to support renewal and annual-plan conversations.",
+      status: proofRisk ? "Review" : "Ready",
+      statusClass: proofRisk ? "review" : "ready"
+    },
+    {
+      label: "Keep rental payment direct",
+      detail: "Revenue Desk tracks Heavyster listing subscription value only. Buyer and supplier still settle rental payment directly in phase one.",
+      status: "Clean",
+      statusClass: "ready"
+    }
+  ];
+}
+
 function getSupplierProfile(supplierName) {
   return supplierProfiles.find((profile) => profile.supplier === supplierName)
     || {
@@ -2887,7 +3503,7 @@ function renderSupplierTable() {
   document.querySelector("#studioHealth").innerHTML = [
     ["Profile", `${model.profileCompletion}/100`, model.profileCompletion >= 82 ? "Ready" : "Improve"],
     ["Storefront", `${model.storefront.score}/100`, model.storefront.badge],
-    ["Listing revenue", `USD ${model.monthlyRevenue}/mo`, `USD ${model.annualRevenue}/yr`],
+    ["Listing revenue", `USD ${model.monthlyRevenue.toLocaleString()}/mo`, `USD ${model.annualRevenue.toLocaleString()}/yr`],
     ["Freshness", `${model.yardScore}/100`, model.freshnessLabel]
   ].map(([label, value, detail]) => `
     <span>
@@ -2959,8 +3575,9 @@ function getSupplierStudioModel() {
   const yardScore = yardRows.length
     ? Math.round(yardRows.reduce((total, row) => total + row.score, 0) / yardRows.length)
     : storefront.yardScore;
-  const monthlyRevenue = visibleListings.length * 9;
-  const annualRevenue = visibleListings.length * 99;
+  const revenueDesk = getRevenueDeskModel(selected);
+  const monthlyRevenue = revenueDesk.monthlyRevenue;
+  const annualRevenue = revenueDesk.annualRevenue;
   const modeledListings = profile.fleet.reduce((total, lane) => total + lane.count, 0);
   const modeledAnnualRevenue = modeledListings * 99;
   const freshnessLabel = yardScore >= 82 ? "Fresh yard" : yardScore >= 64 ? "Refresh needed" : "Trust risk";
@@ -2969,6 +3586,7 @@ function getSupplierStudioModel() {
   return {
     profile,
     storefront,
+    revenueDesk,
     listings: visibleListings,
     profileCompletion,
     yardScore,
@@ -3002,9 +3620,9 @@ function getSupplierStudioModel() {
       },
       {
         label: "Revenue preview",
-        status: "Track",
-        statusClass: "direct",
-        detail: `${visibleListings.length} live demo listing${visibleListings.length === 1 ? "" : "s"} = USD ${annualRevenue}/yr. Modeled fleet upside: ${modeledListings} listings = USD ${modeledAnnualRevenue.toLocaleString()}/yr.`
+        status: revenueDesk.renewalRiskCount ? "Renew" : "Track",
+        statusClass: revenueDesk.renewalRiskCount ? "confirm" : "direct",
+        detail: `${revenueDesk.paidListings} paid listing${revenueDesk.paidListings === 1 ? "" : "s"} = USD ${annualRevenue.toLocaleString()}/yr. Modeled fleet upside: ${modeledListings} listings = USD ${modeledAnnualRevenue.toLocaleString()}/yr.`
       }
     ]
   };
@@ -3068,8 +3686,8 @@ function renderLeadDesk() {
   });
 }
 
-function getLeadDeskModel() {
-  const selected = getSelectedListing();
+function getLeadDeskModel(listing = getSelectedListing()) {
+  const selected = listing;
   const studio = getSupplierStudioModel();
   const profile = studio.profile;
   const supplierListings = listings.filter((listing) => listing.supplier === profile.supplier);
@@ -3199,6 +3817,212 @@ function formatLeadAge(minutes) {
   if (minutes < 60) return `${minutes}m old`;
   const hours = Math.round(minutes / 60);
   return `${hours}h old`;
+}
+
+function renderAccountHealth() {
+  const model = getAccountHealthModel();
+  setText("#accountHealthTitle", model.profile.supplier);
+  setText("#accountHealthBadge", model.badge);
+
+  document.querySelector("#accountHealthScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${model.summary}</span>
+  `;
+
+  document.querySelector("#accountHealthMetrics").innerHTML = [
+    ["Risk signals", String(model.riskCount)],
+    ["Listing ARR", `USD ${model.revenueDesk.annualRevenue.toLocaleString()}`],
+    ["Lead pipeline", `USD ${model.leadDesk.totalBudget.toLocaleString()}`],
+    ["Expansion ARR", `USD ${model.expansionArr.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#accountHealthSignals").innerHTML = model.signals.map((signal) => `
+    <div class="account-health-signal ${signal.statusClass}">
+      <span>
+        <strong>${escapeHtml(signal.label)}</strong>
+        ${escapeHtml(signal.detail)}
+      </span>
+      <em>${signal.score}/100</em>
+      <b>${escapeHtml(signal.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#accountHealthActions").innerHTML = model.actions.map((action, index) => `
+    <button type="button" class="account-health-action ${action.priorityClass}" data-health-anchor="${escapeHtml(action.anchor)}" data-health-label="${escapeHtml(action.label)}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(action.label)}<small>${escapeHtml(action.detail)}</small></span>
+      <em>${escapeHtml(action.status)}</em>
+    </button>
+  `).join("");
+
+  document.querySelector("#accountHealthPlan").innerHTML = buildAccountHealthText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-health-anchor]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.healthAnchor);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(`${button.dataset.healthLabel} opened.`);
+    });
+  });
+}
+
+function getAccountHealthModel(listing = getSelectedListing()) {
+  const profile = getSupplierProfile(listing.supplier);
+  const storefront = getSupplierStorefrontModel(listing);
+  const fleetImport = getFleetImportModel(listing);
+  const proofVault = getProofVaultModel(listing);
+  const revenueDesk = getRevenueDeskModel(listing);
+  const leadDesk = getLeadDeskModel(listing);
+  const supplierYardRows = getYardModel().rows.filter((row) => row.listing.supplier === profile.supplier);
+  const yardScore = supplierYardRows.length
+    ? Math.round(supplierYardRows.reduce((total, row) => total + row.score, 0) / supplierYardRows.length)
+    : storefront.yardScore;
+  const supplierReviewRows = supplierYardRows.filter((row) => row.status !== "fresh");
+  const expansionArr = revenueDesk.pendingListings * 99 + fleetImport.annualRevenue;
+  const signals = [
+    getAccountHealthSignal("Listing retention", revenueDesk.score, `${revenueDesk.paidListings} paid listing${revenueDesk.paidListings === 1 ? "" : "s"}, ${revenueDesk.renewalRiskCount} renewal risk, ${revenueDesk.annualShare}% annual share.`),
+    getAccountHealthSignal("Proof confidence", proofVault.score, `${proofVault.readyCount} ready proof item${proofVault.readyCount === 1 ? "" : "s"}, ${proofVault.expiringCount} expiring, ${proofVault.missingCount} missing.`),
+    getAccountHealthSignal("Lead response", leadDesk.active.score, `${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"}, USD ${leadDesk.totalBudget.toLocaleString()} direct enquiry pipeline.`),
+    getAccountHealthSignal("Yard freshness", yardScore, `${supplierReviewRows.length} supplier listing${supplierReviewRows.length === 1 ? "" : "s"} need reconfirmation before serious routing.`),
+    getAccountHealthSignal("Storefront strength", storefront.score, `${storefront.visibleFleetCount} public listing${storefront.visibleFleetCount === 1 ? "" : "s"}, Trust Passport average ${storefront.averagePassport}/100.`),
+    getAccountHealthSignal("Import upside", fleetImport.score, `${fleetImport.readyListings} import-ready paid listing${fleetImport.readyListings === 1 ? "" : "s"}, USD ${fleetImport.annualRevenue.toLocaleString()} potential ARR.`)
+  ];
+  const score = Math.max(0, Math.min(100, Math.round(
+    revenueDesk.score * 0.26
+    + proofVault.score * 0.18
+    + leadDesk.active.score * 0.2
+    + yardScore * 0.14
+    + storefront.score * 0.12
+    + fleetImport.score * 0.1
+  )));
+  const riskCount = signals.filter((signal) => signal.statusClass !== "ready").length;
+  const badge = score >= 86 && riskCount <= 1 ? "Grow account" : score >= 70 ? "Save and grow" : "Retention risk";
+  const summary = riskCount
+    ? `${riskCount} risk signal${riskCount === 1 ? "" : "s"} need attention before renewal or expansion.`
+    : "Account is healthy enough for annual expansion and category growth.";
+  const actions = getAccountHealthActions({
+    profile,
+    proofVault,
+    revenueDesk,
+    leadDesk,
+    fleetImport,
+    supplierReviewRows,
+    expansionArr
+  });
+
+  return {
+    profile,
+    storefront,
+    fleetImport,
+    proofVault,
+    revenueDesk,
+    leadDesk,
+    yardScore,
+    supplierReviewRows,
+    expansionArr,
+    signals,
+    score,
+    riskCount,
+    badge,
+    summary,
+    actions
+  };
+}
+
+function getAccountHealthSignal(label, score, detail) {
+  const statusClass = score >= 80 ? "ready" : score >= 65 ? "watch" : "risk";
+  return {
+    label,
+    score,
+    detail,
+    status: statusClass === "ready" ? "Ready" : statusClass === "watch" ? "Watch" : "Risk",
+    statusClass
+  };
+}
+
+function getAccountHealthActions(context) {
+  const actions = [];
+  const proofGaps = context.proofVault.expiringCount + context.proofVault.missingCount;
+  const dormantListings = context.revenueDesk.pausedCount + context.revenueDesk.draftCount;
+
+  if (context.revenueDesk.renewalRiskCount) {
+    actions.push({
+      label: "Save renewal risk",
+      detail: `${context.revenueDesk.renewalRiskCount} paid listing${context.revenueDesk.renewalRiskCount === 1 ? "" : "s"} need renewal attention before visibility drops.`,
+      status: "Save",
+      priorityClass: "hot",
+      anchor: "#revenue-desk"
+    });
+  }
+
+  if (proofGaps) {
+    actions.push({
+      label: "Clean proof before renewal",
+      detail: `${proofGaps} proof item${proofGaps === 1 ? "" : "s"} could weaken trust, renewal confidence, or high-value lead routing.`,
+      status: "Trust",
+      priorityClass: proofGaps > 2 ? "hot" : "warm",
+      anchor: "#proof-vault"
+    });
+  }
+
+  if (context.leadDesk.hotCount) {
+    actions.push({
+      label: "Answer hot direct leads",
+      detail: `${context.leadDesk.hotCount} hot lead${context.leadDesk.hotCount === 1 ? "" : "s"} can prove listing ROI before the supplier questions renewal.`,
+      status: "Reply",
+      priorityClass: "hot",
+      anchor: "#lead-desk"
+    });
+  }
+
+  if (context.supplierReviewRows.length) {
+    actions.push({
+      label: "Refresh yard freshness",
+      detail: `${context.supplierReviewRows.length} listing${context.supplierReviewRows.length === 1 ? "" : "s"} need availability, documents, photos, or contact reconfirmation.`,
+      status: "Refresh",
+      priorityClass: "warm",
+      anchor: "#yard"
+    });
+  }
+
+  if (context.fleetImport.readyListings) {
+    actions.push({
+      label: "Publish import-ready rows",
+      detail: `${context.fleetImport.readyListings} clean import listing${context.fleetImport.readyListings === 1 ? "" : "s"} can add USD ${context.fleetImport.annualRevenue.toLocaleString()} ARR.`,
+      status: "Grow",
+      priorityClass: "grow",
+      anchor: "#fleet-import"
+    });
+  }
+
+  if (dormantListings) {
+    actions.push({
+      label: "Reactivate dormant inventory",
+      detail: `${dormantListings} paused or draft listing${dormantListings === 1 ? "" : "s"} can become paid inventory once proof and availability are clean.`,
+      status: "Grow",
+      priorityClass: "grow",
+      anchor: "#revenue-desk"
+    });
+  }
+
+  if (!actions.length) {
+    actions.push({
+      label: "Prepare annual expansion",
+      detail: `${context.profile.supplier} is healthy enough to pitch annual renewal, branch pages, or more category coverage.`,
+      status: "Expand",
+      priorityClass: "grow",
+      anchor: "#pricing"
+    });
+  }
+
+  return actions.slice(0, 5);
 }
 
 function renderTrustChecklist() {
@@ -3704,6 +4528,45 @@ function buildFleetImportText(model = getFleetImportModel()) {
   ].join("\n");
 }
 
+function buildProofVaultText(model = getProofVaultModel()) {
+  return [
+    "Heavyster Proof Vault",
+    `Supplier: ${model.profile.supplier}`,
+    `Vault status: ${model.badge} - ${model.score}/100`,
+    `Buyer-ready proof items: ${model.readyCount}`,
+    `Expiring soon: ${model.expiringCount}`,
+    `Missing proof items: ${model.missingCount}`,
+    "Proof register:",
+    ...model.rows.map((row) => `- ${row.status}: ${row.type} for ${row.target}, ${row.expiryLabel}, holder ${row.holder}, action ${row.action}`),
+    "Buyer trust gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.label} - ${gate.detail}`),
+    "Supplier instruction:",
+    "Refresh expiring documents, upload missing proof, and attach buyer-safe proof to public listings before routing high-value enquiries.",
+    "Phase one rule: proof improves listing trust and conversion. Rental payment still stays direct between buyer and rental company."
+  ].join("\n");
+}
+
+function buildRevenueDeskText(model = getRevenueDeskModel()) {
+  return [
+    "Heavyster Listing Revenue Desk",
+    `Supplier: ${model.profile.supplier}`,
+    `Revenue status: ${model.badge} - ${model.score}/100`,
+    `Paid listings: ${model.paidListings}`,
+    `Pending paused or draft listings: ${model.pendingListings}`,
+    `Monthly listing SaaS revenue: USD ${model.monthlyRevenue.toLocaleString()}`,
+    `Annualized listing revenue: USD ${model.annualRevenue.toLocaleString()}`,
+    `Annual-plan share: ${model.annualShare}%`,
+    `Renewal-risk listings: ${model.renewalRiskCount}`,
+    "Paid listing queue:",
+    ...model.rows.map((row) => `- ${row.status}: ${row.package}, ${row.listings} listing${row.listings === 1 ? "" : "s"}, ${row.planLabel}, USD ${row.monthlyRevenue.toLocaleString()}/mo, USD ${row.annualRevenue.toLocaleString()} ARR, ${row.renewalLabel}, action ${row.action}`),
+    "Renewal playbook:",
+    ...model.playbook.map((step) => `- ${step.status}: ${step.label} - ${step.detail}`),
+    "Supplier instruction:",
+    "Renew at-risk paid listings first, move monthly listings to annual where trust is proven, then activate paused or draft inventory only after photos, proof, and availability are clean.",
+    "Phase one rule: Heavyster charges for active listings only. Buyer-supplier rental payment stays direct and Heavyster takes 0% rental commission."
+  ].join("\n");
+}
+
 function buildLeadDeskText(model = getLeadDeskModel()) {
   const item = model.active;
   return [
@@ -3726,6 +4589,25 @@ function buildLeadDeskText(model = getLeadDeskModel()) {
     `We can confirm availability, operator/crew terms, delivery, documents, and quote validity for ${item.lead.start}.`,
     `Please confirm site access, exact start date, working hours, and whether ${item.lead.terms.join(", ").toLowerCase()} should be included in the quote.`,
     "Payment will be arranged directly between buyer and rental company. Heavyster is only supporting the listing and lead workflow."
+  ].join("\n");
+}
+
+function buildAccountHealthText(model = getAccountHealthModel()) {
+  return [
+    "Heavyster Supplier Account Health Radar",
+    `Supplier: ${model.profile.supplier}`,
+    `Health status: ${model.badge} - ${model.score}/100`,
+    `Risk signals: ${model.riskCount}`,
+    `Listing ARR: USD ${model.revenueDesk.annualRevenue.toLocaleString()}`,
+    `Direct enquiry pipeline: USD ${model.leadDesk.totalBudget.toLocaleString()}`,
+    `Expansion ARR visible: USD ${model.expansionArr.toLocaleString()}`,
+    "Health signals:",
+    ...model.signals.map((signal) => `- ${signal.status}: ${signal.label}, ${signal.score}/100, ${signal.detail}`),
+    "Next best actions:",
+    ...model.actions.map((action) => `- ${action.status}: ${action.label} - ${action.detail}`),
+    "Founder instruction:",
+    "Use this account health view before renewal calls. Save renewal-risk listings first, prove lead ROI, clean proof gaps, refresh stale yard data, then pitch annual expansion or more active listings.",
+    "Phase one rule: account health is about supplier retention and listing SaaS growth. Rental payment still stays direct between buyer and rental company."
   ].join("\n");
 }
 

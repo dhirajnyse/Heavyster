@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-fleet-import" />
+    <link rel="stylesheet" href="styles.css?v=20260517-account-health" />
   </head>
   <body>
     <div class="app-shell">
@@ -43,6 +43,8 @@
           <a href="#command-center">Command</a>
           <a href="#jobsite">Jobsite</a>
           <a href="#studio">Supplier Studio</a>
+          <a href="#revenue-desk">Revenue</a>
+          <a href="#account-health">Health</a>
           <a href="#growth">Growth</a>
           <a href="#market-maker">Market Map</a>
           <a href="#pricing">Pricing</a>
@@ -741,6 +743,84 @@
           </div>
         </section>
 
+        <section class="proof-vault-section" id="proof-vault">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Proof Vault</p>
+              <h2>Keep supplier documents, inspections, and operator proof buyer-ready.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyProofVaultButton">Copy proof packet</button>
+          </div>
+
+          <div class="proof-vault-grid">
+            <article class="proof-vault-card proof-vault-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Verification control</p>
+                  <h3 id="proofVaultTitle">Supplier proof vault</h3>
+                </div>
+                <span class="pill" id="proofVaultBadge">Review</span>
+              </div>
+              <div class="proof-vault-score" id="proofVaultScore"></div>
+              <div class="proof-vault-metrics" id="proofVaultMetrics"></div>
+            </article>
+
+            <article class="proof-vault-card">
+              <h3>Proof register</h3>
+              <div class="proof-vault-queue" id="proofVaultQueue"></div>
+            </article>
+
+            <article class="proof-vault-card">
+              <h3>Buyer trust gates</h3>
+              <div class="proof-vault-gates" id="proofVaultGates"></div>
+            </article>
+
+            <article class="proof-vault-card proof-vault-packet-card">
+              <h3>Buyer-ready proof packet</h3>
+              <div class="proof-vault-packet" id="proofVaultPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="revenue-desk-section" id="revenue-desk">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Listing Revenue Desk</p>
+              <h2>Know which listings are paid, renewing, paused, or ready to publish.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyRevenueDeskButton">Copy revenue packet</button>
+          </div>
+
+          <div class="revenue-desk-grid">
+            <article class="revenue-desk-card revenue-desk-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Phase-one SaaS money</p>
+                  <h3 id="revenueDeskTitle">Supplier revenue desk</h3>
+                </div>
+                <span class="pill" id="revenueDeskBadge">Review</span>
+              </div>
+              <div class="revenue-desk-score" id="revenueDeskScore"></div>
+              <div class="revenue-desk-metrics" id="revenueDeskMetrics"></div>
+            </article>
+
+            <article class="revenue-desk-card">
+              <h3>Paid listing queue</h3>
+              <div class="revenue-desk-queue" id="revenueDeskQueue"></div>
+            </article>
+
+            <article class="revenue-desk-card">
+              <h3>Renewal playbook</h3>
+              <div class="revenue-desk-playbook" id="revenueDeskPlaybook"></div>
+            </article>
+
+            <article class="revenue-desk-card revenue-desk-packet-card">
+              <h3>Copy-ready revenue packet</h3>
+              <div class="revenue-desk-packet" id="revenueDeskPacket"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="lead-desk-section" id="lead-desk">
           <div class="section-header wide">
             <div>
@@ -776,6 +856,45 @@
             <article class="lead-desk-card lead-desk-reply-card">
               <h3>Copy-ready supplier reply</h3>
               <div class="lead-desk-reply" id="leadDeskReply"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="account-health-section" id="account-health">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Supplier Account Health Radar</p>
+              <h2>Spot supplier churn risk, expansion upside, and the next best save action.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyAccountHealthButton">Copy health plan</button>
+          </div>
+
+          <div class="account-health-grid">
+            <article class="account-health-card account-health-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Retention command</p>
+                  <h3 id="accountHealthTitle">Supplier health radar</h3>
+                </div>
+                <span class="pill" id="accountHealthBadge">Review</span>
+              </div>
+              <div class="account-health-score" id="accountHealthScore"></div>
+              <div class="account-health-metrics" id="accountHealthMetrics"></div>
+            </article>
+
+            <article class="account-health-card">
+              <h3>Health signals</h3>
+              <div class="account-health-signals" id="accountHealthSignals"></div>
+            </article>
+
+            <article class="account-health-card">
+              <h3>Next best actions</h3>
+              <div class="account-health-actions" id="accountHealthActions"></div>
+            </article>
+
+            <article class="account-health-card account-health-plan-card">
+              <h3>Copy-ready save and grow plan</h3>
+              <div class="account-health-plan" id="accountHealthPlan"></div>
             </article>
           </div>
         </section>
@@ -1017,6 +1136,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-fleet-import" defer></script>
+    <script src="app.js?v=20260517-account-health" defer></script>
   </body>
 </html>

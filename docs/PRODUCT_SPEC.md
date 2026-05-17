@@ -50,6 +50,9 @@ Marketplace:
 - Yard Availability OS that flags stale supplier inventory before buyer trust is damaged
 - Supplier Fleet Storefront that gives each rental company a verified mini-site with fleet lanes, services, proof, and direct enquiry rules
 - Fleet Import Console that lets suppliers bulk intake machine rows, validate photos/documents/availability/rate terms, and preview paid-listing revenue
+- Proof Vault that tracks document expiry, missing proof, inspection/load-test status, operator proof, and copy-ready buyer trust packets
+- Listing Revenue Desk that tracks active paid listings, renewal risk, monthly-to-annual upsell, paused inventory, and copy-ready billing follow-up
+- Supplier Account Health Radar that combines revenue, proof, lead response, yard freshness, storefront strength, and import upside into a churn and expansion command view
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -60,6 +63,7 @@ Billing:
 - USD 9 monthly per active listing
 - USD 99 yearly per active listing
 - Listing status: draft, active, paused, expired
+- Renewal status: clean, renewal risk, paused, draft
 
 Supplier Studio:
 
@@ -69,9 +73,12 @@ Supplier Studio:
 - Profile completion score
 - Storefront publishing readiness
 - Bulk fleet import validation
+- Document expiry and proof vault readiness
+- Listing Revenue Desk with renewal queue, annual upsell, paused inventory, and phase-one revenue packet
 - Listing revenue preview per supplier
 - Document gap and availability freshness board
 - Lead Desk with supplier-specific enquiry scoring, response urgency, and copy-ready replies
+- Supplier Account Health Radar with risk signals, next-best save actions, expansion ARR, and copy-ready account plan
 - Verification checklist
 - Billing readiness preview
 
@@ -114,6 +121,15 @@ Founder Admin:
 - Supplier storefront packets copied
 - Fleet import plans copied
 - Bulk import rows converted into paid listings
+- Proof Vault packets copied
+- Expiring supplier proof renewed before routing high-value leads
+- Listing Revenue Desk packets copied
+- Listing renewals saved before expiry
+- Monthly paid listings converted to annual plans
+- Paused or draft inventory activated into paid listings
+- Supplier Account Health plans copied
+- Supplier churn-risk signals reduced before renewal
+- Expansion ARR surfaced from import-ready and dormant listings
 - Supplier profile page views and enquiry clicks
 - Supplier Studio profile readiness improved
 - Supplier listings published from Studio

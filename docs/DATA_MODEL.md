@@ -54,6 +54,84 @@ Use this when the supplier manages its fleet, profile readiness, storefront publ
 - modeled_listing_revenue_upside
 - updated_at
 
+## ListingRevenueDesk
+
+Use this when Heavyster tracks phase-one listing subscription revenue without touching the rental payment.
+
+- id
+- supplier_id
+- active_paid_listing_count
+- pending_listing_count
+- monthly_listing_revenue
+- annualized_listing_revenue
+- annual_plan_share
+- renewal_risk_count
+- paused_listing_count
+- draft_listing_count
+- revenue_score
+- revenue_status
+- renewal_playbook
+- copy_ready_revenue_packet
+- copied_at
+- updated_at
+
+## ListingRevenueRow
+
+- id
+- revenue_desk_id
+- supplier_id
+- listing_id
+- package_name
+- billing_plan
+- billing_status
+- paid_listing_count
+- renewal_days_remaining
+- monthly_revenue_equivalent
+- annualized_revenue
+- demand_signal
+- renewal_action
+- row_score
+- created_at
+- updated_at
+
+## SupplierAccountHealth
+
+Use this when Heavyster needs to retain and expand suppliers by combining revenue, proof, lead, yard, storefront, and import signals.
+
+- id
+- supplier_id
+- health_score
+- health_status
+- risk_signal_count
+- listing_arr
+- direct_enquiry_pipeline_value
+- expansion_arr_visible
+- revenue_health_score
+- proof_health_score
+- lead_response_score
+- yard_freshness_score
+- storefront_strength_score
+- import_upside_score
+- next_best_actions
+- copy_ready_health_plan
+- copied_at
+- updated_at
+
+## SupplierAccountHealthAction
+
+- id
+- account_health_id
+- supplier_id
+- action_type
+- action_label
+- action_detail
+- action_priority
+- target_module
+- expected_impact
+- action_status
+- created_at
+- updated_at
+
 ## SupplierLeadDesk
 
 Use this when a supplier tracks direct enquiries and response workflow without Heavyster collecting payment.
@@ -129,6 +207,26 @@ Use this when a supplier imports many machines before they become paid listings.
 - publish_action
 - matching_listing_id
 - created_at
+
+## ProofVaultItem
+
+Use this when suppliers need to keep license, insurance, inspection, load-test, operator, and permit proof buyer-ready.
+
+- id
+- supplier_id
+- listing_id
+- proof_type
+- proof_target
+- proof_status
+- holder
+- expires_at
+- days_to_expiry
+- trust_score
+- buyer_safe_label
+- refresh_action
+- copied_at
+- created_at
+- updated_at
 
 ## CommandCenter
 

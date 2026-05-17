@@ -30,7 +30,10 @@ This folder contains a static product prototype with:
 - Yard Availability OS for supplier freshness scoring and copy-ready update queues
 - Supplier Fleet Storefront for verified supplier mini-sites, fleet lanes, proof stack, and buyer-ready profile packets
 - Fleet Import Console for bulk machine intake, validation gaps, and paid-listing revenue preview
+- Proof Vault for document expiry, inspection proof, operator proof, and buyer-ready verification packets
+- Listing Revenue Desk for paid listings, renewal risk, annual upsell, paused inventory, and copy-ready billing follow-up
 - Supplier Lead Desk for direct enquiry scoring, response urgency, reply playbooks, and copy-ready supplier replies
+- Supplier Account Health Radar for churn risk, expansion upside, health signals, and next-best save actions
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach

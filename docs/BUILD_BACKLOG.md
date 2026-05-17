@@ -23,6 +23,9 @@
 - Yard Availability OS for stale listing detection and supplier refresh queues
 - Supplier Fleet Storefront for verified mini-sites and copy-ready supplier profile packets
 - Fleet Import Console for bulk supplier intake, validation gates, and listing revenue preview
+- Proof Vault for document expiry, missing proof, and buyer-ready verification packets
+- Listing Revenue Desk for renewal risk, annual upsell, paused inventory, and phase-one listing ARR control
+- Supplier Account Health Radar for churn-risk signals, next-best save actions, and expansion ARR visibility
 - Demand request capture and founder demand radar
 - Supplier hunt growth engine and copy-ready outreach packet
 - Market Maker Mode with expansion scoring and launch page brief
@@ -64,7 +67,10 @@
 - Supplier profile page with fleet lanes, proof stack, and direct enquiry rules
 - Supplier Studio publishing controls connected to the buyer-facing storefront
 - Bulk fleet import queue with validation gates before paid listing publish
+- Proof Vault expiry radar before routing high-value buyer enquiries
+- Listing Revenue Desk so suppliers can renew, annualize, and activate paid listings without any rental commission workflow
 - Lead response desk connected to supplier listings and storefront proof
+- Supplier Account Health Radar connected to Revenue Desk, Proof Vault, Lead Desk, Yard Board, Storefront, and Fleet Import
 - Command Center role launcher so large-feature UX stays simple as the marketplace grows
 - Saved demand request flow for zero-result searches
 - Supplier profile page
@@ -78,6 +84,8 @@
 - Monthly and annual plan selection
 - Billing status states
 - Active, paused, expired listing controls
+- Renewal-risk queue, annual conversion prompt, and copy-ready listing revenue packet
+- Account health plan before renewal calls
 - Supplier invoice receipt page
 
 ## Sprint 6: Trust and Launch
