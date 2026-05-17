@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260516-rfq-room" />
+    <link rel="stylesheet" href="styles.css?v=20260517-mobilization-tower" />
   </head>
   <body>
     <div class="app-shell">
@@ -40,8 +40,11 @@
 
         <nav class="topnav" aria-label="Primary">
           <a href="#marketplace">Marketplace</a>
+          <a href="#jobsite">Jobsite</a>
           <a href="#passport">Passport</a>
           <a href="#rfq">RFQ Room</a>
+          <a href="#award">Award Room</a>
+          <a href="#mobilize">Mobilize</a>
           <a href="#studio">Supplier Studio</a>
           <a href="#categories">Categories</a>
           <a href="#growth">Growth</a>
@@ -229,6 +232,79 @@
           </aside>
         </section>
 
+        <section class="jobsite-section" id="jobsite">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Jobsite Planner</p>
+              <h2>Turn a project note into a rental package before the buyer sends RFQs.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyJobsiteButton">Copy project brief</button>
+          </div>
+
+          <div class="jobsite-grid">
+            <article class="jobsite-card jobsite-control-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Package builder</p>
+                  <h3>Plan the machine mix</h3>
+                </div>
+              </div>
+              <div class="jobsite-controls">
+                <label>
+                  Project type
+                  <select id="jobsiteType">
+                    <option value="smart">Smart from note</option>
+                    <option value="earthworks">Earthworks</option>
+                    <option value="lifting">Lifting</option>
+                    <option value="roadwork">Roadwork</option>
+                    <option value="site-power">Site power</option>
+                  </select>
+                </label>
+                <label>
+                  Region
+                  <select id="jobsiteRegion">
+                    <option value="selected">Use selected market</option>
+                    <option value="UAE">UAE</option>
+                    <option value="USA">USA</option>
+                    <option value="India">India</option>
+                    <option value="UK">UK</option>
+                  </select>
+                </label>
+                <label>
+                  Start window
+                  <select id="jobsiteUrgency">
+                    <option>This week</option>
+                    <option>Next week</option>
+                    <option>This month</option>
+                    <option>Planning stage</option>
+                  </select>
+                </label>
+              </div>
+              <div class="jobsite-actions">
+                <button type="button" class="ghost-button" id="applyJobsiteButton">Build package</button>
+                <button type="button" class="solid-button" id="applyPackageButton">Send to shortlist</button>
+              </div>
+            </article>
+
+            <article class="jobsite-card jobsite-plan-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Planner output</p>
+                  <h3 id="jobsiteTitle">Project package</h3>
+                </div>
+                <span class="pill" id="jobsiteBadge">Draft</span>
+              </div>
+              <div class="jobsite-score" id="jobsiteScore"></div>
+              <div class="jobsite-package" id="jobsitePackage"></div>
+            </article>
+
+            <article class="jobsite-card jobsite-gap-card">
+              <h3>Supply gap radar</h3>
+              <div class="jobsite-gaps" id="jobsiteGaps"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="passport-section" id="passport">
           <div class="section-header wide">
             <div>
@@ -295,6 +371,74 @@
             <article class="rfq-card rfq-packet-card">
               <h3>Quote control checklist</h3>
               <div class="rfq-checklist" id="rfqChecklist"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="award-section" id="award">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Award Intelligence</p>
+              <h2>Rank suppliers before the buyer chooses who gets the job.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyAwardButton">Copy award memo</button>
+          </div>
+
+          <div class="award-grid">
+            <article class="award-card award-winner-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Recommended award</p>
+                  <h3 id="awardWinner">Select shortlist</h3>
+                </div>
+                <span class="pill" id="awardBadge">Draft</span>
+              </div>
+              <div class="award-score" id="awardScore"></div>
+              <div class="award-reason" id="awardReason"></div>
+            </article>
+
+            <article class="award-card">
+              <h3>Decision matrix</h3>
+              <div class="award-matrix" id="awardMatrix"></div>
+            </article>
+
+            <article class="award-card award-memo-card">
+              <h3>Award memo</h3>
+              <div class="award-memo" id="awardMemo"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="mobilize-section" id="mobilize">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Mobilization Control Tower</p>
+              <h2>Check if the awarded machine can actually move from promise to jobsite.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyMobilizeButton">Copy handoff</button>
+          </div>
+
+          <div class="mobilize-grid">
+            <article class="mobilize-card mobilize-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Pre-dispatch status</p>
+                  <h3 id="mobilizeTitle">Mobilization target</h3>
+                </div>
+                <span class="pill" id="mobilizeBadge">Draft</span>
+              </div>
+              <div class="mobilize-score" id="mobilizeScore"></div>
+              <div class="mobilize-summary" id="mobilizeSummary"></div>
+            </article>
+
+            <article class="mobilize-card">
+              <h3>Dispatch gate checklist</h3>
+              <div class="mobilize-checklist" id="mobilizeChecklist"></div>
+            </article>
+
+            <article class="mobilize-card mobilize-handoff-card">
+              <h3>Buyer-supplier handoff</h3>
+              <div class="mobilize-handoff" id="mobilizeHandoff"></div>
             </article>
           </div>
         </section>
@@ -619,6 +763,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260516-rfq-room" defer></script>
+    <script src="app.js?v=20260517-mobilization-tower" defer></script>
   </body>
 </html>

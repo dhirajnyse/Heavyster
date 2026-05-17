@@ -19,8 +19,10 @@ This folder contains a static product prototype with:
 - Compact catalog row view for large inventory UX
 - Smart no-results recovery with nearby matches and one-click filter relaxation
 - Buyer shortlist and comparison tray
+- Jobsite Planner that turns a project note into a package of matched machines and supply gaps
 - Trust Passport with machine readiness score, proof stack, and buyer risk radar
 - RFQ Command Room for shortlist readiness and copy-ready supplier quote packets
+- Award Intelligence for supplier ranking and copy-ready buyer award memos
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach

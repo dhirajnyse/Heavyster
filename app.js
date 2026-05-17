@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260516-heavyster-rfq-room-v8";
+const DATA_VERSION = "20260517-heavyster-mobilization-tower-v11";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -165,6 +165,57 @@ const huntBlueprints = [
   }
 ];
 
+const jobsiteBlueprints = [
+  {
+    key: "earthworks",
+    label: "Earthworks package",
+    keywords: ["earth", "excavat", "foundation", "trench", "backfill", "site prep", "dozer", "loader"],
+    outcome: "Move soil, open trenches, shape the site, and finish with compaction.",
+    roles: [
+      { role: "Primary excavation", category: "Earthmoving", keywords: ["excavator", "bucket", "breaker"], target: "Excavator with attachments" },
+      { role: "Bulk loading", category: "Earthmoving", keywords: ["loader", "wheel"], target: "Wheel loader" },
+      { role: "Cut and push", category: "Earthmoving", keywords: ["dozer", "blade", "track"], target: "Dozer" },
+      { role: "Final compaction", category: "Roadwork", keywords: ["roller", "compactor", "soil"], target: "Soil compactor" }
+    ]
+  },
+  {
+    key: "lifting",
+    label: "Lifting package",
+    keywords: ["lift", "crane", "telehandler", "steel", "permit", "operator", "height"],
+    outcome: "Lift heavy materials with certified capacity, operator proof, and site logistics support.",
+    roles: [
+      { role: "Heavy lift", category: "Lifting", keywords: ["crane", "mobile", "load"], target: "Mobile crane" },
+      { role: "Material reach", category: "Lifting", keywords: ["telehandler", "reach", "fork"], target: "Telehandler" },
+      { role: "Site loading", category: "Earthmoving", keywords: ["loader", "bucket"], target: "Loader for staging" },
+      { role: "Transport support", category: "Transport", keywords: ["lowbed", "trailer", "transport"], target: "Lowbed trailer" }
+    ]
+  },
+  {
+    key: "roadwork",
+    label: "Roadwork package",
+    keywords: ["road", "asphalt", "roller", "compaction", "grader", "pavement", "civil"],
+    outcome: "Prepare, place, compact, and support roadwork execution.",
+    roles: [
+      { role: "Compaction", category: "Roadwork", keywords: ["roller", "compactor"], target: "Road roller" },
+      { role: "Earth shaping", category: "Earthmoving", keywords: ["dozer", "blade"], target: "Dozer or grader" },
+      { role: "Material loading", category: "Earthmoving", keywords: ["loader", "wheel"], target: "Wheel loader" },
+      { role: "Site excavation", category: "Earthmoving", keywords: ["excavator"], target: "Excavator" }
+    ]
+  },
+  {
+    key: "site-power",
+    label: "Site power package",
+    keywords: ["power", "generator", "kva", "temporary", "event", "backup", "cable"],
+    outcome: "Keep the site powered while material handling and backup equipment stay ready.",
+    roles: [
+      { role: "Temporary power", category: "Power", keywords: ["generator", "kva", "power"], target: "Generator set" },
+      { role: "Material handling", category: "Lifting", keywords: ["telehandler", "fork"], target: "Telehandler" },
+      { role: "Backup lift", category: "Lifting", keywords: ["crane", "lift"], target: "Crane on call" },
+      { role: "Delivery support", category: "Transport", keywords: ["lowbed", "transport", "trailer"], target: "Transport partner" }
+    ]
+  }
+];
+
 let state = loadState();
 let toastTimer = 0;
 
@@ -191,6 +242,9 @@ function defaultState() {
     builderModel: "Cat 320 Excavator",
     builderRegion: "UAE",
     builderAvailability: "available",
+    jobsiteType: "smart",
+    jobsiteRegion: "selected",
+    jobsiteUrgency: "This week",
     demandEquipment: "Crawler crane",
     demandRegion: "UAE",
     demandUrgency: "This week",
@@ -234,6 +288,9 @@ function bindControls() {
   const builderModel = document.querySelector("#builderModel");
   const builderRegion = document.querySelector("#builderRegion");
   const builderAvailability = document.querySelector("#builderAvailability");
+  const jobsiteType = document.querySelector("#jobsiteType");
+  const jobsiteRegion = document.querySelector("#jobsiteRegion");
+  const jobsiteUrgency = document.querySelector("#jobsiteUrgency");
   const demandEquipment = document.querySelector("#demandEquipment");
   const demandRegion = document.querySelector("#demandRegion");
   const demandUrgency = document.querySelector("#demandUrgency");
@@ -251,6 +308,9 @@ function bindControls() {
   builderModel.value = state.builderModel;
   builderRegion.value = state.builderRegion;
   builderAvailability.value = state.builderAvailability;
+  jobsiteType.value = state.jobsiteType;
+  jobsiteRegion.value = state.jobsiteRegion;
+  jobsiteUrgency.value = state.jobsiteUrgency;
   demandEquipment.value = state.demandEquipment;
   demandRegion.value = state.demandRegion;
   demandUrgency.value = state.demandUrgency;
@@ -278,7 +338,10 @@ function bindControls() {
     state.projectNote = event.target.value;
     saveState();
     renderLeadPacket();
+    renderJobsitePlanner();
     renderRfqRoom();
+    renderAwardRoom();
+    renderMobilizationTower();
   });
 
   listingCount.addEventListener("input", (event) => {
@@ -315,6 +378,11 @@ function bindControls() {
   [builderCategory, builderModel, builderRegion, builderAvailability].forEach((input) => {
     input.addEventListener("input", updateBuilderState);
     input.addEventListener("change", updateBuilderState);
+  });
+
+  [jobsiteType, jobsiteRegion, jobsiteUrgency].forEach((input) => {
+    input.addEventListener("input", updateJobsiteState);
+    input.addEventListener("change", updateJobsiteState);
   });
 
   [demandEquipment, demandRegion, demandUrgency, demandDuration].forEach((input) => {
@@ -359,6 +427,54 @@ function bindControls() {
     } catch {
       showToast("Copy is blocked here, but the RFQ packet is visible.");
     }
+  });
+
+  document.querySelector("#copyAwardButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildAwardMemoText());
+      showToast("Award memo copied.");
+    } catch {
+      showToast("Copy is blocked here, but the award memo is visible.");
+    }
+  });
+
+  document.querySelector("#copyJobsiteButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildJobsiteBriefText());
+      showToast("Jobsite project brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the jobsite brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyMobilizeButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildMobilizationText());
+      showToast("Mobilization handoff copied.");
+    } catch {
+      showToast("Copy is blocked here, but the mobilization handoff is visible.");
+    }
+  });
+
+  document.querySelector("#applyJobsiteButton").addEventListener("click", () => {
+    renderJobsitePlanner();
+    renderMobilizationTower();
+    document.querySelector("#jobsite").scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Jobsite package refreshed.");
+  });
+
+  document.querySelector("#applyPackageButton").addEventListener("click", () => {
+    const packageListings = getJobsiteModel().matches.map((match) => match.listing).filter(Boolean);
+    if (!packageListings.length) {
+      showToast("No matched machines yet. Capture the supply gap first.");
+      return;
+    }
+    state.shortlistIds = Array.from(new Set([...state.shortlistIds, ...packageListings.map((listing) => listing.id)]));
+    state.selectedListingId = packageListings[0].id;
+    saveState();
+    render();
+    document.querySelector("#rfq").scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast(`${packageListings.length} jobsite machines sent to RFQ shortlist.`);
   });
 
   document.querySelector("#copyHuntButton").addEventListener("click", async () => {
@@ -434,6 +550,14 @@ function updateBuilderState() {
   renderBuilderSummary();
 }
 
+function updateJobsiteState() {
+  state.jobsiteType = document.querySelector("#jobsiteType").value;
+  state.jobsiteRegion = document.querySelector("#jobsiteRegion").value;
+  state.jobsiteUrgency = document.querySelector("#jobsiteUrgency").value;
+  saveState();
+  renderJobsitePlanner();
+}
+
 function updateDemandState() {
   state.demandEquipment = document.querySelector("#demandEquipment").value.trim();
   state.demandRegion = document.querySelector("#demandRegion").value;
@@ -450,9 +574,12 @@ function render() {
   renderCatalog();
   renderLeadPacket();
   renderEquipmentDetail();
+  renderJobsitePlanner();
   renderTrustPassport();
   renderShortlistTray();
   renderRfqRoom();
+  renderAwardRoom();
+  renderMobilizationTower();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -743,6 +870,139 @@ function renderEquipmentDetail() {
   `;
 }
 
+function renderJobsitePlanner() {
+  const model = getJobsiteModel();
+  setText("#jobsiteTitle", `${model.blueprint.label} - ${model.region}`);
+  setText("#jobsiteBadge", model.badge);
+
+  document.querySelector("#jobsiteScore").innerHTML = [
+    ["Readiness", `${model.packageScore}/100`],
+    ["Matched", `${model.matchedCount}/${model.roles.length}`],
+    ["Available now", String(model.availableCount)],
+    ["Gaps", String(model.gaps.length)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#jobsitePackage").innerHTML = model.matches.map((match) => `
+    <div class="jobsite-role ${match.listing ? "is-ready" : "is-gap"}">
+      <span>
+        <strong>${escapeHtml(match.role.role)}</strong>
+        ${escapeHtml(match.role.target)}
+      </span>
+      <em>${match.listing ? `${escapeHtml(match.listing.name)} (${match.readiness}/100)` : "Supply gap"}</em>
+      <small>${match.listing ? `${escapeHtml(match.listing.supplier)} - ${escapeHtml(match.listing.city)}, ${escapeHtml(match.listing.region)}` : `Recruit ${escapeHtml(match.role.target.toLowerCase())} suppliers for ${escapeHtml(model.region)}.`}</small>
+    </div>
+  `).join("");
+
+  document.querySelector("#jobsiteGaps").innerHTML = model.gaps.length ? model.gaps.map((gap) => `
+    <div class="jobsite-gap">
+      <strong>${escapeHtml(gap.role)}</strong>
+      <span>${escapeHtml(gap.message)}</span>
+    </div>
+  `).join("") : `
+    <div class="jobsite-gap is-clear">
+      <strong>Package covered</strong>
+      <span>Every planned role has a visible supplier match. Move the package to RFQ, then let Award Intelligence choose the safest winner.</span>
+    </div>
+  `;
+}
+
+function getJobsiteModel() {
+  const blueprint = getJobsiteBlueprint();
+  const region = getJobsiteRegion();
+  const usedIds = new Set();
+  const matches = blueprint.roles.map((role) => {
+    const listing = matchListingForJobsiteRole(role, region, usedIds);
+    if (listing) usedIds.add(listing.id);
+    return {
+      role,
+      listing,
+      readiness: listing ? getTrustPassport(listing).score : 0
+    };
+  });
+  const matched = matches.filter((match) => match.listing);
+  const gaps = matches
+    .filter((match) => !match.listing)
+    .map((match) => ({
+      role: match.role.role,
+      message: `${match.role.target} is missing in ${region}. Save this as a demand signal and recruit suppliers before promising full coverage.`
+    }));
+  const averageReadiness = matched.length
+    ? Math.round(matched.reduce((total, match) => total + match.readiness, 0) / matched.length)
+    : 0;
+  const coverageScore = Math.round((matched.length / matches.length) * 100);
+  const packageScore = Math.round((coverageScore * 0.56) + (averageReadiness * 0.44));
+  const availableCount = matched.filter((match) => match.listing.availability === "available").length;
+  const badge = packageScore >= 86
+    ? "Site-ready"
+    : packageScore >= 62
+      ? "Partial package"
+      : "Supply gap";
+
+  return {
+    blueprint,
+    region,
+    roles: blueprint.roles,
+    matches,
+    matchedCount: matched.length,
+    availableCount,
+    gaps,
+    averageReadiness,
+    coverageScore,
+    packageScore,
+    badge
+  };
+}
+
+function getJobsiteBlueprint() {
+  if (state.jobsiteType && state.jobsiteType !== "smart") {
+    return jobsiteBlueprints.find((blueprint) => blueprint.key === state.jobsiteType) || jobsiteBlueprints[0];
+  }
+  const text = [
+    state.projectNote,
+    state.search,
+    state.demandEquipment,
+    getSelectedListing().name,
+    getSelectedListing().category,
+    getSelectedListing().specs
+  ].join(" ").toLowerCase();
+  return jobsiteBlueprints
+    .map((blueprint) => ({
+      blueprint,
+      score: blueprint.keywords.reduce((total, keyword) => total + (text.includes(keyword) ? 1 : 0), 0)
+    }))
+    .sort((a, b) => b.score - a.score)[0].blueprint;
+}
+
+function getJobsiteRegion() {
+  if (state.jobsiteRegion && state.jobsiteRegion !== "selected") return state.jobsiteRegion;
+  if (state.region && state.region !== "all") return state.region;
+  return getSelectedListing().region;
+}
+
+function matchListingForJobsiteRole(role, region, usedIds) {
+  const candidates = listings
+    .filter((listing) => !usedIds.has(listing.id) && listing.region === region)
+    .map((listing) => {
+      const text = [listing.name, listing.category, listing.specs, listing.supplier].join(" ").toLowerCase();
+      const hasRoleMatch = listing.category === role.category || role.keywords.some((keyword) => text.includes(keyword));
+      let score = 0;
+      if (listing.category === role.category) score += 12;
+      score += role.keywords.reduce((total, keyword) => total + (text.includes(keyword) ? 8 : 0), 0);
+      if (listing.region === region) score += 7;
+      if (listing.availability === "available") score += 4;
+      if (listing.availability === "soon") score += 2;
+      if (listing.verified) score += 3;
+      score += Math.round(getTrustPassport(listing).score / 25);
+      return { listing, score: hasRoleMatch ? score : 0 };
+    })
+    .filter((candidate) => candidate.score >= 16)
+    .sort((a, b) => b.score - a.score || a.listing.name.localeCompare(b.listing.name));
+
+  return candidates[0]?.listing || null;
+}
+
 function renderTrustPassport() {
   const listing = getSelectedListing();
   const passport = getTrustPassport(listing);
@@ -855,6 +1115,8 @@ function toggleShortlist(id) {
   renderShortlistTray();
   renderLeadPacket();
   renderRfqRoom();
+  renderAwardRoom();
+  renderMobilizationTower();
   showToast(exists ? "Removed from shortlist." : "Saved to shortlist.");
 }
 
@@ -962,6 +1224,255 @@ function getRfqListings() {
     .map((id) => listings.find((listing) => listing.id === id))
     .filter(Boolean);
   return shortlisted.length ? shortlisted : [getSelectedListing()];
+}
+
+function renderAwardRoom() {
+  const award = getAwardModel();
+  const winner = award.winner;
+
+  setText("#awardWinner", `${winner.listing.supplier}`);
+  setText("#awardBadge", award.badge);
+
+  document.querySelector("#awardScore").innerHTML = `
+    <strong>${winner.total}/100</strong>
+    <span>${escapeHtml(winner.listing.name)} - ${escapeHtml(winner.listing.city)}, ${escapeHtml(winner.listing.region)}</span>
+  `;
+
+  document.querySelector("#awardReason").innerHTML = winner.reasons.map((reason) => `
+    <div>${escapeHtml(reason)}</div>
+  `).join("");
+
+  document.querySelector("#awardMatrix").innerHTML = award.candidates.map((candidate, index) => `
+    <div class="award-row ${index === 0 ? "is-winner" : ""}">
+      <span>
+        <strong>${escapeHtml(candidate.listing.supplier)}</strong>
+        ${escapeHtml(candidate.listing.name)} - ${escapeHtml(candidate.listing.city)}, ${escapeHtml(candidate.listing.region)}
+      </span>
+      <em>${candidate.total}/100</em>
+      <small>${escapeHtml(candidate.signal)}</small>
+      <b>${escapeHtml(candidate.action)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#awardMemo").innerHTML = buildAwardMemoText(award)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getAwardModel() {
+  const ranked = getAwardCandidates()
+    .map((listing) => getAwardScore(listing))
+    .sort((a, b) => b.total - a.total || a.listing.supplier.localeCompare(b.listing.supplier));
+  const candidates = ranked.map((candidate, index) => {
+    if (index === 0) {
+      return {
+        ...candidate,
+        action: candidate.total >= 74 ? "Award" : "Clarify"
+      };
+    }
+    if (candidate.total >= 74) {
+      return {
+        ...candidate,
+        signal: candidate.total >= 86 ? "Qualified backup" : candidate.signal,
+        action: "Backup"
+      };
+    }
+    return candidate;
+  });
+  const winner = candidates[0];
+  const hasMultipleOptions = candidates.length > 1;
+  const hasWinnerDocumentGaps = winner.documentGaps > 0;
+  const badge = !hasMultipleOptions
+    ? "Single option"
+    : winner.total >= 86 && !hasWinnerDocumentGaps
+      ? "Award-ready"
+      : winner.total >= 74
+        ? "Clarify terms"
+        : "Hold award";
+
+  return {
+    badge,
+    winner,
+    candidates,
+    shortlistMode: (state.shortlistIds || []).length >= 2
+  };
+}
+
+function getAwardCandidates() {
+  const shortlisted = getRfqListings();
+  if (shortlisted.length >= 2) return shortlisted;
+
+  const selected = getSelectedListing();
+  const alternatives = listings
+    .filter((listing) => listing.id !== selected.id)
+    .map((listing) => {
+      let score = 0;
+      if (listing.region === selected.region) score += 5;
+      if (listing.category === selected.category) score += 4;
+      if (listing.availability === "available") score += 2;
+      if (listing.verified) score += 1;
+      return { listing, score };
+    })
+    .sort((a, b) => b.score - a.score || a.listing.name.localeCompare(b.listing.name))
+    .slice(0, 2)
+    .map((item) => item.listing);
+
+  return [selected, ...alternatives];
+}
+
+function getAwardScore(listing) {
+  const passport = getTrustPassport(listing);
+  const proof = getCategoryProof(listing);
+  const pendingDocs = listing.documents.filter((document) => document.toLowerCase().includes("pending")).length;
+  const missingProof = proof.filter((item) => !item.ready).length;
+  const documentGaps = pendingDocs + missingProof;
+  const selected = getSelectedListing();
+  const availabilityBonus = listing.availability === "available" ? 12 : listing.availability === "soon" ? 6 : 0;
+  const verificationBonus = listing.verified ? 8 : -6;
+  const documentBonus = documentGaps === 0 ? 8 : documentGaps === 1 ? 3 : -7;
+  const locationBonus = listing.region === selected.region ? 5 : 0;
+  const shortlistBonus = (state.shortlistIds || []).includes(listing.id) ? 4 : 0;
+  const total = Math.max(0, Math.min(100, Math.round(passport.score * 0.72 + availabilityBonus + verificationBonus + documentBonus + locationBonus + shortlistBonus)));
+  const reasons = [
+    `Trust Passport ${passport.score}/100 with ${passport.verdict.toLowerCase()} status.`,
+    listing.availability === "available" ? "Marked available now for faster award." : "Availability should be reconfirmed before award.",
+    listing.verified ? "Supplier identity is verified." : "Supplier identity still needs founder review.",
+    documentGaps ? `${documentGaps} proof gap${documentGaps === 1 ? "" : "s"} should be closed before dispatch.` : "No visible document gaps in this prototype.",
+    listing.region === selected.region ? "Region aligns with the selected project market." : "Cross-region option; confirm service radius and delivery."
+  ];
+  const signal = total >= 86
+    ? "Cleanest award path"
+    : total >= 74
+      ? "Good option, clarify terms"
+      : total >= 62
+        ? "Backup only"
+        : "Hold for verification";
+  const action = total >= 86 ? "Award" : total >= 74 ? "Clarify" : total >= 62 ? "Backup" : "Hold";
+
+  return {
+    listing,
+    total,
+    reasons,
+    signal,
+    action,
+    documentGaps
+  };
+}
+
+function renderMobilizationTower() {
+  const model = getMobilizationModel();
+
+  setText("#mobilizeTitle", model.title);
+  setText("#mobilizeBadge", model.badge);
+
+  document.querySelector("#mobilizeScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.target.name)} - ${escapeHtml(model.target.city)}, ${escapeHtml(model.target.region)}</span>
+  `;
+
+  document.querySelector("#mobilizeSummary").innerHTML = model.summary.map((item) => `
+    <div>
+      <strong>${escapeHtml(item.label)}</strong>
+      <span>${escapeHtml(item.value)}</span>
+    </div>
+  `).join("");
+
+  document.querySelector("#mobilizeChecklist").innerHTML = model.checks.map((check) => `
+    <div class="mobilize-check ${check.status.toLowerCase()}">
+      <span>
+        <strong>${escapeHtml(check.label)}</strong>
+        ${escapeHtml(check.detail)}
+      </span>
+      <em>${escapeHtml(check.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#mobilizeHandoff").innerHTML = model.handoff.map((line) => `
+    <p>${escapeHtml(line)}</p>
+  `).join("");
+}
+
+function getMobilizationModel() {
+  const award = getAwardModel();
+  const jobsite = getJobsiteModel();
+  const target = award.winner.listing;
+  const passport = getTrustPassport(target);
+  const pendingDocs = target.documents.filter((document) => document.toLowerCase().includes("pending")).length;
+  const text = [target.name, target.category, target.specs, target.documents.join(" ")].join(" ").toLowerCase();
+  const hasOperatorEvidence = text.includes("operator") || text.includes("driver");
+  const hasTransportEvidence = text.includes("delivery") || text.includes("permit") || text.includes("transport") || text.includes("lowbed");
+  const packageGapCount = jobsite.gaps.length;
+  const checks = [
+    {
+      label: "Availability lock",
+      status: target.availability === "available" ? "Ready" : "Confirm",
+      detail: target.availability === "available" ? "Machine is marked available now." : "Supplier must reconfirm the start window before dispatch."
+    },
+    {
+      label: "Supplier and document proof",
+      status: target.verified && pendingDocs === 0 ? "Ready" : pendingDocs ? "Gap" : "Confirm",
+      detail: target.verified && pendingDocs === 0 ? "Verified supplier with visible clean documents." : "Close supplier verification or pending document gaps."
+    },
+    {
+      label: "Operator or crew path",
+      status: hasOperatorEvidence ? "Ready" : "Confirm",
+      detail: hasOperatorEvidence ? "Operator or crew support is visible in the listing proof." : "Confirm whether rental includes operator, helper crew, or buyer-provided operator."
+    },
+    {
+      label: "Transport, access, and permits",
+      status: hasTransportEvidence ? "Ready" : "Confirm",
+      detail: hasTransportEvidence ? "Transport, permit, or site movement support is visible." : "Confirm site access, delivery route, lifting permits, and mobilization cost."
+    },
+    {
+      label: "Quote validity and payment",
+      status: "Confirm",
+      detail: "Supplier should lock rate, quote validity, deposit terms, and direct buyer-supplier payment route."
+    },
+    {
+      label: "Package support coverage",
+      status: packageGapCount === 0 ? "Ready" : packageGapCount <= 2 ? "Confirm" : "Gap",
+      detail: packageGapCount === 0 ? "Jobsite package has visible matched support equipment." : `${packageGapCount} jobsite package gap${packageGapCount === 1 ? "" : "s"} should be filled or excluded before promise.`
+    }
+  ];
+  const readyCount = checks.filter((check) => check.status === "Ready").length;
+  const gapCount = checks.filter((check) => check.status === "Gap").length;
+  const gateScore = Math.round((readyCount / checks.length) * 100);
+  const packageScore = packageGapCount === 0 ? 12 : packageGapCount === 1 ? 7 : packageGapCount === 2 ? 3 : 0;
+  const score = Math.max(0, Math.min(100, Math.round(passport.score * 0.5 + gateScore * 0.38 + packageScore - gapCount * 4)));
+  const badge = score >= 86 && gapCount === 0
+    ? "Mobilize-ready"
+    : score >= 66
+      ? "Control gaps"
+      : "Hold dispatch";
+  const risks = [
+    target.availability === "available" ? "Availability is strong; still lock the exact start time." : "Availability is not fully locked for the start window.",
+    packageGapCount ? `${packageGapCount} package support gap${packageGapCount === 1 ? "" : "s"} remain from Jobsite Planner.` : "Jobsite support package is covered in the planner.",
+    hasTransportEvidence ? "Transport or permit support is visible." : "Mobilization route, delivery cost, and site access need confirmation."
+  ];
+
+  return {
+    title: `${target.supplier}`,
+    badge,
+    target,
+    passport,
+    score,
+    checks,
+    summary: [
+      { label: "Award signal", value: `${award.badge} - ${award.winner.total}/100` },
+      { label: "Trust Passport", value: `${passport.score}/100 - ${passport.verdict}` },
+      { label: "Jobsite package", value: `${jobsite.matchedCount}/${jobsite.roles.length} matched, ${packageGapCount} gap${packageGapCount === 1 ? "" : "s"}` },
+      { label: "Dispatch risk", value: risks.join(" ") }
+    ],
+    handoff: [
+      `Mobilization target: ${target.supplier} for ${target.name} in ${target.city}, ${target.region}.`,
+      `Project note: ${state.projectNote || "No project note provided"}`,
+      `Start window: ${state.jobsiteUrgency}. Availability: ${target.availability === "available" ? "available now" : "available soon"}.`,
+      `Before dispatch: confirm operator, delivery route, site access, quote validity, insurance, inspection, and any permit requirement.`,
+      "Payment remains direct between buyer and rental company. Heavyster provides listing, RFQ, decision, and mobilization handoff support only."
+    ]
+  };
 }
 
 function prepareDemandFromSearch() {
@@ -1433,6 +1944,64 @@ function buildRfqText() {
     "Quote request:",
     "Please confirm availability, rental rate, operator option, delivery terms, quote validity, required documents, and best contact route.",
     "Payment: buyer and rental company arrange directly in phase one. Heavyster is only routing the RFQ."
+  ].join("\n");
+}
+
+function buildAwardMemoText(model = getAwardModel()) {
+  const winner = model.winner;
+  return [
+    "Heavyster Award Intelligence",
+    `Decision status: ${model.badge}`,
+    `Recommended award: ${winner.listing.supplier} - ${winner.listing.name}`,
+    `Location: ${winner.listing.city}, ${winner.listing.region}`,
+    `Award score: ${winner.total}/100`,
+    `Project note: ${state.projectNote || "No project note provided"}`,
+    "Why this supplier:",
+    ...winner.reasons.map((reason) => `- ${reason}`),
+    "Decision matrix:",
+    ...model.candidates.map((candidate) => `- ${candidate.listing.supplier}: ${candidate.listing.name}, ${candidate.total}/100, ${candidate.signal}, action ${candidate.action}`),
+    "Award conditions:",
+    "- Confirm rental rate, quote validity, operator option, delivery terms, insurance, and document freshness before dispatch.",
+    "- Keep rental payment direct between buyer and rental company in phase one.",
+    "- Use Heavyster as the listing, Trust Passport, RFQ, and decision-support layer."
+  ].join("\n");
+}
+
+function buildMobilizationText(model = getMobilizationModel()) {
+  return [
+    "Heavyster Mobilization Control Tower",
+    `Mobilization status: ${model.badge}`,
+    `Target supplier: ${model.target.supplier}`,
+    `Equipment: ${model.target.name}`,
+    `Location: ${model.target.city}, ${model.target.region}`,
+    `Mobilization readiness: ${model.score}/100`,
+    `Trust Passport: ${model.passport.score}/100 - ${model.passport.verdict}`,
+    `Project note: ${state.projectNote || "No project note provided"}`,
+    "Dispatch gate checklist:",
+    ...model.checks.map((check) => `- ${check.status}: ${check.label} - ${check.detail}`),
+    "Buyer-supplier handoff:",
+    ...model.handoff.map((line) => `- ${line}`),
+    "Phase one payment rule: buyer and rental company arrange payment directly. Heavyster does not collect rental payment."
+  ].join("\n");
+}
+
+function buildJobsiteBriefText(model = getJobsiteModel()) {
+  return [
+    "Heavyster Jobsite Planner",
+    `Project package: ${model.blueprint.label}`,
+    `Region: ${model.region}`,
+    `Start window: ${state.jobsiteUrgency}`,
+    `Package readiness: ${model.packageScore}/100 - ${model.badge}`,
+    `Project note: ${state.projectNote || "No project note provided"}`,
+    `Planner thesis: ${model.blueprint.outcome}`,
+    "Recommended machine mix:",
+    ...model.matches.map((match) => match.listing
+      ? `- ${match.role.role}: ${match.listing.name}, ${match.listing.supplier}, ${match.listing.city}, ${match.listing.region}, Trust Passport ${match.readiness}/100`
+      : `- ${match.role.role}: supply gap for ${match.role.target} in ${model.region}`),
+    "Supply gaps:",
+    ...(model.gaps.length ? model.gaps.map((gap) => `- ${gap.role}: ${gap.message}`) : ["- No visible package gaps in this prototype."]),
+    "Next action: send matched machines to shortlist, issue the RFQ, then use Award Intelligence for the final supplier decision.",
+    "Payment: buyer and rental company arrange directly in phase one."
   ].join("\n");
 }
 

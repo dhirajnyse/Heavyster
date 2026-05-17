@@ -39,8 +39,10 @@ Marketplace:
 - Compact row view for large catalogs
 - Smart no-results recovery with nearby matches
 - Shortlist and comparison tray
+- Jobsite Planner that converts a project note into a multi-machine rental package
 - Trust Passport with readiness score, document proof, risk radar, and next verification actions
 - RFQ Command Room that turns a shortlist into a multi-supplier quote packet
+- Award Intelligence that ranks shortlisted suppliers and creates a decision-ready award memo
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -86,7 +88,10 @@ Founder Admin:
 - Active paid listings
 - Verified listings
 - Trust Passport copy events
+- Jobsite project briefs copied
+- Machines moved from Jobsite Planner to RFQ shortlist
 - RFQ packets copied
+- Award memos copied
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar

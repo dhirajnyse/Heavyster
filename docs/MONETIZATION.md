@@ -25,7 +25,9 @@ Add these only after basic supplier onboarding works:
 - Featured category placement
 - Verified supplier badge
 - Trust Passport and proof stack on each active listing
+- Jobsite package planning for buyers with multi-machine needs
 - RFQ routing and quote packet tools for serious buyers
+- Award memo and decision support tools for serious buyers
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region

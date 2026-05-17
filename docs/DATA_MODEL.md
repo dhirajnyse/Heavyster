@@ -76,6 +76,24 @@ Use this to explain why a machine is ready, risky, or still needs verification b
 - created_at
 - updated_at
 
+## JobsitePlan
+
+Use this when a buyer describes a job and Heavyster suggests a complete rental package before RFQ.
+
+- id
+- buyer_project_note
+- project_type
+- region
+- start_window
+- planned_roles
+- matched_listing_ids
+- missing_roles
+- package_readiness_score
+- copied_at
+- sent_to_shortlist_at
+- created_at
+- updated_at
+
 ## Enquiry
 
 - id
@@ -104,6 +122,23 @@ Use this when a buyer converts shortlisted machines into a controlled quote requ
 - available_now_count
 - supplier_routes
 - quote_checklist
+- copied_at
+- created_at
+
+## AwardDecision
+
+Use this when a buyer compares shortlisted suppliers and records why one should receive the rental award.
+
+- id
+- rfq_packet_id
+- buyer_project_note
+- candidate_listing_ids
+- recommended_listing_id
+- award_score
+- award_status
+- decision_reasons
+- supplier_matrix
+- award_conditions
 - copied_at
 - created_at
 

@@ -842,6 +842,148 @@ button.compact-row.is-selected {
   color: var(--ink);
 }
 
+.jobsite-section {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(245, 251, 250, 0.95)),
+    var(--surface);
+  box-shadow: 0 10px 26px rgba(42, 38, 30, 0.07);
+}
+
+.jobsite-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(420px, 1.28fr) minmax(300px, 0.9fr);
+  gap: 12px;
+}
+
+.jobsite-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.jobsite-control-card {
+  background: #fffaf0;
+}
+
+.jobsite-controls,
+.jobsite-package,
+.jobsite-gaps {
+  display: grid;
+  gap: 10px;
+}
+
+.jobsite-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.jobsite-score {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.jobsite-score span {
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.jobsite-score strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.jobsite-package,
+.jobsite-gaps {
+  margin-top: 12px;
+}
+
+.jobsite-role {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(140px, 0.8fr) minmax(160px, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 68px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.jobsite-role.is-ready {
+  border-color: #b9d9c1;
+  background: var(--green-soft);
+}
+
+.jobsite-role.is-gap {
+  border-color: #e8cd8e;
+  background: #fffaf0;
+}
+
+.jobsite-role span,
+.jobsite-role strong {
+  display: block;
+}
+
+.jobsite-role span,
+.jobsite-role small {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.jobsite-role strong {
+  margin-bottom: 3px;
+  color: var(--ink);
+}
+
+.jobsite-role em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.jobsite-role.is-gap em {
+  color: var(--amber);
+}
+
+.jobsite-gap {
+  display: grid;
+  gap: 5px;
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid #d1a03f;
+  border-radius: var(--radius);
+  background: #fffaf0;
+}
+
+.jobsite-gap.is-clear {
+  border-color: #b9d9c1;
+  background: var(--green-soft);
+}
+
+.jobsite-gap strong {
+  color: var(--ink);
+}
+
+.jobsite-gap span {
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
 .passport-section {
   margin-top: 14px;
   border: 1px solid var(--line);
@@ -1157,6 +1299,156 @@ button.compact-row.is-selected {
 .rfq-checklist span {
   color: var(--ink-2);
   line-height: 1.4;
+}
+
+.award-section {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: linear-gradient(180deg, #ffffff, #f7faf8);
+  box-shadow: 0 10px 26px rgba(42, 38, 30, 0.07);
+}
+
+.award-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(360px, 1.18fr) minmax(320px, 1fr);
+  gap: 12px;
+}
+
+.award-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.award-winner-card {
+  background:
+    linear-gradient(135deg, rgba(32, 38, 45, 0.96), rgba(40, 93, 134, 0.82)),
+    var(--coal);
+  color: #ffffff;
+}
+
+.award-winner-card .eyebrow,
+.award-winner-card .pill {
+  color: #d7f2ee;
+}
+
+.award-winner-card .pill {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.award-score {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.award-score strong {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  line-height: 0.95;
+}
+
+.award-score span {
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.35;
+}
+
+.award-reason {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.award-reason div {
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.4;
+}
+
+.award-matrix,
+.award-memo {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.award-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) 70px minmax(120px, 0.8fr) 78px;
+  gap: 10px;
+  align-items: center;
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.award-row.is-winner {
+  border-color: #b9d9c1;
+  background: var(--green-soft);
+}
+
+.award-row span,
+.award-row strong {
+  display: block;
+}
+
+.award-row span {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.award-row strong {
+  margin-bottom: 3px;
+  color: var(--ink);
+}
+
+.award-row em {
+  color: var(--blue);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.award-row small {
+  color: var(--ink-2);
+  line-height: 1.35;
+}
+
+.award-row b {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 68px;
+  padding: 7px 8px;
+  border-radius: var(--radius);
+  background: #e6eef5;
+  color: var(--blue);
+  font-size: 0.78rem;
+}
+
+.award-memo-card {
+  background: #f5fbfa;
+}
+
+.award-memo p {
+  margin-bottom: 0;
+  padding: 8px 10px;
+  border: 1px solid #c6d8d5;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-2);
+  line-height: 1.42;
 }
 
 .note-box {
@@ -1946,6 +2238,11 @@ button.admin-row {
     overflow-x: auto;
   }
 
+  .topnav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   .hero,
   .section-grid {
     grid-template-columns: 1fr;
@@ -1958,6 +2255,7 @@ button.admin-row {
 
   .pricing-grid,
   .hunt-grid,
+  .jobsite-grid,
   .market-maker-grid {
     grid-template-columns: 1fr;
   }
@@ -1970,6 +2268,7 @@ button.admin-row {
   .admin-grid,
   .studio-builder,
   .rfq-grid,
+  .award-grid,
   .passport-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2010,24 +2309,28 @@ button.admin-row {
   .market-stats,
   .metrics-strip,
   .listing-grid,
-    .roadmap-grid,
-    .category-directory,
-    .admin-grid,
-    .passport-grid,
-    .rfq-grid,
-    .studio-builder,
-    .builder-grid,
-    .builder-summary,
-    .detail-spec-grid,
-    .empty-advisor,
-    .demand-grid,
-    .rfq-metrics,
-    .rfq-route,
-    .hunt-metrics,
-    .hunt-signal,
-    .market-metrics,
-    .market-opportunity,
-    .lead-actions {
+  .roadmap-grid,
+  .category-directory,
+  .admin-grid,
+  .passport-grid,
+  .rfq-grid,
+  .award-grid,
+  .studio-builder,
+  .builder-grid,
+  .builder-summary,
+  .detail-spec-grid,
+  .empty-advisor,
+  .demand-grid,
+  .jobsite-score,
+  .jobsite-role,
+  .rfq-metrics,
+  .rfq-route,
+  .award-row,
+  .hunt-metrics,
+  .hunt-signal,
+  .market-metrics,
+  .market-opportunity,
+  .lead-actions {
     grid-template-columns: 1fr;
   }
 
