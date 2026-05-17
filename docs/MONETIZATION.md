@@ -32,6 +32,7 @@ Add these only after basic supplier onboarding works:
 - Quote Guard for high-value buyers who need complete supplier terms before dispatch
 - Mobilization handoff tools for serious buyers and verified suppliers
 - Yard Availability OS for suppliers who want cleaner enquiry conversion
+- Supplier Fleet Storefronts that make the listing subscription feel like a real SaaS storefront
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region

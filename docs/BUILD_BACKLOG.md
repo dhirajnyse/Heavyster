@@ -19,6 +19,7 @@
 - Quote Guard for hidden cost detection and quote clarification packets
 - Mobilization Control Tower for dispatch readiness handoff
 - Yard Availability OS for stale listing detection and supplier refresh queues
+- Supplier Fleet Storefront for verified mini-sites and copy-ready supplier profile packets
 - Demand request capture and founder demand radar
 - Supplier hunt growth engine and copy-ready outreach packet
 - Market Maker Mode with expansion scoring and launch page brief
@@ -57,6 +58,7 @@
 - Quote clarity audit before mobilization
 - Mobilization handoff checklist after award
 - Supplier availability freshness board
+- Supplier profile page with fleet lanes, proof stack, and direct enquiry rules
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form

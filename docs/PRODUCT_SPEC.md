@@ -47,6 +47,7 @@ Marketplace:
 - Quote Guard that audits operator, transport, fuel, permit, overtime, validity, and daily quote clarity before dispatch
 - Mobilization Control Tower that checks dispatch readiness before the buyer calls the supplier
 - Yard Availability OS that flags stale supplier inventory before buyer trust is damaged
+- Supplier Fleet Storefront that gives each rental company a verified mini-site with fleet lanes, services, proof, and direct enquiry rules
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -102,6 +103,8 @@ Founder Admin:
 - Mobilization handoffs copied
 - Yard availability update packets copied
 - Listings reconfirmed before enquiry routing
+- Supplier storefront packets copied
+- Supplier profile page views and enquiry clicks
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar

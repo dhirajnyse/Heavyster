@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-quote-guard" />
+    <link rel="stylesheet" href="styles.css?v=20260517-supplier-storefront" />
   </head>
   <body>
     <div class="app-shell">
@@ -47,6 +47,7 @@
           <a href="#quote-guard">Quote Guard</a>
           <a href="#mobilize">Mobilize</a>
           <a href="#yard">Yard Board</a>
+          <a href="#storefront">Storefront</a>
           <a href="#studio">Supplier Studio</a>
           <a href="#categories">Categories</a>
           <a href="#growth">Growth</a>
@@ -554,6 +555,47 @@
           </div>
         </section>
 
+        <section class="storefront-section" id="storefront">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Supplier Fleet Storefront</p>
+              <h2>Give every rental company a verified mini-site buyers can trust.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyStorefrontButton">Copy profile packet</button>
+          </div>
+
+          <div class="storefront-grid">
+            <article class="storefront-card storefront-profile-card">
+              <div class="storefront-identity">
+                <img src="assets/heavyster-logo-3d.svg" alt="" />
+                <div>
+                  <p class="eyebrow">Verified supplier page</p>
+                  <h3 id="storefrontName">Supplier profile</h3>
+                  <span id="storefrontSlug">/suppliers/profile/</span>
+                </div>
+              </div>
+              <p id="storefrontIntro"></p>
+              <div class="storefront-score" id="storefrontScore"></div>
+              <div class="storefront-metrics" id="storefrontMetrics"></div>
+            </article>
+
+            <article class="storefront-card">
+              <h3>Fleet lanes</h3>
+              <div class="storefront-fleet" id="storefrontFleet"></div>
+            </article>
+
+            <article class="storefront-card">
+              <h3>Proof and services</h3>
+              <div class="storefront-proof" id="storefrontProof"></div>
+            </article>
+
+            <article class="storefront-card storefront-packet-card">
+              <h3>Buyer-ready supplier packet</h3>
+              <div class="storefront-packet" id="storefrontPacket"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="section-grid supplier-section" id="studio">
           <section class="panel supplier-panel" aria-labelledby="supplierTitle">
             <div class="section-header">
@@ -874,6 +916,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-quote-guard" defer></script>
+    <script src="app.js?v=20260517-supplier-storefront" defer></script>
   </body>
 </html>

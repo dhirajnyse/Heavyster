@@ -17,6 +17,27 @@
 - created_at
 - updated_at
 
+## SupplierProfilePage
+
+Use this to turn a rental company into a public verified fleet storefront.
+
+- id
+- supplier_id
+- slug
+- headline
+- branch
+- service_area
+- response_target
+- years_in_market
+- storefront_score
+- fleet_lanes
+- service_items
+- proof_items
+- public_profile_url
+- copied_at
+- created_at
+- updated_at
+
 ## EquipmentListing
 
 - id

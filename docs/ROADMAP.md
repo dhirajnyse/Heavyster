@@ -14,6 +14,7 @@
 - Quote Guard for hidden cost and quote term clarity
 - Mobilization Control Tower for pre-dispatch buyer-supplier handoff
 - Yard Availability OS for supplier inventory freshness
+- Supplier Fleet Storefront for verified rental company mini-sites
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
 - Market Maker Mode for choosing the next region/category launch
@@ -35,6 +36,7 @@
 - Quote Guard history, daily rate normalization, and missing-term analytics
 - Mobilization history, dispatch evidence, and site readiness memory
 - Availability history, stale listing prevention, and supplier refresh SLAs
+- Supplier storefront analytics, profile completion scoring, and branch pages
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue

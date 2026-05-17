@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-quote-guard-v14";
+const DATA_VERSION = "20260517-heavyster-supplier-storefront-v15";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -91,6 +91,105 @@ const categoryDirectory = [
   { name: "Rollers", group: "Roadwork", count: 132, regions: "India, UAE, USA", intent: "Roadwork and compaction" },
   { name: "Generators", group: "Power", count: 205, regions: "UAE, USA, UK", intent: "Event, backup, and site power" },
   { name: "Lowbed trailers", group: "Transport", count: 77, regions: "UAE, India, USA", intent: "Equipment transport support" }
+];
+
+const supplierProfiles = [
+  {
+    supplier: "Al Noor Heavy Rentals",
+    slug: "al-noor-heavy-rentals",
+    headline: "Dubai earthmoving fleet with operator support and attachment-ready excavators.",
+    branch: "Dubai, UAE",
+    serviceArea: "Dubai, Sharjah, Abu Dhabi, and northern UAE sites",
+    response: "Under 2 hours",
+    since: "2016",
+    fleet: [
+      { label: "Excavators", count: 14, status: "Ready" },
+      { label: "Breakers and buckets", count: 9, status: "On request" },
+      { label: "Site support", count: 6, status: "Confirm" }
+    ],
+    services: ["Operator on request", "Attachment list", "Insurance certificate", "Site delivery coordination"],
+    proof: ["Trade license", "Insurance", "Inspection", "Fleet photos"]
+  },
+  {
+    supplier: "Gulf Lift Services",
+    slug: "gulf-lift-services",
+    headline: "Certified UAE lifting supplier for crane pads, city permits, and operator-led lifts.",
+    branch: "Abu Dhabi, UAE",
+    serviceArea: "Abu Dhabi, Dubai, industrial zones, and oilfield support areas",
+    response: "Same day",
+    since: "2012",
+    fleet: [
+      { label: "Mobile cranes", count: 18, status: "Certified" },
+      { label: "Lift supervisors", count: 7, status: "On request" },
+      { label: "Permit support", count: 5, status: "Confirm" }
+    ],
+    services: ["Certified operator", "Load chart review", "City permit support", "Lift plan notes"],
+    proof: ["Trade license", "Load test", "Operator license", "Insurance cover"]
+  },
+  {
+    supplier: "Desertline Equipment",
+    slug: "desertline-equipment",
+    headline: "Houston loaders and yard machines for quarry, bulk handling, and civil jobs.",
+    branch: "Houston, USA",
+    serviceArea: "Houston metro, yards, quarries, and Gulf Coast contractor sites",
+    response: "Next business hour",
+    since: "2019",
+    fleet: [
+      { label: "Wheel loaders", count: 11, status: "Ready" },
+      { label: "Buckets", count: 8, status: "Included" },
+      { label: "Document refresh", count: 2, status: "Pending" }
+    ],
+    services: ["Yard loading", "Bulk handling", "Quarry specs", "Insurance refresh"],
+    proof: ["Insurance pending", "Inspection", "Machine photos", "Service notes"]
+  },
+  {
+    supplier: "Metro Plant Hire",
+    slug: "metro-plant-hire",
+    headline: "UK telehandler and site logistics partner for weekly hire and material reach.",
+    branch: "Birmingham, UK",
+    serviceArea: "West Midlands, construction sites, warehouses, and infrastructure works",
+    response: "Under 3 hours",
+    since: "2014",
+    fleet: [
+      { label: "Telehandlers", count: 9, status: "Ready" },
+      { label: "Forks and buckets", count: 12, status: "Included" },
+      { label: "Weekly hire", count: 6, status: "Ready" }
+    ],
+    services: ["Weekly hire", "Fork and bucket options", "Service record", "Site logistics"],
+    proof: ["Company registry", "Insurance", "Service record", "Fleet photos"]
+  },
+  {
+    supplier: "Prime Road Rentals",
+    slug: "prime-road-rentals",
+    headline: "Pune roadwork fleet for compaction, civil contractors, and operator-led jobs.",
+    branch: "Pune, India",
+    serviceArea: "Pune, Mumbai corridor, industrial roads, and civil sites",
+    response: "Same day",
+    since: "2018",
+    fleet: [
+      { label: "Rollers", count: 17, status: "Ready soon" },
+      { label: "Operators", count: 10, status: "Direct" },
+      { label: "Maintenance logs", count: 17, status: "Ready" }
+    ],
+    services: ["Operator terms", "Fuel terms", "Compaction support", "Maintenance log"],
+    proof: ["GST", "Insurance", "Maintenance log", "Operator terms"]
+  },
+  {
+    supplier: "Frontier Civil Rentals",
+    slug: "frontier-civil-rentals",
+    headline: "Phoenix civil rental yard for dozers, GPS-ready blades, and earthworks support.",
+    branch: "Phoenix, USA",
+    serviceArea: "Arizona civil jobs, earthworks, utility corridors, and site prep",
+    response: "Under 2 hours",
+    since: "2015",
+    fleet: [
+      { label: "Dozers", count: 22, status: "Ready" },
+      { label: "GPS-ready blades", count: 8, status: "On request" },
+      { label: "LGP tracks", count: 5, status: "Confirm" }
+    ],
+    services: ["GPS-ready blade control", "LGP option", "Site prep support", "Inspection packet"],
+    proof: ["Business license", "Insurance", "Inspection", "Service photos"]
+  }
 ];
 
 const trustItems = [
@@ -502,6 +601,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyStorefrontButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierStorefrontText());
+      showToast("Supplier storefront packet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the storefront packet is visible.");
+    }
+  });
+
   document.querySelector("#applyJobsiteButton").addEventListener("click", () => {
     renderJobsitePlanner();
     renderMobilizationTower();
@@ -641,6 +749,7 @@ function render() {
   renderQuoteGuard();
   renderMobilizationTower();
   renderYardAvailability();
+  renderSupplierStorefront();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -1966,6 +2075,103 @@ function getYardRow(listing, index) {
   };
 }
 
+function renderSupplierStorefront() {
+  const model = getSupplierStorefrontModel();
+  setText("#storefrontName", model.profile.supplier);
+  setText("#storefrontSlug", `/suppliers/${model.profile.slug}/`);
+  setText("#storefrontIntro", model.profile.headline);
+
+  document.querySelector("#storefrontScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.badge)} - ${escapeHtml(model.profile.branch)}</span>
+  `;
+
+  document.querySelector("#storefrontMetrics").innerHTML = [
+    ["Public URL", `/suppliers/${model.profile.slug}/`],
+    ["Visible fleet", `${model.visibleFleetCount} listing${model.visibleFleetCount === 1 ? "" : "s"}`],
+    ["Response", model.profile.response],
+    ["Supplier keeps", "100%"]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#storefrontFleet").innerHTML = model.profile.fleet.map((lane) => `
+    <div class="storefront-fleet-row ${lane.status.toLowerCase().replace(/\s+/g, "-")}">
+      <span>
+        <strong>${escapeHtml(lane.label)}</strong>
+        ${lane.count} modeled fleet item${lane.count === 1 ? "" : "s"}
+      </span>
+      <em>${escapeHtml(lane.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#storefrontProof").innerHTML = [
+    ...model.profile.services.map((service) => ({ label: service, type: "Service" })),
+    ...model.profile.proof.map((proof) => ({ label: proof, type: "Proof" }))
+  ].map((item) => `
+    <div>
+      <strong>${escapeHtml(item.type)}</strong>
+      <span>${escapeHtml(item.label)}</span>
+    </div>
+  `).join("");
+
+  document.querySelector("#storefrontPacket").innerHTML = buildSupplierStorefrontText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getSupplierStorefrontModel(listing = getSelectedListing()) {
+  const profile = getSupplierProfile(listing.supplier);
+  const supplierListings = listings.filter((item) => item.supplier === profile.supplier);
+  const visibleListings = supplierListings.length ? supplierListings : [listing];
+  const passportScores = visibleListings.map((item) => getTrustPassport(item).score);
+  const averagePassport = Math.round(passportScores.reduce((total, score) => total + score, 0) / passportScores.length);
+  const yardRows = getYardModel().rows.filter((row) => row.listing.supplier === profile.supplier);
+  const yardScore = yardRows.length
+    ? Math.round(yardRows.reduce((total, row) => total + row.score, 0) / yardRows.length)
+    : 70;
+  const verifiedBonus = visibleListings.every((item) => item.verified) ? 8 : -6;
+  const serviceDepth = Math.min(10, profile.services.length * 2);
+  const proofDepth = Math.min(10, profile.proof.length * 2);
+  const score = Math.max(0, Math.min(100, Math.round(
+    averagePassport * 0.42
+    + yardScore * 0.28
+    + serviceDepth
+    + proofDepth
+    + verifiedBonus
+  )));
+  const badge = score >= 86 ? "Storefront ready" : score >= 66 ? "Strong profile" : "Needs proof";
+
+  return {
+    profile,
+    listing,
+    visibleListings,
+    visibleFleetCount: visibleListings.length,
+    averagePassport,
+    yardScore,
+    score,
+    badge
+  };
+}
+
+function getSupplierProfile(supplierName) {
+  return supplierProfiles.find((profile) => profile.supplier === supplierName)
+    || {
+      supplier: supplierName,
+      slug: supplierName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      headline: "Verified equipment rental supplier with direct enquiry routing.",
+      branch: getSelectedListing().city + ", " + getSelectedListing().region,
+      serviceArea: "Local and regional project sites",
+      response: "Confirm",
+      since: "Founder review",
+      fleet: [{ label: getSelectedListing().category, count: 1, status: "Confirm" }],
+      services: ["Direct enquiry routing", "Document checklist", "Availability update"],
+      proof: getSelectedListing().documents
+    };
+}
+
 function prepareDemandFromSearch() {
   state.demandEquipment = getDemandEquipmentFromSearch();
   state.demandRegion = state.region === "all" ? getSelectedListing().region : state.region;
@@ -2509,6 +2715,30 @@ function buildYardUpdateText(model = getYardModel()) {
     "Availability board:",
     ...model.rows.map((row) => `- ${row.listing.supplier}: ${row.listing.name}, ${row.availabilityLabel}, ${row.freshnessLabel}, action ${row.action}, freshness ${row.score}/100`),
     "Operating rule: pause or reconfirm stale listings before routing serious enquiries. Buyer payment stays direct with the rental company."
+  ].join("\n");
+}
+
+function buildSupplierStorefrontText(model = getSupplierStorefrontModel()) {
+  return [
+    "Heavyster Supplier Fleet Storefront",
+    `Supplier: ${model.profile.supplier}`,
+    `Public profile: /suppliers/${model.profile.slug}/`,
+    `Branch: ${model.profile.branch}`,
+    `Service area: ${model.profile.serviceArea}`,
+    `Storefront score: ${model.score}/100 - ${model.badge}`,
+    `Average Trust Passport: ${model.averagePassport}/100`,
+    `Yard freshness: ${model.yardScore}/100`,
+    `Response target: ${model.profile.response}`,
+    `Supplier since: ${model.profile.since}`,
+    "Fleet lanes:",
+    ...model.profile.fleet.map((lane) => `- ${lane.label}: ${lane.count} modeled item${lane.count === 1 ? "" : "s"}, ${lane.status}`),
+    "Visible marketplace listings:",
+    ...model.visibleListings.map((listing) => `- ${listing.name}: ${listing.city}, ${listing.region}, ${listing.availability}, ${listing.documents.join(", ")}`),
+    "Services:",
+    ...model.profile.services.map((service) => `- ${service}`),
+    "Proof stack:",
+    ...model.profile.proof.map((proof) => `- ${proof}`),
+    "Phase one rule: buyers contact the supplier directly and payment stays between buyer and rental company. Heavyster sells verified listing visibility and supplier storefront tools."
   ].join("\n");
 }
 

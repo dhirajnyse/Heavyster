@@ -27,6 +27,7 @@ This folder contains a static product prototype with:
 - Quote Guard for rental quote clarity, hidden cost detection, and copy-ready supplier clarification
 - Mobilization Control Tower for pre-dispatch readiness and buyer-supplier handoff
 - Yard Availability OS for supplier freshness scoring and copy-ready update queues
+- Supplier Fleet Storefront for verified supplier mini-sites, fleet lanes, proof stack, and buyer-ready profile packets
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach
