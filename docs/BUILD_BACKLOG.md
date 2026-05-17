@@ -10,12 +10,15 @@
 - Phase-two 1% success fee calculator
 - Compact catalog rows for large inventory UX
 - Category directory and founder admin board
+- Smart Match Rescue for zero-result hero searches
 - Smart no-results guidance and shortlist comparison
 - Jobsite Planner for project-to-package matching
 - Trust Passport for buyer confidence and verification gaps
 - RFQ Command Room for multi-supplier quote packets
 - Award Intelligence for supplier ranking and buyer award memos
+- Quote Guard for hidden cost detection and quote clarification packets
 - Mobilization Control Tower for dispatch readiness handoff
+- Yard Availability OS for stale listing detection and supplier refresh queues
 - Demand request capture and founder demand radar
 - Supplier hunt growth engine and copy-ready outreach packet
 - Market Maker Mode with expansion scoring and launch page brief
@@ -45,12 +48,15 @@
 - Equipment detail page
 - Compact list/table view for large catalogs
 - Helpful empty state that suggests near matches
+- Hero-level Smart Match Rescue for first-screen recovery
 - Buyer shortlist and comparison tray
 - Jobsite package planner before RFQ
 - Trust Passport block on every listing page
 - RFQ packet builder from shortlisted machines
 - Award memo builder for shortlist decisions
+- Quote clarity audit before mobilization
 - Mobilization handoff checklist after award
+- Supplier availability freshness board
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form

@@ -94,6 +94,20 @@ Use this when a buyer describes a job and Heavyster suggests a complete rental p
 - created_at
 - updated_at
 
+## SearchRescueEvent
+
+Use this when an exact search returns no matching live supply and the buyer needs recovery options.
+
+- id
+- search_query
+- region_filter
+- availability_filter
+- result_count
+- suggested_listing_ids
+- action_taken
+- demand_signal_id
+- created_at
+
 ## Enquiry
 
 - id
@@ -142,6 +156,28 @@ Use this when a buyer compares shortlisted suppliers and records why one should 
 - copied_at
 - created_at
 
+## QuoteGuardReview
+
+Use this when a buyer or founder reviews a supplier quote before mobilization.
+
+- id
+- award_decision_id
+- listing_id
+- supplier_id
+- quoted_amount
+- currency
+- hire_duration_days
+- normalized_daily_rate
+- modeled_rate_band_low
+- modeled_rate_band_high
+- included_terms
+- missing_terms
+- clarity_score
+- quote_status
+- clarification_notes
+- copied_at
+- created_at
+
 ## MobilizationHandoff
 
 Use this when the buyer needs a pre-dispatch control packet after award but before payment or site movement.
@@ -155,6 +191,23 @@ Use this when the buyer needs a pre-dispatch control packet after award but befo
 - checklist_items
 - package_gap_summary
 - handoff_notes
+- copied_at
+- created_at
+
+## AvailabilityRefresh
+
+Use this when a supplier or founder reconfirms listing freshness before serious enquiries are routed.
+
+- id
+- supplier_id
+- listing_id
+- previous_availability_status
+- refreshed_availability_status
+- freshness_score
+- last_supplier_confirmation_at
+- refresh_action
+- demand_pressure_count
+- notes
 - copied_at
 - created_at
 

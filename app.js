@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-mobilization-tower-v11";
+const DATA_VERSION = "20260517-heavyster-quote-guard-v14";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -238,6 +238,16 @@ function defaultState() {
     listingCount: 12,
     bookingValue: 8500,
     confirmedBookings: 6,
+    quoteAmount: 8500,
+    quoteDays: 5,
+    quoteIncludes: {
+      operator: true,
+      transport: false,
+      fuel: false,
+      permit: false,
+      overtime: false,
+      validity: true
+    },
     builderCategory: "Earthmoving",
     builderModel: "Cat 320 Excavator",
     builderRegion: "UAE",
@@ -262,6 +272,7 @@ function loadState() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
     const base = defaultState();
     const merged = { ...base, ...(saved || {}) };
+    merged.quoteIncludes = { ...base.quoteIncludes, ...(merged.quoteIncludes || {}) };
     if (!Array.isArray(merged.demandSignals)) merged.demandSignals = base.demandSignals;
     if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
     if (!merged.activeMarketKey) merged.activeMarketKey = getMarketKeyFromSignal(merged.demandSignals[0]);
@@ -283,6 +294,9 @@ function bindControls() {
   const listingCount = document.querySelector("#listingCount");
   const bookingValue = document.querySelector("#bookingValue");
   const confirmedBookings = document.querySelector("#confirmedBookings");
+  const quoteAmount = document.querySelector("#quoteAmount");
+  const quoteDays = document.querySelector("#quoteDays");
+  const quoteIncludes = [...document.querySelectorAll("[data-quote-include]")];
   const sort = document.querySelector("#sortFilter");
   const builderCategory = document.querySelector("#builderCategory");
   const builderModel = document.querySelector("#builderModel");
@@ -303,6 +317,11 @@ function bindControls() {
   listingCount.value = String(state.listingCount);
   bookingValue.value = String(state.bookingValue);
   confirmedBookings.value = String(state.confirmedBookings);
+  quoteAmount.value = String(state.quoteAmount);
+  quoteDays.value = String(state.quoteDays);
+  quoteIncludes.forEach((input) => {
+    input.checked = Boolean(state.quoteIncludes[input.dataset.quoteInclude]);
+  });
   sort.value = state.sort;
   builderCategory.value = state.builderCategory;
   builderModel.value = state.builderModel;
@@ -341,6 +360,7 @@ function bindControls() {
     renderJobsitePlanner();
     renderRfqRoom();
     renderAwardRoom();
+    renderQuoteGuard();
     renderMobilizationTower();
   });
 
@@ -360,6 +380,14 @@ function bindControls() {
     state.confirmedBookings = Number(event.target.value);
     saveState();
     renderCommissionCalculator();
+  });
+
+  [quoteAmount, quoteDays].forEach((input) => {
+    input.addEventListener("input", updateQuoteGuardState);
+  });
+
+  quoteIncludes.forEach((input) => {
+    input.addEventListener("change", updateQuoteGuardState);
   });
 
   sort.addEventListener("change", (event) => {
@@ -438,6 +466,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyQuoteButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildQuoteGuardText());
+      showToast("Quote Guard check copied.");
+    } catch {
+      showToast("Copy is blocked here, but the quote check is visible.");
+    }
+  });
+
   document.querySelector("#copyJobsiteButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildJobsiteBriefText());
@@ -453,6 +490,15 @@ function bindControls() {
       showToast("Mobilization handoff copied.");
     } catch {
       showToast("Copy is blocked here, but the mobilization handoff is visible.");
+    }
+  });
+
+  document.querySelector("#copyYardButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildYardUpdateText());
+      showToast("Yard availability update copied.");
+    } catch {
+      showToast("Copy is blocked here, but the yard update is visible.");
     }
   });
 
@@ -556,6 +602,19 @@ function updateJobsiteState() {
   state.jobsiteUrgency = document.querySelector("#jobsiteUrgency").value;
   saveState();
   renderJobsitePlanner();
+  renderQuoteGuard();
+  renderMobilizationTower();
+}
+
+function updateQuoteGuardState() {
+  state.quoteAmount = Number(document.querySelector("#quoteAmount").value);
+  state.quoteDays = Number(document.querySelector("#quoteDays").value);
+  document.querySelectorAll("[data-quote-include]").forEach((input) => {
+    state.quoteIncludes[input.dataset.quoteInclude] = input.checked;
+  });
+  saveState();
+  renderQuoteGuard();
+  renderMobilizationTower();
 }
 
 function updateDemandState() {
@@ -579,7 +638,9 @@ function render() {
   renderShortlistTray();
   renderRfqRoom();
   renderAwardRoom();
+  renderQuoteGuard();
   renderMobilizationTower();
+  renderYardAvailability();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -660,6 +721,7 @@ function renderMarketplaceStats() {
   const verifiedSuppliers = new Set(filtered.filter((listing) => listing.verified).map((listing) => listing.supplier));
   setText("#resultCount", String(filtered.length));
   setText("#verifiedCount", String(verifiedSuppliers.size));
+  renderSearchRescue(filtered);
 }
 
 function getNearbyListings() {
@@ -679,6 +741,106 @@ function getNearbyListings() {
     .sort((a, b) => b.score - a.score || a.listing.name.localeCompare(b.listing.name))
     .slice(0, 3)
     .map((item) => item.listing);
+}
+
+function renderSearchRescue(filtered = getFilteredListings()) {
+  const container = document.querySelector("#searchRescue");
+  if (filtered.length) {
+    container.innerHTML = "";
+    return;
+  }
+
+  const suggestions = getSearchRescueSuggestions();
+  const equipment = getDemandEquipmentFromSearch();
+  const region = state.region === "all" ? "any region" : state.region;
+  const availability = state.availability === "available" ? "available now" : state.availability === "soon" ? "available soon" : "any availability";
+
+  container.innerHTML = `
+    <div class="rescue-head">
+      <span>Smart Match Rescue</span>
+      <strong>No exact ${escapeHtml(equipment.toLowerCase())} match in ${escapeHtml(region)} for ${escapeHtml(availability)}.</strong>
+      <p>Heavyster can recover the search, show closest options, or convert this into a supplier recruitment signal.</p>
+    </div>
+    <div class="rescue-actions">
+      <button type="button" data-rescue-action="availability">Show any availability</button>
+      <button type="button" data-rescue-action="request">Capture demand</button>
+      <button type="button" data-rescue-action="hunt">Open supplier hunt</button>
+    </div>
+    <div class="rescue-suggestions">
+      ${suggestions.length ? suggestions.map((item) => `
+        <button type="button" data-rescue-id="${escapeHtml(item.listing.id)}">
+          <strong>${escapeHtml(item.listing.name)}</strong>
+          <span>${escapeHtml(item.reason)}</span>
+        </button>
+      `).join("") : `<span>Add supplier inventory to improve rescue suggestions.</span>`}
+    </div>
+  `;
+
+  bindSearchRescue(container);
+}
+
+function getSearchRescueSuggestions() {
+  const query = state.search.toLowerCase();
+  return listings
+    .map((listing) => {
+      const searchable = [listing.name, listing.category, listing.supplier, listing.region, listing.city, listing.specs].join(" ").toLowerCase();
+      const queryMatch = Boolean(query && searchable.includes(query));
+      let score = 0;
+      if (queryMatch) score += 8;
+      if (state.region !== "all" && listing.region === state.region) score += 5;
+      if (state.availability !== "all" && listing.availability === state.availability) score += 3;
+      if (listing.verified) score += 2;
+      if (listing.availability === "soon") score += 1;
+      const reasons = [];
+      if (queryMatch) reasons.push("equipment match");
+      if (state.region !== "all") reasons.push(listing.region === state.region ? `${listing.region} market` : `${listing.region} alternative`);
+      if (state.availability !== "all") reasons.push(listing.availability === state.availability ? "available now" : listing.availability === "soon" ? "available soon" : "different availability");
+      if (listing.verified) reasons.push("verified supplier");
+      return {
+        listing,
+        queryMatch,
+        score,
+        reason: `${listing.supplier} - ${listing.city}, ${listing.region}; ${reasons.join(", ")}`
+      };
+    })
+    .filter((item) => item.score > 0 && (!query || item.queryMatch))
+    .sort((a, b) => b.score - a.score || a.listing.name.localeCompare(b.listing.name))
+    .slice(0, 3);
+}
+
+function bindSearchRescue(container) {
+  container.querySelectorAll("[data-rescue-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.rescueAction === "availability") {
+        state.availability = "all";
+        saveState();
+        syncFilterInputs();
+        render();
+        showToast("Showing any availability for this search.");
+        return;
+      }
+      prepareDemandFromSearch();
+      saveDemandSignal(button.dataset.rescueAction === "hunt" ? "Smart rescue supplier hunt" : "Smart rescue demand", false);
+      const target = button.dataset.rescueAction === "hunt" ? "#growth" : "#demandRequest";
+      document.querySelector(target).scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(button.dataset.rescueAction === "hunt" ? "Demand signal added to supplier hunt." : "Demand signal captured.");
+    });
+  });
+
+  container.querySelectorAll("[data-rescue-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.rescueId);
+      if (!listing) return;
+      state.selectedListingId = listing.id;
+      state.availability = "all";
+      if (state.region !== "all" && listing.region !== state.region) state.region = listing.region;
+      saveState();
+      syncFilterInputs();
+      render();
+      document.querySelector("#leadTitle").scrollIntoView({ behavior: "smooth", block: "center" });
+      showToast("Closest match opened.");
+    });
+  });
 }
 
 function renderNoResultsAdvisor() {
@@ -1361,6 +1523,222 @@ function getAwardScore(listing) {
   };
 }
 
+function renderQuoteGuard() {
+  const model = getQuoteGuardModel();
+
+  setText("#quoteGuardTitle", model.target.supplier);
+  setText("#quoteGuardBadge", model.badge);
+
+  document.querySelector("#quoteAmount").value = String(model.quoteAmount);
+  document.querySelector("#quoteDays").value = String(model.quoteDays);
+  document.querySelectorAll("[data-quote-include]").forEach((input) => {
+    input.checked = Boolean(model.includes[input.dataset.quoteInclude]);
+  });
+
+  document.querySelector("#quoteGuardScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.target.name)} - ${escapeHtml(model.rateSignal)} daily quote view</span>
+  `;
+
+  document.querySelector("#quoteGuardMetrics").innerHTML = [
+    ["Quote", `USD ${model.quoteAmount.toLocaleString()}`],
+    ["Daily view", `USD ${model.dailyRate.toLocaleString()}`],
+    ["Missing terms", String(model.missingCount)],
+    ["Supplier keeps", "100%"]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#quoteGuardBoard").innerHTML = model.board.map((item) => `
+    <div class="quote-row ${item.statusClass}">
+      <span>
+        <strong>${escapeHtml(item.label)}</strong>
+        ${escapeHtml(item.detail)}
+      </span>
+      <em>${escapeHtml(item.status)}</em>
+      <b>${escapeHtml(item.action)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#quoteGuardMemo").innerHTML = buildQuoteGuardText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getQuoteGuardModel() {
+  const award = getAwardModel();
+  const target = award.winner.listing;
+  const passport = getTrustPassport(target);
+  const includes = {
+    operator: Boolean(state.quoteIncludes.operator),
+    transport: Boolean(state.quoteIncludes.transport),
+    fuel: Boolean(state.quoteIncludes.fuel),
+    permit: Boolean(state.quoteIncludes.permit),
+    overtime: Boolean(state.quoteIncludes.overtime),
+    validity: Boolean(state.quoteIncludes.validity)
+  };
+  const quoteAmount = Math.max(500, Number(state.quoteAmount || 8500));
+  const quoteDays = Math.max(1, Number(state.quoteDays || 5));
+  const dailyRate = Math.round(quoteAmount / quoteDays);
+  const band = getQuoteBand(target);
+  const text = [
+    target.name,
+    target.category,
+    target.specs,
+    target.documents.join(" "),
+    state.projectNote
+  ].join(" ").toLowerCase();
+  const rateSignal = dailyRate < band.low
+    ? "Below prototype band"
+    : dailyRate > band.high
+      ? "Above prototype band"
+      : "Inside prototype band";
+  const rateStatus = rateSignal === "Inside prototype band" ? "Ready" : "Confirm";
+  const rateDetail = `Modeled ${target.category.toLowerCase()} band for ${target.region}: USD ${band.low.toLocaleString()}-${band.high.toLocaleString()} per day.`;
+  const terms = [
+    {
+      key: "operator",
+      label: "Operator or crew",
+      weight: 14,
+      fallback: text.includes("operator") || text.includes("driver"),
+      severity: "gap",
+      detail: "Confirm whether certified operator, helper crew, and shift hours are included."
+    },
+    {
+      key: "transport",
+      label: "Transport and mobilization",
+      weight: 14,
+      fallback: text.includes("delivery") || text.includes("transport") || text.includes("lowbed"),
+      severity: "gap",
+      detail: "Lock pickup, delivery, demobilization, route, site access, and who pays the move."
+    },
+    {
+      key: "fuel",
+      label: "Fuel and consumables",
+      weight: 9,
+      fallback: text.includes("fuel"),
+      severity: "confirm",
+      detail: "Clarify fuel, grease, wear items, and refill responsibility."
+    },
+    {
+      key: "permit",
+      label: "Permit and site access",
+      weight: target.category === "Lifting" ? 12 : 7,
+      fallback: text.includes("permit") || text.includes("city"),
+      severity: target.category === "Lifting" ? "gap" : "confirm",
+      detail: "Confirm lift permit, road permit, gate passes, access timing, and document holder."
+    },
+    {
+      key: "overtime",
+      label: "Overtime and standby",
+      weight: 10,
+      fallback: text.includes("weekly") || text.includes("shift"),
+      severity: "confirm",
+      detail: "State overtime, weekend, night shift, idle day, and standby rules before award."
+    },
+    {
+      key: "validity",
+      label: "Quote validity window",
+      weight: 8,
+      fallback: text.includes("quote") || text.includes("terms"),
+      severity: "confirm",
+      detail: "Set validity date, deposit terms, cancellation rule, and direct payment contact."
+    }
+  ];
+  const boardTerms = terms.map((term) => getQuoteTermStatus(term, includes[term.key]));
+  const coverageScore = boardTerms.reduce((total, item) => total + item.points, 0);
+  const rateScore = rateStatus === "Ready" ? 20 : 10;
+  const gapCount = boardTerms.filter((item) => item.status === "Gap").length;
+  const missingCount = boardTerms.filter((item) => item.status !== "Ready").length + (rateStatus === "Ready" ? 0 : 1);
+  const score = Math.max(0, Math.min(100, Math.round(
+    coverageScore
+    + rateScore
+    + passport.score * 0.12
+    + award.winner.total * 0.05
+    - gapCount * 4
+  )));
+  const badge = score >= 86 && gapCount === 0
+    ? "Quote-clean"
+    : score >= 62
+      ? "Clarify terms"
+      : "Hold quote";
+  const board = [
+    {
+      label: "Daily rate sense",
+      status: rateStatus,
+      statusClass: rateStatus.toLowerCase(),
+      detail: rateDetail,
+      action: rateStatus === "Ready" ? "Keep" : "Break up"
+    },
+    ...boardTerms,
+    {
+      label: "Phase one payment",
+      status: "Direct",
+      statusClass: "direct",
+      detail: "Buyer and supplier settle payment directly; Heavyster only cleans the quote path.",
+      action: "No take"
+    }
+  ];
+
+  return {
+    award,
+    target,
+    passport,
+    includes,
+    quoteAmount,
+    quoteDays,
+    dailyRate,
+    band,
+    rateSignal,
+    score,
+    badge,
+    board,
+    missingCount,
+    gapCount
+  };
+}
+
+function getQuoteTermStatus(term, included) {
+  const status = included ? "Ready" : term.fallback ? "Confirm" : term.severity === "gap" ? "Gap" : "Confirm";
+  const statusClass = status.toLowerCase();
+  const points = included ? term.weight : term.fallback ? Math.round(term.weight * 0.45) : 0;
+  const action = included ? "Keep" : term.fallback ? "Name it" : term.severity === "gap" ? "Add line" : "Clarify";
+  const detail = included ? `${term.label} is marked inside the quote.` : term.detail;
+
+  return {
+    label: term.label,
+    status,
+    statusClass,
+    detail,
+    action,
+    points
+  };
+}
+
+function getQuoteBand(listing) {
+  const bands = {
+    Earthmoving: [650, 1700],
+    Lifting: [1200, 4800],
+    Roadwork: [400, 1200],
+    Power: [150, 750],
+    Transport: [550, 1500]
+  };
+  const multipliers = {
+    UAE: 1.05,
+    USA: 1.15,
+    UK: 1.2,
+    India: 0.65
+  };
+  const [low, high] = bands[listing.category] || [500, 1800];
+  const multiplier = multipliers[listing.region] || 1;
+  return {
+    low: Math.round(low * multiplier),
+    high: Math.round(high * multiplier)
+  };
+}
+
 function renderMobilizationTower() {
   const model = getMobilizationModel();
 
@@ -1399,6 +1777,7 @@ function getMobilizationModel() {
   const jobsite = getJobsiteModel();
   const target = award.winner.listing;
   const passport = getTrustPassport(target);
+  const quote = getQuoteGuardModel();
   const pendingDocs = target.documents.filter((document) => document.toLowerCase().includes("pending")).length;
   const text = [target.name, target.category, target.specs, target.documents.join(" ")].join(" ").toLowerCase();
   const hasOperatorEvidence = text.includes("operator") || text.includes("driver");
@@ -1431,6 +1810,11 @@ function getMobilizationModel() {
       detail: "Supplier should lock rate, quote validity, deposit terms, and direct buyer-supplier payment route."
     },
     {
+      label: "Quote Guard clarity",
+      status: quote.score >= 82 ? "Ready" : quote.score >= 58 ? "Confirm" : "Gap",
+      detail: `${quote.missingCount} quote term${quote.missingCount === 1 ? "" : "s"} need clearer wording before dispatch.`
+    },
+    {
       label: "Package support coverage",
       status: packageGapCount === 0 ? "Ready" : packageGapCount <= 2 ? "Confirm" : "Gap",
       detail: packageGapCount === 0 ? "Jobsite package has visible matched support equipment." : `${packageGapCount} jobsite package gap${packageGapCount === 1 ? "" : "s"} should be filled or excluded before promise.`
@@ -1461,6 +1845,7 @@ function getMobilizationModel() {
     checks,
     summary: [
       { label: "Award signal", value: `${award.badge} - ${award.winner.total}/100` },
+      { label: "Quote Guard", value: `${quote.score}/100 - ${quote.badge}` },
       { label: "Trust Passport", value: `${passport.score}/100 - ${passport.verdict}` },
       { label: "Jobsite package", value: `${jobsite.matchedCount}/${jobsite.roles.length} matched, ${packageGapCount} gap${packageGapCount === 1 ? "" : "s"}` },
       { label: "Dispatch risk", value: risks.join(" ") }
@@ -1469,9 +1854,115 @@ function getMobilizationModel() {
       `Mobilization target: ${target.supplier} for ${target.name} in ${target.city}, ${target.region}.`,
       `Project note: ${state.projectNote || "No project note provided"}`,
       `Start window: ${state.jobsiteUrgency}. Availability: ${target.availability === "available" ? "available now" : "available soon"}.`,
+      `Quote Guard: ${quote.score}/100, ${quote.badge}, ${quote.missingCount} unclear quote term${quote.missingCount === 1 ? "" : "s"}.`,
       `Before dispatch: confirm operator, delivery route, site access, quote validity, insurance, inspection, and any permit requirement.`,
       "Payment remains direct between buyer and rental company. Heavyster provides listing, RFQ, decision, and mobilization handoff support only."
     ]
+  };
+}
+
+function renderYardAvailability() {
+  const model = getYardModel();
+  setText("#yardTitle", model.title);
+  setText("#yardBadge", model.badge);
+
+  document.querySelector("#yardScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${model.readyCount} fresh listings, ${model.reviewCount} need supplier confirmation.</span>
+  `;
+
+  document.querySelector("#yardMetrics").innerHTML = [
+    ["Available now", String(model.availableCount)],
+    ["Available soon", String(model.soonCount)],
+    ["Reconfirm", String(model.reviewCount)],
+    ["Demand pressure", `${model.demandCount} signals`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#yardBoard").innerHTML = model.rows.map((row) => `
+    <div class="yard-row ${row.statusClass}">
+      <span>
+        <strong>${escapeHtml(row.listing.name)}</strong>
+        ${escapeHtml(row.listing.supplier)} - ${escapeHtml(row.listing.city)}, ${escapeHtml(row.listing.region)}
+      </span>
+      <em>${escapeHtml(row.availabilityLabel)}</em>
+      <small>${escapeHtml(row.freshnessLabel)}</small>
+      <b>${escapeHtml(row.action)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#yardRefreshQueue").innerHTML = model.refreshQueue.map((item, index) => `
+    <div class="yard-refresh-item">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(item)}</span>
+    </div>
+  `).join("");
+}
+
+function getYardModel() {
+  const rows = listings.map((listing, index) => getYardRow(listing, index));
+  const readyCount = rows.filter((row) => row.status === "fresh").length;
+  const reviewCount = rows.filter((row) => row.status !== "fresh").length;
+  const availableCount = rows.filter((row) => row.listing.availability === "available").length;
+  const soonCount = rows.filter((row) => row.listing.availability === "soon").length;
+  const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
+  const averageFreshness = Math.round(rows.reduce((total, row) => total + row.score, 0) / rows.length);
+  const demandPenalty = Math.min(10, Math.floor(demandCount / 2));
+  const score = Math.max(0, Math.min(100, averageFreshness - demandPenalty + Math.min(8, availableCount)));
+  const badge = score >= 82 ? "Fresh yard" : score >= 64 ? "Refresh needed" : "Trust risk";
+  const refreshQueue = rows
+    .filter((row) => row.status !== "fresh")
+    .slice(0, 4)
+    .map((row) => `${row.listing.supplier}: confirm ${row.listing.name} availability, documents, photos, operator option, and direct enquiry contact.`);
+
+  if (!refreshQueue.length) {
+    refreshQueue.push("All visible demo listings are fresh. Ask suppliers to confirm again before high-value enquiries.");
+  }
+
+  return {
+    title: "Supplier yard freshness",
+    badge,
+    rows,
+    readyCount,
+    reviewCount,
+    availableCount,
+    soonCount,
+    demandCount,
+    score,
+    refreshQueue
+  };
+}
+
+function getYardRow(listing, index) {
+  const passport = getTrustPassport(listing);
+  const baseAge = [2, 6, 14, 4, 18, 8][index % 6];
+  const ageDays = listing.availability === "available" ? baseAge : baseAge + 4;
+  const pendingDocs = listing.documents.some((document) => document.toLowerCase().includes("pending"));
+  const demandPressure = getDemandSignals().some((signal) => {
+    const demandText = `${signal.equipment} ${getHuntPlan(signal).category}`.toLowerCase();
+    return demandText.includes(listing.category.toLowerCase()) || demandText.includes(listing.name.split(" ")[0].toLowerCase());
+  });
+  const score = Math.max(0, Math.min(100,
+    passport.score
+    - Math.max(0, ageDays - 5) * 3
+    - (pendingDocs ? 14 : 0)
+    + (listing.availability === "available" ? 8 : 0)
+    - (demandPressure ? 4 : 0)
+  ));
+  const status = score >= 78 ? "fresh" : score >= 58 ? "watch" : "stale";
+  const availabilityLabel = listing.availability === "available" ? "Now" : listing.availability === "soon" ? "Soon" : "Call";
+  const freshnessLabel = `${ageDays}d since supplier check`;
+  const action = status === "fresh" ? "Keep live" : status === "watch" ? "Reconfirm" : "Pause risk";
+
+  return {
+    listing,
+    score,
+    status,
+    statusClass: `is-${status}`,
+    availabilityLabel,
+    freshnessLabel,
+    action
   };
 }
 
@@ -1961,9 +2452,29 @@ function buildAwardMemoText(model = getAwardModel()) {
     "Decision matrix:",
     ...model.candidates.map((candidate) => `- ${candidate.listing.supplier}: ${candidate.listing.name}, ${candidate.total}/100, ${candidate.signal}, action ${candidate.action}`),
     "Award conditions:",
+    "- Run Quote Guard before dispatch so operator, transport, fuel, permit, overtime, and validity terms are visible.",
     "- Confirm rental rate, quote validity, operator option, delivery terms, insurance, and document freshness before dispatch.",
     "- Keep rental payment direct between buyer and rental company in phase one.",
     "- Use Heavyster as the listing, Trust Passport, RFQ, and decision-support layer."
+  ].join("\n");
+}
+
+function buildQuoteGuardText(model = getQuoteGuardModel()) {
+  return [
+    "Heavyster Quote Guard",
+    `Quote status: ${model.badge}`,
+    `Supplier: ${model.target.supplier}`,
+    `Equipment: ${model.target.name}`,
+    `Location: ${model.target.city}, ${model.target.region}`,
+    `Quote amount: USD ${model.quoteAmount.toLocaleString()} for ${model.quoteDays} day${model.quoteDays === 1 ? "" : "s"}`,
+    `Daily view: USD ${model.dailyRate.toLocaleString()} - ${model.rateSignal}`,
+    `Quote clarity: ${model.score}/100`,
+    `Unclear terms: ${model.missingCount}`,
+    "Clarification board:",
+    ...model.board.map((item) => `- ${item.status}: ${item.label} - ${item.detail} Action: ${item.action}`),
+    "Supplier request:",
+    "Please send one clean quote that separates machine hire, operator, transport, fuel, permit, overtime, standby, validity, deposit, and cancellation terms.",
+    "Payment rule: buyer and rental company arrange payment directly in phase one. Heavyster does not collect rental payment."
   ].join("\n");
 }
 
@@ -1982,6 +2493,22 @@ function buildMobilizationText(model = getMobilizationModel()) {
     "Buyer-supplier handoff:",
     ...model.handoff.map((line) => `- ${line}`),
     "Phase one payment rule: buyer and rental company arrange payment directly. Heavyster does not collect rental payment."
+  ].join("\n");
+}
+
+function buildYardUpdateText(model = getYardModel()) {
+  return [
+    "Heavyster Yard Availability OS",
+    `Yard freshness: ${model.score}/100 - ${model.badge}`,
+    `Available now: ${model.availableCount}`,
+    `Available soon: ${model.soonCount}`,
+    `Needs reconfirmation: ${model.reviewCount}`,
+    `Demand pressure: ${model.demandCount} saved demand signals`,
+    "Supplier refresh queue:",
+    ...model.refreshQueue.map((item) => `- ${item}`),
+    "Availability board:",
+    ...model.rows.map((row) => `- ${row.listing.supplier}: ${row.listing.name}, ${row.availabilityLabel}, ${row.freshnessLabel}, action ${row.action}, freshness ${row.score}/100`),
+    "Operating rule: pause or reconfirm stale listings before routing serious enquiries. Buyer payment stays direct with the rental company."
   ].join("\n");
 }
 

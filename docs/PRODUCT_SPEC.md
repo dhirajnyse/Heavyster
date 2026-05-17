@@ -37,13 +37,16 @@ Marketplace:
 - Search by equipment, region, category, availability
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
+- Smart Match Rescue on the hero search when exact supply is unavailable
 - Smart no-results recovery with nearby matches
 - Shortlist and comparison tray
 - Jobsite Planner that converts a project note into a multi-machine rental package
 - Trust Passport with readiness score, document proof, risk radar, and next verification actions
 - RFQ Command Room that turns a shortlist into a multi-supplier quote packet
 - Award Intelligence that ranks shortlisted suppliers and creates a decision-ready award memo
+- Quote Guard that audits operator, transport, fuel, permit, overtime, validity, and daily quote clarity before dispatch
 - Mobilization Control Tower that checks dispatch readiness before the buyer calls the supplier
+- Yard Availability OS that flags stale supplier inventory before buyer trust is damaged
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -89,11 +92,16 @@ Founder Admin:
 - Active paid listings
 - Verified listings
 - Trust Passport copy events
+- Smart Match Rescue actions clicked
 - Jobsite project briefs copied
 - Machines moved from Jobsite Planner to RFQ shortlist
 - RFQ packets copied
 - Award memos copied
+- Quote Guard clarification packets copied
+- Hidden quote terms clarified before mobilization
 - Mobilization handoffs copied
+- Yard availability update packets copied
+- Listings reconfirmed before enquiry routing
 - Direct enquiries sent
 - Unmet demand signals captured
 - Supplier gaps closed from demand radar

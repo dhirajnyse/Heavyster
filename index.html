@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-mobilization-tower" />
+    <link rel="stylesheet" href="styles.css?v=20260517-quote-guard" />
   </head>
   <body>
     <div class="app-shell">
@@ -44,7 +44,9 @@
           <a href="#passport">Passport</a>
           <a href="#rfq">RFQ Room</a>
           <a href="#award">Award Room</a>
+          <a href="#quote-guard">Quote Guard</a>
           <a href="#mobilize">Mobilize</a>
+          <a href="#yard">Yard Board</a>
           <a href="#studio">Supplier Studio</a>
           <a href="#categories">Categories</a>
           <a href="#growth">Growth</a>
@@ -113,6 +115,7 @@
                 <span><strong id="verifiedCount">0</strong> verified suppliers</span>
                 <span><strong>0%</strong> rental commission</span>
               </div>
+              <div class="search-rescue" id="searchRescue" aria-live="polite"></div>
             </div>
           </div>
         </section>
@@ -409,6 +412,80 @@
           </div>
         </section>
 
+        <section class="quote-section" id="quote-guard">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Quote Guard</p>
+              <h2>Catch hidden rental costs before award turns into a site delay.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyQuoteButton">Copy quote check</button>
+          </div>
+
+          <div class="quote-grid">
+            <article class="quote-card quote-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Quote clarity</p>
+                  <h3 id="quoteGuardTitle">Quote target</h3>
+                </div>
+                <span class="pill" id="quoteGuardBadge">Draft</span>
+              </div>
+              <div class="quote-score" id="quoteGuardScore"></div>
+              <div class="quote-metrics" id="quoteGuardMetrics"></div>
+            </article>
+
+            <article class="quote-card">
+              <h3>Quote inputs</h3>
+              <div class="quote-controls">
+                <label for="quoteAmount">
+                  Quote amount
+                  <input id="quoteAmount" type="range" min="500" max="50000" step="250" value="8500" />
+                </label>
+                <label for="quoteDays">
+                  Hire duration
+                  <input id="quoteDays" type="range" min="1" max="60" step="1" value="5" />
+                </label>
+              </div>
+              <div class="quote-coverage" aria-label="Quote coverage">
+                <label>
+                  <input type="checkbox" data-quote-include="operator" />
+                  <span>Operator</span>
+                </label>
+                <label>
+                  <input type="checkbox" data-quote-include="transport" />
+                  <span>Transport</span>
+                </label>
+                <label>
+                  <input type="checkbox" data-quote-include="fuel" />
+                  <span>Fuel</span>
+                </label>
+                <label>
+                  <input type="checkbox" data-quote-include="permit" />
+                  <span>Permit</span>
+                </label>
+                <label>
+                  <input type="checkbox" data-quote-include="overtime" />
+                  <span>Overtime</span>
+                </label>
+                <label>
+                  <input type="checkbox" data-quote-include="validity" />
+                  <span>Validity</span>
+                </label>
+              </div>
+            </article>
+
+            <article class="quote-card">
+              <h3>Cost clarity board</h3>
+              <div class="quote-board" id="quoteGuardBoard"></div>
+            </article>
+
+            <article class="quote-card quote-memo-card">
+              <h3>Supplier clarification</h3>
+              <div class="quote-memo" id="quoteGuardMemo"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="mobilize-section" id="mobilize">
           <div class="section-header wide">
             <div>
@@ -439,6 +516,40 @@
             <article class="mobilize-card mobilize-handoff-card">
               <h3>Buyer-supplier handoff</h3>
               <div class="mobilize-handoff" id="mobilizeHandoff"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="yard-section" id="yard">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Yard Availability OS</p>
+              <h2>Keep supplier inventory fresh before stale listings damage buyer trust.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyYardButton">Copy yard update</button>
+          </div>
+
+          <div class="yard-grid">
+            <article class="yard-card yard-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Freshness control</p>
+                  <h3 id="yardTitle">Live yard board</h3>
+                </div>
+                <span class="pill" id="yardBadge">Review</span>
+              </div>
+              <div class="yard-score" id="yardScore"></div>
+              <div class="yard-metrics" id="yardMetrics"></div>
+            </article>
+
+            <article class="yard-card yard-board-card">
+              <h3>Availability board</h3>
+              <div class="yard-board" id="yardBoard"></div>
+            </article>
+
+            <article class="yard-card yard-update-card">
+              <h3>Supplier refresh queue</h3>
+              <div class="yard-refresh" id="yardRefreshQueue"></div>
             </article>
           </div>
         </section>
@@ -763,6 +874,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-mobilization-tower" defer></script>
+    <script src="app.js?v=20260517-quote-guard" defer></script>
   </body>
 </html>

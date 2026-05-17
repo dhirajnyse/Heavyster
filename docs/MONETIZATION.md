@@ -25,10 +25,13 @@ Add these only after basic supplier onboarding works:
 - Featured category placement
 - Verified supplier badge
 - Trust Passport and proof stack on each active listing
+- Smart Match Rescue that converts missing supply into supplier acquisition signals
 - Jobsite package planning for buyers with multi-machine needs
 - RFQ routing and quote packet tools for serious buyers
 - Award memo and decision support tools for serious buyers
+- Quote Guard for high-value buyers who need complete supplier terms before dispatch
 - Mobilization handoff tools for serious buyers and verified suppliers
+- Yard Availability OS for suppliers who want cleaner enquiry conversion
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region
@@ -60,6 +63,7 @@ High-take marketplace fees can work in consumer marketplaces, but heavy equipmen
 2. Featured placement
 3. Verified supplier plans
 4. Lead intelligence tools
-5. Optional 1% confirmed booking success fee
-6. Optional payment/deposit rails
-7. Insurance, logistics, operator scheduling, and financing partnerships
+5. Quote clarity and award workflow upgrades
+6. Optional 1% confirmed booking success fee
+7. Optional payment/deposit rails
+8. Insurance, logistics, operator scheduling, and financing partnerships

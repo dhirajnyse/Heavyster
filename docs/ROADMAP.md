@@ -5,12 +5,15 @@
 - Supplier signup and company profile
 - Equipment categories and listing pages
 - Compact catalog UI for thousands of listings
+- Smart Match Rescue for zero-result searches
 - Smart empty-state recovery and shortlist comparison
 - Jobsite Planner that turns project notes into rental packages
 - Trust Passport for every active machine
 - RFQ Command Room for shortlist-based quote packets
 - Award Intelligence for shortlist ranking and buyer award memos
+- Quote Guard for hidden cost and quote term clarity
 - Mobilization Control Tower for pre-dispatch buyer-supplier handoff
+- Yard Availability OS for supplier inventory freshness
 - Demand request capture for zero-result searches
 - Supplier hunt autopilot for demand-led supplier acquisition
 - Market Maker Mode for choosing the next region/category launch
@@ -29,12 +32,15 @@
 - Multi-machine package templates by jobsite type
 - RFQ response comparison and supplier reply scoring
 - Award history, decision audit trail, and post-award supplier scoring
+- Quote Guard history, daily rate normalization, and missing-term analytics
 - Mobilization history, dispatch evidence, and site readiness memory
+- Availability history, stale listing prevention, and supplier refresh SLAs
 - Response time scoring
 - Category demand heatmaps from demand radar
 - Supplier acquisition scoring by region, equipment, and listing revenue
 - Automated market launch briefs for category pages
 - Saved renter requirements
+- Search rescue conversion analytics
 - CRM export
 - Featured listing upgrades
 - Optional 1% confirmed-booking success fee when Heavyster creates a booking trail
