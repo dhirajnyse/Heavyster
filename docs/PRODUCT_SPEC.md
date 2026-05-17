@@ -35,7 +35,7 @@ Equipment listing:
 Marketplace:
 
 - Search by equipment, region, category, availability
-- Command Center that turns the growing product into three simple paths: buyer decision flow, supplier revenue flow, and founder growth flow
+- Command Center that turns the growing product into role workspaces for buyer decision flow, supplier revenue flow, and founder growth flow
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Smart Match Rescue on the hero search when exact supply is unavailable
@@ -124,5 +124,6 @@ Founder Admin:
 - Category pages launched from demand signals
 - Supplier response time
 - Command Center module launches
+- Command Center role switches
 - Listing renewal rate
 - Enquiries per active listing

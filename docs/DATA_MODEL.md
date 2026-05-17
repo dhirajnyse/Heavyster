@@ -102,6 +102,8 @@ Use this when Heavyster needs one simple control layer across buyer, supplier, a
 - founder_demand_signal_count
 - active_market_opportunity_id
 - route_cards
+- active_role
+- role_workspace_summary
 - module_launcher_items
 - last_opened_module
 - created_at

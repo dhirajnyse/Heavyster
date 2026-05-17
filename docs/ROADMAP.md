@@ -4,7 +4,7 @@
 
 - Supplier signup and company profile
 - Equipment categories and listing pages
-- Command Center for simple buyer, supplier, and founder navigation
+- Command Center role workspaces for simple buyer, supplier, and founder navigation
 - Compact catalog UI for thousands of listings
 - Smart Match Rescue for zero-result searches
 - Smart empty-state recovery and shortlist comparison
@@ -31,7 +31,7 @@
 ## Phase 2: Lead Intelligence
 
 - Supplier lead inbox
-- Command Center usage analytics and saved role-specific workspaces
+- Command Center usage analytics, saved role-specific workspaces, and role-based onboarding
 - Trust Passport expiry and confidence history
 - Quote templates
 - Multi-machine package templates by jobsite type

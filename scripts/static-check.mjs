@@ -48,7 +48,7 @@ assert(index.includes('id="supplierTable"') && index.includes('id="studioHealth"
 assert(index.includes('id="trustChecklist"'), "index.html is missing the verification checklist.");
 assert(index.includes('id="bookingFeeOutput"'), "index.html is missing the commission calculator.");
 assert(index.includes('id="quickSearchButton"') && index.includes('id="scrollTopButton"'), "index.html is missing floating quick actions.");
-assert(index.includes('id="commandPulse"') && index.includes('id="commandRoutes"') && index.includes('id="commandModuleRail"'), "index.html is missing Command Center controls.");
+assert(index.includes('id="commandPulse"') && index.includes('id="commandRoutes"') && index.includes('id="commandRoleTabs"') && index.includes('id="commandWorkspace"') && index.includes('id="commandModuleRail"'), "index.html is missing Command Center controls.");
 assert(index.includes('id="shortlistToggleButton"') && index.includes('id="shortlistTray"'), "index.html is missing shortlist controls.");
 assert(index.includes('id="searchRescue"'), "index.html is missing Smart Match Rescue.");
 assert(index.includes('id="jobsitePackage"') && index.includes('id="copyJobsiteButton"'), "index.html is missing Jobsite Planner controls.");
@@ -66,13 +66,13 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260517-command-center"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260517-command-center"), "index.html is missing the JS cache-bust token.");
-assert(app.includes('const DATA_VERSION = "20260517-heavyster-command-center-v18";'), "app.js DATA_VERSION is missing or changed.");
+assert(index.includes("styles.css?v=20260517-role-workspaces"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260517-role-workspaces"), "index.html is missing the JS cache-bust token.");
+assert(app.includes('const DATA_VERSION = "20260517-heavyster-role-workspaces-v19";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderCompactCatalog") && app.includes("renderCategoryDirectory") && app.includes("renderAdminBoard"), "app.js is missing scalable UX renderers.");
-assert(app.includes("renderCommandCenter") && app.includes("getCommandCenterModel"), "app.js is missing Command Center rendering or model logic.");
+assert(app.includes("renderCommandCenter") && app.includes("getCommandCenterModel") && app.includes("getCommandWorkspace"), "app.js is missing Command Center rendering or model logic.");
 assert(app.includes("renderNoResultsAdvisor") && app.includes("renderShortlistTray"), "app.js is missing buyer recovery or shortlist renderers.");
 assert(app.includes("renderSearchRescue") && app.includes("getSearchRescueSuggestions"), "app.js is missing Smart Match Rescue rendering or suggestions.");
 assert(app.includes("renderJobsitePlanner") && app.includes("buildJobsiteBriefText"), "app.js is missing Jobsite Planner rendering or copy text.");

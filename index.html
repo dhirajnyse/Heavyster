@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-command-center" />
+    <link rel="stylesheet" href="styles.css?v=20260517-role-workspaces" />
   </head>
   <body>
     <div class="app-shell">
@@ -154,7 +154,9 @@
               <div class="command-routes" id="commandRoutes"></div>
             </article>
             <article class="command-panel">
-              <h3>Module launcher</h3>
+              <h3>Workspace launcher</h3>
+              <div class="command-tabs" id="commandRoleTabs" aria-label="Command workspace role"></div>
+              <div class="command-workspace" id="commandWorkspace"></div>
               <div class="command-module-rail" id="commandModuleRail"></div>
             </article>
           </div>
@@ -976,6 +978,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-command-center" defer></script>
+    <script src="app.js?v=20260517-role-workspaces" defer></script>
   </body>
 </html>

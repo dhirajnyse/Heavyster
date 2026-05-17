@@ -576,6 +576,11 @@ textarea {
   background: #fff8e7;
 }
 
+.command-route.is-active {
+  border-color: var(--amber);
+  background: var(--amber-soft);
+}
+
 .command-route span,
 .command-route strong,
 .command-route small,
@@ -601,6 +606,77 @@ textarea {
   color: var(--teal);
   font-style: normal;
   font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.command-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.command-tabs button {
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.command-tabs button:hover,
+.command-tabs button.is-active {
+  border-color: var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.command-workspace {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fcfbf7;
+}
+
+.command-workspace strong,
+.command-workspace span,
+.command-workspace p,
+.command-workspace small {
+  display: block;
+}
+
+.command-workspace strong {
+  font-size: 1.02rem;
+}
+
+.command-workspace span {
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--coal);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.command-workspace p,
+.command-workspace small {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+.command-workspace small {
+  color: var(--teal);
   font-weight: 850;
 }
 

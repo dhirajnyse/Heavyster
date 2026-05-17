@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-command-center-v18";
+const DATA_VERSION = "20260517-heavyster-role-workspaces-v19";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -414,6 +414,8 @@ const jobsiteBlueprints = [
   }
 ];
 
+const commandRoles = ["Buyer", "Supplier", "Founder"];
+
 const commandRoutes = [
   {
     role: "Buyer",
@@ -458,6 +460,7 @@ const commandRoutes = [
 
 const commandModules = [
   { role: "Buyer", label: "Marketplace", anchor: "#marketplace", signal: "Find equipment" },
+  { role: "Buyer", label: "Jobsite", anchor: "#jobsite", signal: "Build package" },
   { role: "Buyer", label: "Trust Passport", anchor: "#passport", signal: "Check proof" },
   { role: "Buyer", label: "RFQ Room", anchor: "#rfq", signal: "Ask suppliers" },
   { role: "Buyer", label: "Award Room", anchor: "#award", signal: "Choose supplier" },
@@ -467,8 +470,12 @@ const commandModules = [
   { role: "Supplier", label: "Supplier Studio", anchor: "#studio", signal: "Manage fleet" },
   { role: "Supplier", label: "Lead Desk", anchor: "#lead-desk", signal: "Reply faster" },
   { role: "Supplier", label: "Yard Board", anchor: "#yard", signal: "Fresh stock" },
+  { role: "Supplier", label: "Pricing", anchor: "#pricing", signal: "Listing revenue" },
+  { role: "Founder", label: "Admin", anchor: "#admin", signal: "Verify supply" },
   { role: "Founder", label: "Growth", anchor: "#growth", signal: "Recruit supply" },
-  { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" }
+  { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" },
+  { role: "Founder", label: "Categories", anchor: "#categories", signal: "Plan inventory" },
+  { role: "Founder", label: "Roadmap", anchor: "#roadmap", signal: "Build sequence" }
 ];
 
 let state = loadState();
@@ -517,6 +524,7 @@ function defaultState() {
     demandSignals: seedDemandSignals.map((signal) => ({ ...signal })),
     activeDemandKey: "",
     activeMarketKey: "",
+    commandRole: "Buyer",
     supplierView: false,
     trustChecked: [true, true, true, false, false, false]
   };
@@ -529,6 +537,7 @@ function loadState() {
     const merged = { ...base, ...(saved || {}) };
     merged.quoteIncludes = { ...base.quoteIncludes, ...(merged.quoteIncludes || {}) };
     if (!Array.isArray(merged.demandSignals)) merged.demandSignals = base.demandSignals;
+    if (!commandRoles.includes(merged.commandRole)) merged.commandRole = base.commandRole;
     if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
     if (!merged.activeMarketKey) merged.activeMarketKey = getMarketKeyFromSignal(merged.demandSignals[0]);
     return merged;
@@ -950,7 +959,7 @@ function renderCommandCenter() {
   `).join("");
 
   document.querySelector("#commandRoutes").innerHTML = model.routes.map((route) => `
-    <button type="button" class="command-route" data-command-anchor="${escapeHtml(route.anchor)}" data-command-label="${escapeHtml(route.label)}">
+    <button type="button" class="command-route ${route.isActive ? "is-active" : ""}" data-command-anchor="${escapeHtml(route.anchor)}" data-command-label="${escapeHtml(route.label)}" data-command-role="${escapeHtml(route.role)}">
       <span>
         <em>${escapeHtml(route.role)}</em>
         <strong>${escapeHtml(route.label)}</strong>
@@ -960,6 +969,19 @@ function renderCommandCenter() {
       <i>${route.steps.map((step) => escapeHtml(step.label)).join(" / ")}</i>
     </button>
   `).join("");
+
+  document.querySelector("#commandRoleTabs").innerHTML = model.roles.map((role) => `
+    <button type="button" class="${role === model.activeRole ? "is-active" : ""}" data-command-role-filter="${escapeHtml(role)}">
+      ${escapeHtml(role)}
+    </button>
+  `).join("");
+
+  document.querySelector("#commandWorkspace").innerHTML = `
+    <strong>${escapeHtml(model.workspace.title)}</strong>
+    <span>${escapeHtml(model.workspace.score)}</span>
+    <p>${escapeHtml(model.workspace.detail)}</p>
+    <small>${escapeHtml(model.workspace.next)}</small>
+  `;
 
   document.querySelector("#commandModuleRail").innerHTML = model.modules.map((module) => `
     <button type="button" class="command-module ${module.isActive ? "is-active" : ""}" data-command-anchor="${escapeHtml(module.anchor)}" data-command-label="${escapeHtml(module.label)}">
@@ -973,8 +995,22 @@ function renderCommandCenter() {
     button.addEventListener("click", () => {
       const target = document.querySelector(button.dataset.commandAnchor);
       if (!target) return;
+      if (button.dataset.commandRole) {
+        state.commandRole = button.dataset.commandRole;
+        saveState();
+        renderCommandCenter();
+      }
       target.scrollIntoView({ behavior: "smooth", block: "start" });
       showToast(`${button.dataset.commandLabel || "Module"} opened.`);
+    });
+  });
+
+  document.querySelectorAll("[data-command-role-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.commandRole = button.dataset.commandRoleFilter;
+      saveState();
+      renderCommandCenter();
+      showToast(`${state.commandRole} workspace active.`);
     });
   });
 }
@@ -995,9 +1031,29 @@ function getCommandCenterModel() {
   const supplierScore = Math.round((storefront.score + yard.score + leadDesk.active.score) / 3);
   const founderScore = market.score;
   const badge = buyerScore >= 82 && supplierScore >= 82 ? "Ready to demo" : "Focused build";
+  const activeRole = commandRoles.includes(state.commandRole) ? state.commandRole : "Buyer";
+  const workspace = getCommandWorkspace(activeRole, {
+    selected,
+    passport,
+    rfq,
+    award,
+    quote,
+    mobilize,
+    yard,
+    storefront,
+    leadDesk,
+    market,
+    demandCount,
+    buyerScore,
+    supplierScore,
+    founderScore
+  });
 
   return {
     badge,
+    activeRole,
+    roles: commandRoles,
+    workspace,
     pulse: [
       {
         label: "Buyer readiness",
@@ -1022,16 +1078,44 @@ function getCommandCenterModel() {
     ],
     routes: commandRoutes.map((route) => ({
       ...route,
+      isActive: route.role === activeRole,
       score: route.role === "Buyer"
         ? `${buyerScore}/100`
         : route.role === "Supplier"
           ? `${supplierScore}/100`
           : `${founderScore}/100`
     })),
-    modules: commandModules.map((module) => ({
+    modules: commandModules.filter((module) => module.role === activeRole).map((module, index) => ({
       ...module,
-      isActive: module.anchor === "#marketplace" || module.anchor === "#studio" && state.supplierView
+      isActive: index === 0
     }))
+  };
+}
+
+function getCommandWorkspace(role, context) {
+  if (role === "Supplier") {
+    return {
+      title: `${context.leadDesk.profile.supplier} workspace`,
+      score: `${context.supplierScore}/100 supplier readiness`,
+      detail: `${context.leadDesk.leads.length} open lead${context.leadDesk.leads.length === 1 ? "" : "s"}, USD ${context.leadDesk.totalBudget.toLocaleString()} pipeline, ${context.yard.reviewCount} listing${context.yard.reviewCount === 1 ? "" : "s"} need freshness review.`,
+      next: "Open Lead Desk first, then refresh Yard Board before pushing more paid listings."
+    };
+  }
+
+  if (role === "Founder") {
+    return {
+      title: `${context.market.region} ${context.market.category} growth workspace`,
+      score: `${context.founderScore}/100 launch score`,
+      detail: `${context.demandCount} demand signals are active. Current page target is ${context.market.slug} with ${context.market.launchListings} starter listings.`,
+      next: "Use Growth to recruit suppliers, then Market Map to publish the next demand-led page."
+    };
+  }
+
+  return {
+    title: `${context.selected.name} buyer workspace`,
+    score: `${context.buyerScore}/100 buyer readiness`,
+    detail: `${context.rfq.listings.length} machine${context.rfq.listings.length === 1 ? "" : "s"} in RFQ flow, ${context.quote.missingCount} quote term${context.quote.missingCount === 1 ? "" : "s"} unclear, award status ${context.award.badge.toLowerCase()}.`,
+    next: "Start with Jobsite, confirm Trust Passport, then move through RFQ, Award, Quote Guard, and Mobilize."
   };
 }
 

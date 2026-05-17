@@ -16,7 +16,7 @@ The first version is intentionally simple:
 This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
-- Command Center that groups buyer, supplier, and founder workflows into one simple operating cockpit
+- Command Center with role workspaces for buyer, supplier, and founder workflows
 - Compact catalog row view for large inventory UX
 - Smart Match Rescue on the hero search for zero-result buyer recovery
 - Smart no-results recovery with nearby matches and one-click filter relaxation
