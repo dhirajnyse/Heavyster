@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-role-workspaces-v19";
+const DATA_VERSION = "20260517-heavyster-hash-stabilizer-v20";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -484,6 +484,8 @@ let toastTimer = 0;
 document.addEventListener("DOMContentLoaded", () => {
   bindControls();
   render();
+  stabilizeHashScroll();
+  window.addEventListener("hashchange", () => stabilizeHashScroll());
 });
 
 function defaultState() {
@@ -944,6 +946,20 @@ function render() {
   renderPricingCalculator();
   renderCommissionCalculator();
   document.body.classList.toggle("supplier-view", state.supplierView);
+}
+
+function stabilizeHashScroll() {
+  const id = decodeURIComponent((window.location.hash || "").slice(1));
+  if (!id) return;
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  window.requestAnimationFrame(() => {
+    target.scrollIntoView({ behavior: "auto", block: "start" });
+    window.setTimeout(() => {
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+    }, 80);
+  });
 }
 
 function renderCommandCenter() {
