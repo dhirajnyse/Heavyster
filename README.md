@@ -34,10 +34,20 @@ This folder contains a static product prototype with:
 - Listing Revenue Desk for paid listings, renewal risk, annual upsell, paused inventory, and copy-ready billing follow-up
 - Supplier Lead Desk for direct enquiry scoring, response urgency, reply playbooks, and copy-ready supplier replies
 - Supplier Account Health Radar for churn risk, expansion upside, health signals, and next-best save actions
+- Supplier Success Daily Queue for ranking which supplier to call first, why, and what action saves or grows the account
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach
 - Market Maker Mode for region/category expansion scoring and launch briefs
+- Market Page Factory for turning demand gaps into launch-ready SEO pages, proof gates, supplier targets, and copy-ready page packs
+- Market Launch Room for seven-day founder launch sprints, supplier strike lists, proof gaps, and first-week listing ARR targets
+- Market Twin for simulating launch intensity, paid listing density, trust risk, demand coverage, and listing ARR before scaling a category page
+- Liquidity Flywheel for detecting whether demand, supply, trust, response, and listing revenue are compounding or blocked by a founder bottleneck
+- Founder Autopilot for turning flywheel bottlenecks into owner-assigned weekly commands with ARR impact and copy-ready operating briefs
+- Demand Exchange for turning unmet buyer searches into supplier-facing opportunity tickets, proof requests, and copy-ready listing invites
+- Proof of Demand Room for packaging buyer demand, supply shortage, trust proof, ROI, and supplier objections into a copy-ready sales pack
+- Supplier Commitment Room for converting proof into paid listing packages, go-live gates, and copy-ready close notes
+- Listing Activation Room for turning paid listing commitments into activation queues, billing gates, publish readiness, and copy-ready go-live plans
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

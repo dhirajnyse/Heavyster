@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260517-account-health" />
+    <link rel="stylesheet" href="styles.css?v=20260518-listing-activation" />
   </head>
   <body>
     <div class="app-shell">
@@ -45,6 +45,16 @@
           <a href="#studio">Supplier Studio</a>
           <a href="#revenue-desk">Revenue</a>
           <a href="#account-health">Health</a>
+          <a href="#supplier-success">Success</a>
+          <a href="#page-factory">Pages</a>
+          <a href="#launch-room">Launch</a>
+          <a href="#market-twin">Twin</a>
+          <a href="#liquidity-flywheel">Flywheel</a>
+          <a href="#founder-autopilot">Autopilot</a>
+          <a href="#demand-exchange">Exchange</a>
+          <a href="#proof-demand">Proof Room</a>
+          <a href="#supplier-commitment">Commit</a>
+          <a href="#listing-activation">Activate</a>
           <a href="#growth">Growth</a>
           <a href="#market-maker">Market Map</a>
           <a href="#pricing">Pricing</a>
@@ -899,6 +909,396 @@
           </div>
         </section>
 
+        <section class="supplier-success-section" id="supplier-success">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Supplier Success Daily Queue</p>
+              <h2>Know which supplier to call first today, why, and what will save or grow the account.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copySupplierSuccessButton">Copy daily queue</button>
+          </div>
+
+          <div class="supplier-success-grid">
+            <article class="supplier-success-card supplier-success-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Founder operating queue</p>
+                  <h3>Today&apos;s supplier desk</h3>
+                </div>
+                <span class="pill" id="supplierSuccessBadge">Review</span>
+              </div>
+              <div class="supplier-success-score" id="supplierSuccessScore"></div>
+              <div class="supplier-success-metrics" id="supplierSuccessMetrics"></div>
+            </article>
+
+            <article class="supplier-success-card">
+              <h3>Priority suppliers</h3>
+              <div class="supplier-success-queue" id="supplierSuccessQueue"></div>
+            </article>
+
+            <article class="supplier-success-card">
+              <h3>Daily operating rhythm</h3>
+              <div class="supplier-success-actions" id="supplierSuccessActions"></div>
+            </article>
+
+            <article class="supplier-success-card supplier-success-plan-card">
+              <h3>Copy-ready founder plan</h3>
+              <div class="supplier-success-plan" id="supplierSuccessPlan"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page-factory-section" id="page-factory">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Market Page Factory</p>
+              <h2>Turn demand signals into SEO-ready rental pages with supplier targets and proof gates.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyPageFactoryButton">Copy page pack</button>
+          </div>
+
+          <div class="page-factory-grid">
+            <article class="page-factory-card page-factory-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Launch pipeline</p>
+                  <h3 id="pageFactoryTitle">Market page queue</h3>
+                </div>
+                <span class="pill" id="pageFactoryBadge">Review</span>
+              </div>
+              <div class="page-factory-score" id="pageFactoryScore"></div>
+              <div class="page-factory-metrics" id="pageFactoryMetrics"></div>
+            </article>
+
+            <article class="page-factory-card">
+              <h3>Page queue</h3>
+              <div class="page-factory-queue" id="pageFactoryQueue"></div>
+            </article>
+
+            <article class="page-factory-card">
+              <h3>Launch gates</h3>
+              <div class="page-factory-gates" id="pageFactoryGates"></div>
+            </article>
+
+            <article class="page-factory-card page-factory-pack-card">
+              <h3>Copy-ready page pack</h3>
+              <div class="page-factory-pack" id="pageFactoryPack"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="launch-room-section" id="launch-room">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Market Launch Room</p>
+              <h2>Convert the selected market page into a seven-day supplier recruitment sprint.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyLaunchRoomButton">Copy launch sprint</button>
+          </div>
+
+          <div class="launch-room-grid">
+            <article class="launch-room-card launch-room-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Founder sprint</p>
+                  <h3 id="launchRoomTitle">Market launch sprint</h3>
+                </div>
+                <span class="pill" id="launchRoomBadge">Review</span>
+              </div>
+              <div class="launch-room-score" id="launchRoomScore"></div>
+              <div class="launch-room-metrics" id="launchRoomMetrics"></div>
+            </article>
+
+            <article class="launch-room-card">
+              <h3>Seven-day launch sprint</h3>
+              <div class="launch-room-timeline" id="launchRoomTimeline"></div>
+            </article>
+
+            <article class="launch-room-card">
+              <h3>Supplier strike list</h3>
+              <div class="launch-room-suppliers" id="launchRoomSuppliers"></div>
+            </article>
+
+            <article class="launch-room-card launch-room-packet-card">
+              <h3>Copy-ready launch packet</h3>
+              <div class="launch-room-packet" id="launchRoomPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="market-twin-section" id="market-twin">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Market Twin</p>
+              <h2>Simulate how a category launch becomes supply, trust, direct enquiries, and listing revenue.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyMarketTwinButton">Copy twin memo</button>
+          </div>
+
+          <div class="market-twin-grid">
+            <article class="market-twin-card market-twin-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Founder simulation</p>
+                  <h3 id="marketTwinTitle">Market twin</h3>
+                </div>
+                <span class="pill" id="marketTwinBadge">Review</span>
+              </div>
+              <div class="market-twin-score" id="marketTwinScore"></div>
+              <div class="market-twin-metrics" id="marketTwinMetrics"></div>
+            </article>
+
+            <article class="market-twin-card">
+              <h3>Launch intensity</h3>
+              <div class="market-twin-scenarios" id="marketTwinScenarios"></div>
+            </article>
+
+            <article class="market-twin-card">
+              <h3>Risk map</h3>
+              <div class="market-twin-risks" id="marketTwinRisks"></div>
+            </article>
+
+            <article class="market-twin-card market-twin-packet-card">
+              <h3>Copy-ready twin memo</h3>
+              <div class="market-twin-packet" id="marketTwinPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="liquidity-flywheel-section" id="liquidity-flywheel">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Liquidity Flywheel</p>
+              <h2>See whether a market can compound from demand into verified supply, direct enquiries, and listing revenue.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyLiquidityFlywheelButton">Copy flywheel memo</button>
+          </div>
+
+          <div class="liquidity-flywheel-grid">
+            <article class="liquidity-flywheel-card liquidity-flywheel-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Market compounding</p>
+                  <h3 id="liquidityFlywheelTitle">Liquidity flywheel</h3>
+                </div>
+                <span class="pill" id="liquidityFlywheelBadge">Review</span>
+              </div>
+              <div class="liquidity-flywheel-score" id="liquidityFlywheelScore"></div>
+              <div class="liquidity-flywheel-metrics" id="liquidityFlywheelMetrics"></div>
+            </article>
+
+            <article class="liquidity-flywheel-card">
+              <h3>Flywheel loops</h3>
+              <div class="liquidity-flywheel-loops" id="liquidityFlywheelLoops"></div>
+            </article>
+
+            <article class="liquidity-flywheel-card">
+              <h3>Bottleneck fixes</h3>
+              <div class="liquidity-flywheel-bottlenecks" id="liquidityFlywheelBottlenecks"></div>
+            </article>
+
+            <article class="liquidity-flywheel-card liquidity-flywheel-packet-card">
+              <h3>Copy-ready flywheel memo</h3>
+              <div class="liquidity-flywheel-packet" id="liquidityFlywheelPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="founder-autopilot-section" id="founder-autopilot">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Founder Autopilot</p>
+              <h2>Convert the flywheel bottleneck into a weekly operating queue with owners and ARR impact.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyFounderAutopilotButton">Copy autopilot brief</button>
+          </div>
+
+          <div class="founder-autopilot-grid">
+            <article class="founder-autopilot-card founder-autopilot-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Weekly command layer</p>
+                  <h3 id="founderAutopilotTitle">Founder autopilot</h3>
+                </div>
+                <span class="pill" id="founderAutopilotBadge">Review</span>
+              </div>
+              <div class="founder-autopilot-score" id="founderAutopilotScore"></div>
+              <div class="founder-autopilot-metrics" id="founderAutopilotMetrics"></div>
+            </article>
+
+            <article class="founder-autopilot-card">
+              <h3>Command queue</h3>
+              <div class="founder-autopilot-queue" id="founderAutopilotQueue"></div>
+            </article>
+
+            <article class="founder-autopilot-card">
+              <h3>Impact ladder</h3>
+              <div class="founder-autopilot-impact" id="founderAutopilotImpact"></div>
+            </article>
+
+            <article class="founder-autopilot-card founder-autopilot-packet-card">
+              <h3>Copy-ready autopilot brief</h3>
+              <div class="founder-autopilot-packet" id="founderAutopilotPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="demand-exchange-section" id="demand-exchange">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Demand Exchange</p>
+              <h2>Show rental companies the exact unmet demand waiting for their fleet before they list.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyDemandExchangeButton">Copy supplier invite</button>
+          </div>
+
+          <div class="demand-exchange-grid">
+            <article class="demand-exchange-card demand-exchange-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Supplier pull engine</p>
+                  <h3 id="demandExchangeTitle">Demand exchange</h3>
+                </div>
+                <span class="pill" id="demandExchangeBadge">Open</span>
+              </div>
+              <div class="demand-exchange-score" id="demandExchangeScore"></div>
+              <div class="demand-exchange-metrics" id="demandExchangeMetrics"></div>
+            </article>
+
+            <article class="demand-exchange-card">
+              <h3>Unmet demand tickets</h3>
+              <div class="demand-exchange-tickets" id="demandExchangeTickets"></div>
+            </article>
+
+            <article class="demand-exchange-card">
+              <h3>Supplier conversion lanes</h3>
+              <div class="demand-exchange-lanes" id="demandExchangeLanes"></div>
+            </article>
+
+            <article class="demand-exchange-card demand-exchange-packet-card">
+              <h3>Copy-ready supplier invite</h3>
+              <div class="demand-exchange-packet" id="demandExchangePacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="proof-demand-section" id="proof-demand">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Proof of Demand Room</p>
+              <h2>Turn a supplier objection into evidence: buyer demand, supply gap, proof ask, and listing ROI.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyProofDemandButton">Copy proof pack</button>
+          </div>
+
+          <div class="proof-demand-grid">
+            <article class="proof-demand-card proof-demand-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Sales proof room</p>
+                  <h3 id="proofDemandTitle">Proof room</h3>
+                </div>
+                <span class="pill" id="proofDemandBadge">Proof</span>
+              </div>
+              <div class="proof-demand-score" id="proofDemandScore"></div>
+              <div class="proof-demand-metrics" id="proofDemandMetrics"></div>
+            </article>
+
+            <article class="proof-demand-card">
+              <h3>Evidence chain</h3>
+              <div class="proof-demand-evidence" id="proofDemandEvidence"></div>
+            </article>
+
+            <article class="proof-demand-card">
+              <h3>Supplier objections</h3>
+              <div class="proof-demand-objections" id="proofDemandObjections"></div>
+            </article>
+
+            <article class="proof-demand-card proof-demand-packet-card">
+              <h3>Copy-ready proof pack</h3>
+              <div class="proof-demand-packet" id="proofDemandPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="supplier-commitment-section" id="supplier-commitment">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Supplier Commitment Room</p>
+              <h2>Convert proof into a paid listing package, proof gates, go-live plan, and close note.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copySupplierCommitmentButton">Copy commitment note</button>
+          </div>
+
+          <div class="supplier-commitment-grid">
+            <article class="supplier-commitment-card supplier-commitment-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Proof to revenue</p>
+                  <h3 id="supplierCommitmentTitle">Supplier commitment</h3>
+                </div>
+                <span class="pill" id="supplierCommitmentBadge">Close</span>
+              </div>
+              <div class="supplier-commitment-score" id="supplierCommitmentScore"></div>
+              <div class="supplier-commitment-metrics" id="supplierCommitmentMetrics"></div>
+            </article>
+
+            <article class="supplier-commitment-card">
+              <h3>Listing packages</h3>
+              <div class="supplier-commitment-packages" id="supplierCommitmentPackages"></div>
+            </article>
+
+            <article class="supplier-commitment-card">
+              <h3>Go-live gates</h3>
+              <div class="supplier-commitment-gates" id="supplierCommitmentGates"></div>
+            </article>
+
+            <article class="supplier-commitment-card supplier-commitment-packet-card">
+              <h3>Copy-ready commitment note</h3>
+              <div class="supplier-commitment-packet" id="supplierCommitmentPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="listing-activation-section" id="listing-activation">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Listing Activation Room</p>
+              <h2>Turn a supplier commitment into paid listings ready to publish, bill, and route enquiries.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyListingActivationButton">Copy activation plan</button>
+          </div>
+
+          <div class="listing-activation-grid">
+            <article class="listing-activation-card listing-activation-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Commitment to live listings</p>
+                  <h3 id="listingActivationTitle">Listing activation</h3>
+                </div>
+                <span class="pill" id="listingActivationBadge">Activate</span>
+              </div>
+              <div class="listing-activation-score" id="listingActivationScore"></div>
+              <div class="listing-activation-metrics" id="listingActivationMetrics"></div>
+            </article>
+
+            <article class="listing-activation-card">
+              <h3>Activation queue</h3>
+              <div class="listing-activation-queue" id="listingActivationQueue"></div>
+            </article>
+
+            <article class="listing-activation-card">
+              <h3>Billing and launch gates</h3>
+              <div class="listing-activation-gates" id="listingActivationGates"></div>
+            </article>
+
+            <article class="listing-activation-card listing-activation-packet-card">
+              <h3>Copy-ready activation plan</h3>
+              <div class="listing-activation-packet" id="listingActivationPacket"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="directory-section" id="categories">
           <div class="section-header wide">
             <div>
@@ -1136,6 +1536,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260517-account-health" defer></script>
+    <script src="app.js?v=20260518-listing-activation" defer></script>
   </body>
 </html>

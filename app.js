@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260517-heavyster-account-health-v24";
+const DATA_VERSION = "20260518-heavyster-listing-activation-v34";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -453,6 +453,16 @@ const commandRoutes = [
     detail: "Use missing demand to recruit suppliers, launch category pages, and keep phase-one monetization clean.",
     steps: [
       { label: "Demand", anchor: "#admin" },
+      { label: "Success", anchor: "#supplier-success" },
+      { label: "Pages", anchor: "#page-factory" },
+      { label: "Launch", anchor: "#launch-room" },
+      { label: "Twin", anchor: "#market-twin" },
+      { label: "Flywheel", anchor: "#liquidity-flywheel" },
+      { label: "Autopilot", anchor: "#founder-autopilot" },
+      { label: "Exchange", anchor: "#demand-exchange" },
+      { label: "Proof Room", anchor: "#proof-demand" },
+      { label: "Commit", anchor: "#supplier-commitment" },
+      { label: "Activate", anchor: "#listing-activation" },
       { label: "Hunt", anchor: "#growth" },
       { label: "Market Map", anchor: "#market-maker" },
       { label: "Categories", anchor: "#categories" },
@@ -479,6 +489,16 @@ const commandModules = [
   { role: "Supplier", label: "Yard Board", anchor: "#yard", signal: "Fresh stock" },
   { role: "Supplier", label: "Pricing", anchor: "#pricing", signal: "Listing revenue" },
   { role: "Founder", label: "Admin", anchor: "#admin", signal: "Verify supply" },
+  { role: "Founder", label: "Success Queue", anchor: "#supplier-success", signal: "Call first" },
+  { role: "Founder", label: "Page Factory", anchor: "#page-factory", signal: "Publish pages" },
+  { role: "Founder", label: "Launch Room", anchor: "#launch-room", signal: "Run sprint" },
+  { role: "Founder", label: "Market Twin", anchor: "#market-twin", signal: "Simulate launch" },
+  { role: "Founder", label: "Liquidity Flywheel", anchor: "#liquidity-flywheel", signal: "Find bottleneck" },
+  { role: "Founder", label: "Founder Autopilot", anchor: "#founder-autopilot", signal: "Dispatch work" },
+  { role: "Founder", label: "Demand Exchange", anchor: "#demand-exchange", signal: "Pull suppliers" },
+  { role: "Founder", label: "Proof of Demand", anchor: "#proof-demand", signal: "Prove ROI" },
+  { role: "Founder", label: "Supplier Commitment", anchor: "#supplier-commitment", signal: "Close listing" },
+  { role: "Founder", label: "Listing Activation", anchor: "#listing-activation", signal: "Go live" },
   { role: "Founder", label: "Growth", anchor: "#growth", signal: "Recruit supply" },
   { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" },
   { role: "Founder", label: "Categories", anchor: "#categories", signal: "Plan inventory" },
@@ -855,6 +875,7 @@ function defaultState() {
     demandSignals: seedDemandSignals.map((signal) => ({ ...signal })),
     activeDemandKey: "",
     activeMarketKey: "",
+    marketTwinScenario: "balanced",
     commandRole: "Buyer",
     supplierView: false,
     trustChecked: [true, true, true, false, false, false]
@@ -1157,6 +1178,96 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copySupplierSuccessButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierSuccessText());
+      showToast("Supplier success queue copied.");
+    } catch {
+      showToast("Copy is blocked here, but the success queue is visible.");
+    }
+  });
+
+  document.querySelector("#copyPageFactoryButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildPageFactoryText());
+      showToast("Market page pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the page pack is visible.");
+    }
+  });
+
+  document.querySelector("#copyLaunchRoomButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLaunchRoomText());
+      showToast("Market launch sprint copied.");
+    } catch {
+      showToast("Copy is blocked here, but the launch sprint is visible.");
+    }
+  });
+
+  document.querySelector("#copyMarketTwinButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildMarketTwinText());
+      showToast("Market twin memo copied.");
+    } catch {
+      showToast("Copy is blocked here, but the twin memo is visible.");
+    }
+  });
+
+  document.querySelector("#copyLiquidityFlywheelButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLiquidityFlywheelText());
+      showToast("Liquidity flywheel memo copied.");
+    } catch {
+      showToast("Copy is blocked here, but the flywheel memo is visible.");
+    }
+  });
+
+  document.querySelector("#copyFounderAutopilotButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildFounderAutopilotText());
+      showToast("Founder autopilot brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the autopilot brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyDemandExchangeButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildDemandExchangeText());
+      showToast("Demand Exchange supplier invite copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier invite is visible.");
+    }
+  });
+
+  document.querySelector("#copyProofDemandButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildProofDemandText());
+      showToast("Proof of Demand pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the proof pack is visible.");
+    }
+  });
+
+  document.querySelector("#copySupplierCommitmentButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierCommitmentText());
+      showToast("Supplier commitment note copied.");
+    } catch {
+      showToast("Copy is blocked here, but the commitment note is visible.");
+    }
+  });
+
+  document.querySelector("#copyListingActivationButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildListingActivationText());
+      showToast("Listing activation plan copied.");
+    } catch {
+      showToast("Copy is blocked here, but the activation plan is visible.");
+    }
+  });
+
   document.querySelector("#applyJobsiteButton").addEventListener("click", () => {
     renderJobsitePlanner();
     renderMobilizationTower();
@@ -1303,6 +1414,16 @@ function render() {
   renderRevenueDesk();
   renderLeadDesk();
   renderAccountHealth();
+  renderSupplierSuccessQueue();
+  renderPageFactory();
+  renderLaunchRoom();
+  renderMarketTwin();
+  renderLiquidityFlywheel();
+  renderFounderAutopilot();
+  renderDemandExchange();
+  renderProofDemandRoom();
+  renderSupplierCommitmentRoom();
+  renderListingActivationRoom();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -1415,6 +1536,7 @@ function getCommandCenterModel() {
   const leadDesk = getLeadDeskModel();
   const accountHealth = getAccountHealthModel(selected);
   const market = getActiveMarketOpportunity();
+  const supplierSuccess = getSupplierSuccessModel();
   const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
   const buyerScore = Math.round((passport.score + rfq.averageScore + award.winner.total + quote.score + mobilize.score) / 5);
   const supplierScore = Math.round((storefront.score + yard.score + leadDesk.active.score + proofVault.score + revenueDesk.score + accountHealth.score) / 6);
@@ -1436,6 +1558,7 @@ function getCommandCenterModel() {
     leadDesk,
     accountHealth,
     market,
+    supplierSuccess,
     demandCount,
     buyerScore,
     supplierScore,
@@ -1499,8 +1622,8 @@ function getCommandWorkspace(role, context) {
     return {
       title: `${context.market.region} ${context.market.category} growth workspace`,
       score: `${context.founderScore}/100 launch score`,
-      detail: `${context.demandCount} demand signals are active. Current page target is ${context.market.slug} with ${context.market.launchListings} starter listings.`,
-      next: "Use Growth to recruit suppliers, then Market Map to publish the next demand-led page."
+      detail: `${context.demandCount} demand signals are active. ${context.supplierSuccess.atRiskCount} supplier account${context.supplierSuccess.atRiskCount === 1 ? "" : "s"} need attention today. Current page target is ${context.market.slug}.`,
+      next: "Start with Supplier Success Queue, save weak accounts, then use Growth and Market Map to recruit the next demand-led supply."
     };
   }
 
@@ -3481,6 +3604,15 @@ function saveDemandSignal(source = "Buyer request", readInputs = true) {
   renderDemandRadar();
   renderSupplierHunt();
   renderMarketMaker();
+  renderPageFactory();
+  renderLaunchRoom();
+  renderMarketTwin();
+  renderLiquidityFlywheel();
+  renderFounderAutopilot();
+  renderDemandExchange();
+  renderProofDemandRoom();
+  renderSupplierCommitmentRoom();
+  renderListingActivationRoom();
   showToast(`${equipment} demand saved for ${region}.`);
 }
 
@@ -3548,8 +3680,8 @@ function renderSupplierTable() {
   });
 }
 
-function getSupplierStudioModel() {
-  const selected = getSelectedListing();
+function getSupplierStudioModel(listing = getSelectedListing()) {
+  const selected = listing;
   const storefront = getSupplierStorefrontModel(selected);
   const profile = storefront.profile;
   const supplierListings = listings.filter((listing) => listing.supplier === profile.supplier);
@@ -3688,7 +3820,7 @@ function renderLeadDesk() {
 
 function getLeadDeskModel(listing = getSelectedListing()) {
   const selected = listing;
-  const studio = getSupplierStudioModel();
+  const studio = getSupplierStudioModel(selected);
   const profile = studio.profile;
   const supplierListings = listings.filter((listing) => listing.supplier === profile.supplier);
   const rawLeads = supplierLeadSeeds.filter((lead) => lead.supplier === profile.supplier);
@@ -4025,6 +4157,196 @@ function getAccountHealthActions(context) {
   return actions.slice(0, 5);
 }
 
+function renderSupplierSuccessQueue() {
+  const model = getSupplierSuccessModel();
+  setText("#supplierSuccessBadge", model.badge);
+
+  document.querySelector("#supplierSuccessScore").innerHTML = `
+    <strong>${model.averageHealth}/100</strong>
+    <span>${model.summary}</span>
+  `;
+
+  document.querySelector("#supplierSuccessMetrics").innerHTML = [
+    ["Call first", model.callFirst.profile.supplier],
+    ["At-risk accounts", String(model.atRiskCount)],
+    ["Hot leads", String(model.hotLeadCount)],
+    ["Expansion ARR", `USD ${model.expansionArr.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#supplierSuccessQueue").innerHTML = model.rows.map((row) => `
+    <button type="button" class="supplier-success-row ${row.priorityClass}" data-success-listing="${escapeHtml(row.listing.id)}">
+      <span>
+        <strong>${escapeHtml(row.profile.supplier)}</strong>
+        ${escapeHtml(row.primaryAction.label)}
+        <small>${escapeHtml(row.reason)}</small>
+      </span>
+      <em>${row.urgency}/100</em>
+      <small>Health ${row.health.score}/100</small>
+      <b>${escapeHtml(row.primaryAction.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#supplierSuccessActions").innerHTML = model.rhythm.map((item, index) => `
+    <div class="supplier-success-action ${item.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(item.label)}<small>${escapeHtml(item.detail)}</small></span>
+      <em>${escapeHtml(item.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#supplierSuccessPlan").innerHTML = buildSupplierSuccessText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-success-listing]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.successListing);
+      if (!listing) return;
+      state.selectedListingId = listing.id;
+      state.commandRole = "Founder";
+      saveState();
+      render();
+      document.querySelector("#account-health").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(`${listing.supplier} health opened.`);
+    });
+  });
+}
+
+function getSupplierSuccessModel() {
+  const rows = supplierProfiles
+    .map((profile) => getSupplierSuccessRow(profile))
+    .sort((a, b) => b.urgency - a.urgency || a.profile.supplier.localeCompare(b.profile.supplier));
+  const averageHealth = Math.round(rows.reduce((total, row) => total + row.health.score, 0) / rows.length);
+  const atRiskCount = rows.filter((row) => row.health.score < 74 || row.health.riskCount >= 3).length;
+  const hotLeadCount = rows.reduce((total, row) => total + row.health.leadDesk.hotCount, 0);
+  const renewalRiskCount = rows.reduce((total, row) => total + row.health.revenueDesk.renewalRiskCount, 0);
+  const proofGapCount = rows.reduce((total, row) => total + row.health.proofVault.expiringCount + row.health.proofVault.missingCount, 0);
+  const expansionArr = rows.reduce((total, row) => total + row.health.expansionArr, 0);
+  const callFirst = rows[0];
+  const badge = atRiskCount ? "Work today" : expansionArr ? "Grow accounts" : "Healthy book";
+  const summary = atRiskCount
+    ? `${atRiskCount} supplier account${atRiskCount === 1 ? "" : "s"} need founder attention today. Start with ${callFirst.profile.supplier}.`
+    : `Supplier book is stable. Use the queue to convert USD ${expansionArr.toLocaleString()} visible expansion ARR.`;
+  const rhythm = getSupplierSuccessRhythm({
+    rows,
+    callFirst,
+    atRiskCount,
+    hotLeadCount,
+    renewalRiskCount,
+    proofGapCount,
+    expansionArr
+  });
+
+  return {
+    rows,
+    averageHealth,
+    atRiskCount,
+    hotLeadCount,
+    renewalRiskCount,
+    proofGapCount,
+    expansionArr,
+    callFirst,
+    badge,
+    summary,
+    rhythm
+  };
+}
+
+function getSupplierSuccessRow(profile) {
+  const listing = getSupplierRepresentativeListing(profile);
+  const health = getAccountHealthModel(listing);
+  const primaryAction = health.actions[0];
+  const urgency = Math.max(0, Math.min(100, Math.round(
+    100 - health.score
+    + health.riskCount * 7
+    + health.revenueDesk.renewalRiskCount * 3
+    + health.leadDesk.hotCount * 4
+    + health.proofVault.expiringCount * 2
+    + health.proofVault.missingCount * 4
+  )));
+  const priorityClass = urgency >= 56 ? "hot" : health.expansionArr >= 600 ? "grow" : "watch";
+  const reasonParts = [
+    `${health.riskCount} risk signal${health.riskCount === 1 ? "" : "s"}`,
+    `USD ${health.revenueDesk.annualRevenue.toLocaleString()} ARR`,
+    `USD ${health.leadDesk.totalBudget.toLocaleString()} pipeline`
+  ];
+
+  if (health.expansionArr) {
+    reasonParts.push(`USD ${health.expansionArr.toLocaleString()} expansion ARR`);
+  }
+
+  return {
+    profile,
+    listing,
+    health,
+    primaryAction,
+    urgency,
+    priorityClass,
+    reason: reasonParts.join(" - ")
+  };
+}
+
+function getSupplierRepresentativeListing(profile) {
+  return listings.find((listing) => listing.supplier === profile.supplier)
+    || {
+      id: `HY-${profile.slug}`,
+      name: profile.fleet[0] ? profile.fleet[0].label : "Starter equipment",
+      category: profile.fleet[0] ? profile.fleet[0].label : "Equipment",
+      supplier: profile.supplier,
+      region: profile.branch.split(", ").pop() || "Global",
+      city: profile.branch.split(", ")[0] || "Branch",
+      rate: "Quote direct",
+      availability: "call",
+      verified: false,
+      documents: profile.proof,
+      specs: profile.headline
+    };
+}
+
+function getSupplierSuccessRhythm(context) {
+  const rhythm = [
+    {
+      label: `Call ${context.callFirst.profile.supplier}`,
+      detail: `${context.callFirst.primaryAction.label}: ${context.callFirst.primaryAction.detail}`,
+      status: "First",
+      statusClass: "hot"
+    },
+    {
+      label: "Save renewal and proof risks",
+      detail: `${context.renewalRiskCount} renewal-risk listing${context.renewalRiskCount === 1 ? "" : "s"} and ${context.proofGapCount} proof gap${context.proofGapCount === 1 ? "" : "s"} need action before supplier confidence drops.`,
+      status: context.renewalRiskCount || context.proofGapCount ? "Save" : "Clean",
+      statusClass: context.renewalRiskCount || context.proofGapCount ? "hot" : "grow"
+    },
+    {
+      label: "Prove listing ROI",
+      detail: `${context.hotLeadCount} hot lead${context.hotLeadCount === 1 ? "" : "s"} should be answered fast so suppliers see direct enquiry value.`,
+      status: context.hotLeadCount ? "Reply" : "Monitor",
+      statusClass: context.hotLeadCount ? "watch" : "grow"
+    },
+    {
+      label: "Grow ready suppliers",
+      detail: `The queue shows USD ${context.expansionArr.toLocaleString()} visible expansion ARR from import-ready and dormant listings.`,
+      status: context.expansionArr ? "Grow" : "Later",
+      statusClass: "grow"
+    }
+  ];
+
+  if (context.atRiskCount > 2) {
+    rhythm.push({
+      label: "Hold new expansion until saves are done",
+      detail: "More than two suppliers need attention, so protect trust and renewal before pushing new paid listings.",
+      status: "Focus",
+      statusClass: "hot"
+    });
+  }
+
+  return rhythm.slice(0, 5);
+}
+
 function renderTrustChecklist() {
   document.querySelector("#trustChecklist").innerHTML = trustItems.map(([title, detail], index) => `
     <label class="check-item">
@@ -4133,6 +4455,15 @@ function renderDemandRadar() {
       renderDemandRadar();
       renderSupplierHunt();
       renderMarketMaker();
+      renderPageFactory();
+      renderLaunchRoom();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
       document.querySelector("#growth").scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -4185,6 +4516,15 @@ function renderSupplierHunt() {
       renderDemandRadar();
       renderSupplierHunt();
       renderMarketMaker();
+      renderPageFactory();
+      renderLaunchRoom();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
     });
   });
 }
@@ -4280,6 +4620,15 @@ function renderMarketMaker() {
       renderDemandRadar();
       renderSupplierHunt();
       renderMarketMaker();
+      renderPageFactory();
+      renderLaunchRoom();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
     });
   });
 }
@@ -4339,6 +4688,1705 @@ function getActiveMarketOpportunity(opportunities = getMarketOpportunities()) {
 function getMarketKeyFromSignal(signal) {
   if (!signal) return "";
   return `${signal.region}::${getHuntPlan(signal).category}`;
+}
+
+function renderPageFactory() {
+  const queue = document.querySelector("#pageFactoryQueue");
+  if (!queue) return;
+
+  const model = getPageFactoryModel();
+  if (!model.active) return;
+
+  setText("#pageFactoryTitle", model.active.title);
+  setText("#pageFactoryBadge", model.badge);
+
+  document.querySelector("#pageFactoryScore").innerHTML = `
+    <strong>${model.active.readiness}/100</strong>
+    <span>${escapeHtml(model.active.summary)}</span>
+  `;
+
+  document.querySelector("#pageFactoryMetrics").innerHTML = [
+    ["Ready pages", String(model.readyCount)],
+    ["Supplier targets", String(model.supplierTargets)],
+    ["Page ARR", `USD ${model.totalArr.toLocaleString()}`],
+    ["Demand signals", String(model.demandSignals)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  queue.innerHTML = model.pages.map((page) => `
+    <button type="button" class="page-factory-row ${page.statusClass} ${page.key === model.active.key ? "is-active" : ""}" data-page-key="${escapeHtml(page.key)}">
+      <span>
+        <strong>${escapeHtml(page.title)}</strong>
+        ${escapeHtml(page.slug)}
+        <small>${escapeHtml(page.summary)}</small>
+      </span>
+      <em>${page.readiness}/100</em>
+      <small>${page.demandCount} demand / ${page.visibleSupply} supply</small>
+      <b>${escapeHtml(page.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#pageFactoryGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="page-factory-gate ${gate.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(gate.label)}<small>${escapeHtml(gate.detail)}</small></span>
+      <em>${escapeHtml(gate.status)}</em>
+    </div>
+  `).join("");
+
+  document.querySelector("#pageFactoryPack").innerHTML = buildPageFactoryText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-page-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeMarketKey = button.dataset.pageKey;
+      const selected = getMarketOpportunities().find((item) => item.key === state.activeMarketKey);
+      if (selected?.signalKey) state.activeDemandKey = selected.signalKey;
+      saveState();
+      renderDemandRadar();
+      renderSupplierHunt();
+      renderMarketMaker();
+      renderPageFactory();
+      renderLaunchRoom();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
+      document.querySelector("#page-factory").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Market page factory focused.");
+    });
+  });
+}
+
+function getPageFactoryModel() {
+  const opportunities = getMarketOpportunities();
+  const pages = opportunities
+    .map((opportunity) => getPageFactoryPage(opportunity))
+    .sort((a, b) => b.readiness - a.readiness || b.demandCount - a.demandCount || a.title.localeCompare(b.title));
+  const active = pages.find((page) => page.key === state.activeMarketKey) || pages[0];
+
+  if (active) state.activeMarketKey = active.key;
+
+  const readyCount = pages.filter((page) => page.statusClass === "launch").length;
+  const prepareCount = pages.filter((page) => page.statusClass === "prepare").length;
+  const supplierTargets = pages.reduce((total, page) => total + page.supplierTarget, 0);
+  const totalArr = pages.reduce((total, page) => total + page.annualRevenue, 0);
+  const demandSignals = pages.reduce((total, page) => total + page.demandCount, 0);
+  const badge = readyCount ? "Ready to publish" : prepareCount ? "Supply work" : "Listen first";
+
+  return {
+    pages,
+    active,
+    gates: active ? getPageFactoryGates(active) : [],
+    readyCount,
+    prepareCount,
+    supplierTargets,
+    totalArr,
+    demandSignals,
+    badge
+  };
+}
+
+function getPageFactoryPage(opportunity) {
+  const matchedListings = listings.filter((listing) =>
+    listing.region === opportunity.region && listing.category === opportunity.category
+  );
+  const verifiedSupply = matchedListings.filter((listing) => listing.verified).length;
+  const pendingProof = matchedListings.reduce((total, listing) =>
+    total + listing.documents.filter((document) => document.toLowerCase().includes("pending")).length, 0
+  );
+  const proofGap = Math.max(0, Math.min(3, opportunity.proof.length - verifiedSupply)) + pendingProof;
+  const supplyGap = Math.max(0, opportunity.supplyGap);
+  const readiness = Math.max(0, Math.min(100, Math.round(
+    opportunity.score
+    + Math.min(16, verifiedSupply * 7)
+    + Math.min(10, opportunity.visibleSupply * 3)
+    - Math.min(18, proofGap * 5)
+    - Math.min(16, supplyGap * 2)
+  )));
+  const statusClass = readiness >= 78 ? "launch" : readiness >= 58 ? "prepare" : "watch";
+  const status = statusClass === "launch" ? "Launch" : statusClass === "prepare" ? "Prepare" : "Watch";
+  const supplierTarget = Math.max(0, opportunity.launchListings - opportunity.visibleSupply);
+  const title = `${opportunity.category} equipment rental in ${opportunity.region}`;
+  const slug = `/${opportunity.slug}/`;
+  const summary = statusClass === "launch"
+    ? `${verifiedSupply} verified supplier${verifiedSupply === 1 ? "" : "s"} and ${opportunity.demandCount} demand signal${opportunity.demandCount === 1 ? "" : "s"} make this page publishable.`
+    : statusClass === "prepare"
+      ? `Recruit ${supplierTarget || 1} more verified listing${supplierTarget === 1 ? "" : "s"} before pushing this page hard.`
+      : "Keep collecting buyer demand until supply and proof are stronger.";
+
+  return {
+    ...opportunity,
+    title,
+    slug,
+    matchedListings,
+    verifiedSupply,
+    proofGap,
+    readiness,
+    status,
+    statusClass,
+    supplierTarget,
+    summary
+  };
+}
+
+function getPageFactoryGates(active) {
+  const supplyStatus = active.visibleSupply >= 2 ? "ready" : active.visibleSupply ? "review" : "gap";
+  const proofStatus = active.verifiedSupply >= 1 && active.proofGap <= 1 ? "ready" : active.verifiedSupply ? "review" : "gap";
+  const gapStatus = active.supplierTarget <= 2 ? "ready" : active.supplierTarget <= 6 ? "review" : "gap";
+  const revenueStatus = active.annualRevenue >= 1200 ? "ready" : active.annualRevenue >= 700 ? "review" : "gap";
+
+  return [
+    {
+      label: "Demand proof",
+      detail: `${active.demandCount} buyer signal${active.demandCount === 1 ? "" : "s"} for ${active.category.toLowerCase()} in ${active.region}.`,
+      status: active.demandCount >= 3 ? "Ready" : active.demandCount >= 1 ? "Review" : "Gap",
+      statusClass: active.demandCount >= 3 ? "ready" : active.demandCount >= 1 ? "review" : "gap"
+    },
+    {
+      label: "Live supply",
+      detail: `${active.visibleSupply} visible listing${active.visibleSupply === 1 ? "" : "s"} on the marketplace.`,
+      status: supplyStatus === "ready" ? "Ready" : supplyStatus === "review" ? "Review" : "Gap",
+      statusClass: supplyStatus
+    },
+    {
+      label: "Verified proof",
+      detail: `${active.verifiedSupply} verified supplier listing${active.verifiedSupply === 1 ? "" : "s"}, ${active.proofGap} proof gap${active.proofGap === 1 ? "" : "s"}.`,
+      status: proofStatus === "ready" ? "Ready" : proofStatus === "review" ? "Review" : "Gap",
+      statusClass: proofStatus
+    },
+    {
+      label: "Supplier target",
+      detail: `${active.supplierTarget} additional paid listing${active.supplierTarget === 1 ? "" : "s"} needed for strong launch coverage.`,
+      status: gapStatus === "ready" ? "Ready" : gapStatus === "review" ? "Review" : "Gap",
+      statusClass: gapStatus
+    },
+    {
+      label: "Listing revenue",
+      detail: `Page can model USD ${active.annualRevenue.toLocaleString()} first-year listing ARR without touching rental payment.`,
+      status: revenueStatus === "ready" ? "Ready" : revenueStatus === "review" ? "Review" : "Gap",
+      statusClass: revenueStatus
+    }
+  ];
+}
+
+function renderLaunchRoom() {
+  const root = document.querySelector("#launchRoomTimeline");
+  if (!root) return;
+
+  const model = getLaunchRoomModel();
+  if (!model.active) return;
+
+  setText("#launchRoomTitle", `${model.active.region} ${model.active.category} launch sprint`);
+  setText("#launchRoomBadge", model.badge);
+
+  document.querySelector("#launchRoomScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#launchRoomMetrics").innerHTML = [
+    ["Sprint status", model.badge],
+    ["Supplier target", `${model.targetSuppliers} invites`],
+    ["First-week ARR", `USD ${model.firstWeekArr.toLocaleString()}`],
+    ["Proof gaps", String(model.active.proofGap)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  root.innerHTML = model.steps.map((step) => `
+    <div class="launch-room-step ${step.statusClass}">
+      <strong>${escapeHtml(step.day)}</strong>
+      <span>${escapeHtml(step.label)}<small>${escapeHtml(step.detail)}</small></span>
+      <em>${escapeHtml(step.owner)}</em>
+      <b>${escapeHtml(step.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#launchRoomSuppliers").innerHTML = model.suppliers.map((supplier) => `
+    <button type="button" class="launch-room-supplier ${supplier.statusClass} ${supplier.listingId === state.selectedListingId ? "is-active" : ""}" data-launch-supplier="${escapeHtml(supplier.listingId)}">
+      <strong>${supplier.rank}</strong>
+      <span>${escapeHtml(supplier.name)}<small>${escapeHtml(supplier.reason)}</small></span>
+      <em>${supplier.score}/100</em>
+      <b>${escapeHtml(supplier.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#launchRoomPacket").innerHTML = buildLaunchRoomText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-launch-supplier]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.launchSupplier);
+      if (!listing) return;
+      state.selectedListingId = listing.id;
+      state.commandRole = "Founder";
+      saveState();
+      render();
+      document.querySelector("#account-health").scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast(`${listing.supplier} opened for launch follow-up.`);
+    });
+  });
+}
+
+function getLaunchRoomModel() {
+  const pageModel = getPageFactoryModel();
+  const active = pageModel.active;
+  if (!active) {
+    return { active: null, score: 0, badge: "Listen first", summary: "", targetSuppliers: 0, firstWeekArr: 0, steps: [], suppliers: [] };
+  }
+
+  const suppliers = getLaunchSupplierProspects(active);
+  const steps = getLaunchRoomSteps(active, suppliers);
+  const bestSupplierScore = suppliers[0]?.score || 0;
+  const score = Math.max(0, Math.min(100, Math.round(
+    active.readiness * 0.5
+    + bestSupplierScore * 0.22
+    + Math.min(100, active.demandCount * 12) * 0.16
+    + (active.annualRevenue >= 1200 ? 12 : 6)
+  )));
+  const badge = score >= 84 ? "Run sprint" : score >= 68 ? "Prep sprint" : "Recruit first";
+  const targetSuppliers = Math.max(3, Math.min(8, active.supplierTarget || active.launchListings || 3));
+  const firstWeekArr = Math.min(active.annualRevenue, targetSuppliers * 99);
+  const openActions = steps.filter((step) => step.statusClass !== "ready").length;
+  const summary = score >= 84
+    ? `${active.title} is strong enough for a seven-day founder sprint. Start with ${suppliers[0]?.name || active.persona}.`
+    : `${active.title} needs ${openActions} sprint action${openActions === 1 ? "" : "s"} before the founder pushes it hard.`;
+
+  return {
+    active,
+    pageModel,
+    score,
+    badge,
+    targetSuppliers,
+    firstWeekArr,
+    openActions,
+    steps,
+    suppliers,
+    summary
+  };
+}
+
+function getLaunchSupplierProspects(active) {
+  return supplierProfiles.map((profile) => {
+    const supplierListings = listings.filter((listing) => listing.supplier === profile.supplier);
+    const firstListing = supplierListings[0] || listings[0];
+    const categoryMatches = supplierListings.filter((listing) => listing.category === active.category).length;
+    const regionMatches = supplierListings.filter((listing) => listing.region === active.region).length;
+    const proofHits = active.proof.filter((required) => {
+      const requiredNeedle = required.toLowerCase().split(" ")[0];
+      return profile.proof.some((proof) => proof.toLowerCase().includes(requiredNeedle));
+    }).length;
+    const fastResponse = profile.response.includes("Under") || profile.response.includes("Same day") || profile.response.includes("Next");
+    const score = Math.max(0, Math.min(100,
+      42
+      + categoryMatches * 16
+      + regionMatches * 14
+      + proofHits * 5
+      + (fastResponse ? 8 : 0)
+      - (categoryMatches ? 0 : 12)
+      - (regionMatches ? 0 : 6)
+    ));
+    const statusClass = score >= 78 ? "ready" : score >= 62 ? "review" : "gap";
+    const status = statusClass === "ready" ? "Invite" : statusClass === "review" ? "Verify" : "Warm";
+    const reason = categoryMatches && regionMatches
+      ? `${categoryMatches} matching listing${categoryMatches === 1 ? "" : "s"} in ${active.region}, proof overlap ${proofHits}/${active.proof.length}.`
+      : categoryMatches
+        ? `${categoryMatches} category match${categoryMatches === 1 ? "" : "es"}; ask for ${active.region} coverage or partner route.`
+        : `${profile.branch} can be warmed for ${active.category.toLowerCase()} supply if fleet proof is available.`;
+
+    return {
+      name: profile.supplier,
+      listingId: firstListing.id,
+      score,
+      status,
+      statusClass,
+      reason
+    };
+  }).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+    .slice(0, 5)
+    .map((supplier, index) => ({ ...supplier, rank: index + 1 }));
+}
+
+function getLaunchRoomSteps(active, suppliers) {
+  const demandReady = active.demandCount >= 3;
+  const supplyReady = active.visibleSupply >= 2;
+  const proofReady = active.proofGap <= 1 && active.verifiedSupply >= 1;
+  const supplierReady = suppliers.some((supplier) => supplier.statusClass === "ready");
+  const revenueReady = active.annualRevenue >= 1200;
+
+  return [
+    {
+      day: "D1",
+      label: "Publish page shell",
+      detail: `${active.slug} with demand proof, direct enquiry rule, and supplier trust placeholders.`,
+      owner: "Founder",
+      status: active.readiness >= 78 ? "Ready" : "Prep",
+      statusClass: active.readiness >= 78 ? "ready" : "review"
+    },
+    {
+      day: "D2",
+      label: "Invite supplier anchors",
+      detail: `Start with ${suppliers[0]?.name || active.persona}; target ${Math.max(3, active.supplierTarget || 3)} paid listings.`,
+      owner: "Growth",
+      status: supplierReady ? "Ready" : "Gap",
+      statusClass: supplierReady ? "ready" : "gap"
+    },
+    {
+      day: "D3",
+      label: "Collect launch proof",
+      detail: `${active.proof.join(", ")} before verified badges or serious routing.`,
+      owner: "Trust",
+      status: proofReady ? "Ready" : "Review",
+      statusClass: proofReady ? "ready" : "review"
+    },
+    {
+      day: "D4",
+      label: "Open first supply block",
+      detail: `${active.visibleSupply} visible listing${active.visibleSupply === 1 ? "" : "s"} now; ${active.supplierTarget} additional listing${active.supplierTarget === 1 ? "" : "s"} still targeted.`,
+      owner: "Studio",
+      status: supplyReady ? "Ready" : "Gap",
+      statusClass: supplyReady ? "ready" : "gap"
+    },
+    {
+      day: "D5",
+      label: "Route demand safely",
+      detail: `${active.demandCount} demand signal${active.demandCount === 1 ? "" : "s"} can be converted into direct supplier enquiries once proof is clean.`,
+      owner: "Desk",
+      status: demandReady ? "Ready" : "Review",
+      statusClass: demandReady ? "ready" : "review"
+    },
+    {
+      day: "D7",
+      label: "Review listing ARR",
+      detail: `Target USD ${active.annualRevenue.toLocaleString()} first-year listing ARR without touching rental payment.`,
+      owner: "Founder",
+      status: revenueReady ? "Ready" : "Review",
+      statusClass: revenueReady ? "ready" : "review"
+    }
+  ];
+}
+
+function renderMarketTwin() {
+  const root = document.querySelector("#marketTwinScenarios");
+  if (!root) return;
+
+  const model = getMarketTwinModel();
+  if (!model.active) return;
+
+  setText("#marketTwinTitle", `${model.active.region} ${model.active.category} market twin`);
+  setText("#marketTwinBadge", model.badge);
+
+  document.querySelector("#marketTwinScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#marketTwinMetrics").innerHTML = [
+    ["Paid listings", `${model.totalListings} after sprint`],
+    ["Listing ARR", `USD ${model.annualArr.toLocaleString()}`],
+    ["Demand coverage", `${model.demandCoverage}%`],
+    ["Trust score", `${model.trustScore}/100`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  root.innerHTML = model.scenarios.map((scenario) => `
+    <button type="button" class="market-twin-scenario ${scenario.key === model.scenario.key ? "is-active" : ""}" data-twin-scenario="${escapeHtml(scenario.key)}">
+      <span>
+        <strong>${escapeHtml(scenario.label)}</strong>
+        ${escapeHtml(scenario.detail)}
+        <small>${escapeHtml(scenario.rule)}</small>
+      </span>
+      <em>${scenario.predictedListings} listings</em>
+      <b>${escapeHtml(scenario.posture)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#marketTwinRisks").innerHTML = model.risks.map((risk) => `
+    <div class="market-twin-risk ${risk.statusClass}">
+      <span>
+        <strong>${escapeHtml(risk.label)}</strong>
+        ${escapeHtml(risk.detail)}
+        <small>${escapeHtml(risk.action)}</small>
+      </span>
+      <em>${risk.score}/100</em>
+      <b>${escapeHtml(risk.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#marketTwinPacket").innerHTML = buildMarketTwinText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-twin-scenario]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.marketTwinScenario = button.dataset.twinScenario;
+      saveState();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
+      showToast(`${button.textContent.trim().split(/\s+/)[0]} twin selected.`);
+    });
+  });
+}
+
+function getMarketTwinModel() {
+  const launch = getLaunchRoomModel();
+  const active = launch.active;
+  if (!active) {
+    return { active: null, score: 0, badge: "Listen first", summary: "", scenarios: [], risks: [] };
+  }
+
+  const scenarios = getMarketTwinScenarios(active, launch);
+  const scenario = scenarios.find((item) => item.key === state.marketTwinScenario) || scenarios[1];
+  state.marketTwinScenario = scenario.key;
+
+  const totalListings = Math.max(active.visibleSupply, scenario.predictedListings);
+  const annualArr = totalListings * 99;
+  const monthlyRevenue = totalListings * 9;
+  const demandCoverage = Math.min(100, Math.round((totalListings / Math.max(1, active.launchListings)) * 100));
+  const trustScore = Math.max(0, Math.min(100, Math.round(active.readiness + scenario.proofLift - active.proofGap * 3)));
+  const responseScore = Math.max(0, Math.min(100, Math.round(launch.score + scenario.responseLift - Math.max(0, active.supplierTarget - scenario.convertedSuppliers) * 2)));
+  const score = Math.max(0, Math.min(100, Math.round(
+    demandCoverage * 0.28
+    + trustScore * 0.28
+    + responseScore * 0.22
+    + Math.min(100, annualArr / 18) * 0.22
+  )));
+  const badge = score >= 86 ? "Dominate wedge" : score >= 72 ? "Open wedge" : "Build proof";
+  const risks = getMarketTwinRisks({
+    active,
+    scenario,
+    totalListings,
+    demandCoverage,
+    trustScore,
+    responseScore,
+    annualArr
+  });
+  const summary = score >= 86
+    ? `${scenario.label} can turn ${active.title} into a defensible page-led market wedge.`
+    : score >= 72
+      ? `${scenario.label} can open ${active.title}, but the founder must protect trust and supply density.`
+      : `${scenario.label} is still fragile for ${active.title}; proof and supplier density should come first.`;
+
+  return {
+    active,
+    launch,
+    scenarios,
+    scenario,
+    totalListings,
+    annualArr,
+    monthlyRevenue,
+    demandCoverage,
+    trustScore,
+    responseScore,
+    score,
+    badge,
+    risks,
+    summary
+  };
+}
+
+function getMarketTwinScenarios(active, launch) {
+  const base = [
+    {
+      key: "lean",
+      label: "Lean launch",
+      invites: 3,
+      conversionRate: 0.45,
+      proofLift: 5,
+      responseLift: 4,
+      posture: "Careful",
+      detail: "Use a narrow page, one anchor supplier, and proof-first routing.",
+      rule: "Best when trust is still thin and founder time is limited."
+    },
+    {
+      key: "balanced",
+      label: "Balanced launch",
+      invites: 6,
+      conversionRate: 0.5,
+      proofLift: 11,
+      responseLift: 10,
+      posture: "Operate",
+      detail: "Recruit several suppliers, publish a useful page, and open direct enquiry routing.",
+      rule: "Best default for phase-one listing revenue without over-promising supply."
+    },
+    {
+      key: "aggressive",
+      label: "Aggressive launch",
+      invites: 10,
+      conversionRate: 0.58,
+      proofLift: 16,
+      responseLift: 15,
+      posture: "Attack",
+      detail: "Push the page, recruit hard, and turn demand into supplier urgency quickly.",
+      rule: "Best when proof is strong and the category can support fast supplier onboarding."
+    }
+  ];
+
+  return base.map((scenario) => {
+    const convertedSuppliers = Math.max(1, Math.round(scenario.invites * scenario.conversionRate));
+    const predictedListings = Math.max(active.visibleSupply + convertedSuppliers, Math.min(active.launchListings + convertedSuppliers, active.visibleSupply + scenario.invites));
+    return {
+      ...scenario,
+      convertedSuppliers,
+      predictedListings,
+      score: Math.min(100, launch.score + scenario.proofLift + scenario.responseLift)
+    };
+  });
+}
+
+function getMarketTwinRisks(context) {
+  const supplyScore = Math.min(100, Math.round(context.demandCoverage));
+  const trustScore = context.trustScore;
+  const responseScore = context.responseScore;
+  const revenueScore = Math.min(100, Math.round(context.annualArr / 18));
+
+  return [
+    getMarketTwinRisk(
+      "Supply density",
+      supplyScore,
+      `${context.totalListings} modeled paid listing${context.totalListings === 1 ? "" : "s"} against ${context.active.launchListings} launch target.`,
+      context.totalListings >= context.active.launchListings ? "Keep page live and recruit depth." : "Recruit more verified listings before scaling traffic."
+    ),
+    getMarketTwinRisk(
+      "Trust burden",
+      trustScore,
+      `${context.active.proofGap} proof gap${context.active.proofGap === 1 ? "" : "s"} after ${context.scenario.label.toLowerCase()}.`,
+      trustScore >= 80 ? "Use verified badges carefully." : "Collect missing documents before routing serious enquiries."
+    ),
+    getMarketTwinRisk(
+      "Lead response",
+      responseScore,
+      `${context.scenario.invites} supplier invite${context.scenario.invites === 1 ? "" : "s"} with ${context.scenario.convertedSuppliers} modeled conversion${context.scenario.convertedSuppliers === 1 ? "" : "s"}.`,
+      responseScore >= 80 ? "Open direct routing and measure reply speed." : "Keep founder follow-up tight until supplier response is proven."
+    ),
+    getMarketTwinRisk(
+      "Revenue pull",
+      revenueScore,
+      `USD ${context.annualArr.toLocaleString()} modeled listing ARR and USD ${(context.totalListings * 9).toLocaleString()} monthly subscription revenue.`,
+      revenueScore >= 80 ? "Protect annual-plan upsell after proof is stable." : "Keep price simple until suppliers see demand."
+    )
+  ];
+}
+
+function getMarketTwinRisk(label, score, detail, action) {
+  const statusClass = score >= 80 ? "ready" : score >= 62 ? "review" : "gap";
+  return {
+    label,
+    score,
+    detail,
+    action,
+    statusClass,
+    status: statusClass === "ready" ? "Ready" : statusClass === "review" ? "Watch" : "Gap"
+  };
+}
+
+function renderLiquidityFlywheel() {
+  const root = document.querySelector("#liquidityFlywheelLoops");
+  if (!root) return;
+
+  const model = getLiquidityFlywheelModel();
+  if (!model.active) return;
+
+  setText("#liquidityFlywheelTitle", `${model.active.region} ${model.active.category} flywheel`);
+  setText("#liquidityFlywheelBadge", model.badge);
+
+  document.querySelector("#liquidityFlywheelScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#liquidityFlywheelMetrics").innerHTML = [
+    ["Bottleneck", model.bottleneck.label],
+    ["Compounding loop", model.strongest.label],
+    ["Revenue pull", `USD ${model.twin.annualArr.toLocaleString()}`],
+    ["Next action", model.bottleneck.status]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  root.innerHTML = model.loops.map((loop, index) => `
+    <div class="liquidity-flywheel-loop ${loop.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(loop.label)}
+        <small>${escapeHtml(loop.detail)}</small>
+      </span>
+      <em>${loop.score}/100</em>
+      <b>${escapeHtml(loop.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#liquidityFlywheelBottlenecks").innerHTML = model.fixes.map((fix, index) => `
+    <div class="liquidity-flywheel-fix ${fix.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(fix.label)}
+        <small>${escapeHtml(fix.detail)}</small>
+      </span>
+      <em>${escapeHtml(fix.owner)}</em>
+      <b>${escapeHtml(fix.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#liquidityFlywheelPacket").innerHTML = buildLiquidityFlywheelText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getLiquidityFlywheelModel() {
+  const twin = getMarketTwinModel();
+  const active = twin.active;
+  if (!active) {
+    return { active: null, score: 0, badge: "Listen first", summary: "", loops: [], fixes: [] };
+  }
+
+  const demandScore = Math.min(100, Math.round(active.demandCount * 13 + active.urgencyHits * 9 + twin.demandCoverage * 0.25));
+  const supplyScore = Math.min(100, Math.round(twin.demandCoverage + Math.min(18, twin.totalListings * 2)));
+  const trustScore = twin.trustScore;
+  const responseScore = twin.responseScore;
+  const revenueScore = Math.min(100, Math.round(twin.annualArr / 18));
+
+  const loops = [
+    getLiquidityLoop(
+      "Demand to page",
+      demandScore,
+      `${active.demandCount} demand signal${active.demandCount === 1 ? "" : "s"} make ${active.title} worth a focused page.`,
+      "Capture more unmet searches and keep the page tied to real buyer language."
+    ),
+    getLiquidityLoop(
+      "Page to supply",
+      supplyScore,
+      `${twin.totalListings} modeled paid listing${twin.totalListings === 1 ? "" : "s"} cover ${twin.demandCoverage}% of launch target.`,
+      "Recruit anchor suppliers until the page has enough visible supply to feel real."
+    ),
+    getLiquidityLoop(
+      "Supply to trust",
+      trustScore,
+      `${active.verifiedSupply} verified listing${active.verifiedSupply === 1 ? "" : "s"} and ${active.proofGap} proof gap${active.proofGap === 1 ? "" : "s"}.`,
+      "Close license, insurance, inspection, operator, or photo proof before pushing traffic."
+    ),
+    getLiquidityLoop(
+      "Trust to response",
+      responseScore,
+      `${twin.scenario.convertedSuppliers} modeled supplier conversion${twin.scenario.convertedSuppliers === 1 ? "" : "s"} under the ${twin.scenario.label.toLowerCase()} scenario.`,
+      "Measure supplier response speed before adding booking rails or heavier buyer promises."
+    ),
+    getLiquidityLoop(
+      "Response to revenue",
+      revenueScore,
+      `USD ${twin.annualArr.toLocaleString()} modeled listing ARR while rental payment stays direct.`,
+      "Use direct enquiry proof to convert monthly listings into annual supplier plans."
+    )
+  ];
+
+  const sorted = [...loops].sort((a, b) => a.score - b.score);
+  const bottleneck = sorted[0];
+  const strongest = sorted[sorted.length - 1];
+  const score = Math.round(loops.reduce((total, loop) => total + loop.score, 0) / loops.length);
+  const badge = score >= 84 && bottleneck.score >= 70 ? "Compounding" : score >= 70 ? "Turning" : "Founder push";
+  const summary = badge === "Compounding"
+    ? `${active.title} is close to a self-reinforcing supplier and buyer loop. Protect ${bottleneck.label.toLowerCase()}.`
+    : badge === "Turning"
+      ? `${active.title} has a working flywheel, but ${bottleneck.label.toLowerCase()} still slows compounding.`
+      : `${active.title} still needs founder force. Fix ${bottleneck.label.toLowerCase()} before scaling traffic.`;
+  const fixes = getLiquidityFixes(loops, active, twin);
+
+  return {
+    active,
+    twin,
+    loops,
+    fixes,
+    bottleneck,
+    strongest,
+    score,
+    badge,
+    summary
+  };
+}
+
+function getLiquidityLoop(label, score, detail, action) {
+  const statusClass = score >= 80 ? "ready" : score >= 62 ? "review" : "gap";
+  return {
+    label,
+    score,
+    detail,
+    action,
+    statusClass,
+    status: statusClass === "ready" ? "Ready" : statusClass === "review" ? "Watch" : "Gap"
+  };
+}
+
+function getLiquidityFixes(loops, active, twin) {
+  return [...loops]
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 3)
+    .map((loop) => {
+      const owner = loop.label.includes("Demand") ? "Growth"
+        : loop.label.includes("Page") ? "Founder"
+          : loop.label.includes("Trust") ? "Trust"
+            : loop.label.includes("Response") ? "Success"
+              : "Revenue";
+      const detail = loop.label.includes("Revenue")
+        ? `${twin.totalListings} paid listing${twin.totalListings === 1 ? "" : "s"} can become USD ${twin.annualArr.toLocaleString()} ARR if supplier ROI is visible.`
+        : loop.action;
+      return {
+        label: `Fix ${loop.label.toLowerCase()}`,
+        detail,
+        owner,
+        status: loop.status,
+        statusClass: loop.statusClass,
+        market: active.title
+      };
+    });
+}
+
+function renderFounderAutopilot() {
+  const queueRoot = document.querySelector("#founderAutopilotQueue");
+  if (!queueRoot) return;
+
+  const model = getFounderAutopilotModel();
+  if (!model.active) return;
+
+  setText("#founderAutopilotTitle", `${model.active.region} ${model.active.category} founder autopilot`);
+  setText("#founderAutopilotBadge", model.badge);
+
+  document.querySelector("#founderAutopilotScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#founderAutopilotMetrics").innerHTML = [
+    ["First command", model.primary.owner],
+    ["Bottleneck", model.flywheel.bottleneck.label],
+    ["ARR unlocked", `USD ${model.totalImpactArr.toLocaleString()}`],
+    ["Open commands", String(model.openCommandCount)]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  queueRoot.innerHTML = model.commands.map((command, index) => `
+    <button type="button" class="founder-autopilot-command ${command.statusClass} ${index === 0 ? "is-primary" : ""}" data-autopilot-anchor="${escapeHtml(command.anchor)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(command.label)}
+        <small>${escapeHtml(command.detail)}</small>
+      </span>
+      <em>${escapeHtml(command.owner)} - ${escapeHtml(command.due)}</em>
+      <b>${escapeHtml(command.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#founderAutopilotImpact").innerHTML = model.impactRows.map((row, index) => `
+    <div class="founder-autopilot-impact-row ${row.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(row.label)}
+        <small>${escapeHtml(row.detail)}</small>
+      </span>
+      <em>USD ${row.impactArr.toLocaleString()}</em>
+      <b>${escapeHtml(row.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#founderAutopilotPacket").innerHTML = buildFounderAutopilotText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-autopilot-anchor]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.autopilotAnchor);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Autopilot command opened.");
+    });
+  });
+}
+
+function getFounderAutopilotModel() {
+  const flywheel = getLiquidityFlywheelModel();
+  const active = flywheel.active;
+  if (!active) {
+    return {
+      active: null,
+      flywheel,
+      score: 0,
+      badge: "Listen first",
+      summary: "",
+      primary: null,
+      commands: [],
+      impactRows: [],
+      totalImpactArr: 0,
+      openCommandCount: 0
+    };
+  }
+
+  const commands = getFounderAutopilotCommands(flywheel);
+  const primary = commands[0];
+  const totalImpactArr = commands.reduce((total, command) => total + command.impactArr, 0);
+  const openCommandCount = commands.filter((command) => command.statusClass !== "ready").length;
+  const actionLift = Math.min(14, Math.round((totalImpactArr / Math.max(99, flywheel.twin.annualArr)) * 14));
+  const score = Math.max(0, Math.min(100, Math.round(flywheel.score + actionLift - openCommandCount * 4)));
+  const badge = getFounderAutopilotStatus(score, openCommandCount);
+  const summary = `Start with ${primary.owner}: ${primary.label}. This turns ${flywheel.bottleneck.label.toLowerCase()} into owned weekly work for ${active.title}.`;
+  const impactRows = commands.map((command) => ({
+    label: command.label,
+    detail: `${command.owner} owns ${command.due.toLowerCase()} execution through ${command.anchor.replace("#", "")}.`,
+    status: command.status,
+    statusClass: command.statusClass,
+    impactArr: command.impactArr
+  }));
+
+  return {
+    active,
+    flywheel,
+    score,
+    badge,
+    summary,
+    primary,
+    commands,
+    impactRows,
+    totalImpactArr,
+    openCommandCount
+  };
+}
+
+function getFounderAutopilotCommands(flywheel) {
+  const impactWeights = [0.36, 0.22, 0.14];
+  const dueWindows = ["Today", "48h", "This week"];
+  const commands = flywheel.fixes.map((fix, index) => {
+    const loop = flywheel.loops.find((item) => fix.label.toLowerCase().includes(item.label.toLowerCase())) || flywheel.bottleneck;
+    const status = fix.statusClass === "ready" ? "Protect" : fix.statusClass === "review" ? "Tighten" : "Dispatch";
+    const urgency = Math.max(18, Math.min(99, 100 - loop.score + index * 5));
+    const impactArr = Math.max(99, Math.round(flywheel.twin.annualArr * impactWeights[index]));
+
+    return {
+      label: `Repair ${loop.label.toLowerCase()}`,
+      detail: fix.detail,
+      owner: fix.owner,
+      due: dueWindows[index],
+      status,
+      statusClass: fix.statusClass,
+      urgency,
+      impactArr,
+      anchor: getAutopilotOwnerAnchor(fix.owner)
+    };
+  });
+
+  const protectOwner = getAutopilotOwnerForLoop(flywheel.strongest.label);
+  commands.push({
+    label: `Protect ${flywheel.strongest.label.toLowerCase()}`,
+    detail: flywheel.strongest.action,
+    owner: protectOwner,
+    due: "This week",
+    status: "Protect",
+    statusClass: "ready",
+    urgency: Math.max(12, 100 - flywheel.strongest.score),
+    impactArr: Math.max(99, Math.round(flywheel.twin.annualArr * 0.1)),
+    anchor: getAutopilotOwnerAnchor(protectOwner)
+  });
+
+  return commands.sort((a, b) => b.urgency - a.urgency || b.impactArr - a.impactArr);
+}
+
+function getFounderAutopilotStatus(score, openCommandCount) {
+  if (score >= 84 && openCommandCount <= 1) return "Autopilot ready";
+  if (score >= 70) return "Run this week";
+  return "Founder push";
+}
+
+function getAutopilotOwnerForLoop(label) {
+  return label.includes("Demand") ? "Growth"
+    : label.includes("Page") ? "Founder"
+      : label.includes("Trust") ? "Trust"
+        : label.includes("Response") ? "Success"
+          : "Revenue";
+}
+
+function getAutopilotOwnerAnchor(owner) {
+  return owner === "Growth" ? "#growth"
+    : owner === "Trust" ? "#proof-vault"
+      : owner === "Success" ? "#supplier-success"
+        : owner === "Revenue" ? "#revenue-desk"
+          : "#launch-room";
+}
+
+function renderDemandExchange() {
+  const ticketRoot = document.querySelector("#demandExchangeTickets");
+  if (!ticketRoot) return;
+
+  const model = getDemandExchangeModel();
+  if (!model.active) return;
+
+  setText("#demandExchangeTitle", `${model.active.region} ${model.active.category} demand exchange`);
+  setText("#demandExchangeBadge", model.badge);
+
+  document.querySelector("#demandExchangeScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#demandExchangeMetrics").innerHTML = [
+    ["Buyer signals", String(model.active.demandCount)],
+    ["Supply gap", `${model.active.supplyGap} listings`],
+    ["Supplier pull", model.badge],
+    ["Exchange ARR", `USD ${model.exchangeArr.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  ticketRoot.innerHTML = model.tickets.map((ticket, index) => `
+    <button type="button" class="demand-exchange-ticket ${ticket.statusClass} ${ticket.key === model.active.key ? "is-active" : ""}" data-exchange-key="${escapeHtml(ticket.key)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(ticket.title)}
+        <small>${escapeHtml(ticket.detail)}</small>
+      </span>
+      <em>${ticket.pullScore}/100</em>
+      <b>${escapeHtml(ticket.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#demandExchangeLanes").innerHTML = model.lanes.map((lane, index) => `
+    <div class="demand-exchange-lane ${lane.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(lane.label)}
+        <small>${escapeHtml(lane.detail)}</small>
+      </span>
+      <em>${escapeHtml(lane.value)}</em>
+      <b>${escapeHtml(lane.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#demandExchangePacket").innerHTML = buildDemandExchangeText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-exchange-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeMarketKey = button.dataset.exchangeKey;
+      const selected = getMarketOpportunities().find((item) => item.key === state.activeMarketKey);
+      if (selected?.signalKey) state.activeDemandKey = selected.signalKey;
+      saveState();
+      renderDemandRadar();
+      renderSupplierHunt();
+      renderMarketMaker();
+      renderPageFactory();
+      renderLaunchRoom();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
+      showToast("Demand Exchange market selected.");
+    });
+  });
+}
+
+function getDemandExchangeModel() {
+  const opportunities = getMarketOpportunities();
+  const active = opportunities.length ? getActiveMarketOpportunity(opportunities) : null;
+  if (!active) {
+    return {
+      active: null,
+      tickets: [],
+      lanes: [],
+      score: 0,
+      badge: "Listen first",
+      summary: "",
+      exchangeArr: 0
+    };
+  }
+
+  const tickets = opportunities.map((opportunity) => getDemandExchangeTicket(opportunity));
+  const activeTicket = tickets.find((ticket) => ticket.key === active.key) || tickets[0];
+  const lanes = getDemandExchangeLanes(active, activeTicket);
+  const exchangeArr = tickets.reduce((total, ticket) => total + ticket.annualRevenue, 0);
+  const score = activeTicket.pullScore;
+  const badge = score >= 82 ? "Supplier pull" : score >= 62 ? "Recruit now" : "Seed demand";
+  const summary = score >= 82
+    ? `${active.title || `${active.region} ${active.category}`} has enough visible demand to invite suppliers with confidence.`
+    : score >= 62
+      ? `${active.region} ${active.category} has a useful gap. Recruit anchor suppliers and prove response before scaling.`
+      : `${active.region} ${active.category} needs more demand capture before it becomes a strong supplier magnet.`;
+
+  return {
+    active,
+    activeTicket,
+    tickets,
+    lanes,
+    score,
+    badge,
+    summary,
+    exchangeArr
+  };
+}
+
+function getDemandExchangeTicket(opportunity) {
+  const zeroSupplyLift = opportunity.visibleSupply === 0 ? 10 : 0;
+  const gapLift = Math.min(24, opportunity.supplyGap * 3);
+  const urgencyLift = Math.min(18, opportunity.urgencyHits * 6);
+  const pullScore = Math.max(0, Math.min(100, Math.round(opportunity.score * 0.52 + gapLift + urgencyLift + zeroSupplyLift)));
+  const statusClass = pullScore >= 82 ? "ready" : pullScore >= 62 ? "review" : "gap";
+  const needed = opportunity.supplyGap || Math.max(1, Math.ceil(opportunity.launchListings * 0.35));
+
+  return {
+    key: opportunity.key,
+    title: `${opportunity.region} ${opportunity.category}`,
+    detail: `${opportunity.demandCount} buyer signal${opportunity.demandCount === 1 ? "" : "s"}, ${needed} listing${needed === 1 ? "" : "s"} to recruit, USD ${opportunity.annualRevenue.toLocaleString()} first-year listing ARR.`,
+    pullScore,
+    statusClass,
+    status: statusClass === "ready" ? "Invite" : statusClass === "review" ? "Warm" : "Capture",
+    demandCount: opportunity.demandCount,
+    supplyGap: opportunity.supplyGap,
+    annualRevenue: opportunity.annualRevenue,
+    persona: opportunity.persona,
+    proof: opportunity.proof
+  };
+}
+
+function getDemandExchangeLanes(active, ticket) {
+  const proofReady = active.proof.length >= 3;
+  const supplierNeed = active.supplyGap || Math.max(1, Math.ceil(active.launchListings * 0.35));
+
+  return [
+    {
+      label: "Prove buyer demand",
+      detail: `${active.demandCount} captured search signal${active.demandCount === 1 ? "" : "s"} can become the supplier hook.`,
+      value: `${active.demandCount} signals`,
+      status: active.demandCount >= 3 ? "Ready" : "Collect",
+      statusClass: active.demandCount >= 3 ? "ready" : "review"
+    },
+    {
+      label: "Show the supply gap",
+      detail: `${active.visibleSupply} live listing${active.visibleSupply === 1 ? "" : "s"} are visible against a ${active.launchListings} listing launch target.`,
+      value: `${supplierNeed} needed`,
+      status: active.supplyGap > 0 ? "Gap" : "Covered",
+      statusClass: active.supplyGap > 0 ? "gap" : "ready"
+    },
+    {
+      label: "Ask for proof",
+      detail: `Request ${active.proof.slice(0, 3).join(", ").toLowerCase()} before a verified badge appears.`,
+      value: proofReady ? "Proof list" : "Define proof",
+      status: proofReady ? "Ready" : "Review",
+      statusClass: proofReady ? "ready" : "review"
+    },
+    {
+      label: "Convert to listing SaaS",
+      detail: `Position the opportunity as USD ${active.annualRevenue.toLocaleString()} first-year listing visibility, no rental commission.`,
+      value: `USD ${active.annualRevenue.toLocaleString()}`,
+      status: ticket.status,
+      statusClass: ticket.statusClass
+    }
+  ];
+}
+
+function renderProofDemandRoom() {
+  const evidenceRoot = document.querySelector("#proofDemandEvidence");
+  if (!evidenceRoot) return;
+
+  const model = getProofDemandRoomModel();
+  if (!model.active) return;
+
+  setText("#proofDemandTitle", `${model.active.region} ${model.active.category} proof room`);
+  setText("#proofDemandBadge", model.badge);
+
+  document.querySelector("#proofDemandScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#proofDemandMetrics").innerHTML = [
+    ["Supplier answer", model.primaryObjection.label],
+    ["Demand proof", `${model.active.demandCount} signals`],
+    ["Trust proof", `${model.active.proof.length} asks`],
+    ["Listing ROI", `USD ${model.proofValue.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  evidenceRoot.innerHTML = model.evidence.map((item, index) => `
+    <div class="proof-demand-evidence-row ${item.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(item.label)}
+        <small>${escapeHtml(item.detail)}</small>
+      </span>
+      <em>${escapeHtml(item.value)}</em>
+      <b>${escapeHtml(item.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#proofDemandObjections").innerHTML = model.objections.map((item, index) => `
+    <div class="proof-demand-objection ${item.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(item.label)}
+        <small>${escapeHtml(item.answer)}</small>
+      </span>
+      <em>${escapeHtml(item.owner)}</em>
+      <b>${escapeHtml(item.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#proofDemandPacket").innerHTML = buildProofDemandText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getProofDemandRoomModel() {
+  const exchange = getDemandExchangeModel();
+  const active = exchange.active;
+  if (!active) {
+    return {
+      active: null,
+      exchange,
+      score: 0,
+      badge: "Listen first",
+      summary: "",
+      evidence: [],
+      objections: [],
+      primaryObjection: null,
+      proofValue: 0
+    };
+  }
+
+  const evidence = getProofDemandEvidence(active, exchange.activeTicket);
+  const objections = getProofDemandObjections(active, exchange);
+  const readyEvidence = evidence.filter((item) => item.statusClass === "ready").length;
+  const objectionScore = objections.filter((item) => item.statusClass !== "gap").length * 7;
+  const proofValue = Math.max(active.annualRevenue, Math.round(exchange.exchangeArr * 0.32));
+  const score = Math.max(0, Math.min(100, Math.round(exchange.score * 0.52 + readyEvidence * 8 + objectionScore)));
+  const badge = score >= 84 ? "Proof ready" : score >= 68 ? "Sales ready" : "Collect proof";
+  const primaryObjection = objections[0];
+  const summary = score >= 84
+    ? `${active.region} ${active.category} has enough proof to invite suppliers with a demand-backed listing offer.`
+    : score >= 68
+      ? `${active.region} ${active.category} can be sold now, but the proof pack should stay honest about the open gap.`
+      : `${active.region} ${active.category} needs stronger evidence before supplier outreach feels undeniable.`;
+
+  return {
+    active,
+    exchange,
+    score,
+    badge,
+    summary,
+    evidence,
+    objections,
+    primaryObjection,
+    proofValue
+  };
+}
+
+function getProofDemandEvidence(active, ticket) {
+  const supplierNeed = active.supplyGap || Math.max(1, Math.ceil(active.launchListings * 0.35));
+  const demandReady = active.demandCount >= 3;
+  const gapReady = supplierNeed > 0;
+  const proofReady = active.proof.length >= 3;
+  const roiReady = active.annualRevenue >= 900;
+
+  return [
+    {
+      label: "Buyer demand captured",
+      detail: `${active.demandCount} buyer signal${active.demandCount === 1 ? "" : "s"} are already tied to this market page.`,
+      value: `${active.demandCount} signals`,
+      status: demandReady ? "Ready" : "Build",
+      statusClass: demandReady ? "ready" : "review"
+    },
+    {
+      label: "Supply shortage visible",
+      detail: `${active.visibleSupply} live listing${active.visibleSupply === 1 ? "" : "s"} against ${active.launchListings} launch listing target.`,
+      value: `${supplierNeed} needed`,
+      status: gapReady ? "Open" : "Covered",
+      statusClass: gapReady ? "ready" : "review"
+    },
+    {
+      label: "Verification proof defined",
+      detail: `Ask for ${active.proof.slice(0, 3).join(", ").toLowerCase()} before promising a verified supplier badge.`,
+      value: `${active.proof.length} checks`,
+      status: proofReady ? "Ready" : "Define",
+      statusClass: proofReady ? "ready" : "gap"
+    },
+    {
+      label: "Listing ROI visible",
+      detail: `A ${active.launchListings} listing wedge models USD ${active.annualRevenue.toLocaleString()} first-year listing ARR.`,
+      value: `USD ${active.annualRevenue.toLocaleString()}`,
+      status: roiReady ? "Clear" : "Small",
+      statusClass: roiReady ? "ready" : "review"
+    },
+    {
+      label: "Direct payment promise",
+      detail: "The supplier keeps the rental relationship and payment. Heavyster earns only from active listings in phase one.",
+      value: "0% take",
+      status: ticket.status,
+      statusClass: "ready"
+    }
+  ];
+}
+
+function getProofDemandObjections(active, exchange) {
+  const supplyGap = active.supplyGap || Math.max(1, Math.ceil(active.launchListings * 0.35));
+  const urgent = active.urgencyHits > 0;
+
+  return [
+    {
+      label: "We already get rental enquiries.",
+      answer: `Good. Heavyster adds searchable demand proof for ${active.region} ${active.category} and routes direct enquiries without taking rental payment.`,
+      owner: "Founder",
+      status: "Answer",
+      statusClass: "ready"
+    },
+    {
+      label: "We do not want marketplace commission.",
+      answer: "Phase one is listing SaaS only: USD 9 monthly or USD 99 yearly per active listing, and customer payment stays direct.",
+      owner: "Revenue",
+      status: "Answer",
+      statusClass: "ready"
+    },
+    {
+      label: "Will serious buyers trust the listing?",
+      answer: `Trust comes from ${active.proof.slice(0, 3).join(", ").toLowerCase()}, fresh availability, and a verified supplier profile before high-value enquiries are routed.`,
+      owner: "Trust",
+      status: active.proof.length >= 3 ? "Ready" : "Tighten",
+      statusClass: active.proof.length >= 3 ? "ready" : "review"
+    },
+    {
+      label: "Is this urgent enough for our team?",
+      answer: urgent
+        ? `${active.urgencyHits} urgent signal${active.urgencyHits === 1 ? "" : "s"} and ${supplyGap} open listing slot${supplyGap === 1 ? "" : "s"} make this a near-term supplier pull.`
+        : `${exchange.score}/100 supplier pull means start with a small fleet lane, then expand after response proof.`,
+      owner: "Growth",
+      status: urgent ? "Now" : "Warm",
+      statusClass: urgent ? "ready" : "review"
+    }
+  ];
+}
+
+function renderSupplierCommitmentRoom() {
+  const packageRoot = document.querySelector("#supplierCommitmentPackages");
+  if (!packageRoot) return;
+
+  const model = getSupplierCommitmentModel();
+  if (!model.active) return;
+
+  setText("#supplierCommitmentTitle", `${model.active.region} ${model.active.category} commitment`);
+  setText("#supplierCommitmentBadge", model.badge);
+
+  document.querySelector("#supplierCommitmentScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#supplierCommitmentMetrics").innerHTML = [
+    ["Recommended package", model.recommendedPackage.label],
+    ["Paid listings", `${model.recommendedPackage.listings} machines`],
+    ["Annual close", `USD ${model.recommendedPackage.annualRevenue.toLocaleString()}`],
+    ["Go-live gates", `${model.readyGateCount}/${model.gates.length} ready`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  packageRoot.innerHTML = model.packages.map((item, index) => `
+    <button type="button" class="supplier-commitment-package ${item.statusClass} ${item.id === model.recommendedPackage.id ? "is-recommended" : ""}" data-commitment-anchor="#pricing">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(item.label)}
+        <small>${escapeHtml(item.detail)}</small>
+      </span>
+      <em>USD ${item.annualRevenue.toLocaleString()}/yr</em>
+      <b>${escapeHtml(item.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#supplierCommitmentGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="supplier-commitment-gate ${gate.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(gate.label)}
+        <small>${escapeHtml(gate.detail)}</small>
+      </span>
+      <em>${escapeHtml(gate.owner)}</em>
+      <b>${escapeHtml(gate.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#supplierCommitmentPacket").innerHTML = buildSupplierCommitmentText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-commitment-anchor]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.commitmentAnchor);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("Listing pricing opened.");
+    });
+  });
+}
+
+function getSupplierCommitmentModel() {
+  const proof = getProofDemandRoomModel();
+  const active = proof.active;
+  if (!active) {
+    return {
+      active: null,
+      proof,
+      score: 0,
+      badge: "Listen first",
+      summary: "",
+      packages: [],
+      gates: [],
+      recommendedPackage: null,
+      readyGateCount: 0
+    };
+  }
+
+  const packages = getSupplierCommitmentPackages(active, proof);
+  const recommendedPackage = packages.find((item) => item.recommended) || packages[0];
+  const gates = getSupplierCommitmentGates(active, proof, recommendedPackage);
+  const readyGateCount = gates.filter((gate) => gate.statusClass === "ready").length;
+  const score = Math.max(0, Math.min(100, Math.round(proof.score * 0.5 + recommendedPackage.closeScore * 0.32 + readyGateCount * 5)));
+  const badge = score >= 84 ? "Close now" : score >= 68 ? "Close with proof" : "Nurture";
+  const summary = score >= 84
+    ? `${active.region} ${active.category} is ready for a paid listing close without touching rental payment.`
+    : score >= 68
+      ? `${active.region} ${active.category} can close with a focused starter package and honest proof gates.`
+      : `${active.region} ${active.category} needs more proof before asking for a paid listing commitment.`;
+
+  return {
+    active,
+    proof,
+    score,
+    badge,
+    summary,
+    packages,
+    gates,
+    recommendedPackage,
+    readyGateCount
+  };
+}
+
+function getSupplierCommitmentPackages(active, proof) {
+  const baseNeed = active.supplyGap || Math.max(3, Math.ceil(active.launchListings * 0.35));
+  const starter = Math.max(3, Math.min(8, baseNeed));
+  const anchor = Math.max(starter + 2, Math.min(16, active.launchListings));
+  const annual = Math.max(anchor, Math.min(24, active.launchListings + Math.ceil(active.demandCount / 2)));
+
+  return [
+    getCommitmentPackage(
+      "starter",
+      "Starter proof package",
+      starter,
+      `Start with the machines that match current ${active.region} buyer demand and clear the minimum proof gates.`,
+      proof.score >= 62,
+      proof.score
+    ),
+    getCommitmentPackage(
+      "anchor",
+      "Market anchor package",
+      anchor,
+      `Own the visible ${active.category.toLowerCase()} lane with enough active listings to make the page feel real.`,
+      proof.score >= 76,
+      proof.score + 6
+    ),
+    getCommitmentPackage(
+      "annual",
+      "Annual visibility package",
+      annual,
+      "Convert the supplier into an annual listing account after proof, availability, and direct enquiry routing are clear.",
+      proof.score >= 84,
+      proof.score + 10
+    )
+  ];
+}
+
+function getCommitmentPackage(id, label, listings, detail, recommended, closeScore) {
+  const annualRevenue = listings * 99;
+  const monthlyRevenue = listings * 9;
+  const statusClass = recommended ? "ready" : closeScore >= 70 ? "review" : "gap";
+  return {
+    id,
+    label,
+    listings,
+    detail,
+    recommended,
+    monthlyRevenue,
+    annualRevenue,
+    closeScore: Math.max(0, Math.min(100, Math.round(closeScore))),
+    statusClass,
+    status: recommended ? "Recommend" : statusClass === "review" ? "Option" : "Later"
+  };
+}
+
+function getSupplierCommitmentGates(active, proof, recommendedPackage) {
+  const proofReady = active.proof.length >= 3;
+  const demandReady = active.demandCount >= 3;
+  const roiReady = recommendedPackage.annualRevenue >= 300;
+  const availabilityReady = proof.evidence.some((item) => item.label.includes("Supply") && item.statusClass !== "gap");
+
+  return [
+    {
+      label: "Package accepted",
+      detail: `${recommendedPackage.label}: ${recommendedPackage.listings} active listing${recommendedPackage.listings === 1 ? "" : "s"} at USD ${recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${recommendedPackage.annualRevenue.toLocaleString()}/year.`,
+      owner: "Revenue",
+      status: roiReady ? "Ready" : "Review",
+      statusClass: roiReady ? "ready" : "review"
+    },
+    {
+      label: "Demand proof attached",
+      detail: `${active.demandCount} buyer signal${active.demandCount === 1 ? "" : "s"} and ${active.urgencyHits} urgent signal${active.urgencyHits === 1 ? "" : "s"} support the close.`,
+      owner: "Growth",
+      status: demandReady ? "Ready" : "Collect",
+      statusClass: demandReady ? "ready" : "review"
+    },
+    {
+      label: "Verification proof ready",
+      detail: `Attach ${active.proof.slice(0, 3).join(", ").toLowerCase()} before using verified supplier language.`,
+      owner: "Trust",
+      status: proofReady ? "Ready" : "Gap",
+      statusClass: proofReady ? "ready" : "gap"
+    },
+    {
+      label: "Availability lane clear",
+      detail: "Each listing needs available now, available soon, or call-to-confirm status before go-live.",
+      owner: "Success",
+      status: availabilityReady ? "Ready" : "Review",
+      statusClass: availabilityReady ? "ready" : "review"
+    },
+    {
+      label: "Direct enquiry route set",
+      detail: "Phone, WhatsApp, email, or web route must send the renter directly to the supplier in phase one.",
+      owner: "Founder",
+      status: "Ready",
+      statusClass: "ready"
+    }
+  ];
+}
+
+function renderListingActivationRoom() {
+  const queueRoot = document.querySelector("#listingActivationQueue");
+  if (!queueRoot) return;
+
+  const model = getListingActivationModel();
+  if (!model.active) return;
+
+  setText("#listingActivationTitle", `${model.active.region} ${model.active.category} activation`);
+  setText("#listingActivationBadge", model.badge);
+
+  document.querySelector("#listingActivationScore").innerHTML = `
+    <strong>${model.activationScore}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#listingActivationMetrics").innerHTML = [
+    ["Listing package", `${model.recommendedPackage.listings} machines`],
+    ["First invoice", `USD ${model.recommendedPackage.monthlyRevenue.toLocaleString()}/mo`],
+    ["Annual value", `USD ${model.recommendedPackage.annualRevenue.toLocaleString()}`],
+    ["Launch gates", `${model.readyGateCount}/${model.gates.length} ready`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  queueRoot.innerHTML = model.queue.map((item, index) => `
+    <div class="listing-activation-item ${item.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(item.label)}
+        <small>${escapeHtml(item.detail)}</small>
+      </span>
+      <em>${escapeHtml(item.owner)}</em>
+      <b>${escapeHtml(item.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#listingActivationGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="listing-activation-gate ${gate.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(gate.label)}
+        <small>${escapeHtml(gate.detail)}</small>
+      </span>
+      <em>${escapeHtml(gate.owner)}</em>
+      <b>${escapeHtml(gate.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#listingActivationPacket").innerHTML = buildListingActivationText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getListingActivationModel() {
+  const commitment = getSupplierCommitmentModel();
+  const active = commitment.active;
+  if (!active) {
+    return {
+      active: null,
+      commitment,
+      activationScore: 0,
+      badge: "Prep first",
+      summary: "",
+      queue: [],
+      gates: [],
+      recommendedPackage: null,
+      readyQueueCount: 0,
+      readyGateCount: 0
+    };
+  }
+
+  const recommendedPackage = commitment.recommendedPackage;
+  const queue = getListingActivationQueue(active, commitment);
+  const gates = getListingActivationGates(active, commitment, queue);
+  const readyQueueCount = queue.filter((item) => item.statusClass === "ready").length;
+  const readyGateCount = gates.filter((gate) => gate.statusClass === "ready").length;
+  const activationScore = Math.max(0, Math.min(100, Math.round(commitment.score * 0.5 + readyQueueCount * 7 + readyGateCount * 6)));
+  const badge = activationScore >= 84 ? "Ready to publish" : activationScore >= 68 ? "Activation sprint" : "Prep first";
+  const summary = activationScore >= 84
+    ? `${active.region} ${active.category} can move from commitment to live paid listings now.`
+    : activationScore >= 68
+      ? `${active.region} ${active.category} has enough momentum for a focused activation sprint.`
+      : `${active.region} ${active.category} needs billing, proof, and availability tightened before go-live.`;
+
+  return {
+    active,
+    commitment,
+    activationScore,
+    badge,
+    summary,
+    queue,
+    gates,
+    recommendedPackage,
+    readyQueueCount,
+    readyGateCount
+  };
+}
+
+function getListingActivationQueue(active, commitment) {
+  const recommendedPackage = commitment.recommendedPackage;
+  const proofGate = commitment.gates.find((gate) => gate.label.includes("Verification")) || commitment.gates[2];
+  const availabilityGate = commitment.gates.find((gate) => gate.label.includes("Availability")) || commitment.gates[3];
+  const hasEnoughVisibleSupply = active.visibleSupply >= recommendedPackage.listings;
+  const launchReady = commitment.score >= 68 && commitment.readyGateCount >= 3;
+
+  return [
+    {
+      label: "Create paid listing shells",
+      detail: `${recommendedPackage.label}: ${recommendedPackage.listings} active listing${recommendedPackage.listings === 1 ? "" : "s"} at USD ${recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${recommendedPackage.annualRevenue.toLocaleString()}/year.`,
+      owner: "Revenue",
+      status: "Ready",
+      statusClass: "ready"
+    },
+    {
+      label: "Attach photos and specs",
+      detail: hasEnoughVisibleSupply
+        ? `${active.visibleSupply} visible listing${active.visibleSupply === 1 ? "" : "s"} can seed the supplier storefront.`
+        : `Collect clean photos, model specs, and simple rate notes for ${recommendedPackage.listings} machine${recommendedPackage.listings === 1 ? "" : "s"}.`,
+      owner: "Supplier",
+      status: hasEnoughVisibleSupply ? "Ready" : "Review",
+      statusClass: hasEnoughVisibleSupply ? "ready" : "review"
+    },
+    {
+      label: "Link verification proof",
+      detail: proofGate.detail,
+      owner: "Trust",
+      status: proofGate.status,
+      statusClass: proofGate.statusClass
+    },
+    {
+      label: "Set availability and lead route",
+      detail: `${availabilityGate.detail} Direct enquiry routes stay with the supplier in phase one.`,
+      owner: "Success",
+      status: availabilityGate.statusClass === "ready" ? "Ready" : "Review",
+      statusClass: availabilityGate.statusClass === "gap" ? "review" : availabilityGate.statusClass
+    },
+    {
+      label: "Publish market page",
+      detail: `${active.region} ${active.category.toLowerCase()} page opens with verified inventory, proof notes, and no rental payment collection.`,
+      owner: "Founder",
+      status: launchReady ? "Publish" : "Sprint",
+      statusClass: launchReady ? "ready" : "review"
+    }
+  ];
+}
+
+function getListingActivationGates(active, commitment, queue) {
+  const recommendedPackage = commitment.recommendedPackage;
+  const proofGate = commitment.gates.find((gate) => gate.label.includes("Verification")) || commitment.gates[2];
+  const availabilityGate = commitment.gates.find((gate) => gate.label.includes("Availability")) || commitment.gates[3];
+  const billingMode = recommendedPackage.id === "annual" || commitment.score >= 84 ? "Annual" : "Monthly";
+  const readyQueueCount = queue.filter((item) => item.statusClass === "ready").length;
+  const launchReady = readyQueueCount >= 3 && commitment.readyGateCount >= 3;
+
+  return [
+    {
+      label: "Billing plan selected",
+      detail: `${billingMode} listing plan for ${recommendedPackage.listings} machine${recommendedPackage.listings === 1 ? "" : "s"}: USD ${recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${recommendedPackage.annualRevenue.toLocaleString()}/year.`,
+      owner: "Revenue",
+      status: "Ready",
+      statusClass: "ready"
+    },
+    {
+      label: "Proof gate",
+      detail: proofGate.detail,
+      owner: "Trust",
+      status: proofGate.status,
+      statusClass: proofGate.statusClass
+    },
+    {
+      label: "Availability gate",
+      detail: availabilityGate.detail,
+      owner: "Success",
+      status: availabilityGate.status,
+      statusClass: availabilityGate.statusClass === "gap" ? "review" : availabilityGate.statusClass
+    },
+    {
+      label: "Direct enquiry route",
+      detail: "Phone, WhatsApp, email, or web enquiry path is visible before the page is promoted.",
+      owner: "Supplier",
+      status: "Ready",
+      statusClass: "ready"
+    },
+    {
+      label: "Launch review",
+      detail: `${active.region} ${active.category} can publish when at least three activation queue items and three commitment gates are ready.`,
+      owner: "Founder",
+      status: launchReady ? "Ready" : "Sprint",
+      statusClass: launchReady ? "ready" : "review"
+    }
+  ];
 }
 
 
@@ -4611,6 +6659,26 @@ function buildAccountHealthText(model = getAccountHealthModel()) {
   ].join("\n");
 }
 
+function buildSupplierSuccessText(model = getSupplierSuccessModel()) {
+  return [
+    "Heavyster Supplier Success Daily Queue",
+    `Book health: ${model.averageHealth}/100 - ${model.badge}`,
+    `Call first: ${model.callFirst.profile.supplier}`,
+    `At-risk accounts: ${model.atRiskCount}`,
+    `Hot leads to protect ROI: ${model.hotLeadCount}`,
+    `Renewal-risk listings: ${model.renewalRiskCount}`,
+    `Proof gaps: ${model.proofGapCount}`,
+    `Visible expansion ARR: USD ${model.expansionArr.toLocaleString()}`,
+    "Priority suppliers:",
+    ...model.rows.map((row) => `- ${row.urgency}/100 urgency: ${row.profile.supplier}, health ${row.health.score}/100, action ${row.primaryAction.label}, reason ${row.reason}`),
+    "Daily operating rhythm:",
+    ...model.rhythm.map((item) => `- ${item.status}: ${item.label} - ${item.detail}`),
+    "Founder instruction:",
+    "Open the first supplier, execute the save action, prove lead ROI, clean proof or freshness gaps, then move to expansion only after the renewal risk is controlled.",
+    "Phase one rule: success work protects listing SaaS revenue and supplier trust. Heavyster still takes 0% rental commission."
+  ].join("\n");
+}
+
 function buildJobsiteBriefText(model = getJobsiteModel()) {
   return [
     "Heavyster Jobsite Planner",
@@ -4651,6 +6719,215 @@ function buildMarketBriefText(opportunity = getActiveMarketOpportunity()) {
     `Supplier target: recruit ${opportunity.launchListings} paid listings from ${opportunity.persona.toLowerCase()} for first-year listing ARR of USD ${opportunity.annualRevenue.toLocaleString()}.`,
     `Trust proof: ${opportunity.proof.join(", ")}.`,
     `Founder action: launch the page, invite suppliers, verify documents, then route direct enquiries without touching rental payments.`
+  ].join("\n");
+}
+
+function buildPageFactoryText(model = getPageFactoryModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Market Page Factory\nNo market pages are ready yet.";
+
+  return [
+    "Heavyster Market Page Factory",
+    `Page title: ${active.title}`,
+    `Slug: ${active.slug}`,
+    `Status: ${active.status} - ${active.readiness}/100 readiness`,
+    `Demand: ${active.demandCount} buyer signal${active.demandCount === 1 ? "" : "s"} and ${active.urgencyHits} urgent hit${active.urgencyHits === 1 ? "" : "s"}`,
+    `Supply: ${active.visibleSupply} visible listing${active.visibleSupply === 1 ? "" : "s"}, ${active.verifiedSupply} verified listing${active.verifiedSupply === 1 ? "" : "s"}, ${active.supplierTarget} supplier target${active.supplierTarget === 1 ? "" : "s"}`,
+    `Listing ARR target: USD ${active.annualRevenue.toLocaleString()} in phase-one paid listing revenue`,
+    `Opening copy: Contractors searching for ${active.category.toLowerCase()} equipment rental in ${active.region} need verified machines, document clarity, availability, and a direct supplier route.`,
+    `Trust proof: ${active.proof.join(", ")}.`,
+    "Launch gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.label} - ${gate.detail}`),
+    "Founder instruction:",
+    "Publish only when demand, live supply, verified proof, supplier target, and listing revenue are good enough to protect buyer trust.",
+    "Phase one rule: Heavyster monetizes supplier listing visibility. Buyer and rental company still arrange rental payment directly."
+  ].join("\n");
+}
+
+function buildLaunchRoomText(model = getLaunchRoomModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Market Launch Room\nNo launch sprint is ready yet.";
+
+  return [
+    "Heavyster Market Launch Room",
+    `Launch page: ${active.title}`,
+    `Slug: ${active.slug}`,
+    `Sprint status: ${model.badge} - ${model.score}/100`,
+    `First-week target: invite ${model.targetSuppliers} suppliers and create USD ${model.firstWeekArr.toLocaleString()} first-week listing ARR capacity`,
+    `Demand signal: ${active.demandCount} buyer signal${active.demandCount === 1 ? "" : "s"}, ${active.urgencyHits} urgent hit${active.urgencyHits === 1 ? "" : "s"}`,
+    `Supply signal: ${active.visibleSupply} live listing${active.visibleSupply === 1 ? "" : "s"}, ${active.verifiedSupply} verified listing${active.verifiedSupply === 1 ? "" : "s"}, ${active.supplierTarget} listing target${active.supplierTarget === 1 ? "" : "s"}`,
+    "Seven-day sprint:",
+    ...model.steps.map((step) => `- ${step.day}: ${step.status} - ${step.label}. ${step.detail}`),
+    "Supplier strike list:",
+    ...model.suppliers.map((supplier) => `- ${supplier.status}: ${supplier.name}, ${supplier.score}/100. ${supplier.reason}`),
+    "Founder instruction:",
+    "Run the page only as far as trust allows. Publish the shell, recruit anchor suppliers, collect proof, open direct enquiries, and review listing ARR before adding any rental payment workflow.",
+    "Phase one rule: Heavyster sells listing visibility and operating tools. Rental payment stays direct between buyer and rental company."
+  ].join("\n");
+}
+
+function buildMarketTwinText(model = getMarketTwinModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Market Twin\nNo market twin is ready yet.";
+
+  return [
+    "Heavyster Market Twin",
+    `Market: ${active.title}`,
+    `Scenario: ${model.scenario.label}`,
+    `Twin score: ${model.score}/100 - ${model.badge}`,
+    `Modeled paid listings: ${model.totalListings}`,
+    `Modeled listing revenue: USD ${model.monthlyRevenue.toLocaleString()}/month, USD ${model.annualArr.toLocaleString()}/year`,
+    `Demand coverage: ${model.demandCoverage}% of the launch target`,
+    `Trust score: ${model.trustScore}/100`,
+    `Lead response score: ${model.responseScore}/100`,
+    "Risk map:",
+    ...model.risks.map((risk) => `- ${risk.status}: ${risk.label}, ${risk.score}/100. ${risk.detail} Action: ${risk.action}`),
+    "Founder decision:",
+    model.score >= 86
+      ? "Run the wedge now: publish, recruit, verify, and convert the first suppliers into annual listing proof."
+      : model.score >= 72
+        ? "Open the wedge carefully: recruit suppliers and route only the enquiries the proof stack can support."
+        : "Hold heavy promotion: build verified supply and proof first, then reopen the market twin.",
+    "Phase one rule: the twin models listing SaaS revenue and trust readiness only. Heavyster still does not collect rental payment."
+  ].join("\n");
+}
+
+function buildLiquidityFlywheelText(model = getLiquidityFlywheelModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Liquidity Flywheel\nNo liquidity flywheel is ready yet.";
+
+  return [
+    "Heavyster Liquidity Flywheel",
+    `Market: ${active.title}`,
+    `Flywheel score: ${model.score}/100 - ${model.badge}`,
+    `Active scenario: ${model.twin.scenario.label}`,
+    `Main bottleneck: ${model.bottleneck.label} - ${model.bottleneck.score}/100`,
+    `Strongest loop: ${model.strongest.label} - ${model.strongest.score}/100`,
+    `Modeled listing ARR: USD ${model.twin.annualArr.toLocaleString()}`,
+    "Loop health:",
+    ...model.loops.map((loop) => `- ${loop.status}: ${loop.label}, ${loop.score}/100. ${loop.detail} Action: ${loop.action}`),
+    "Founder fixes:",
+    ...model.fixes.map((fix) => `- ${fix.status}: ${fix.owner} owns ${fix.label}. ${fix.detail}`),
+    "Founder decision:",
+    model.score >= 84 && model.bottleneck.score >= 70
+      ? "Keep the loop turning: add suppliers, protect proof, measure response, and convert visible ROI into annual listing plans."
+      : model.score >= 70
+        ? "Push carefully: fix the bottleneck first, then scale supplier invites and page traffic."
+        : "Do not force traffic yet: repair the bottleneck and rebuild trust before asking the market to compound.",
+    "Phase one rule: liquidity means more verified listings and direct enquiries. Heavyster still earns from listing SaaS and keeps rental payment direct."
+  ].join("\n");
+}
+
+function buildFounderAutopilotText(model = getFounderAutopilotModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Founder Autopilot\nNo founder autopilot is ready yet.";
+
+  return [
+    "Heavyster Founder Autopilot",
+    `Market: ${active.title}`,
+    `Autopilot status: ${model.badge} - ${model.score}/100`,
+    `Flywheel bottleneck: ${model.flywheel.bottleneck.label} - ${model.flywheel.bottleneck.score}/100`,
+    `Primary command: ${model.primary.owner} - ${model.primary.label}`,
+    `ARR unlocked: USD ${model.totalImpactArr.toLocaleString()}`,
+    `Open commands: ${model.openCommandCount}`,
+    "Command queue:",
+    ...model.commands.map((command, index) => `${index + 1}. ${command.due} - ${command.owner}: ${command.label} (${command.status}). ${command.detail} Impact: USD ${command.impactArr.toLocaleString()} ARR.`),
+    "Operating rule:",
+    "Run the smallest command that repairs the market bottleneck first. Keep phase one monetization clean: paid listings, verified supplier pages, direct enquiries, and no rental payment collection."
+  ].join("\n");
+}
+
+function buildDemandExchangeText(model = getDemandExchangeModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Demand Exchange\nNo supplier demand exchange is ready yet.";
+
+  return [
+    "Heavyster Demand Exchange",
+    `Market: ${active.region} ${active.category}`,
+    `Supplier pull score: ${model.score}/100 - ${model.badge}`,
+    `Captured buyer demand: ${active.demandCount} signal${active.demandCount === 1 ? "" : "s"}`,
+    `Visible supply: ${active.visibleSupply} listing${active.visibleSupply === 1 ? "" : "s"}`,
+    `Open supply gap: ${active.supplyGap} listing${active.supplyGap === 1 ? "" : "s"}`,
+    `Modeled listing ARR: USD ${active.annualRevenue.toLocaleString()}`,
+    `Best-fit supplier: ${active.persona}`,
+    "Supplier invite:",
+    `Buyers are already searching for ${active.category.toLowerCase()} equipment in ${active.region}. Heavyster can give your fleet a verified page, direct enquiry route, and demand-backed category visibility.`,
+    "Proof requested:",
+    ...active.proof.map((item) => `- ${item}`),
+    "Conversion path:",
+    ...model.lanes.map((lane) => `- ${lane.status}: ${lane.label}. ${lane.detail}`),
+    "Phase one rule:",
+    "The supplier pays only for active equipment listings. The customer still pays the rental company directly, and Heavyster does not collect rental payment."
+  ].join("\n");
+}
+
+function buildProofDemandText(model = getProofDemandRoomModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Proof of Demand Room\nNo proof room is ready yet.";
+
+  return [
+    "Heavyster Proof of Demand Room",
+    `Market: ${active.region} ${active.category}`,
+    `Proof score: ${model.score}/100 - ${model.badge}`,
+    `Buyer demand: ${active.demandCount} signal${active.demandCount === 1 ? "" : "s"}`,
+    `Supply gap: ${active.supplyGap} listing${active.supplyGap === 1 ? "" : "s"}`,
+    `Proof value: USD ${model.proofValue.toLocaleString()}`,
+    `Best-fit supplier: ${active.persona}`,
+    "Evidence chain:",
+    ...model.evidence.map((item) => `- ${item.status}: ${item.label}. ${item.detail}`),
+    "Supplier objections answered:",
+    ...model.objections.map((item) => `- ${item.label} ${item.answer}`),
+    "Supplier pitch:",
+    `We are seeing buyer demand for ${active.category.toLowerCase()} equipment in ${active.region}, but visible verified supply is still thin. Heavyster can publish your machines as paid active listings, add proof, route enquiries directly to your team, and keep rental payment between you and the customer.`,
+    "Phase one rule:",
+    "Use this proof pack to sell active listing subscriptions, not rental commission."
+  ].join("\n");
+}
+
+function buildSupplierCommitmentText(model = getSupplierCommitmentModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Supplier Commitment Room\nNo supplier commitment is ready yet.";
+
+  return [
+    "Heavyster Supplier Commitment Room",
+    `Market: ${active.region} ${active.category}`,
+    `Commitment status: ${model.badge} - ${model.score}/100`,
+    `Recommended package: ${model.recommendedPackage.label}`,
+    `Active listings: ${model.recommendedPackage.listings}`,
+    `Monthly listing revenue: USD ${model.recommendedPackage.monthlyRevenue.toLocaleString()}`,
+    `Annual listing revenue: USD ${model.recommendedPackage.annualRevenue.toLocaleString()}`,
+    `Proof score: ${model.proof.score}/100 - ${model.proof.badge}`,
+    "Package options:",
+    ...model.packages.map((item) => `- ${item.status}: ${item.label}, ${item.listings} listings, USD ${item.monthlyRevenue.toLocaleString()}/month or USD ${item.annualRevenue.toLocaleString()}/year. ${item.detail}`),
+    "Go-live gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.owner} owns ${gate.label}. ${gate.detail}`),
+    "Commitment note:",
+    `We recommend starting with ${model.recommendedPackage.listings} active ${active.category.toLowerCase()} listings for ${active.region}. The market already has buyer demand proof, a visible supply gap, and a clean no-commission model. Heavyster routes enquiries directly to your team while the rental payment stays between you and the customer.`,
+    "Phase one rule:",
+    "Close the listing subscription first. Do not introduce rental commission until Heavyster earns the booking workflow."
+  ].join("\n");
+}
+
+function buildListingActivationText(model = getListingActivationModel()) {
+  const active = model.active;
+  if (!active) return "Heavyster Listing Activation Room\nNo listing activation plan is ready yet.";
+
+  return [
+    "Heavyster Listing Activation Room",
+    `Market: ${active.region} ${active.category}`,
+    `Activation status: ${model.badge} - ${model.activationScore}/100`,
+    `Supplier package: ${model.recommendedPackage.label}`,
+    `Active paid listings: ${model.recommendedPackage.listings}`,
+    `First invoice: USD ${model.recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${model.recommendedPackage.annualRevenue.toLocaleString()}/year`,
+    `Commitment score: ${model.commitment.score}/100 - ${model.commitment.badge}`,
+    "Activation queue:",
+    ...model.queue.map((item) => `- ${item.status}: ${item.owner} owns ${item.label}. ${item.detail}`),
+    "Billing and launch gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.owner} owns ${gate.label}. ${gate.detail}`),
+    "Go-live note:",
+    `${active.region} ${active.category.toLowerCase()} can start with ${model.recommendedPackage.listings} active paid listings, verified proof, availability, and direct enquiry routing. Customers still pay the rental company directly, and Heavyster does not collect rental payment in phase one.`,
+    "Phase one rule:",
+    "Activate paid listings before booking rails."
   ].join("\n");
 }
 

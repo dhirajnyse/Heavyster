@@ -40,12 +40,22 @@ Add these only after basic supplier onboarding works:
 - Supplier Studio readiness and revenue previews that show the supplier why more paid listings matter
 - Supplier Lead Desk that proves paid listings create actionable direct enquiries
 - Supplier Account Health Radar that helps save renewals, prove lead ROI, and surface expansion ARR before suppliers churn
+- Supplier Success Daily Queue that tells the founder which supplier action protects or grows listing SaaS revenue today
 - Command Center supplier workspace that helps a supplier understand the full paid-listing workspace quickly
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region
 - Supplier hunt tools that prove where a fleet owner can earn demand
 - Market Maker Mode for deciding which category pages can create listing revenue fastest
+- Market Page Factory that turns demand gaps into SEO pages with supplier targets, proof gates, and phase-one listing ARR targets
+- Market Launch Room that converts publishable pages into supplier invites, proof completion, safe enquiry routing, and first-week listing ARR targets
+- Market Twin that shows which launch intensity can create listing ARR without weakening trust or touching rental payments
+- Liquidity Flywheel that tells the founder which loop must improve before listing revenue can compound
+- Founder Autopilot that turns each bottleneck into owner-assigned work with visible ARR impact before the team spends more effort
+- Demand Exchange that lets suppliers see demand-backed listing opportunities before paying for active listings
+- Proof of Demand Room that helps founders sell paid listing subscriptions with evidence instead of discounts or commission promises
+- Supplier Commitment Room that converts proof into starter, market anchor, or annual listing packages with visible SaaS ARR
+- Listing Activation Room that moves accepted packages into live paid listings with billing gates, proof checks, and direct enquiry routes
 - WhatsApp/email enquiry routing
 - CSV import for larger fleets
 
