@@ -16,6 +16,7 @@ Recommended launch pricing:
 - Customer pays rental company directly
 - Heavyster provides equipment pages, supplier profiles, documents, availability, search visibility, and direct enquiries
 - Command Center role workspaces make the product easier to demo, sell, and expand without confusing suppliers with too many separate tools
+- Universal Command Palette keeps the product fast as modules grow, which helps suppliers and founders reach revenue workflows without training overhead
 
 This is deliberately easy to understand. A supplier with 10 machines pays USD 90/month or USD 990/year. That is low enough for independent rental yards and still creates clean recurring revenue.
 
@@ -56,6 +57,7 @@ Add these only after basic supplier onboarding works:
 - Proof of Demand Room that helps founders sell paid listing subscriptions with evidence instead of discounts or commission promises
 - Supplier Commitment Room that converts proof into starter, market anchor, or annual listing packages with visible SaaS ARR
 - Listing Activation Room that moves accepted packages into live paid listings with billing gates, proof checks, and direct enquiry routes
+- Trust & Revenue Ledger that protects listing ARR by exposing trust debt, renewal exposure, direct enquiry pipeline, and scale gates
 - WhatsApp/email enquiry routing
 - CSV import for larger fleets
 

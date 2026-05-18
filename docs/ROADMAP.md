@@ -5,6 +5,7 @@
 - Supplier signup and company profile
 - Equipment categories and listing pages
 - Command Center role workspaces for simple buyer, supplier, and founder navigation
+- Universal Command Palette for instant access to equipment, suppliers, markets, pricing, activation, and workflow modules
 - Compact catalog UI for thousands of listings
 - Smart Match Rescue for zero-result searches
 - Smart empty-state recovery and shortlist comparison
@@ -35,6 +36,7 @@
 - Proof of Demand Room for converting supplier doubt into demand proof, shortage proof, trust proof, and no-commission ROI proof
 - Supplier Commitment Room for choosing starter, market anchor, or annual listing packages and clearing go-live gates
 - Listing Activation Room for turning accepted packages into paid listing shells, billing gates, publish readiness, and direct enquiry routes
+- Trust & Revenue Ledger for deciding when listing ARR, trust proof, supplier response, and renewal protection are strong enough to scale
 - Photo upload slots
 - License, insurance, inspection, and operator document fields
 - Availability status per listing
@@ -46,6 +48,7 @@
 
 - Supplier lead inbox
 - Command Center usage analytics, saved role-specific workspaces, and role-based onboarding
+- Universal Command Palette analytics for search intent, failed searches, module launches, and workflow discovery
 - Trust Passport expiry and confidence history
 - Quote templates
 - Multi-machine package templates by jobsite type
@@ -74,6 +77,7 @@
 - Proof of Demand analytics for objection resolution, proof-pack copies, and supplier conversion by evidence type
 - Supplier Commitment analytics for package mix, close score, go-live readiness, and ARR closed from supplier commitments
 - Listing Activation analytics for activation queue completion, launch-gate delays, billing plan selection, and first live paid listing time
+- Trust & Revenue Ledger analytics for scale decisions, trust debt, renewal exposure, listing ARR, and direct enquiry pipeline
 - Saved renter requirements
 - Search rescue conversion analytics
 - CRM export

@@ -17,6 +17,7 @@ This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
 - Command Center with role workspaces for buyer, supplier, and founder workflows
+- Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
 - Compact catalog row view for large inventory UX
 - Smart Match Rescue on the hero search for zero-result buyer recovery
 - Smart no-results recovery with nearby matches and one-click filter relaxation
@@ -48,6 +49,7 @@ This folder contains a static product prototype with:
 - Proof of Demand Room for packaging buyer demand, supply shortage, trust proof, ROI, and supplier objections into a copy-ready sales pack
 - Supplier Commitment Room for converting proof into paid listing packages, go-live gates, and copy-ready close notes
 - Listing Activation Room for turning paid listing commitments into activation queues, billing gates, publish readiness, and copy-ready go-live plans
+- Trust & Revenue Ledger for showing listing ARR, direct enquiry pipeline, trust debt, renewal exposure, and scale gates in one founder view
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

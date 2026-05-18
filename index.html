@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260518-listing-activation" />
+    <link rel="stylesheet" href="styles.css?v=20260518-trust-ledger" />
   </head>
   <body>
     <div class="app-shell">
@@ -55,6 +55,7 @@
           <a href="#proof-demand">Proof Room</a>
           <a href="#supplier-commitment">Commit</a>
           <a href="#listing-activation">Activate</a>
+          <a href="#trust-revenue-ledger">Ledger</a>
           <a href="#growth">Growth</a>
           <a href="#market-maker">Market Map</a>
           <a href="#pricing">Pricing</a>
@@ -1299,6 +1300,45 @@
           </div>
         </section>
 
+        <section class="trust-ledger-section" id="trust-revenue-ledger">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Trust & Revenue Ledger</p>
+              <h2>See which markets create listing revenue, which trust gaps slow conversion, and what to fix before scaling.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyTrustLedgerButton">Copy ledger brief</button>
+          </div>
+
+          <div class="trust-ledger-grid">
+            <article class="trust-ledger-card trust-ledger-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Founder control layer</p>
+                  <h3 id="trustLedgerTitle">Trust ledger</h3>
+                </div>
+                <span class="pill" id="trustLedgerBadge">Ledger</span>
+              </div>
+              <div class="trust-ledger-score" id="trustLedgerScore"></div>
+              <div class="trust-ledger-metrics" id="trustLedgerMetrics"></div>
+            </article>
+
+            <article class="trust-ledger-card">
+              <h3>Market ledger</h3>
+              <div class="trust-ledger-rows" id="trustLedgerRows"></div>
+            </article>
+
+            <article class="trust-ledger-card">
+              <h3>Control gates</h3>
+              <div class="trust-ledger-controls" id="trustLedgerControls"></div>
+            </article>
+
+            <article class="trust-ledger-card trust-ledger-packet-card">
+              <h3>Copy-ready founder brief</h3>
+              <div class="trust-ledger-packet" id="trustLedgerPacket"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="directory-section" id="categories">
           <div class="section-header wide">
             <div>
@@ -1521,7 +1561,7 @@
     </div>
 
     <div class="floating-actions" aria-label="Quick actions">
-      <button type="button" class="float-button" id="quickSearchButton" aria-label="Jump to equipment search" title="Search equipment">
+      <button type="button" class="float-button" id="quickSearchButton" aria-label="Open Heavyster command search" title="Search Heavyster">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M10.5 18a7.5 7.5 0 1 1 5.3-12.8 7.5 7.5 0 0 1-5.3 12.8Z" />
           <path d="m16 16 4 4" />
@@ -1535,7 +1575,28 @@
       </button>
     </div>
 
+    <div class="command-palette" id="commandPalette" aria-hidden="true">
+      <div class="command-palette-backdrop" id="commandPaletteBackdrop"></div>
+      <section class="command-palette-panel" role="dialog" aria-modal="true" aria-labelledby="commandPaletteTitle">
+        <div class="command-palette-head">
+          <div>
+            <p class="eyebrow">Heavyster Command</p>
+            <h2 id="commandPaletteTitle">Find equipment, suppliers, markets, and workflows.</h2>
+          </div>
+          <button type="button" class="command-palette-close" id="commandPaletteCloseButton" aria-label="Close command search">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 6l12 12" />
+              <path d="M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+        <label class="screen-reader-only" for="commandPaletteInput">Search Heavyster</label>
+        <input id="commandPaletteInput" type="search" autocomplete="off" placeholder="Search equipment, supplier, workflow, market..." />
+        <div class="command-palette-results" id="commandPaletteResults"></div>
+      </section>
+    </div>
+
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260518-listing-activation" defer></script>
+    <script src="app.js?v=20260518-trust-ledger" defer></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260518-heavyster-listing-activation-v34";
+const DATA_VERSION = "20260518-heavyster-trust-ledger-v37";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -463,6 +463,7 @@ const commandRoutes = [
       { label: "Proof Room", anchor: "#proof-demand" },
       { label: "Commit", anchor: "#supplier-commitment" },
       { label: "Activate", anchor: "#listing-activation" },
+      { label: "Ledger", anchor: "#trust-revenue-ledger" },
       { label: "Hunt", anchor: "#growth" },
       { label: "Market Map", anchor: "#market-maker" },
       { label: "Categories", anchor: "#categories" },
@@ -499,6 +500,7 @@ const commandModules = [
   { role: "Founder", label: "Proof of Demand", anchor: "#proof-demand", signal: "Prove ROI" },
   { role: "Founder", label: "Supplier Commitment", anchor: "#supplier-commitment", signal: "Close listing" },
   { role: "Founder", label: "Listing Activation", anchor: "#listing-activation", signal: "Go live" },
+  { role: "Founder", label: "Trust Ledger", anchor: "#trust-revenue-ledger", signal: "Protect revenue" },
   { role: "Founder", label: "Growth", anchor: "#growth", signal: "Recruit supply" },
   { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" },
   { role: "Founder", label: "Categories", anchor: "#categories", signal: "Plan inventory" },
@@ -829,6 +831,7 @@ const listingRevenueRows = [
 
 let state = loadState();
 let toastTimer = 0;
+let commandPaletteQuery = "";
 
 document.addEventListener("DOMContentLoaded", () => {
   bindControls();
@@ -918,6 +921,7 @@ function bindControls() {
   const builderModel = document.querySelector("#builderModel");
   const builderRegion = document.querySelector("#builderRegion");
   const builderAvailability = document.querySelector("#builderAvailability");
+  const commandPaletteInput = document.querySelector("#commandPaletteInput");
   const jobsiteType = document.querySelector("#jobsiteType");
   const jobsiteRegion = document.querySelector("#jobsiteRegion");
   const jobsiteUrgency = document.querySelector("#jobsiteUrgency");
@@ -1268,6 +1272,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyTrustLedgerButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildTrustLedgerText());
+      showToast("Trust and revenue ledger brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the ledger brief is visible.");
+    }
+  });
+
   document.querySelector("#applyJobsiteButton").addEventListener("click", () => {
     renderJobsitePlanner();
     renderMobilizationTower();
@@ -1317,13 +1330,33 @@ function bindControls() {
     showToast(state.shortlistIds.length ? "RFQ room is ready." : "Save equipment first to build an RFQ.");
   });
 
-  document.querySelector("#quickSearchButton").addEventListener("click", () => {
-    document.querySelector("#marketplace").scrollIntoView({ behavior: "smooth", block: "start" });
-    window.setTimeout(() => {
-      const search = document.querySelector("#equipmentSearch");
-      search.focus();
-      search.select();
-    }, 320);
+  document.querySelector("#quickSearchButton").addEventListener("click", () => openCommandPalette());
+  document.querySelector("#commandPaletteCloseButton").addEventListener("click", () => closeCommandPalette());
+  document.querySelector("#commandPaletteBackdrop").addEventListener("click", () => closeCommandPalette());
+  commandPaletteInput.addEventListener("input", (event) => renderCommandPalette(event.target.value));
+  commandPaletteInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      const first = document.querySelector("[data-command-index]");
+      if (first) activateCommandPaletteItem(first.dataset.commandIndex);
+    }
+    if (event.key === "Escape") closeCommandPalette();
+  });
+  document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    const isTyping = target && ["INPUT", "SELECT", "TEXTAREA"].includes(target.tagName);
+    if (event.key === "Escape") {
+      closeCommandPalette();
+      return;
+    }
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      openCommandPalette();
+      return;
+    }
+    if (event.key === "/" && !isTyping) {
+      event.preventDefault();
+      openCommandPalette();
+    }
   });
 
   document.querySelector("#scrollTopButton").addEventListener("click", () => {
@@ -1400,6 +1433,7 @@ function render() {
   renderCatalog();
   renderLeadPacket();
   renderEquipmentDetail();
+  renderCommandPalette(commandPaletteQuery);
   renderJobsitePlanner();
   renderTrustPassport();
   renderShortlistTray();
@@ -1424,6 +1458,7 @@ function render() {
   renderProofDemandRoom();
   renderSupplierCommitmentRoom();
   renderListingActivationRoom();
+  renderTrustRevenueLedger();
   renderDemandCapture();
   renderSupplierTable();
   renderTrustChecklist();
@@ -1519,6 +1554,207 @@ function renderCommandCenter() {
       showToast(`${state.commandRole} workspace active.`);
     });
   });
+}
+
+function openCommandPalette(query = "") {
+  const palette = document.querySelector("#commandPalette");
+  const input = document.querySelector("#commandPaletteInput");
+  commandPaletteQuery = query;
+  palette.classList.add("is-open");
+  palette.setAttribute("aria-hidden", "false");
+  document.body.classList.add("command-palette-open");
+  input.value = query;
+  renderCommandPalette(query);
+  window.setTimeout(() => {
+    input.focus();
+    input.select();
+  }, 20);
+}
+
+function closeCommandPalette() {
+  const palette = document.querySelector("#commandPalette");
+  if (!palette) return;
+  palette.classList.remove("is-open");
+  palette.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("command-palette-open");
+}
+
+function renderCommandPalette(query = commandPaletteQuery) {
+  const root = document.querySelector("#commandPaletteResults");
+  if (!root) return;
+
+  commandPaletteQuery = query;
+  const results = getCommandPaletteResults(query);
+  root.innerHTML = results.length ? results.map((item, index) => `
+    <button type="button" class="command-palette-item ${escapeHtml(item.typeClass)}" data-command-index="${index}">
+      <em>${escapeHtml(item.kind)}</em>
+      <span>
+        <strong>${escapeHtml(item.label)}</strong>
+        <small>${escapeHtml(item.detail)}</small>
+      </span>
+      <b>${escapeHtml(item.action)}</b>
+    </button>
+  `).join("") : `
+    <div class="command-palette-empty">
+      <strong>No exact command found</strong>
+      <span>Use the marketplace search or capture the missing demand signal.</span>
+    </div>
+  `;
+
+  document.querySelectorAll("[data-command-index]").forEach((button) => {
+    button.addEventListener("click", () => activateCommandPaletteItem(button.dataset.commandIndex));
+  });
+}
+
+function getCommandPaletteResults(query = "") {
+  const normalized = query.trim().toLowerCase();
+  const items = getCommandPaletteItems();
+  if (!normalized) {
+    return items
+      .filter((item) => item.default)
+      .slice(0, 12);
+  }
+
+  return items
+    .map((item) => ({ ...item, rank: getCommandPaletteRank(item, normalized) }))
+    .filter((item) => item.rank > 0)
+    .sort((a, b) => b.rank - a.rank || a.label.localeCompare(b.label))
+    .slice(0, 12);
+}
+
+function getCommandPaletteRank(item, query) {
+  const haystack = [item.kind, item.label, item.detail, item.keywords].join(" ").toLowerCase();
+  const label = String(item.label || "").toLowerCase();
+  if (label === query) return 100;
+  if (label.startsWith(query)) return 86;
+  if (haystack.includes(query)) return 64;
+  return query.split(/\s+/).filter((part) => haystack.includes(part)).length * 18;
+}
+
+function getCommandPaletteItems() {
+  const supplierMap = new Map();
+  listings.forEach((listing) => {
+    const existing = supplierMap.get(listing.supplier) || {
+      supplier: listing.supplier,
+      regions: new Set(),
+      categories: new Set(),
+      listingIds: []
+    };
+    existing.regions.add(listing.region);
+    existing.categories.add(listing.category);
+    existing.listingIds.push(listing.id);
+    supplierMap.set(listing.supplier, existing);
+  });
+
+  const moduleItems = commandModules.map((module) => ({
+    kind: module.role,
+    typeClass: module.role.toLowerCase(),
+    label: module.label,
+    detail: `${module.signal} - ${module.role} workflow`,
+    keywords: `${module.role} ${module.signal} ${module.anchor}`,
+    anchor: module.anchor,
+    role: module.role,
+    action: "Open",
+    default: ["Marketplace", "Command", "Supplier Studio", "Revenue Desk", "Proof of Demand", "Supplier Commitment", "Listing Activation", "Trust Ledger", "Pricing"].includes(module.label)
+  }));
+
+  const listingItems = listings.map((listing) => ({
+    kind: "Equipment",
+    typeClass: "equipment",
+    label: listing.name,
+    detail: `${listing.supplier} - ${listing.city}, ${listing.region} - ${getAvailabilityLabel(listing.availability)}`,
+    keywords: `${listing.category} ${listing.specs} ${listing.documents.join(" ")}`,
+    anchor: "#marketplace",
+    listingId: listing.id,
+    action: "View",
+    default: listing.id === state.selectedListingId
+  }));
+
+  const supplierItems = [...supplierMap.values()].map((supplier) => ({
+    kind: "Supplier",
+    typeClass: "supplier",
+    label: supplier.supplier,
+    detail: `${supplier.listingIds.length} listing${supplier.listingIds.length === 1 ? "" : "s"} - ${[...supplier.categories].join(", ")} - ${[...supplier.regions].join(", ")}`,
+    keywords: `${[...supplier.categories].join(" ")} ${[...supplier.regions].join(" ")}`,
+    anchor: "#storefront",
+    supplier: supplier.supplier,
+    listingId: supplier.listingIds[0],
+    action: "Open",
+    default: supplier.listingIds.includes(state.selectedListingId)
+  }));
+
+  const marketItems = getMarketOpportunities().slice(0, 8).map((market) => ({
+    kind: "Market",
+    typeClass: "market",
+    label: market.title || `${market.region} ${market.category}`,
+    detail: `${market.demandCount} demand signal${market.demandCount === 1 ? "" : "s"} - ${market.visibleSupply} live supply - USD ${market.annualRevenue.toLocaleString()} ARR`,
+    keywords: `${market.region} ${market.category} ${market.persona} ${market.proof.join(" ")}`,
+    anchor: "#market-maker",
+    marketKey: market.key,
+    demandKey: market.signalKey,
+    action: "Focus",
+    default: market.key === state.activeMarketKey
+  }));
+
+  const actionItems = [
+    {
+      kind: "Action",
+      typeClass: "action",
+      label: "Create a demand signal",
+      detail: "Capture missing equipment demand and turn it into supplier acquisition.",
+      keywords: "missing search demand capture supplier hunt",
+      anchor: "#admin",
+      action: "Capture",
+      default: true
+    },
+    {
+      kind: "Action",
+      typeClass: "action",
+      label: "Review phase-one monetization",
+      detail: "Open listing pricing, annual revenue, and future 1% booking fee model.",
+      keywords: "pricing monetization billing commission revenue",
+      anchor: "#pricing",
+      action: "Open",
+      default: true
+    }
+  ];
+
+  return [...actionItems, ...listingItems, ...supplierItems, ...marketItems, ...moduleItems];
+}
+
+function activateCommandPaletteItem(index) {
+  const item = getCommandPaletteResults(commandPaletteQuery)[Number(index)];
+  if (!item) return;
+
+  if (item.listingId) {
+    state.selectedListingId = item.listingId;
+    state.search = item.supplier || "";
+    state.region = "all";
+    state.availability = "all";
+    state.category = "all";
+  }
+
+  if (item.marketKey) {
+    state.activeMarketKey = item.marketKey;
+    if (item.demandKey) state.activeDemandKey = item.demandKey;
+  }
+
+  if (item.role) {
+    state.commandRole = item.role;
+  }
+
+  saveState();
+  closeCommandPalette();
+  render();
+  const target = document.querySelector(item.anchor);
+  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(`${item.label} opened.`);
+}
+
+function getAvailabilityLabel(value) {
+  if (value === "available") return "available now";
+  if (value === "soon") return "available soon";
+  return "call to confirm";
 }
 
 function getCommandCenterModel() {
@@ -3613,6 +3849,7 @@ function saveDemandSignal(source = "Buyer request", readInputs = true) {
   renderProofDemandRoom();
   renderSupplierCommitmentRoom();
   renderListingActivationRoom();
+  renderTrustRevenueLedger();
   showToast(`${equipment} demand saved for ${region}.`);
 }
 
@@ -4464,6 +4701,7 @@ function renderDemandRadar() {
       renderProofDemandRoom();
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
+      renderTrustRevenueLedger();
       document.querySelector("#growth").scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -4525,6 +4763,7 @@ function renderSupplierHunt() {
       renderProofDemandRoom();
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
+      renderTrustRevenueLedger();
     });
   });
 }
@@ -4629,6 +4868,7 @@ function renderMarketMaker() {
       renderProofDemandRoom();
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
+      renderTrustRevenueLedger();
     });
   });
 }
@@ -4759,6 +4999,7 @@ function renderPageFactory() {
       renderProofDemandRoom();
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
+      renderTrustRevenueLedger();
       document.querySelector("#page-factory").scrollIntoView({ behavior: "smooth", block: "start" });
       showToast("Market page factory focused.");
     });
@@ -5142,6 +5383,7 @@ function renderMarketTwin() {
       renderProofDemandRoom();
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
+      renderTrustRevenueLedger();
       showToast(`${button.textContent.trim().split(/\s+/)[0]} twin selected.`);
     });
   });
@@ -5705,6 +5947,7 @@ function renderDemandExchange() {
       renderProofDemandRoom();
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
+      renderTrustRevenueLedger();
       showToast("Demand Exchange market selected.");
     });
   });
@@ -6389,6 +6632,235 @@ function getListingActivationGates(active, commitment, queue) {
   ];
 }
 
+function renderTrustRevenueLedger() {
+  const rowRoot = document.querySelector("#trustLedgerRows");
+  if (!rowRoot) return;
+
+  const model = getTrustRevenueLedgerModel();
+  if (!model.active) return;
+
+  setText("#trustLedgerTitle", `${model.marketLabel} ledger`);
+  setText("#trustLedgerBadge", model.badge);
+
+  document.querySelector("#trustLedgerScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#trustLedgerMetrics").innerHTML = [
+    ["Active listing ARR", `USD ${model.activeListingArr.toLocaleString()}`],
+    ["Next package ARR", `USD ${model.nextPackageArr.toLocaleString()}`],
+    ["Lead pipeline", `USD ${model.directPipeline.toLocaleString()}`],
+    ["Trust debt", `${model.trustDebt} gap${model.trustDebt === 1 ? "" : "s"}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  rowRoot.innerHTML = model.rows.map((row, index) => `
+    <div class="trust-ledger-row ${row.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(row.label)}
+        <small>${escapeHtml(row.detail)}</small>
+      </span>
+      <em>${escapeHtml(row.value)}</em>
+      <b>${escapeHtml(row.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#trustLedgerControls").innerHTML = model.controls.map((control, index) => `
+    <div class="trust-ledger-control ${control.statusClass}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(control.label)}
+        <small>${escapeHtml(control.detail)}</small>
+      </span>
+      <em>${escapeHtml(control.owner)}</em>
+      <b>${escapeHtml(control.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#trustLedgerPacket").innerHTML = buildTrustLedgerText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getTrustRevenueLedgerModel() {
+  const activation = getListingActivationModel();
+  const flywheel = getLiquidityFlywheelModel();
+  const success = getSupplierSuccessModel();
+  const market = flywheel.active || activation.active || getActiveMarketOpportunity();
+  const active = activation.active || market;
+  if (!active) {
+    return {
+      active: null,
+      marketLabel: "Market",
+      score: 0,
+      badge: "Listen first",
+      summary: "",
+      rows: [],
+      controls: [],
+      activeListingArr: 0,
+      nextPackageArr: 0,
+      directPipeline: 0,
+      trustDebt: 0
+    };
+  }
+
+  const marketLabel = getTrustLedgerMarketLabel(market);
+  const activeListingArr = success.rows.reduce((total, row) => total + row.health.revenueDesk.annualRevenue, 0);
+  const directPipeline = success.rows.reduce((total, row) => total + row.health.leadDesk.totalBudget, 0);
+  const trustDebt = success.proofGapCount + Number(market?.proofGap || 0);
+  const nextPackageArr = activation.recommendedPackage?.annualRevenue || active.annualRevenue || 0;
+  const renewalRiskArr = success.renewalRiskCount * 99;
+  const rows = getTrustLedgerRows({ activation, flywheel, success, market, marketLabel, activeListingArr, directPipeline, trustDebt, nextPackageArr, renewalRiskArr });
+  const controls = getTrustLedgerControls({ activation, flywheel, success, market, trustDebt, renewalRiskArr });
+  const readyControls = controls.filter((control) => control.statusClass === "ready").length;
+  const score = Math.max(0, Math.min(100, Math.round(
+    (flywheel.score || 0) * 0.28
+    + (activation.activationScore || 0) * 0.28
+    + success.averageHealth * 0.24
+    + readyControls * 4
+    + Math.min(12, activeListingArr / 1200)
+    - Math.min(10, trustDebt * 1.5)
+  )));
+  const badge = score >= 84 && trustDebt <= 2 ? "Scale-ready" : score >= 70 ? "Protect growth" : "Fix trust debt";
+  const summary = badge === "Scale-ready"
+    ? `${marketLabel} has enough listing revenue, proof, and response quality to scale carefully.`
+    : badge === "Protect growth"
+      ? `${marketLabel} is monetizing, but trust or renewal debt should be cleared before heavier growth.`
+      : `${marketLabel} needs proof, renewal, or response fixes before Heavyster pushes more buyer demand.`;
+
+  return {
+    active,
+    activation,
+    flywheel,
+    success,
+    market,
+    marketLabel,
+    score,
+    badge,
+    summary,
+    rows,
+    controls,
+    readyControls,
+    activeListingArr,
+    nextPackageArr,
+    directPipeline,
+    trustDebt,
+    renewalRiskArr
+  };
+}
+
+function getTrustLedgerRows(context) {
+  const { activation, flywheel, success, marketLabel, activeListingArr, directPipeline, trustDebt, nextPackageArr, renewalRiskArr } = context;
+  return [
+    {
+      label: "Active listing revenue",
+      detail: `${success.rows.length} supplier account${success.rows.length === 1 ? "" : "s"} currently model paid listing ARR without touching rental payments.`,
+      value: `USD ${activeListingArr.toLocaleString()}`,
+      status: activeListingArr >= 3000 ? "Strong" : activeListingArr >= 1000 ? "Building" : "Seed",
+      statusClass: activeListingArr >= 3000 ? "ready" : activeListingArr >= 1000 ? "review" : "gap"
+    },
+    {
+      label: "Next paid package",
+      detail: `${marketLabel} can move through activation with ${activation.recommendedPackage?.listings || 0} paid listing${activation.recommendedPackage?.listings === 1 ? "" : "s"}.`,
+      value: `USD ${nextPackageArr.toLocaleString()}`,
+      status: activation.activationScore >= 84 ? "Publish" : activation.activationScore >= 68 ? "Sprint" : "Prep",
+      statusClass: activation.activationScore >= 84 ? "ready" : activation.activationScore >= 68 ? "review" : "gap"
+    },
+    {
+      label: "Direct enquiry pipeline",
+      detail: `${success.hotLeadCount} hot lead${success.hotLeadCount === 1 ? "" : "s"} show buyer intent while customer payment stays direct to suppliers.`,
+      value: `USD ${directPipeline.toLocaleString()}`,
+      status: success.hotLeadCount ? "Live" : "Quiet",
+      statusClass: success.hotLeadCount ? "ready" : "review"
+    },
+    {
+      label: "Trust debt",
+      detail: "Proof gaps, expiring documents, and verified-supply weakness reduce how hard Heavyster should push traffic.",
+      value: `${trustDebt} gap${trustDebt === 1 ? "" : "s"}`,
+      status: trustDebt <= 2 ? "Controlled" : trustDebt <= 6 ? "Review" : "Blocker",
+      statusClass: trustDebt <= 2 ? "ready" : trustDebt <= 6 ? "review" : "gap"
+    },
+    {
+      label: "Renewal exposure",
+      detail: `${success.renewalRiskCount} paid listing${success.renewalRiskCount === 1 ? "" : "s"} at renewal risk should be saved before selling more inventory.`,
+      value: `USD ${renewalRiskArr.toLocaleString()}`,
+      status: success.renewalRiskCount ? "Save" : "Clean",
+      statusClass: success.renewalRiskCount ? "review" : "ready"
+    },
+    {
+      label: "Compounding signal",
+      detail: flywheel.bottleneck ? `${flywheel.bottleneck.label} is the current bottleneck in the marketplace loop.` : "Flywheel signal is still forming.",
+      value: `${flywheel.score || 0}/100`,
+      status: flywheel.score >= 84 ? "Compound" : flywheel.score >= 70 ? "Turn" : "Push",
+      statusClass: flywheel.score >= 84 ? "ready" : flywheel.score >= 70 ? "review" : "gap"
+    }
+  ];
+}
+
+function getTrustLedgerControls(context) {
+  const { activation, flywheel, success, market, trustDebt, renewalRiskArr } = context;
+  const listingReady = activation.activationScore >= 84;
+  const trustReady = trustDebt <= 2;
+  const renewalReady = success.renewalRiskCount === 0;
+  const responseReady = success.hotLeadCount > 0 && success.averageHealth >= 72;
+  const scaleReady = listingReady && trustReady && renewalReady && flywheel.score >= 70;
+
+  return [
+    {
+      label: "Scale gate",
+      detail: scaleReady ? "Market can accept more buyer traffic without overpromising trust." : "Hold aggressive growth until activation, trust, renewal, and flywheel gates improve.",
+      owner: "Founder",
+      status: scaleReady ? "Ready" : "Hold",
+      statusClass: scaleReady ? "ready" : "review"
+    },
+    {
+      label: "Trust gate",
+      detail: trustReady ? "Proof debt is controlled enough for verified marketplace language." : `${trustDebt} trust gap${trustDebt === 1 ? "" : "s"} should be cleared before scaling category traffic.`,
+      owner: "Trust",
+      status: trustReady ? "Ready" : "Fix",
+      statusClass: trustReady ? "ready" : "gap"
+    },
+    {
+      label: "Revenue gate",
+      detail: renewalReady ? "No modeled renewal leakage is blocking new listing sales." : `Protect USD ${renewalRiskArr.toLocaleString()} modeled renewal exposure before pushing expansion.`,
+      owner: "Revenue",
+      status: renewalReady ? "Ready" : "Save",
+      statusClass: renewalReady ? "ready" : "review"
+    },
+    {
+      label: "Response gate",
+      detail: responseReady ? "Supplier response and lead quality are good enough for direct routing." : "Supplier response proof should improve before Heavyster promises faster buyer outcomes.",
+      owner: "Success",
+      status: responseReady ? "Ready" : "Watch",
+      statusClass: responseReady ? "ready" : "review"
+    },
+    {
+      label: "No-commission gate",
+      detail: "Phase one remains clean: listing SaaS revenue first, rental payment direct, booking fee only after workflow proof.",
+      owner: "Founder",
+      status: "Locked",
+      statusClass: "ready"
+    },
+    {
+      label: "Market proof gate",
+      detail: market?.demandCount ? `${market.demandCount} demand signal${market.demandCount === 1 ? "" : "s"} support this ledger.` : "Keep capturing demand until the market ledger has enough buyer language.",
+      owner: "Growth",
+      status: market?.demandCount >= 3 ? "Ready" : "Collect",
+      statusClass: market?.demandCount >= 3 ? "ready" : "review"
+    }
+  ];
+}
+
+function getTrustLedgerMarketLabel(market) {
+  if (!market) return "Selected market";
+  return market.title || `${market.region} ${market.category}`;
+}
+
 
 function renderPricingCalculator() {
   const monthly = state.listingCount * 9;
@@ -6928,6 +7400,28 @@ function buildListingActivationText(model = getListingActivationModel()) {
     `${active.region} ${active.category.toLowerCase()} can start with ${model.recommendedPackage.listings} active paid listings, verified proof, availability, and direct enquiry routing. Customers still pay the rental company directly, and Heavyster does not collect rental payment in phase one.`,
     "Phase one rule:",
     "Activate paid listings before booking rails."
+  ].join("\n");
+}
+
+function buildTrustLedgerText(model = getTrustRevenueLedgerModel()) {
+  if (!model.active) return "Heavyster Trust & Revenue Ledger\nNo trust ledger is ready yet.";
+
+  return [
+    "Heavyster Trust & Revenue Ledger",
+    `Market: ${model.marketLabel}`,
+    `Ledger status: ${model.badge} - ${model.score}/100`,
+    `Active listing ARR: USD ${model.activeListingArr.toLocaleString()}`,
+    `Next package ARR: USD ${model.nextPackageArr.toLocaleString()}`,
+    `Direct enquiry pipeline: USD ${model.directPipeline.toLocaleString()}`,
+    `Trust debt: ${model.trustDebt} gap${model.trustDebt === 1 ? "" : "s"}`,
+    "Market ledger:",
+    ...model.rows.map((row) => `- ${row.status}: ${row.label}, ${row.value}. ${row.detail}`),
+    "Control gates:",
+    ...model.controls.map((control) => `- ${control.status}: ${control.owner} owns ${control.label}. ${control.detail}`),
+    "Founder decision:",
+    `${model.marketLabel} should scale only when paid listing activation, trust proof, supplier response, and renewal protection are clean. Heavyster keeps rental payment direct in phase one and uses the ledger to protect listing SaaS revenue before any booking rails.`,
+    "Phase one rule:",
+    "Grow listing ARR only as fast as trust can support."
   ].join("\n");
 }
 

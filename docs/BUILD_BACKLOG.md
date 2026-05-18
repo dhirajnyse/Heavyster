@@ -5,6 +5,7 @@
 - Landing page with clear phase-one thesis
 - Marketplace search prototype
 - Command Center role workspaces for buyer, supplier, and founder workflow navigation
+- Universal Command Palette for fast navigation across equipment, suppliers, markets, pricing, and workflow modules
 - Supplier Studio 2.0 workspace with supplier-specific fleet, readiness, gaps, and revenue preview
 - Supplier Lead Desk with direct enquiry scoring, response urgency, and copy-ready replies
 - 3D logo and brand system
@@ -39,6 +40,7 @@
 - Proof of Demand Room with evidence chain, supplier objections, ROI proof, and copy-ready sales pack
 - Supplier Commitment Room with starter, anchor, and annual listing packages plus go-live gates
 - Listing Activation Room with paid listing shells, activation queue, billing gates, publish readiness, and copy-ready go-live plan
+- Trust & Revenue Ledger with listing ARR, direct pipeline, trust debt, renewal exposure, control gates, and founder brief
 
 ## Sprint 2: Repository Foundation
 
@@ -91,7 +93,9 @@
 - Proof of Demand Room connected to Demand Exchange so outreach is backed by buyer signals, shortage proof, trust proof, and no-commission economics
 - Supplier Commitment Room connected to Proof of Demand so founders can close listing packages from evidence instead of discounts
 - Listing Activation Room connected to Supplier Commitment so accepted packages become live paid listings before any rental commission workflow exists
+- Trust & Revenue Ledger connected to Listing Activation, Liquidity Flywheel, Supplier Success, and Revenue Desk so founders know when to scale or repair trust
 - Command Center role launcher so large-feature UX stays simple as the marketplace grows
+- Universal Command Palette connected to listings, suppliers, market opportunities, and workflow modules so power does not make the interface feel heavy
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form
@@ -123,6 +127,8 @@
 - Proof of Demand history that tracks which evidence and objection answers convert suppliers into paid listings
 - Supplier Commitment history that tracks package acceptance, go-live gate completion, and ARR closed from proof rooms
 - Listing Activation history that tracks activation queue completion, billing plan selection, launch gate readiness, and first live paid listing date
+- Trust & Revenue Ledger history that tracks scale decisions, trust debt, renewal exposure, and ARR protected before traffic increases
+- Command Palette analytics that track what users search for, which modules they open, and where navigation friction remains
 - Launch supplier invite list
 - Demand-led supplier recruitment queue
 - Market expansion scoring board

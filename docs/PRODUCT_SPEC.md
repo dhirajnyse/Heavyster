@@ -36,6 +36,7 @@ Marketplace:
 
 - Search by equipment, region, category, availability
 - Command Center that turns the growing product into role workspaces for buyer decision flow, supplier revenue flow, and founder growth flow
+- Universal Command Palette that lets users jump to equipment, suppliers, markets, pricing, activation, and workflow modules from one search surface
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Smart Match Rescue on the hero search when exact supply is unavailable
@@ -63,6 +64,7 @@ Marketplace:
 - Proof of Demand Room that turns a supplier objection into buyer demand proof, shortage proof, trust proof, ROI proof, and copy-ready pitch copy
 - Supplier Commitment Room that turns proof into a recommended paid listing package, go-live gates, and copy-ready close note
 - Listing Activation Room that turns a supplier commitment into paid listing shells, activation queue, billing gates, publish readiness, and copy-ready go-live plan
+- Trust & Revenue Ledger that combines listing ARR, direct enquiry pipeline, trust debt, renewal exposure, and market scale gates
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -111,6 +113,7 @@ Founder Admin:
 - Proof of Demand Room for giving sales teams a demand-backed supplier pitch before asking for paid listings
 - Supplier Commitment Room for closing the right listing package without introducing rental commission
 - Listing Activation Room for moving accepted listing packages into paid listings, billing readiness, proof gates, and direct enquiry routes
+- Trust & Revenue Ledger for deciding whether a market can scale, needs trust repair, or should protect renewal revenue first
 - Launch health metrics
 - Category inventory planning
 
@@ -183,8 +186,12 @@ Founder Admin:
 - Recommended paid listing packages accepted
 - Listing Activation plans copied
 - Paid listing activation gates completed
+- Trust & Revenue Ledger briefs copied
+- Trust debt reduced before traffic scaling
 - Supplier response time
 - Command Center module launches
 - Command Center role switches
+- Universal Command Palette searches
+- Universal Command Palette result launches
 - Listing renewal rate
 - Enquiries per active listing

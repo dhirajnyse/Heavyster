@@ -285,6 +285,23 @@ Use this when Heavyster needs one simple control layer across buyer, supplier, a
 - created_at
 - updated_at
 
+## UniversalCommandPaletteEvent
+
+Use this when Heavyster needs to understand how users find equipment, suppliers, markets, and workflow modules.
+
+- id
+- user_id
+- query_text
+- result_count
+- selected_result_type: equipment, supplier, market, buyer_workflow, supplier_workflow, founder_workflow, action
+- selected_result_label
+- selected_anchor
+- selected_listing_id
+- selected_supplier_id
+- selected_market_opportunity_id
+- launched_at
+- created_at
+
 ## EquipmentListing
 
 - id
@@ -898,6 +915,57 @@ Use this to protect billing, proof, availability, launch review, and direct enqu
 
 - id
 - listing_activation_room_id
+- gate_label
+- gate_detail
+- owner_role
+- gate_status
+- status_class: ready, review, gap
+- completed_at
+- created_at
+- updated_at
+
+## TrustRevenueLedger
+
+Use this when founders need one control layer for listing ARR, direct enquiry pipeline, trust debt, renewal exposure, and scale decisions.
+
+- id
+- market_opportunity_id
+- listing_activation_room_id
+- liquidity_flywheel_id
+- supplier_success_queue_id
+- ledger_score
+- ledger_status: scale_ready, protect_growth, fix_trust_debt
+- active_listing_arr
+- next_package_arr
+- direct_enquiry_pipeline_value
+- trust_debt_count
+- renewal_exposure_arr
+- ready_control_count
+- ledger_brief_copy
+- copied_at
+- created_at
+- updated_at
+
+## TrustRevenueLedgerRow
+
+Use this to show each market-level revenue, trust, response, and renewal signal.
+
+- id
+- trust_revenue_ledger_id
+- row_label
+- row_detail
+- row_value
+- row_status
+- status_class: ready, review, gap
+- created_at
+- updated_at
+
+## TrustRevenueControlGate
+
+Use this to decide whether a market can scale, should hold, or needs trust repair before more traffic.
+
+- id
+- trust_revenue_ledger_id
 - gate_label
 - gate_detail
 - owner_role
