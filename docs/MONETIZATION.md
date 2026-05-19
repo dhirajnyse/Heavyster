@@ -15,8 +15,16 @@ Recommended launch pricing:
 - No rental commission
 - Customer pays rental company directly
 - Heavyster provides equipment pages, supplier profiles, documents, availability, search visibility, and direct enquiries
+- Founder Workbench protects monetization discipline by showing when a market is ready to scale paid listings and when trust, response, or activation must be repaired first
+- Founder Morning Brief makes phase-one discipline part of the founder's first daily read: protect paid listings, supplier saves, trust, and activation before opening new traffic
+- Founder Daily Moves keeps daily founder work tied to paid listings, supplier saves, activation, and trust repair before any rental payment workflow is introduced
+- Founder Supplier Call Sheet converts proof and package math into supplier conversations that sell paid listings without touching rental payments
+- Buyer Workbench makes the no-commission model feel premium by organizing the renter decision path without taking the rental payment
+- Direct Deal Trail lets Heavyster prove enquiry, quote, award, supplier response, and mobilization value while keeping the buyer-supplier payment direct
+- Supplier Workbench makes the listing subscription feel like an operating desk by showing each rental yard the exact revenue, proof, lead, import, and freshness step to fix next
 - Command Center role workspaces make the product easier to demo, sell, and expand without confusing suppliers with too many separate tools
 - Universal Command Palette keeps the product fast as modules grow, which helps suppliers and founders reach revenue workflows without training overhead
+- Grouped workflow navigation reduces training and support friction as the product grows from listing SaaS into buyer, supplier, and founder operating rooms
 
 This is deliberately easy to understand. A supplier with 10 machines pays USD 90/month or USD 990/year. That is low enough for independent rental yards and still creates clean recurring revenue.
 
@@ -29,20 +37,28 @@ Add these only after basic supplier onboarding works:
 - Trust Passport and proof stack on each active listing
 - Smart Match Rescue that converts missing supply into supplier acquisition signals
 - Jobsite package planning for buyers with multi-machine needs
+- Buyer Workbench for serious renters who need one clean path from search to proof, RFQ, award, quote clarity, and mobilization
 - RFQ routing and quote packet tools for serious buyers
 - Award memo and decision support tools for serious buyers
 - Quote Guard for high-value buyers who need complete supplier terms before dispatch
 - Mobilization handoff tools for serious buyers and verified suppliers
+- Direct Deal Trail for serious buyers and founders who need no-commission booking proof before any future success-fee conversation
 - Yard Availability OS for suppliers who want cleaner enquiry conversion
 - Supplier Fleet Storefronts that make the listing subscription feel like a real SaaS storefront
 - Fleet Import Console that helps a supplier convert an offline yard sheet into many paid listings faster
 - Proof Vault that protects verified listing value by keeping documents and inspection proof buyer-ready
 - Listing Revenue Desk that makes renewals, annual upsell, paused inventory, and phase-one ARR visible without collecting rental money
+- Supplier Workbench that connects the supplier's profile, storefront, import queue, proof, revenue, leads, account health, and yard freshness into one paid-listing command path
 - Supplier Studio readiness and revenue previews that show the supplier why more paid listings matter
 - Supplier Lead Desk that proves paid listings create actionable direct enquiries
 - Supplier Account Health Radar that helps save renewals, prove lead ROI, and surface expansion ARR before suppliers churn
 - Supplier Success Daily Queue that tells the founder which supplier action protects or grows listing SaaS revenue today
+- Founder Workbench that turns many founder rooms into one scale decision path, so growth work stays tied to paid listing revenue and verified direct enquiries
+- Founder Morning Brief that keeps the first daily founder decision tied to ARR at stake, direct-payment discipline, and the highest-risk market signal
+- Founder Daily Moves that turns market, supplier, activation, ledger, and matrix signals into one daily operating queue with ARR at stake
+- Founder Supplier Call Sheet that packages demand proof, trust asks, and listing offers into call-ready supplier close scripts
 - Command Center supplier workspace that helps a supplier understand the full paid-listing workspace quickly
+- Grouped workflow menu that makes paid supplier tools discoverable without making the product feel complicated
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region
@@ -50,7 +66,7 @@ Add these only after basic supplier onboarding works:
 - Market Maker Mode for deciding which category pages can create listing revenue fastest
 - Market Page Factory that turns demand gaps into SEO pages with supplier targets, proof gates, and phase-one listing ARR targets
 - Market Launch Room that converts publishable pages into supplier invites, proof completion, safe enquiry routing, and first-week listing ARR targets
-- Market Twin that shows which launch intensity can create listing ARR without weakening trust or touching rental payments
+- Market Twin that shows which launch intensity can create listing ARR without weakening trust or touching rental payments, plus a launch verdict that keeps traffic and monetization disciplined
 - Liquidity Flywheel that tells the founder which loop must improve before listing revenue can compound
 - Founder Autopilot that turns each bottleneck into owner-assigned work with visible ARR impact before the team spends more effort
 - Demand Exchange that lets suppliers see demand-backed listing opportunities before paying for active listings
@@ -58,6 +74,7 @@ Add these only after basic supplier onboarding works:
 - Supplier Commitment Room that converts proof into starter, market anchor, or annual listing packages with visible SaaS ARR
 - Listing Activation Room that moves accepted packages into live paid listings with billing gates, proof checks, and direct enquiry routes
 - Trust & Revenue Ledger that protects listing ARR by exposing trust debt, renewal exposure, direct enquiry pipeline, and scale gates
+- Market Signal Matrix that shows where region/category demand, supply gaps, proof strength, and listing ARR justify the next paid-listing push
 - WhatsApp/email enquiry routing
 - CSV import for larger fleets
 
@@ -66,7 +83,8 @@ Add these only after basic supplier onboarding works:
 Recommended model:
 
 - Optional 1% success fee on confirmed rental bookings
-- Charge it only when Heavyster provides proof of booking value, such as quote acceptance, booking trail, deposit/payment workflow, or signed confirmation
+- Charge it only when Heavyster provides proof of booking value, such as a Direct Deal Trail, quote acceptance, booking trail, deposit/payment workflow, or signed confirmation
+- Keep the phase-one Direct Deal Trail at 0% take until quote clarity, award evidence, supplier response, and mobilization proof are strong enough to defend a fee
 - Consider a launch cap, such as USD 499 or USD 999 per booking, to reduce supplier fear on large rentals
 - Annual listing subscribers can receive a lower success fee, such as 0.75%
 

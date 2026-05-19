@@ -5,7 +5,18 @@
 - Landing page with clear phase-one thesis
 - Marketplace search prototype
 - Command Center role workspaces for buyer, supplier, and founder workflow navigation
+- Workflow Dock for switching buyer, supplier, and founder paths from one compact operating rail
+- Demo Flight Deck for opening the five-scene buyer, supplier, and founder walkthrough with a copy-ready script
+- Boardroom Snapshot for packaging wedge, ARR, pipeline, trust debt, and next founder move into a copy-ready investor memo
+- 30-Day Pilot Pack for turning the boardroom snapshot into supplier calls, listing activation, controlled enquiry routing, pilot gates, and month-end ARR review
+- Founder Workbench that scores demand, success, pages, launch, twin, flywheel, autopilot, exchange, proof, commitment, activation, and ledger in one founder scale path
+- Founder Morning Brief that summarizes supplier, trust, activation, launch, market, ARR, and direct-payment discipline before the day starts
+- Founder Daily Moves that turns the founder scale path into today's ranked queue with owners, due windows, ARR at stake, and guardrails
+- Founder Supplier Call Sheet that turns demand proof, supplier urgency, package math, and proof asks into close-ready supplier conversations
+- Buyer Workbench that scores search, package, proof, RFQ, award, quote, mobilization, and direct deal readiness in one renter-facing path
+- Supplier Workbench that scores Studio, Storefront, Import, Proof, Revenue, Leads, Health, and Yard Freshness in one supplier-facing revenue path
 - Universal Command Palette for fast navigation across equipment, suppliers, markets, pricing, and workflow modules
+- Grouped workflow navigation for buyer, supplier, and founder modules so the header can scale without visual crowding
 - Supplier Studio 2.0 workspace with supplier-specific fleet, readiness, gaps, and revenue preview
 - Supplier Lead Desk with direct enquiry scoring, response urgency, and copy-ready replies
 - 3D logo and brand system
@@ -21,6 +32,7 @@
 - Award Intelligence for supplier ranking and buyer award memos
 - Quote Guard for hidden cost detection and quote clarification packets
 - Mobilization Control Tower for dispatch readiness handoff
+- Direct Deal Trail for no-commission booking proof and future success-fee discipline
 - Yard Availability OS for stale listing detection and supplier refresh queues
 - Supplier Fleet Storefront for verified mini-sites and copy-ready supplier profile packets
 - Fleet Import Console for bulk supplier intake, validation gates, and listing revenue preview
@@ -33,7 +45,7 @@
 - Market Maker Mode with expansion scoring and launch page brief
 - Market Page Factory with launch/prepare/watch page queue, proof gates, supplier targets, and copy-ready page pack
 - Market Launch Room with seven-day sprint, supplier strike list, proof work, safe routing, and first-week listing ARR target
-- Market Twin with lean/balanced/aggressive simulations, demand coverage, trust risk, lead response, and listing ARR prediction
+- Market Twin with lean/balanced/aggressive simulations, demand coverage, trust risk, lead response, listing ARR prediction, and founder launch verdict gates
 - Liquidity Flywheel with demand-to-page, page-to-supply, supply-to-trust, trust-to-response, and response-to-revenue loop scoring
 - Founder Autopilot with owner-assigned weekly commands, ARR impact, and copy-ready operating brief
 - Demand Exchange with supplier-facing unmet demand tickets, proof asks, conversion lanes, and copy-ready listing invites
@@ -41,6 +53,7 @@
 - Supplier Commitment Room with starter, anchor, and annual listing packages plus go-live gates
 - Listing Activation Room with paid listing shells, activation queue, billing gates, publish readiness, and copy-ready go-live plan
 - Trust & Revenue Ledger with listing ARR, direct pipeline, trust debt, renewal exposure, control gates, and founder brief
+- Market Signal Matrix with region-by-category demand, visible supply, verified supply, proof, gap, ARR, and next action scoring
 
 ## Sprint 2: Repository Foundation
 
@@ -77,6 +90,9 @@
 - Mobilization handoff checklist after award
 - Supplier availability freshness board
 - Supplier profile page with fleet lanes, proof stack, and direct enquiry rules
+- Buyer Workbench connected to shortlist, Trust Passport, RFQ, Award, Quote Guard, Mobilization, and Direct Deal Trail so buyer flow does not fragment
+- Direct Deal Trail connected to Supplier Lead Desk, Award, Quote Guard, and Mobilization so Heavyster can prove workflow value before any rental commission is introduced
+- Supplier Workbench connected to Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Board so supplier flow does not fragment
 - Supplier Studio publishing controls connected to the buyer-facing storefront
 - Bulk fleet import queue with validation gates before paid listing publish
 - Proof Vault expiry radar before routing high-value buyer enquiries
@@ -84,9 +100,10 @@
 - Lead response desk connected to supplier listings and storefront proof
 - Supplier Account Health Radar connected to Revenue Desk, Proof Vault, Lead Desk, Yard Board, Storefront, and Fleet Import
 - Supplier Success Daily Queue connected to all supplier health radars so founders know who to call first
+- Founder Workbench connected to demand capture, supplier success, page factory, launch, market twin, liquidity flywheel, autopilot, demand exchange, proof, commitment, activation, and trust ledger so growth does not fragment
 - Market Page Factory connected to demand radar and Market Maker Mode so category pages launch only when supply, proof, and listing revenue are strong enough
 - Market Launch Room connected to Page Factory so launch-ready pages become supplier recruitment and proof execution work
-- Market Twin connected to Launch Room so founders can compare launch intensity before scaling supplier outreach
+- Market Twin connected to Launch Room so founders can compare launch intensity, launch verdict, and gate readiness before scaling supplier outreach
 - Liquidity Flywheel connected to Market Twin so founders see the weakest compounding loop before scaling traffic
 - Founder Autopilot connected to Liquidity Flywheel so founders can dispatch the next owner, deadline, and ARR-impact action
 - Demand Exchange connected to demand radar and market pages so suppliers can see why listing their fleet matters now
@@ -94,8 +111,13 @@
 - Supplier Commitment Room connected to Proof of Demand so founders can close listing packages from evidence instead of discounts
 - Listing Activation Room connected to Supplier Commitment so accepted packages become live paid listings before any rental commission workflow exists
 - Trust & Revenue Ledger connected to Listing Activation, Liquidity Flywheel, Supplier Success, and Revenue Desk so founders know when to scale or repair trust
+- Market Signal Matrix connected to demand radar, listings, category directory, Market Maker, Page Factory, and Founder Workbench so expansion decisions stay compact at high inventory volume
+- Founder Morning Brief connected to the daily queue, trust ledger, supplier success, market twin, activation room, and matrix so the founder starts with the right risk read
+- Founder Daily Moves connected to Supplier Success, Market Twin, Autopilot, Listing Activation, Trust Ledger, and Market Signal Matrix so the next founder action is obvious each morning
+- Founder Supplier Call Sheet connected to Supplier Success, Demand Exchange, Proof of Demand, Supplier Commitment, and Listing Activation so supplier outreach can close paid listings
 - Command Center role launcher so large-feature UX stays simple as the marketplace grows
 - Universal Command Palette connected to listings, suppliers, market opportunities, and workflow modules so power does not make the interface feel heavy
+- Workflow navigation telemetry connected to role, module, and active-section state so the team can see which rooms users actually use
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form
@@ -120,7 +142,7 @@
 - SEO pages for key categories and regions
 - Market Page Factory publishing workflow for demand-led category and region pages
 - Market Launch Room sprint history, supplier invite status, proof completion, and first-week ARR review
-- Market Twin history that compares predicted listing ARR, trust risk, and supplier response against actual launch results
+- Market Twin history that compares predicted listing ARR, launch verdict, trust risk, and supplier response against actual launch results
 - Liquidity Flywheel history that tracks bottleneck fixes and market compounding over time
 - Founder Autopilot history that tracks completed commands, owner velocity, and ARR unlocked from each bottleneck repair
 - Demand Exchange history that tracks supplier invite conversion, proof completion, and paid listings created from unmet demand
@@ -128,6 +150,9 @@
 - Supplier Commitment history that tracks package acceptance, go-live gate completion, and ARR closed from proof rooms
 - Listing Activation history that tracks activation queue completion, billing plan selection, launch gate readiness, and first live paid listing date
 - Trust & Revenue Ledger history that tracks scale decisions, trust debt, renewal exposure, and ARR protected before traffic increases
+- Founder Morning Brief history that tracks daily risk readouts, copied briefs, first action opened, and payment-discipline guardrail status
+- Founder Daily Moves history that tracks completed daily actions, skipped guardrails, ARR protected, and founder velocity by market
+- Founder Supplier Call Sheet history that tracks call scripts copied, suppliers opened, package offers, proof asks, and paid listing conversion
 - Command Palette analytics that track what users search for, which modules they open, and where navigation friction remains
 - Launch supplier invite list
 - Demand-led supplier recruitment queue

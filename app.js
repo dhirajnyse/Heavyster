@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260518-heavyster-trust-ledger-v37";
+const DATA_VERSION = "20260519-heavyster-pilot-pack-v51";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -420,22 +420,25 @@ const commandRoutes = [
   {
     role: "Buyer",
     label: "Buyer decision flow",
-    anchor: "#jobsite",
-    detail: "Move from equipment search to RFQ, award, quote clarity, and mobilization without losing control.",
+    anchor: "#buyer-workbench",
+    detail: "Move from equipment search to a controlled buyer workbench, RFQ, award, quote clarity, mobilization, and a direct deal trail without losing control.",
     steps: [
       { label: "Search", anchor: "#marketplace" },
+      { label: "Desk", anchor: "#buyer-workbench" },
       { label: "Jobsite", anchor: "#jobsite" },
       { label: "RFQ", anchor: "#rfq" },
       { label: "Award", anchor: "#award" },
-      { label: "Mobilize", anchor: "#mobilize" }
+      { label: "Mobilize", anchor: "#mobilize" },
+      { label: "Deal Trail", anchor: "#deal-trail" }
     ]
   },
   {
     role: "Supplier",
     label: "Supplier revenue flow",
-    anchor: "#studio",
-    detail: "Turn a rental yard into a verified storefront, fresh fleet board, and direct lead response desk.",
+    anchor: "#supplier-workbench",
+    detail: "Turn a rental yard into a verified storefront, fresh fleet board, direct lead response desk, and paid listing revenue path.",
     steps: [
+      { label: "Desk", anchor: "#supplier-workbench" },
       { label: "Storefront", anchor: "#storefront" },
       { label: "Import", anchor: "#fleet-import" },
       { label: "Proof", anchor: "#proof-vault" },
@@ -449,9 +452,13 @@ const commandRoutes = [
   {
     role: "Founder",
     label: "Founder growth flow",
-    anchor: "#growth",
-    detail: "Use missing demand to recruit suppliers, launch category pages, and keep phase-one monetization clean.",
+    anchor: "#founder-workbench",
+    detail: "Run one founder workbench that decides where to capture demand, repair trust, activate paid listings, and scale without touching rental payment.",
     steps: [
+      { label: "Desk", anchor: "#founder-workbench" },
+      { label: "Morning", anchor: "#founder-morning" },
+      { label: "Daily", anchor: "#founder-daily" },
+      { label: "Call Sheet", anchor: "#founder-call-sheet" },
       { label: "Demand", anchor: "#admin" },
       { label: "Success", anchor: "#supplier-success" },
       { label: "Pages", anchor: "#page-factory" },
@@ -464,6 +471,7 @@ const commandRoutes = [
       { label: "Commit", anchor: "#supplier-commitment" },
       { label: "Activate", anchor: "#listing-activation" },
       { label: "Ledger", anchor: "#trust-revenue-ledger" },
+      { label: "Matrix", anchor: "#market-signal-matrix" },
       { label: "Hunt", anchor: "#growth" },
       { label: "Market Map", anchor: "#market-maker" },
       { label: "Categories", anchor: "#categories" },
@@ -474,12 +482,15 @@ const commandRoutes = [
 
 const commandModules = [
   { role: "Buyer", label: "Marketplace", anchor: "#marketplace", signal: "Find equipment" },
+  { role: "Buyer", label: "Buyer Desk", anchor: "#buyer-workbench", signal: "Control path" },
   { role: "Buyer", label: "Jobsite", anchor: "#jobsite", signal: "Build package" },
   { role: "Buyer", label: "Trust Passport", anchor: "#passport", signal: "Check proof" },
   { role: "Buyer", label: "RFQ Room", anchor: "#rfq", signal: "Ask suppliers" },
   { role: "Buyer", label: "Award Room", anchor: "#award", signal: "Choose supplier" },
   { role: "Buyer", label: "Quote Guard", anchor: "#quote-guard", signal: "Clean terms" },
   { role: "Buyer", label: "Mobilize", anchor: "#mobilize", signal: "Dispatch gate" },
+  { role: "Buyer", label: "Deal Trail", anchor: "#deal-trail", signal: "Prove workflow" },
+  { role: "Supplier", label: "Supplier Desk", anchor: "#supplier-workbench", signal: "Control revenue" },
   { role: "Supplier", label: "Storefront", anchor: "#storefront", signal: "Public profile" },
   { role: "Supplier", label: "Fleet Import", anchor: "#fleet-import", signal: "Bulk upload" },
   { role: "Supplier", label: "Proof Vault", anchor: "#proof-vault", signal: "Verify docs" },
@@ -489,6 +500,10 @@ const commandModules = [
   { role: "Supplier", label: "Lead Desk", anchor: "#lead-desk", signal: "Reply faster" },
   { role: "Supplier", label: "Yard Board", anchor: "#yard", signal: "Fresh stock" },
   { role: "Supplier", label: "Pricing", anchor: "#pricing", signal: "Listing revenue" },
+  { role: "Founder", label: "Founder Desk", anchor: "#founder-workbench", signal: "Scale control" },
+  { role: "Founder", label: "Morning Brief", anchor: "#founder-morning", signal: "Start day" },
+  { role: "Founder", label: "Daily Moves", anchor: "#founder-daily", signal: "Work today" },
+  { role: "Founder", label: "Supplier Call Sheet", anchor: "#founder-call-sheet", signal: "Close supply" },
   { role: "Founder", label: "Admin", anchor: "#admin", signal: "Verify supply" },
   { role: "Founder", label: "Success Queue", anchor: "#supplier-success", signal: "Call first" },
   { role: "Founder", label: "Page Factory", anchor: "#page-factory", signal: "Publish pages" },
@@ -501,6 +516,7 @@ const commandModules = [
   { role: "Founder", label: "Supplier Commitment", anchor: "#supplier-commitment", signal: "Close listing" },
   { role: "Founder", label: "Listing Activation", anchor: "#listing-activation", signal: "Go live" },
   { role: "Founder", label: "Trust Ledger", anchor: "#trust-revenue-ledger", signal: "Protect revenue" },
+  { role: "Founder", label: "Market Matrix", anchor: "#market-signal-matrix", signal: "Scan wedges" },
   { role: "Founder", label: "Growth", anchor: "#growth", signal: "Recruit supply" },
   { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" },
   { role: "Founder", label: "Categories", anchor: "#categories", signal: "Plan inventory" },
@@ -837,7 +853,16 @@ document.addEventListener("DOMContentLoaded", () => {
   bindControls();
   render();
   stabilizeHashScroll();
-  window.addEventListener("hashchange", () => stabilizeHashScroll());
+  syncNavigationState();
+  window.addEventListener("hashchange", () => {
+    stabilizeHashScroll();
+    syncNavigationState();
+    renderWorkflowDock();
+    renderDemoFlightDeck();
+    renderBoardroomSnapshot();
+    renderPilotPack();
+    closeWorkflowMenu();
+  });
 });
 
 function defaultState() {
@@ -878,6 +903,7 @@ function defaultState() {
     demandSignals: seedDemandSignals.map((signal) => ({ ...signal })),
     activeDemandKey: "",
     activeMarketKey: "",
+    activeMatrixKey: "",
     marketTwinScenario: "balanced",
     commandRole: "Buyer",
     supplierView: false,
@@ -895,6 +921,7 @@ function loadState() {
     if (!commandRoles.includes(merged.commandRole)) merged.commandRole = base.commandRole;
     if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
     if (!merged.activeMarketKey) merged.activeMarketKey = getMarketKeyFromSignal(merged.demandSignals[0]);
+    if (!merged.activeMatrixKey) merged.activeMatrixKey = merged.activeMarketKey;
     return merged;
   } catch {
     return defaultState();
@@ -982,6 +1009,8 @@ function bindControls() {
     renderAwardRoom();
     renderQuoteGuard();
     renderMobilizationTower();
+    renderDealTrail();
+    renderBuyerWorkbench();
   });
 
   listingCount.addEventListener("input", (event) => {
@@ -1104,12 +1133,30 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyBuyerWorkbenchButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBuyerWorkbenchText());
+      showToast("Buyer workbench brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the buyer brief is visible.");
+    }
+  });
+
   document.querySelector("#copyMobilizeButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildMobilizationText());
       showToast("Mobilization handoff copied.");
     } catch {
       showToast("Copy is blocked here, but the mobilization handoff is visible.");
+    }
+  });
+
+  document.querySelector("#copyDealTrailButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildDealTrailText());
+      showToast("Direct deal trail copied.");
+    } catch {
+      showToast("Copy is blocked here, but the direct deal trail is visible.");
     }
   });
 
@@ -1128,6 +1175,78 @@ function bindControls() {
       showToast("Supplier storefront packet copied.");
     } catch {
       showToast("Copy is blocked here, but the storefront packet is visible.");
+    }
+  });
+
+  document.querySelector("#copySupplierWorkbenchButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierWorkbenchText());
+      showToast("Supplier workbench brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyFounderWorkbenchButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildFounderWorkbenchText());
+      showToast("Founder workbench brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the founder brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyFounderMorningButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildFounderMorningBriefText());
+      showToast("Founder morning brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the morning brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyFounderDailyButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildFounderDailyMovesText());
+      showToast("Founder daily moves copied.");
+    } catch {
+      showToast("Copy is blocked here, but the daily moves are visible.");
+    }
+  });
+
+  document.querySelector("#copyFounderCallSheetButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildFounderCallSheetText());
+      showToast("Founder supplier call sheet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier call sheet is visible.");
+    }
+  });
+
+  document.querySelector("#copyDemoFlightButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildDemoFlightDeckText());
+      showToast("Demo flight script copied.");
+    } catch {
+      showToast("Copy is blocked here, but the demo script is visible.");
+    }
+  });
+
+  document.querySelector("#copyBoardroomButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBoardroomSnapshotText());
+      showToast("Boardroom memo copied.");
+    } catch {
+      showToast("Copy is blocked here, but the boardroom memo is visible.");
+    }
+  });
+
+  document.querySelector("#copyPilotPackButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildPilotPackText());
+      showToast("30-day pilot pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the pilot pack is visible.");
     }
   });
 
@@ -1284,6 +1403,7 @@ function bindControls() {
   document.querySelector("#applyJobsiteButton").addEventListener("click", () => {
     renderJobsitePlanner();
     renderMobilizationTower();
+    renderDealTrail();
     document.querySelector("#jobsite").scrollIntoView({ behavior: "smooth", block: "start" });
     showToast("Jobsite package refreshed.");
   });
@@ -1320,6 +1440,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyMarketMatrixButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildMarketSignalMatrixText());
+      showToast("Market matrix brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the matrix brief is visible.");
+    }
+  });
+
   document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
     toggleShortlist(getSelectedListing().id);
   });
@@ -1331,8 +1460,18 @@ function bindControls() {
   });
 
   document.querySelector("#quickSearchButton").addEventListener("click", () => openCommandPalette());
+  document.querySelector("#workflowDockSearchButton").addEventListener("click", () => openCommandPalette());
   document.querySelector("#commandPaletteCloseButton").addEventListener("click", () => closeCommandPalette());
   document.querySelector("#commandPaletteBackdrop").addEventListener("click", () => closeCommandPalette());
+  const workflowMenu = document.querySelector("#workflowMenu");
+  if (workflowMenu) {
+    workflowMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => closeWorkflowMenu());
+    });
+    document.addEventListener("click", (event) => {
+      if (workflowMenu.open && !workflowMenu.contains(event.target)) closeWorkflowMenu();
+    });
+  }
   commandPaletteInput.addEventListener("input", (event) => renderCommandPalette(event.target.value));
   commandPaletteInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
@@ -1346,6 +1485,7 @@ function bindControls() {
     const isTyping = target && ["INPUT", "SELECT", "TEXTAREA"].includes(target.tagName);
     if (event.key === "Escape") {
       closeCommandPalette();
+      closeWorkflowMenu();
       return;
     }
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -1403,6 +1543,8 @@ function updateJobsiteState() {
   renderJobsitePlanner();
   renderQuoteGuard();
   renderMobilizationTower();
+  renderDealTrail();
+  renderBuyerWorkbench();
 }
 
 function updateQuoteGuardState() {
@@ -1414,6 +1556,8 @@ function updateQuoteGuardState() {
   saveState();
   renderQuoteGuard();
   renderMobilizationTower();
+  renderDealTrail();
+  renderBuyerWorkbench();
 }
 
 function updateDemandState() {
@@ -1428,6 +1572,14 @@ function render() {
   reconcileSelectedListing();
   reconcileShortlist();
   renderCommandCenter();
+  renderWorkflowDock();
+  renderDemoFlightDeck();
+  renderBoardroomSnapshot();
+  renderPilotPack();
+  renderFounderWorkbench();
+  renderFounderMorningBrief();
+  renderFounderDailyMoves();
+  renderFounderCallSheet();
   renderCategoryButtons();
   renderMarketplaceStats();
   renderCatalog();
@@ -1441,8 +1593,11 @@ function render() {
   renderAwardRoom();
   renderQuoteGuard();
   renderMobilizationTower();
+  renderDealTrail();
+  renderBuyerWorkbench();
   renderYardAvailability();
   renderSupplierStorefront();
+  renderSupplierWorkbench();
   renderFleetImport();
   renderProofVault();
   renderRevenueDesk();
@@ -1467,10 +1622,12 @@ function render() {
   renderCategoryDirectory();
   renderAdminBoard();
   renderSupplierHunt();
+  renderMarketSignalMatrix();
   renderMarketMaker();
   renderPricingCalculator();
   renderCommissionCalculator();
   document.body.classList.toggle("supplier-view", state.supplierView);
+  syncNavigationState();
 }
 
 function stabilizeHashScroll() {
@@ -1485,6 +1642,666 @@ function stabilizeHashScroll() {
       target.scrollIntoView({ behavior: "auto", block: "start" });
     }, 80);
   });
+}
+
+function closeWorkflowMenu() {
+  const menu = document.querySelector("#workflowMenu");
+  if (menu) menu.open = false;
+}
+
+function syncNavigationState() {
+  const activeAnchor = window.location.hash || "#marketplace";
+  const links = [...document.querySelectorAll("[data-nav-target]")];
+  links.forEach((link) => {
+    const target = link.dataset.navTarget || link.getAttribute("href");
+    link.classList.toggle("is-active", target === activeAnchor);
+  });
+
+  const workflowMenu = document.querySelector("#workflowMenu");
+  if (workflowMenu) {
+    const hasActive = [...workflowMenu.querySelectorAll("[data-nav-target]")]
+      .some((link) => link.classList.contains("is-active"));
+    workflowMenu.classList.toggle("has-active", hasActive);
+  }
+}
+
+function renderWorkflowDock() {
+  const root = document.querySelector("#workflowDock");
+  const tabsRoot = document.querySelector("#workflowDockTabs");
+  const pathRoot = document.querySelector("#workflowDockPath");
+  if (!root || !tabsRoot || !pathRoot) return;
+
+  const model = getWorkflowDockModel();
+  root.dataset.activeRole = model.activeRole.toLowerCase();
+  setText("#workflowDockSignal", model.signal);
+
+  tabsRoot.innerHTML = model.roles.map((role) => `
+    <button type="button" class="${role.isActive ? "is-active" : ""}" data-workflow-role="${escapeHtml(role.role)}" aria-pressed="${role.isActive ? "true" : "false"}">
+      <span>${escapeHtml(role.role)}</span>
+      <b>${escapeHtml(role.score)}</b>
+    </button>
+  `).join("");
+
+  pathRoot.innerHTML = model.steps.map((step) => `
+    <button type="button" class="workflow-dock-step ${step.isActive ? "is-active" : ""}" data-workflow-anchor="${escapeHtml(step.anchor)}" data-workflow-label="${escapeHtml(step.label)}">
+      <em>${String(step.index + 1).padStart(2, "0")}</em>
+      <strong>${escapeHtml(step.label)}</strong>
+    </button>
+  `).join("");
+
+  tabsRoot.querySelectorAll("[data-workflow-role]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.commandRole = button.dataset.workflowRole;
+      saveState();
+      renderCommandCenter();
+      renderWorkflowDock();
+      showToast(`${state.commandRole} workflow dock active.`);
+    });
+  });
+
+  pathRoot.querySelectorAll("[data-workflow-anchor]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.workflowAnchor);
+      if (!target) return;
+      state.commandRole = model.activeRole;
+      saveState();
+      renderCommandCenter();
+      renderWorkflowDock();
+      closeWorkflowMenu();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.workflowAnchor;
+      showToast(`${button.dataset.workflowLabel || "Workflow step"} opened.`);
+    });
+  });
+}
+
+function getWorkflowDockModel() {
+  const command = getCommandCenterModel();
+  const activeRole = command.activeRole;
+  const activeHash = window.location.hash || "#marketplace";
+  const route = commandRoutes.find((item) => item.role === activeRole) || commandRoutes[0];
+  const steps = getWorkflowDockSteps(route, activeHash).map((step, index) => ({
+    ...step,
+    index,
+    isActive: step.anchor === activeHash
+  }));
+  const activeStep = steps.find((step) => step.isActive);
+
+  return {
+    activeRole,
+    roles: command.routes.map((routeItem) => ({
+      role: routeItem.role,
+      score: routeItem.score,
+      isActive: routeItem.role === activeRole
+    })),
+    steps,
+    signal: activeStep
+      ? `${activeRole} path: ${activeStep.label} is open. ${command.workspace.next}`
+      : `${activeRole} path: ${command.workspace.title} - ${command.workspace.score}`
+  };
+}
+
+function getWorkflowDockSteps(route, activeHash) {
+  if (!route) return [];
+
+  const priorityByRole = {
+    Buyer: ["Search", "Desk", "Jobsite", "RFQ", "Award", "Mobilize", "Deal Trail"],
+    Supplier: ["Desk", "Storefront", "Import", "Proof", "Revenue", "Health", "Studio", "Lead Desk", "Yard"],
+    Founder: ["Desk", "Morning", "Daily", "Call Sheet", "Success", "Launch", "Twin", "Flywheel", "Autopilot", "Exchange", "Proof Room", "Commit", "Activate", "Ledger", "Matrix", "Growth"]
+  };
+  const priority = priorityByRole[route.role] || route.steps.map((step) => step.label);
+  const chosen = route.steps.filter((step) => priority.includes(step.label));
+  const active = route.steps.find((step) => step.anchor === activeHash);
+
+  if (active && !chosen.some((step) => step.anchor === active.anchor)) {
+    return [...chosen.slice(0, 3), active, ...chosen.slice(3)];
+  }
+
+  return chosen;
+}
+
+function renderDemoFlightDeck() {
+  const root = document.querySelector("#demoFlightScenes");
+  if (!root) return;
+
+  const model = getDemoFlightDeckModel();
+  setText("#demoFlightTitle", model.title);
+  setText("#demoFlightBadge", model.badge);
+
+  document.querySelector("#demoFlightScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#demoFlightMetrics").innerHTML = model.metrics.map((metric) => `
+    <span>
+      <strong>${escapeHtml(metric.value)}</strong>
+      ${escapeHtml(metric.label)}
+    </span>
+  `).join("");
+
+  root.innerHTML = model.scenes.map((scene, index) => `
+    <button type="button" class="demo-flight-scene ${scene.isActive ? "is-active" : ""}" data-demo-scene="${index}">
+      <em>${String(index + 1).padStart(2, "0")}</em>
+      <span>
+        <strong>${escapeHtml(scene.label)}</strong>
+        ${escapeHtml(scene.signal)}
+        <small>${escapeHtml(scene.outcome)}</small>
+      </span>
+      <b>${escapeHtml(scene.role)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#demoFlightScript").innerHTML = model.script.map((line, index) => `
+    <div class="demo-flight-script-line">
+      <strong>${index + 1}</strong>
+      <span>${escapeHtml(line)}</span>
+    </div>
+  `).join("");
+
+  root.querySelectorAll("[data-demo-scene]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const scene = model.scenes[Number(button.dataset.demoScene)];
+      if (!scene) return;
+      applyDemoFlightScene(scene);
+    });
+  });
+}
+
+function getDemoFlightDeckModel() {
+  const selected = getSelectedListing();
+  const filtered = getFilteredListings();
+  const rfq = getRfqModel();
+  const leadDesk = getLeadDeskModel();
+  const callSheet = getFounderCallSheetModel();
+  const ledger = getTrustRevenueLedgerModel();
+  const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
+  const activeHash = window.location.hash || "#marketplace";
+  const directPipeline = ledger.directPipeline || leadDesk.totalBudget || 0;
+  const score = Math.max(0, Math.min(100, Math.round(
+    72
+    + Math.min(10, demandCount)
+    + Math.min(8, rfq.listings.length * 2)
+    + Math.min(6, callSheet.cards.length)
+  )));
+  const scenes = getDemoFlightScenes({ selected, filtered, rfq, leadDesk, callSheet, ledger, activeHash });
+  const activeScene = scenes.find((scene) => scene.isActive) || scenes[0];
+  const badge = score >= 88 ? "Boardroom ready" : score >= 78 ? "Demo ready" : "Tighten story";
+
+  return {
+    title: "Five-move Heavyster demo",
+    badge,
+    score,
+    summary: `${activeScene.label} is the current proof point. The story stays simple: search demand, verified supply, direct enquiry, paid listing ARR, then disciplined scale.`,
+    metrics: [
+      { label: "guided scenes", value: String(scenes.length) },
+      { label: "roles covered", value: "3" },
+      { label: "direct pipeline", value: `USD ${directPipeline.toLocaleString()}` },
+      { label: "rental take", value: "0%" }
+    ],
+    scenes,
+    script: [
+      "Start with the marketplace: a buyer searches by machine, region, and availability.",
+      "When exact supply is missing, Heavyster captures demand instead of losing the buyer.",
+      "The buyer path turns the search into RFQ, proof, award, quote clarity, and mobilization.",
+      "The supplier path turns rental yards into verified storefronts and paid listings.",
+      "The founder path uses demand proof, call scripts, trust gates, and listing ARR to scale one market at a time."
+    ]
+  };
+}
+
+function getDemoFlightScenes(context) {
+  const callSupplier = context.callSheet.cards[0]?.supplier || "the first qualified supplier";
+  const marketLabel = context.ledger.marketLabel || "UAE Lifting";
+
+  return [
+    {
+      role: "Buyer",
+      label: "Marketplace rescue",
+      anchor: "#marketplace",
+      listingId: "HY-CR-014",
+      state: { search: "crane", region: "UAE", availability: "available", category: "all" },
+      signal: "Show a real buyer search and convert the zero-result moment into recoverable demand.",
+      outcome: "Buyer stays inside Heavyster instead of disappearing.",
+      isActive: context.activeHash === "#marketplace"
+    },
+    {
+      role: "Buyer",
+      label: "Buyer decision desk",
+      anchor: "#buyer-workbench",
+      listingId: context.rfq.listings[0]?.id || context.selected.id,
+      state: { search: "", region: "all", availability: "all", category: "all" },
+      signal: `${context.rfq.listings.length} machine${context.rfq.listings.length === 1 ? "" : "s"} can move through RFQ, award, quote, and mobilization.`,
+      outcome: "Rental payment remains direct while workflow proof is captured.",
+      isActive: context.activeHash === "#buyer-workbench"
+    },
+    {
+      role: "Supplier",
+      label: "Supplier revenue path",
+      anchor: "#supplier-workbench",
+      listingId: "HY-EX-001",
+      state: { search: "", region: "all", availability: "all", category: "all" },
+      signal: `${context.leadDesk.profile.supplier} sees leads, proof gaps, revenue, and freshness in one workspace.`,
+      outcome: "The supplier understands why a USD 99 annual listing is worth it.",
+      isActive: context.activeHash === "#supplier-workbench"
+    },
+    {
+      role: "Founder",
+      label: "Supplier close script",
+      anchor: "#founder-call-sheet",
+      listingId: context.callSheet.cards[0]?.listingId || "HY-CR-014",
+      state: { search: "", region: "all", availability: "all", category: "all" },
+      signal: `${callSupplier} is converted into a call-ready listing conversation.`,
+      outcome: "Demand proof becomes paid listing outreach without touching rental money.",
+      isActive: context.activeHash === "#founder-call-sheet"
+    },
+    {
+      role: "Founder",
+      label: "Scale gate",
+      anchor: "#trust-revenue-ledger",
+      listingId: "HY-CR-014",
+      state: { search: "", region: "all", availability: "all", category: "all" },
+      signal: `${marketLabel} is checked for ARR, trust debt, renewal exposure, and direct pipeline before scaling.`,
+      outcome: "The founder grows only where trust and listing revenue can support it.",
+      isActive: context.activeHash === "#trust-revenue-ledger"
+    }
+  ];
+}
+
+function applyDemoFlightScene(scene) {
+  state.commandRole = scene.role;
+  if (scene.listingId) state.selectedListingId = scene.listingId;
+  if (scene.state) Object.assign(state, scene.state);
+  if (scene.anchor === "#trust-revenue-ledger") {
+    state.activeMarketKey = state.activeMarketKey || getMarketKeyFromSignal(getDemandSignals()[0]);
+    state.activeMatrixKey = state.activeMarketKey;
+  }
+  window.location.hash = scene.anchor;
+  saveState();
+  render();
+  const target = document.querySelector(scene.anchor);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(`${scene.label} opened.`);
+}
+
+function renderBoardroomSnapshot() {
+  const root = document.querySelector("#boardroomThesis");
+  if (!root) return;
+
+  const model = getBoardroomSnapshotModel();
+  setText("#boardroomTitle", model.title);
+  setText("#boardroomBadge", model.badge);
+
+  document.querySelector("#boardroomScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#boardroomMetrics").innerHTML = model.metrics.map((metric) => `
+    <span>
+      <strong>${escapeHtml(metric.value)}</strong>
+      ${escapeHtml(metric.label)}
+    </span>
+  `).join("");
+
+  root.innerHTML = model.thesis.map((item, index) => `
+    <div class="boardroom-thesis-row">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(item.label)}
+        <small>${escapeHtml(item.detail)}</small>
+      </span>
+      <b>${escapeHtml(item.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#boardroomGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="boardroom-gate ${escapeHtml(gate.statusClass)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(gate.label)}
+        <small>${escapeHtml(gate.detail)}</small>
+      </span>
+      <b>${escapeHtml(gate.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#boardroomMemo").innerHTML = buildBoardroomSnapshotText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getBoardroomSnapshotModel() {
+  const demo = getDemoFlightDeckModel();
+  const market = getActiveMarketOpportunity();
+  const founder = getFounderWorkbenchModel();
+  const ledger = getTrustRevenueLedgerModel();
+  const callSheet = getFounderCallSheetModel();
+  const revenue = getRevenueDeskModel();
+  const success = getSupplierSuccessModel();
+  const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
+  const activeArr = ledger.activeListingArr || revenue.annualRevenue || 0;
+  const directPipeline = ledger.directPipeline || 0;
+  const nextPackageArr = ledger.nextPackageArr || callSheet.recommendedPackage.annualRevenue || 0;
+  const trustDebt = Number(ledger.trustDebt || 0);
+  const score = Math.max(0, Math.min(100, Math.round(
+    demo.score * 0.28
+    + founder.score * 0.28
+    + ledger.score * 0.24
+    + Math.min(12, demandCount)
+    + Math.min(8, callSheet.cards.length * 2)
+    - Math.min(10, trustDebt)
+  )));
+  const badge = score >= 84 ? "Investor ready" : score >= 68 ? "Proof story" : "Tighten proof";
+  const marketLabel = ledger.marketLabel || market.title || `${market.region} ${market.category}`;
+  const firstSupplier = callSheet.cards[0]?.supplier || success.callFirst?.profile?.supplier || "first anchor supplier";
+  const firstAsk = callSheet.cards[0]?.ask || "close the first paid listing package";
+  const summary = `${marketLabel} has USD ${activeArr.toLocaleString()} active listing ARR, USD ${directPipeline.toLocaleString()} direct enquiry pipeline, ${demandCount} demand signal${demandCount === 1 ? "" : "s"}, and ${trustDebt} trust gap${trustDebt === 1 ? "" : "s"} before scale.`;
+
+  return {
+    title: `${marketLabel} boardroom snapshot`,
+    badge,
+    score,
+    summary,
+    marketLabel,
+    firstSupplier,
+    firstAsk,
+    activeArr,
+    directPipeline,
+    nextPackageArr,
+    demandCount,
+    trustDebt,
+    metrics: [
+      { label: "active listing ARR", value: `USD ${activeArr.toLocaleString()}` },
+      { label: "direct pipeline", value: `USD ${directPipeline.toLocaleString()}` },
+      { label: "next package ARR", value: `USD ${nextPackageArr.toLocaleString()}` },
+      { label: "rental take", value: "0%" }
+    ],
+    thesis: [
+      {
+        label: "Wedge",
+        detail: `Start with ${marketLabel}, one narrow category page, and supplier listings that buyers can trust.`,
+        status: "Focused"
+      },
+      {
+        label: "Monetization",
+        detail: "Phase one charges USD 9 monthly or USD 99 yearly per active equipment listing, with rental payment kept direct.",
+        status: "Clean"
+      },
+      {
+        label: "Moat",
+        detail: "Verified inventory, documents, availability, response history, demand gaps, and supplier trust proof compound into a category ledger.",
+        status: "Data"
+      },
+      {
+        label: "Scale rule",
+        detail: "Open more supply only when trust, response, renewal protection, and paid listing activation can support the buyer demand.",
+        status: "Disciplined"
+      }
+    ],
+    gates: getBoardroomGates({ demo, founder, ledger, callSheet, success, demandCount, activeArr, directPipeline, nextPackageArr, trustDebt }),
+    nextMove: `Call ${firstSupplier}: ${firstAsk}`
+  };
+}
+
+function getBoardroomGates(context) {
+  return [
+    {
+      label: "Demo clarity",
+      detail: `${context.demo.scenes.length} guided scenes cover buyer, supplier, and founder workflows with a copy-ready story.`,
+      status: context.demo.score >= 84 ? "Ready" : "Tighten",
+      statusClass: context.demo.score >= 84 ? "ready" : "watch"
+    },
+    {
+      label: "Demand proof",
+      detail: `${context.demandCount} demand signal${context.demandCount === 1 ? "" : "s"} support the selected category wedge.`,
+      status: context.demandCount >= 6 ? "Strong" : "Build",
+      statusClass: context.demandCount >= 6 ? "ready" : "watch"
+    },
+    {
+      label: "Revenue proof",
+      detail: `USD ${context.activeArr.toLocaleString()} active listing ARR and USD ${context.nextPackageArr.toLocaleString()} next package ARR are modeled before any rental commission.`,
+      status: context.activeArr ? "Live" : "Model",
+      statusClass: context.activeArr ? "ready" : "watch"
+    },
+    {
+      label: "Trust debt",
+      detail: `${context.trustDebt} proof gap${context.trustDebt === 1 ? "" : "s"} should be reduced before pushing more buyer traffic.`,
+      status: context.trustDebt <= 4 ? "Manage" : "Fix",
+      statusClass: context.trustDebt <= 4 ? "ready" : "risk"
+    },
+    {
+      label: "Supplier close",
+      detail: `${context.callSheet.cards.length} supplier call card${context.callSheet.cards.length === 1 ? "" : "s"} are ready for demand-backed listing outreach.`,
+      status: context.callSheet.score >= 80 ? "Call" : "Prepare",
+      statusClass: context.callSheet.score >= 80 ? "ready" : "watch"
+    },
+    {
+      label: "Founder control",
+      detail: `Founder workbench score is ${context.founder.score}/100, keeping demand, trust, activation, and listing ARR in one operating loop.`,
+      status: context.founder.score >= 80 ? "Controlled" : "Watch",
+      statusClass: context.founder.score >= 80 ? "ready" : "watch"
+    }
+  ];
+}
+
+function renderPilotPack() {
+  const root = document.querySelector("#pilotPackWeeks");
+  if (!root) return;
+
+  const model = getPilotPackModel();
+  setText("#pilotPackTitle", model.title);
+  setText("#pilotPackBadge", model.badge);
+
+  document.querySelector("#pilotPackScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#pilotPackMetrics").innerHTML = model.metrics.map((metric) => `
+    <span>
+      <strong>${escapeHtml(metric.value)}</strong>
+      ${escapeHtml(metric.label)}
+    </span>
+  `).join("");
+
+  root.innerHTML = model.weeks.map((week) => `
+    <div class="pilot-pack-week ${escapeHtml(week.statusClass)}">
+      <strong>${escapeHtml(week.window)}</strong>
+      <span>
+        ${escapeHtml(week.label)}
+        <small>${escapeHtml(week.detail)}</small>
+      </span>
+      <em>${escapeHtml(week.owner)}</em>
+      <b>${escapeHtml(week.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#pilotPackGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="pilot-pack-gate ${escapeHtml(gate.statusClass)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(gate.label)}
+        <small>${escapeHtml(gate.detail)}</small>
+      </span>
+      <b>${escapeHtml(gate.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#pilotPackMemo").innerHTML = buildPilotPackText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+}
+
+function getPilotPackModel() {
+  const boardroom = getBoardroomSnapshotModel();
+  const launch = getLaunchRoomModel();
+  const twin = getMarketTwinModel();
+  const activation = getListingActivationModel();
+  const callSheet = getFounderCallSheetModel();
+  const success = getSupplierSuccessModel();
+  const market = getActiveMarketOpportunity();
+  const active = activation.active || launch.active || twin.active || market;
+  const marketLabel = boardroom.marketLabel || active.title || `${active.region} ${active.category}`;
+  const firstSupplier = boardroom.firstSupplier || callSheet.cards[0]?.supplier || success.callFirst?.profile?.supplier || "first anchor supplier";
+  const recommendedPackage = activation.recommendedPackage || callSheet.recommendedPackage || { label: "Starter proof package", listings: 3, monthlyRevenue: 27, annualRevenue: 297 };
+  const pilotArr = Math.max(boardroom.nextPackageArr, recommendedPackage.annualRevenue || 0, launch.firstWeekArr || 0);
+  const pilotListings = Math.max(recommendedPackage.listings || 0, twin.totalListings || 0, active.launchListings || 0);
+  const trustDebt = boardroom.trustDebt;
+  const readyGateCount = activation.readyGateCount || 0;
+  const launchScore = launch.score || 0;
+  const twinScore = twin.score || 0;
+  const activationScore = activation.activationScore || 0;
+  const score = Math.max(0, Math.min(100, Math.round(
+    boardroom.score * 0.3
+    + launchScore * 0.22
+    + twinScore * 0.2
+    + activationScore * 0.18
+    + Math.min(10, callSheet.cards.length * 2)
+  )));
+  const badge = score >= 84 ? "Pilot ready" : score >= 68 ? "30-day sprint" : "Prepare pilot";
+  const weeks = getPilotPackWeeks({
+    marketLabel,
+    firstSupplier,
+    recommendedPackage,
+    boardroom,
+    launch,
+    twin,
+    activation,
+    callSheet,
+    pilotArr,
+    pilotListings,
+    readyGateCount,
+    trustDebt
+  });
+  const gates = getPilotPackGates({
+    boardroom,
+    launch,
+    twin,
+    activation,
+    callSheet,
+    recommendedPackage,
+    trustDebt,
+    pilotArr,
+    pilotListings
+  });
+  const summary = `${marketLabel} pilot focuses on ${firstSupplier}, ${recommendedPackage.listings} paid listing${recommendedPackage.listings === 1 ? "" : "s"}, USD ${pilotArr.toLocaleString()} modeled listing ARR, and ${trustDebt} trust gap${trustDebt === 1 ? "" : "s"} to fix before heavier traffic.`;
+
+  return {
+    title: `${marketLabel} 30-day pilot`,
+    badge,
+    score,
+    summary,
+    marketLabel,
+    firstSupplier,
+    recommendedPackage,
+    pilotArr,
+    pilotListings,
+    trustDebt,
+    readyGateCount,
+    metrics: [
+      { label: "pilot listing ARR", value: `USD ${pilotArr.toLocaleString()}` },
+      { label: "target listings", value: String(pilotListings || recommendedPackage.listings) },
+      { label: "first supplier", value: firstSupplier },
+      { label: "rental take", value: "0%" }
+    ],
+    weeks,
+    gates,
+    nextMove: weeks.find((week) => week.statusClass !== "ready")?.label || weeks[0]?.label || "Start pilot"
+  };
+}
+
+function getPilotPackWeeks(context) {
+  const launchReady = context.launch.score >= 68;
+  const activationReady = context.activation.activationScore >= 68;
+  const twinVerdict = context.twin.verdict?.label || "Build proof first";
+  const callCount = context.callSheet.cards.length;
+
+  return [
+    {
+      window: "Days 1-7",
+      label: "Close the anchor supplier",
+      detail: `Call ${context.firstSupplier}, show demand proof, and offer ${context.recommendedPackage.label} for ${context.recommendedPackage.listings} listing${context.recommendedPackage.listings === 1 ? "" : "s"}.`,
+      owner: "Founder",
+      status: callCount ? "Call" : "Prep",
+      statusClass: callCount ? "ready" : "watch"
+    },
+    {
+      window: "Days 8-14",
+      label: "Publish verified listing shells",
+      detail: `${context.marketLabel} needs photos, specs, availability, and direct lead routes before buyer traffic is trusted.`,
+      owner: "Supplier",
+      status: activationReady ? "Publish" : "Sprint",
+      statusClass: activationReady ? "ready" : "watch"
+    },
+    {
+      window: "Days 15-21",
+      label: "Open controlled direct enquiries",
+      detail: `${twinVerdict}. Route only proof-backed enquiries while measuring supplier response and buyer clarity.`,
+      owner: "Success",
+      status: launchReady ? "Route" : "Control",
+      statusClass: launchReady ? "ready" : "watch"
+    },
+    {
+      window: "Days 22-30",
+      label: "Review ARR, proof, and renewal story",
+      detail: `Compare USD ${context.pilotArr.toLocaleString()} modeled ARR against trust debt, supplier response, proof completion, and direct-payment discipline.`,
+      owner: "Founder",
+      status: context.trustDebt <= 4 ? "Review" : "Fix",
+      statusClass: context.trustDebt <= 4 ? "ready" : "risk"
+    }
+  ];
+}
+
+function getPilotPackGates(context) {
+  const readyActivation = context.activation.readyGateCount || 0;
+  const readyCallCards = context.callSheet.cards.length;
+  const proofGap = context.trustDebt;
+  const twinRiskGaps = context.twin.verdict?.riskGaps || 0;
+
+  return [
+    {
+      label: "Supplier call gate",
+      detail: `${readyCallCards} supplier call card${readyCallCards === 1 ? "" : "s"} are available for demand-backed outreach.`,
+      status: readyCallCards ? "Ready" : "Build",
+      statusClass: readyCallCards ? "ready" : "watch"
+    },
+    {
+      label: "Activation gate",
+      detail: `${readyActivation}/${context.activation.gates?.length || 0} activation gate${(context.activation.gates?.length || 0) === 1 ? "" : "s"} are ready for paid listing go-live.`,
+      status: readyActivation >= 3 ? "Sprint" : "Prepare",
+      statusClass: readyActivation >= 3 ? "ready" : "watch"
+    },
+    {
+      label: "Trust gate",
+      detail: `${proofGap} trust gap${proofGap === 1 ? "" : "s"} must be visible in the pilot review before traffic scales.`,
+      status: proofGap <= 4 ? "Manage" : "Fix",
+      statusClass: proofGap <= 4 ? "ready" : "risk"
+    },
+    {
+      label: "Twin gate",
+      detail: `${twinRiskGaps} market twin risk gap${twinRiskGaps === 1 ? "" : "s"} remain before aggressive page growth.`,
+      status: twinRiskGaps <= 1 ? "Controlled" : "Hold",
+      statusClass: twinRiskGaps <= 1 ? "ready" : "watch"
+    },
+    {
+      label: "Revenue gate",
+      detail: `Pilot target is USD ${context.pilotArr.toLocaleString()} listing ARR without touching rental payments.`,
+      status: context.pilotArr >= 500 ? "Visible" : "Model",
+      statusClass: context.pilotArr >= 500 ? "ready" : "watch"
+    },
+    {
+      label: "Payment gate",
+      detail: "Buyer pays the rental company directly. Heavyster proves workflow value before any future booking fee.",
+      status: "Locked",
+      statusClass: "ready"
+    }
+  ];
 }
 
 function renderCommandCenter() {
@@ -1540,6 +2357,7 @@ function renderCommandCenter() {
         state.commandRole = button.dataset.commandRole;
         saveState();
         renderCommandCenter();
+        renderWorkflowDock();
       }
       target.scrollIntoView({ behavior: "smooth", block: "start" });
       showToast(`${button.dataset.commandLabel || "Module"} opened.`);
@@ -1551,6 +2369,7 @@ function renderCommandCenter() {
       state.commandRole = button.dataset.commandRoleFilter;
       saveState();
       renderCommandCenter();
+      renderWorkflowDock();
       showToast(`${state.commandRole} workspace active.`);
     });
   });
@@ -1655,7 +2474,7 @@ function getCommandPaletteItems() {
     anchor: module.anchor,
     role: module.role,
     action: "Open",
-    default: ["Marketplace", "Command", "Supplier Studio", "Revenue Desk", "Proof of Demand", "Supplier Commitment", "Listing Activation", "Trust Ledger", "Pricing"].includes(module.label)
+    default: ["Marketplace", "Command", "Founder Desk", "Market Matrix", "Supplier Studio", "Revenue Desk", "Proof of Demand", "Supplier Commitment", "Listing Activation", "Trust Ledger", "Pricing"].includes(module.label)
   }));
 
   const listingItems = listings.map((listing) => ({
@@ -1697,6 +2516,36 @@ function getCommandPaletteItems() {
   }));
 
   const actionItems = [
+    {
+      kind: "Action",
+      typeClass: "action",
+      label: "Run the demo flight deck",
+      detail: "Open the five-scene guided story for buyer, supplier, and founder workflows.",
+      keywords: "demo story investor boardroom walkthrough flight deck workflow",
+      anchor: "#demo-flight-deck",
+      action: "Open",
+      default: true
+    },
+    {
+      kind: "Action",
+      typeClass: "action",
+      label: "Open the boardroom snapshot",
+      detail: "Review wedge, ARR, direct pipeline, trust debt, and next founder move.",
+      keywords: "investor boardroom memo fundraising thesis arr pipeline risk",
+      anchor: "#boardroom-snapshot",
+      action: "Open",
+      default: true
+    },
+    {
+      kind: "Action",
+      typeClass: "action",
+      label: "Open the 30-day pilot pack",
+      detail: "Turn the boardroom read into supplier calls, activation gates, controlled enquiries, and pilot ARR review.",
+      keywords: "pilot 30 day sprint launch execution supplier calls activation arr",
+      anchor: "#pilot-pack",
+      action: "Open",
+      default: true
+    },
     {
       kind: "Action",
       typeClass: "action",
@@ -1776,7 +2625,7 @@ function getCommandCenterModel() {
   const demandCount = getDemandSignals().reduce((total, signal) => total + Number(signal.count || 1), 0);
   const buyerScore = Math.round((passport.score + rfq.averageScore + award.winner.total + quote.score + mobilize.score) / 5);
   const supplierScore = Math.round((storefront.score + yard.score + leadDesk.active.score + proofVault.score + revenueDesk.score + accountHealth.score) / 6);
-  const founderScore = market.score;
+  const founderScore = getFounderWorkbenchModel().score;
   const badge = buyerScore >= 82 && supplierScore >= 82 ? "Ready to demo" : "Focused build";
   const activeRole = commandRoles.includes(state.commandRole) ? state.commandRole : "Buyer";
   const workspace = getCommandWorkspace(activeRole, {
@@ -1868,6 +2717,1038 @@ function getCommandWorkspace(role, context) {
     score: `${context.buyerScore}/100 buyer readiness`,
     detail: `${context.rfq.listings.length} machine${context.rfq.listings.length === 1 ? "" : "s"} in RFQ flow, ${context.quote.missingCount} quote term${context.quote.missingCount === 1 ? "" : "s"} unclear, award status ${context.award.badge.toLowerCase()}.`,
     next: "Start with Jobsite, confirm Trust Passport, then move through RFQ, Award, Quote Guard, and Mobilize."
+  };
+}
+
+function renderFounderWorkbench() {
+  const root = document.querySelector("#founderWorkbenchFlow");
+  if (!root) return;
+
+  const model = getFounderWorkbenchModel();
+  setText("#founderWorkbenchTitle", model.title);
+  setText("#founderWorkbenchBadge", model.badge);
+
+  document.querySelector("#founderWorkbenchScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#founderWorkbenchNext").innerHTML = `
+    <span>Next best move</span>
+    <strong>${escapeHtml(model.nextStage.label)}</strong>
+    <p>${escapeHtml(model.nextStage.detail)}</p>
+    <button type="button" class="solid-button" data-founder-target="${escapeHtml(model.nextStage.anchor)}" data-founder-label="${escapeHtml(model.nextStage.label)}">${escapeHtml(model.nextStage.action)}</button>
+  `;
+
+  root.innerHTML = model.stages.map((stage, index) => `
+    <button type="button" class="founder-workbench-step ${escapeHtml(stage.statusClass)}" data-founder-target="${escapeHtml(stage.anchor)}" data-founder-label="${escapeHtml(stage.label)}">
+      <em>${index + 1}</em>
+      <span>
+        <strong>${escapeHtml(stage.label)}</strong>
+        ${escapeHtml(stage.detail)}
+      </span>
+      <b>${stage.score}/100</b>
+      <small>${escapeHtml(stage.status)}</small>
+    </button>
+  `).join("");
+
+  document.querySelector("#founderWorkbenchPacket").innerHTML = model.packet.map((item) => `
+    <div>
+      <span>${escapeHtml(item.label)}</span>
+      <strong>${escapeHtml(item.value)}</strong>
+    </div>
+  `).join("");
+
+  document.querySelectorAll("[data-founder-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.founderTarget);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.founderTarget;
+      showToast(`${button.dataset.founderLabel || "Founder step"} opened.`);
+    });
+  });
+}
+
+function getFounderWorkbenchModel() {
+  const market = getActiveMarketOpportunity();
+  const success = getSupplierSuccessModel();
+  const pageFactory = getPageFactoryModel();
+  const launch = getLaunchRoomModel();
+  const twin = getMarketTwinModel();
+  const flywheel = getLiquidityFlywheelModel();
+  const autopilot = getFounderAutopilotModel();
+  const exchange = getDemandExchangeModel();
+  const proof = getProofDemandRoomModel();
+  const commitment = getSupplierCommitmentModel();
+  const activation = getListingActivationModel();
+  const ledger = getTrustRevenueLedgerModel();
+  const marketLabel = ledger.marketLabel || market.title || `${market.region} ${market.category}`;
+  const demandScore = Math.max(0, Math.min(100, Math.round(
+    market.score * 0.45
+    + Math.min(30, market.demandCount * 7)
+    + Math.min(16, market.urgencyHits * 8)
+  )));
+  const stages = [
+    makeFounderStage({
+      label: "Demand proof",
+      anchor: "#admin",
+      score: demandScore,
+      detail: `${market.demandCount} buyer signal${market.demandCount === 1 ? "" : "s"} and ${market.urgencyHits} urgent signal${market.urgencyHits === 1 ? "" : "s"} support ${market.region} ${market.category}.`,
+      action: demandScore >= 84 ? "Use demand" : "Capture demand"
+    }),
+    makeFounderStage({
+      label: "Supplier success",
+      anchor: "#supplier-success",
+      score: success.averageHealth,
+      detail: `${success.atRiskCount} at-risk account${success.atRiskCount === 1 ? "" : "s"}, ${success.hotLeadCount} hot lead${success.hotLeadCount === 1 ? "" : "s"}, USD ${success.expansionArr.toLocaleString()} expansion ARR.`,
+      action: success.atRiskCount ? "Call first supplier" : "Grow accounts"
+    }),
+    makeFounderStage({
+      label: "Page Factory",
+      anchor: "#page-factory",
+      score: pageFactory.active?.readiness || 0,
+      detail: `${pageFactory.readyCount} launch-ready page${pageFactory.readyCount === 1 ? "" : "s"}, ${pageFactory.prepareCount} prepare page${pageFactory.prepareCount === 1 ? "" : "s"}, USD ${pageFactory.totalArr.toLocaleString()} modeled ARR.`,
+      action: pageFactory.readyCount ? "Open page queue" : "Prepare page"
+    }),
+    makeFounderStage({
+      label: "Launch Room",
+      anchor: "#launch-room",
+      score: launch.score,
+      detail: `${launch.targetSuppliers} supplier invite${launch.targetSuppliers === 1 ? "" : "s"} and USD ${launch.firstWeekArr.toLocaleString()} first-week ARR target.`,
+      action: launch.score >= 84 ? "Run sprint" : "Prep sprint"
+    }),
+    makeFounderStage({
+      label: "Market Twin",
+      anchor: "#market-twin",
+      score: twin.score,
+      detail: `${twin.scenario?.label || "Scenario"} models ${twin.totalListings || 0} paid listing${twin.totalListings === 1 ? "" : "s"} and ${twin.demandCoverage || 0}% demand coverage.`,
+      action: twin.score >= 84 ? "Use scenario" : "Tune scenario"
+    }),
+    makeFounderStage({
+      label: "Flywheel",
+      anchor: "#liquidity-flywheel",
+      score: flywheel.score,
+      detail: `${flywheel.bottleneck?.label || "Marketplace loop"} is the current bottleneck; strongest loop is ${flywheel.strongest?.label || "still forming"}.`,
+      action: flywheel.score >= 84 ? "Protect loop" : "Fix bottleneck"
+    }),
+    makeFounderStage({
+      label: "Autopilot",
+      anchor: "#founder-autopilot",
+      score: autopilot.score,
+      detail: `${autopilot.primary?.owner || "Founder"} owns ${autopilot.primary?.label || "the next command"} with USD ${autopilot.totalImpactArr.toLocaleString()} ARR impact modeled.`,
+      action: autopilot.openCommandCount ? "Dispatch command" : "Review commands"
+    }),
+    makeFounderStage({
+      label: "Demand Exchange",
+      anchor: "#demand-exchange",
+      score: exchange.score,
+      detail: `Supplier pull is ${exchange.badge.toLowerCase()} with USD ${exchange.exchangeArr.toLocaleString()} exchange ARR across demand tickets.`,
+      action: exchange.score >= 82 ? "Invite supplier" : "Warm market"
+    }),
+    makeFounderStage({
+      label: "Proof of Demand",
+      anchor: "#proof-demand",
+      score: proof.score,
+      detail: `${proof.badge} sales proof with USD ${proof.proofValue.toLocaleString()} proof value and ${proof.primaryObjection?.label || "supplier objection"} answered.`,
+      action: proof.score >= 84 ? "Use proof pack" : "Build proof"
+    }),
+    makeFounderStage({
+      label: "Commitment",
+      anchor: "#supplier-commitment",
+      score: commitment.score,
+      detail: `${commitment.recommendedPackage?.label || "Starter package"} models ${commitment.recommendedPackage?.listings || 0} paid listing${commitment.recommendedPackage?.listings === 1 ? "" : "s"} and ${commitment.readyGateCount}/${commitment.gates.length} ready gates.`,
+      action: commitment.score >= 84 ? "Close package" : "Clear gates"
+    }),
+    makeFounderStage({
+      label: "Activation",
+      anchor: "#listing-activation",
+      score: activation.activationScore,
+      detail: `${activation.readyQueueCount}/${activation.queue.length} activation items and ${activation.readyGateCount}/${activation.gates.length} launch gates are ready.`,
+      action: activation.activationScore >= 84 ? "Publish listings" : "Run activation"
+    }),
+    makeFounderStage({
+      label: "Trust Ledger",
+      anchor: "#trust-revenue-ledger",
+      score: ledger.score,
+      detail: `USD ${ledger.activeListingArr.toLocaleString()} active listing ARR, USD ${ledger.directPipeline.toLocaleString()} direct pipeline, ${ledger.trustDebt} trust gap${ledger.trustDebt === 1 ? "" : "s"}.`,
+      action: ledger.score >= 84 ? "Scale carefully" : "Protect ledger"
+    })
+  ];
+  const score = Math.round(stages.reduce((total, stage) => total + stage.score, 0) / stages.length);
+  const nextStage = [...stages]
+    .filter((stage) => stage.status !== "Ready")
+    .sort((a, b) => a.score - b.score)[0] || stages[stages.length - 1];
+  const badge = score >= 84 && ledger.trustDebt <= 2 ? "Scale-ready" : score >= 70 ? "Founder control" : "Fix first";
+  const summary = `${marketLabel} has ${market.demandCount} demand signal${market.demandCount === 1 ? "" : "s"}, USD ${ledger.activeListingArr.toLocaleString()} active listing ARR, ${ledger.trustDebt} trust gap${ledger.trustDebt === 1 ? "" : "s"}, and ${flywheel.bottleneck?.label || "market proof"} as the current control point.`;
+
+  return {
+    market,
+    success,
+    pageFactory,
+    launch,
+    twin,
+    flywheel,
+    autopilot,
+    exchange,
+    proof,
+    commitment,
+    activation,
+    ledger,
+    marketLabel,
+    score,
+    badge,
+    title: `${marketLabel} founder desk`,
+    summary,
+    stages,
+    nextStage,
+    packet: [
+      { label: "Market", value: marketLabel },
+      { label: "Scale verdict", value: `${badge} - ${score}/100` },
+      { label: "Active listing ARR", value: `USD ${ledger.activeListingArr.toLocaleString()}` },
+      { label: "Direct enquiry pipeline", value: `USD ${ledger.directPipeline.toLocaleString()}` },
+      { label: "Current bottleneck", value: flywheel.bottleneck?.label || "Collect market proof" },
+      { label: "Next move", value: `${nextStage.label}: ${nextStage.action}` },
+      { label: "Phase-one rule", value: "Scale paid listings and verified direct enquiries before any rental payment or commission workflow" }
+    ]
+  };
+}
+
+function makeFounderStage(stage) {
+  const status = stage.score >= 84 ? "Ready" : stage.score >= 68 ? "Review" : "Gap";
+  return {
+    ...stage,
+    status,
+    statusClass: status.toLowerCase()
+  };
+}
+
+function renderFounderMorningBrief() {
+  const root = document.querySelector("#founderMorningSignals");
+  if (!root) return;
+
+  const model = getFounderMorningBriefModel();
+
+  setText("#founderMorningTitle", model.title);
+  setText("#founderMorningBadge", model.badge);
+
+  document.querySelector("#founderMorningScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#founderMorningMetrics").innerHTML = model.metrics.map((metric) => `
+    <span><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
+  `).join("");
+
+  root.innerHTML = model.signals.map((signal) => `
+    <button type="button" class="founder-morning-signal ${escapeHtml(signal.statusClass)}" data-morning-target="${escapeHtml(signal.anchor)}">
+      <strong>${escapeHtml(signal.value)}</strong>
+      <span>
+        ${escapeHtml(signal.label)}
+        <small>${escapeHtml(signal.detail)}</small>
+      </span>
+      <b>${escapeHtml(signal.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#founderMorningScript").innerHTML = model.script.map((line, index) => `
+    <div class="founder-morning-script-line ${escapeHtml(line.statusClass)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(line.label)}
+        <small>${escapeHtml(line.detail)}</small>
+      </span>
+    </div>
+  `).join("");
+
+  document.querySelector("#founderMorningLanes").innerHTML = model.lanes.map((lane) => `
+    <button type="button" class="founder-morning-lane ${escapeHtml(lane.statusClass)}" data-morning-target="${escapeHtml(lane.anchor)}">
+      <span>${escapeHtml(lane.label)}<small>${escapeHtml(lane.detail)}</small></span>
+      <b>${escapeHtml(lane.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#founderMorningBrief").innerHTML = buildFounderMorningBriefText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-morning-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.morningTarget);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.morningTarget;
+      showToast("Founder morning lane opened.");
+    });
+  });
+}
+
+function getFounderMorningBriefModel() {
+  const daily = getFounderDailyMovesModel();
+  const founder = daily.founder;
+  const success = daily.success;
+  const twin = daily.twin;
+  const activation = daily.activation;
+  const ledger = daily.ledger;
+  const matrix = daily.matrix;
+  const firstMove = daily.moves[0];
+  const firstGuardrail = daily.guardrails.find((guardrail) => guardrail.statusClass !== "ready") || daily.guardrails[0];
+  const matrixCell = matrix.topCells[0] || matrix.activeCell;
+  const launchStatus = twin.verdict?.statusClass || (twin.score >= 84 ? "ready" : twin.score >= 68 ? "review" : "gap");
+  const trustStatus = ledger.trustDebt <= 2 && ledger.score >= 74 ? "ready" : ledger.trustDebt <= 5 ? "review" : "gap";
+  const supplierStatus = success.callFirst.priorityClass === "hot" ? "gap" : success.callFirst.priorityClass === "grow" ? "ready" : "review";
+  const activationStatus = activation.activationScore >= 84 ? "ready" : activation.activationScore >= 68 ? "review" : "gap";
+  const matrixStatus = matrixCell?.statusClass || "review";
+  const signals = [
+    makeFounderMorningSignal({
+      label: "Daily pressure",
+      value: `${daily.openMoveCount} open`,
+      detail: `First command is ${firstMove.label}.`,
+      anchor: "#founder-daily",
+      statusClass: daily.openMoveCount >= 3 ? "gap" : daily.openMoveCount ? "review" : "ready"
+    }),
+    makeFounderMorningSignal({
+      label: "Supplier call",
+      value: success.callFirst.profile.supplier,
+      detail: `${success.callFirst.reason}. ${success.callFirst.primaryAction.detail}`,
+      anchor: "#supplier-success",
+      statusClass: supplierStatus
+    }),
+    makeFounderMorningSignal({
+      label: "Trust gate",
+      value: `${ledger.score}/100`,
+      detail: `${ledger.trustDebt} trust gap${ledger.trustDebt === 1 ? "" : "s"} before heavier traffic.`,
+      anchor: "#trust-revenue-ledger",
+      statusClass: trustStatus
+    }),
+    makeFounderMorningSignal({
+      label: "Launch verdict",
+      value: twin.verdict?.label || "Run twin",
+      detail: twin.verdict?.rule || "Check supply, proof, response, revenue, and payment gates before scaling.",
+      anchor: "#market-twin",
+      statusClass: launchStatus
+    }),
+    makeFounderMorningSignal({
+      label: "Activation gate",
+      value: `${activation.readyGateCount}/${activation.gates.length}`,
+      detail: `${activation.recommendedPackage?.label || "Recommended package"} must clear publish and billing gates.`,
+      anchor: "#listing-activation",
+      statusClass: activationStatus
+    }),
+    makeFounderMorningSignal({
+      label: "Next wedge",
+      value: matrixCell ? `${matrixCell.region} ${matrixCell.category}` : "Matrix",
+      detail: matrixCell ? matrixCell.summary : "Open the matrix to choose a demand-led wedge.",
+      anchor: "#market-signal-matrix",
+      statusClass: matrixStatus
+    })
+  ];
+  const gapCount = signals.filter((signal) => signal.statusClass === "gap").length;
+  const reviewCount = signals.filter((signal) => signal.statusClass === "review").length;
+  const score = Math.max(0, Math.min(100, Math.round(
+    daily.score * 0.55
+    + founder.score * 0.2
+    + ledger.score * 0.15
+    + Math.max(0, 100 - gapCount * 14 - reviewCount * 6) * 0.1
+  )));
+  const badge = gapCount ? "Open carefully" : reviewCount ? "Tight day" : "Ready day";
+  const summary = `${daily.marketLabel}: ${firstMove.label} comes first; protect ${firstGuardrail.label.toLowerCase()} while keeping rental payment direct.`;
+  const lanes = [
+    {
+      label: "Call",
+      detail: `${success.callFirst.profile.supplier}: ${success.callFirst.primaryAction.label}.`,
+      anchor: "#supplier-success",
+      status: supplierStatus === "gap" ? "Now" : "Today",
+      statusClass: supplierStatus
+    },
+    {
+      label: "Protect",
+      detail: `${firstGuardrail.label}: ${firstGuardrail.detail}`,
+      anchor: getFounderMorningGuardrailAnchor(firstGuardrail),
+      status: firstGuardrail.status,
+      statusClass: firstGuardrail.statusClass
+    },
+    {
+      label: "Push",
+      detail: matrixCell ? `${matrixCell.region} ${matrixCell.category}: ${matrixCell.action}.` : "Choose the next expansion wedge.",
+      anchor: "#market-signal-matrix",
+      status: matrixCell?.status || "Scan",
+      statusClass: matrixStatus
+    },
+    {
+      label: "Copy",
+      detail: "Send the morning brief before opening more market work.",
+      anchor: "#founder-morning",
+      status: "Brief",
+      statusClass: "ready"
+    }
+  ];
+  const script = [
+    {
+      label: "Start with the highest-friction move",
+      detail: `${firstMove.label}: ${firstMove.detail}`,
+      statusClass: firstMove.statusClass
+    },
+    {
+      label: "Say the phase-one rule out loud",
+      detail: "Listings are SaaS revenue. Buyer and rental company keep rental payment direct.",
+      statusClass: "ready"
+    },
+    {
+      label: "Repair the strongest blocker",
+      detail: `${firstGuardrail.label}: ${firstGuardrail.detail}`,
+      statusClass: firstGuardrail.statusClass
+    },
+    {
+      label: "Only then open growth",
+      detail: matrixCell ? `${matrixCell.region} ${matrixCell.category} is the next wedge to review.` : "Use the market matrix before pushing a new wedge.",
+      statusClass: matrixStatus
+    }
+  ];
+
+  return {
+    daily,
+    founder,
+    success,
+    twin,
+    activation,
+    ledger,
+    matrix,
+    matrixCell,
+    firstMove,
+    firstGuardrail,
+    title: `${daily.marketLabel} morning brief`,
+    badge,
+    score,
+    summary,
+    gapCount,
+    reviewCount,
+    signals,
+    script,
+    lanes,
+    metrics: [
+      { label: "ARR in focus", value: `USD ${daily.arrAtStake.toLocaleString()}` },
+      { label: "First owner", value: firstMove.owner },
+      { label: "Risk signals", value: String(gapCount + reviewCount) },
+      { label: "Rental take", value: "0%" }
+    ]
+  };
+}
+
+function makeFounderMorningSignal(signal) {
+  const status = signal.statusClass === "ready" ? "Ready" : signal.statusClass === "review" ? "Watch" : "Fix";
+  return {
+    ...signal,
+    status
+  };
+}
+
+function getFounderMorningGuardrailAnchor(guardrail) {
+  const label = `${guardrail.label} ${guardrail.owner}`.toLowerCase();
+  if (label.includes("traffic") || label.includes("growth")) return "#market-twin";
+  if (label.includes("trust")) return "#trust-revenue-ledger";
+  if (label.includes("supplier") || label.includes("success")) return "#supplier-success";
+  if (label.includes("activation") || label.includes("revenue")) return "#listing-activation";
+  return "#founder-daily";
+}
+
+function renderFounderDailyMoves() {
+  const root = document.querySelector("#founderDailyQueue");
+  if (!root) return;
+
+  const model = getFounderDailyMovesModel();
+
+  setText("#founderDailyTitle", model.title);
+  setText("#founderDailyBadge", model.badge);
+
+  document.querySelector("#founderDailyScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#founderDailyMetrics").innerHTML = model.metrics.map((metric) => `
+    <span><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
+  `).join("");
+
+  root.innerHTML = model.moves.map((move, index) => `
+    <button type="button" class="founder-daily-move ${escapeHtml(move.statusClass)} ${index === 0 ? "is-primary" : ""}" data-daily-target="${escapeHtml(move.anchor)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(move.label)}
+        <small>${escapeHtml(move.detail)}</small>
+      </span>
+      <em>${escapeHtml(move.owner)} - ${escapeHtml(move.due)}</em>
+      <b>${escapeHtml(move.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#founderDailyGuardrails").innerHTML = model.guardrails.map((guardrail, index) => `
+    <div class="founder-daily-guardrail ${escapeHtml(guardrail.statusClass)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(guardrail.label)}
+        <small>${escapeHtml(guardrail.detail)}</small>
+      </span>
+      <em>${escapeHtml(guardrail.owner)}</em>
+      <b>${escapeHtml(guardrail.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#founderDailyBrief").innerHTML = buildFounderDailyMovesText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-daily-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.dailyTarget);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.dailyTarget;
+      showToast("Founder daily move opened.");
+    });
+  });
+}
+
+function getFounderDailyMovesModel() {
+  const founder = getFounderWorkbenchModel();
+  const matrix = getMarketSignalMatrixModel();
+  const success = founder.success;
+  const twin = founder.twin;
+  const autopilot = founder.autopilot;
+  const activation = founder.activation;
+  const ledger = founder.ledger;
+  const marketLabel = founder.marketLabel;
+  const activationGap = [...activation.queue, ...activation.gates].find((item) => item.statusClass !== "ready") || activation.queue[0];
+  const ledgerControl = ledger.controls.find((control) => control.statusClass !== "ready") || ledger.controls[0];
+  const matrixCell = matrix.topCells[0] || matrix.activeCell;
+  const twinGapCount = twin.verdict?.riskGaps || twin.risks.filter((risk) => risk.statusClass === "gap").length;
+  const moves = [
+    makeFounderDailyMove({
+      label: `Call ${success.callFirst.profile.supplier}`,
+      detail: `${success.callFirst.reason}. Primary action: ${success.callFirst.primaryAction.label}.`,
+      owner: "Success",
+      due: "Today",
+      anchor: "#supplier-success",
+      priority: success.callFirst.urgency,
+      impact: success.callFirst.health.revenueDesk.annualRevenue,
+      statusClass: success.callFirst.priorityClass === "hot" ? "gap" : success.callFirst.priorityClass === "grow" ? "ready" : "review"
+    }),
+    makeFounderDailyMove({
+      label: twin.verdict?.label || "Tune market twin",
+      detail: `${twin.scenario?.label || "Scenario"} verdict for ${twin.active?.title || marketLabel}: ${twin.verdict?.rule || "Protect supply, proof, response, and revenue gates."}`,
+      owner: "Founder",
+      due: twinGapCount ? "Today" : "48h",
+      anchor: "#market-twin",
+      priority: Math.max(42, 100 - (twin.verdict?.score || twin.score) + twinGapCount * 12),
+      impact: twin.annualArr || 0,
+      statusClass: twin.verdict?.statusClass || (twin.score >= 84 ? "ready" : twin.score >= 68 ? "review" : "gap")
+    }),
+    makeFounderDailyMove({
+      label: autopilot.primary?.label || "Dispatch founder command",
+      detail: autopilot.primary?.detail || "Turn the weakest market loop into owned work.",
+      owner: autopilot.primary?.owner || "Founder",
+      due: autopilot.primary?.due || "Today",
+      anchor: autopilot.primary?.anchor || "#founder-autopilot",
+      priority: autopilot.primary?.urgency || Math.max(35, 100 - autopilot.score),
+      impact: autopilot.primary?.impactArr || autopilot.totalImpactArr,
+      statusClass: autopilot.primary?.statusClass || (autopilot.score >= 84 ? "ready" : autopilot.score >= 68 ? "review" : "gap")
+    }),
+    makeFounderDailyMove({
+      label: activationGap?.label || "Prepare activation",
+      detail: activationGap?.detail || activation.summary,
+      owner: activationGap?.owner || "Founder",
+      due: activation.activationScore >= 84 ? "This week" : "Today",
+      anchor: "#listing-activation",
+      priority: Math.max(30, 100 - activation.activationScore + (activation.gates.length - activation.readyGateCount) * 5),
+      impact: activation.recommendedPackage?.annualRevenue || 0,
+      statusClass: activationGap?.statusClass || (activation.activationScore >= 84 ? "ready" : activation.activationScore >= 68 ? "review" : "gap")
+    }),
+    makeFounderDailyMove({
+      label: ledgerControl?.label || "Protect trust ledger",
+      detail: ledgerControl?.detail || ledger.summary,
+      owner: ledgerControl?.owner || "Founder",
+      due: ledger.trustDebt ? "Today" : "This week",
+      anchor: "#trust-revenue-ledger",
+      priority: Math.max(28, 100 - ledger.score + ledger.trustDebt * 6),
+      impact: ledger.activeListingArr + ledger.nextPackageArr,
+      statusClass: ledgerControl?.statusClass || (ledger.score >= 84 ? "ready" : ledger.score >= 68 ? "review" : "gap")
+    }),
+    makeFounderDailyMove({
+      label: matrixCell ? `${matrixCell.region} ${matrixCell.category}: ${matrixCell.action}` : "Read market matrix",
+      detail: matrixCell ? matrixCell.summary : "Use the matrix to choose the next demand-led wedge.",
+      owner: "Growth",
+      due: "48h",
+      anchor: "#market-signal-matrix",
+      priority: matrixCell?.priorityScore || 40,
+      impact: matrixCell?.annualRevenue || 0,
+      statusClass: matrixCell?.statusClass || "review"
+    })
+  ].sort((a, b) => b.priority - a.priority || b.impact - a.impact).slice(0, 6);
+  const guardrails = getFounderDailyGuardrails({ founder, success, twin, activation, ledger });
+  const openMoveCount = moves.filter((move) => move.statusClass !== "ready").length;
+  const blockedGuardrails = guardrails.filter((guardrail) => guardrail.statusClass === "gap").length;
+  const score = Math.max(0, Math.min(100, Math.round(
+    founder.score * 0.42
+    + success.averageHealth * 0.18
+    + ledger.score * 0.16
+    + activation.activationScore * 0.14
+    + Math.max(0, 100 - openMoveCount * 9 - blockedGuardrails * 12) * 0.1
+  )));
+  const badge = openMoveCount >= 3 || blockedGuardrails ? "Work today" : score >= 84 ? "Clean day" : "Tighten";
+  const summary = `${marketLabel}: ${moves[0].label} is first, with ${openMoveCount} open move${openMoveCount === 1 ? "" : "s"} and ${blockedGuardrails} blocked guardrail${blockedGuardrails === 1 ? "" : "s"}.`;
+  const arrAtStake = moves.reduce((total, move) => total + Number(move.impact || 0), 0);
+
+  return {
+    founder,
+    matrix,
+    success,
+    twin,
+    autopilot,
+    activation,
+    ledger,
+    marketLabel,
+    title: `${marketLabel} daily moves`,
+    badge,
+    score,
+    summary,
+    moves,
+    guardrails,
+    openMoveCount,
+    blockedGuardrails,
+    arrAtStake,
+    metrics: [
+      { label: "First move", value: moves[0].owner },
+      { label: "Open moves", value: String(openMoveCount) },
+      { label: "ARR at stake", value: `USD ${arrAtStake.toLocaleString()}` },
+      { label: "Payment take", value: "0%" }
+    ]
+  };
+}
+
+function makeFounderDailyMove(move) {
+  const status = move.statusClass === "ready" ? "Protect" : move.statusClass === "review" ? "Tighten" : "Dispatch";
+  return {
+    ...move,
+    priority: Math.max(0, Math.min(100, Math.round(move.priority || 0))),
+    status
+  };
+}
+
+function getFounderDailyGuardrails({ founder, success, twin, activation, ledger }) {
+  return [
+    {
+      label: "Rental payment stays direct",
+      detail: "No rental payment collection and no rental commission in phase one.",
+      owner: "Founder",
+      status: "Locked",
+      statusClass: "ready"
+    },
+    {
+      label: "Traffic follows launch verdict",
+      detail: twin.verdict?.rule || "Use Market Twin before opening heavier category traffic.",
+      owner: "Growth",
+      status: twin.verdict?.statusClass === "ready" ? "Open" : twin.verdict?.statusClass === "review" ? "Capped" : "Hold",
+      statusClass: twin.verdict?.statusClass || "review"
+    },
+    {
+      label: "Trust before scale",
+      detail: `${ledger.trustDebt} trust gap${ledger.trustDebt === 1 ? "" : "s"} and ledger score ${ledger.score}/100.`,
+      owner: "Trust",
+      status: ledger.trustDebt <= 2 && ledger.score >= 74 ? "Ready" : ledger.trustDebt <= 5 ? "Tighten" : "Fix",
+      statusClass: ledger.trustDebt <= 2 && ledger.score >= 74 ? "ready" : ledger.trustDebt <= 5 ? "review" : "gap"
+    },
+    {
+      label: "Supplier saves before expansion",
+      detail: `${success.atRiskCount} at-risk account${success.atRiskCount === 1 ? "" : "s"} and ${success.hotLeadCount} hot lead${success.hotLeadCount === 1 ? "" : "s"} in the book.`,
+      owner: "Success",
+      status: success.atRiskCount ? "Call" : "Grow",
+      statusClass: success.atRiskCount ? "gap" : "ready"
+    },
+    {
+      label: "Activation before promotion",
+      detail: `${activation.readyGateCount}/${activation.gates.length} activation gates ready for ${activation.active?.title || founder.marketLabel}.`,
+      owner: "Revenue",
+      status: activation.activationScore >= 84 ? "Publish" : activation.activationScore >= 68 ? "Sprint" : "Prep",
+      statusClass: activation.activationScore >= 84 ? "ready" : activation.activationScore >= 68 ? "review" : "gap"
+    }
+  ];
+}
+
+function renderFounderCallSheet() {
+  const root = document.querySelector("#founderCallSheetCards");
+  if (!root) return;
+
+  const model = getFounderCallSheetModel();
+
+  setText("#founderCallSheetTitle", model.title);
+  setText("#founderCallSheetBadge", model.badge);
+
+  document.querySelector("#founderCallSheetScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#founderCallSheetMetrics").innerHTML = model.metrics.map((metric) => `
+    <span><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
+  `).join("");
+
+  root.innerHTML = model.cards.map((card, index) => `
+    <button type="button" class="founder-call-row ${escapeHtml(card.statusClass)} ${index === 0 ? "is-primary" : ""}" data-call-listing="${escapeHtml(card.listingId)}" data-call-anchor="${escapeHtml(card.anchor)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(card.supplier)}
+        <small>${escapeHtml(card.hook)}</small>
+      </span>
+      <em>USD ${card.value.toLocaleString()}</em>
+      <b>${escapeHtml(card.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#founderCallSheetScript").innerHTML = model.script.map((line, index) => `
+    <div class="founder-call-script-line ${escapeHtml(line.statusClass)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(line.label)}
+        <small>${escapeHtml(line.detail)}</small>
+      </span>
+    </div>
+  `).join("");
+
+  document.querySelector("#founderCallSheetProof").innerHTML = model.proofAsks.map((ask, index) => `
+    <div class="founder-call-proof-row ${escapeHtml(ask.statusClass)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(ask.label)}
+        <small>${escapeHtml(ask.detail)}</small>
+      </span>
+      <b>${escapeHtml(ask.status)}</b>
+    </div>
+  `).join("");
+
+  document.querySelector("#founderCallSheetBrief").innerHTML = buildFounderCallSheetText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-call-anchor]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const listing = listings.find((item) => item.id === button.dataset.callListing);
+      if (listing) state.selectedListingId = listing.id;
+      state.commandRole = "Founder";
+      saveState();
+      render();
+      const target = document.querySelector(button.dataset.callAnchor);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.callAnchor;
+      showToast("Supplier call path opened.");
+    });
+  });
+}
+
+function getFounderCallSheetModel() {
+  const morning = getFounderMorningBriefModel();
+  const daily = morning.daily;
+  const success = getSupplierSuccessModel();
+  const exchange = getDemandExchangeModel();
+  const proof = getProofDemandRoomModel();
+  const commitment = getSupplierCommitmentModel();
+  const active = commitment.active || proof.active || exchange.active;
+  const recommendedPackage = commitment.recommendedPackage || { label: "Starter proof package", listings: 3, annualRevenue: 297, monthlyRevenue: 27 };
+  const marketLabel = active ? `${active.region} ${active.category}` : daily.marketLabel;
+  const cards = success.rows.slice(0, 5).map((row) => getFounderCallCard(row, {
+    active,
+    exchange,
+    proof,
+    commitment,
+    recommendedPackage,
+    marketLabel
+  }));
+  const proofAsks = getFounderCallProofAsks({ active, proof, commitment, recommendedPackage });
+  const hotCount = cards.filter((card) => card.statusClass === "hot").length;
+  const closeReadyCount = cards.filter((card) => card.statusClass === "grow").length;
+  const proofGapCount = proofAsks.filter((ask) => ask.statusClass === "gap").length;
+  const score = Math.max(0, Math.min(100, Math.round(
+    success.averageHealth * 0.3
+    + commitment.score * 0.25
+    + proof.score * 0.18
+    + exchange.score * 0.14
+    + Math.max(0, 100 - hotCount * 9 - proofGapCount * 12) * 0.13
+  )));
+  const badge = commitment.score >= 84 && closeReadyCount ? "Close today" : hotCount ? "Call first" : "Build proof";
+  const summary = `${marketLabel}: call ${cards[0].supplier} first, offer ${recommendedPackage.label.toLowerCase()}, and keep rental payment direct.`;
+  const script = [
+    {
+      label: "Open with demand",
+      detail: active ? `${active.demandCount} buyer signal${active.demandCount === 1 ? "" : "s"} show demand for ${marketLabel}.` : `${marketLabel} has active buyer and supplier signals.`,
+      statusClass: active?.demandCount >= 3 ? "grow" : "watch"
+    },
+    {
+      label: "Show the supplier value",
+      detail: `${recommendedPackage.label}: ${recommendedPackage.listings} paid listing${recommendedPackage.listings === 1 ? "" : "s"} for USD ${recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${recommendedPackage.annualRevenue.toLocaleString()}/year.`,
+      statusClass: recommendedPackage.statusClass === "ready" ? "grow" : recommendedPackage.statusClass === "gap" ? "hot" : "watch"
+    },
+    {
+      label: "Ask for proof before verified visibility",
+      detail: proofAsks.slice(0, 3).map((ask) => ask.label).join(", ") || "Collect machine, company, and availability proof.",
+      statusClass: proofGapCount ? "hot" : "grow"
+    },
+    {
+      label: "Protect the phase-one promise",
+      detail: "Heavyster sells listing SaaS and routes direct enquiries. Buyer and supplier keep rental payment direct.",
+      statusClass: "grow"
+    }
+  ];
+
+  return {
+    morning,
+    daily,
+    success,
+    exchange,
+    proof,
+    commitment,
+    active,
+    recommendedPackage,
+    marketLabel,
+    title: `${marketLabel} supplier call sheet`,
+    badge,
+    score,
+    summary,
+    cards,
+    proofAsks,
+    script,
+    hotCount,
+    closeReadyCount,
+    proofGapCount,
+    metrics: [
+      { label: "First call", value: cards[0].supplier },
+      { label: "Package", value: `${recommendedPackage.listings} listings` },
+      { label: "Offer ARR", value: `USD ${recommendedPackage.annualRevenue.toLocaleString()}` },
+      { label: "Rental take", value: "0%" }
+    ]
+  };
+}
+
+function getFounderCallCard(row, context) {
+  const active = context.active;
+  const packageValue = context.recommendedPackage.annualRevenue || 0;
+  const expansionValue = row.health.expansionArr || 0;
+  const renewalValue = row.health.revenueDesk.annualRevenue || 0;
+  const value = Math.max(packageValue, expansionValue, Math.round(renewalValue * 0.35));
+  const proofAsk = active?.proof?.slice(0, 2).join(" and ") || row.profile.proof.slice(0, 2).join(" and ");
+  const categoryHook = active ? `${active.region} ${active.category}` : row.profile.fleet[0]?.label || "heavy equipment";
+  const statusClass = row.priorityClass;
+  const status = statusClass === "hot" ? "Call now" : statusClass === "grow" ? "Pitch" : "Warm";
+  const anchor = statusClass === "hot" ? "#account-health" : context.commitment.score >= 68 ? "#supplier-commitment" : "#proof-demand";
+
+  return {
+    supplier: row.profile.supplier,
+    listingId: row.listing.id,
+    branch: row.profile.branch,
+    response: row.profile.response,
+    hook: `${categoryHook}: ${row.reason}. Ask for ${proofAsk.toLowerCase()} and route renters direct.`,
+    ask: `${context.recommendedPackage.label}: ${context.recommendedPackage.listings} active listing${context.recommendedPackage.listings === 1 ? "" : "s"}.`,
+    value,
+    status,
+    statusClass,
+    anchor
+  };
+}
+
+function getFounderCallProofAsks({ active, proof, commitment, recommendedPackage }) {
+  const activeProof = active?.proof || [];
+  const proofRows = proof.evidence.length ? proof.evidence : [];
+  const gates = commitment.gates.length ? commitment.gates : [];
+  const asks = [
+    ...activeProof.slice(0, 3).map((item) => ({
+      label: item,
+      detail: "Attach this proof before using verified supplier language.",
+      status: "Ask",
+      statusClass: "watch"
+    })),
+    ...gates.filter((gate) => gate.statusClass !== "ready").slice(0, 2).map((gate) => ({
+      label: gate.label,
+      detail: gate.detail,
+      status: gate.status,
+      statusClass: gate.statusClass === "gap" ? "hot" : "watch"
+    })),
+    ...proofRows.filter((row) => row.statusClass === "gap").slice(0, 1).map((row) => ({
+      label: row.label,
+      detail: row.detail,
+      status: row.status,
+      statusClass: "hot"
+    }))
+  ];
+
+  asks.push({
+    label: "Direct enquiry route",
+    detail: `${recommendedPackage.label} stays phase-one clean: phone, WhatsApp, email, or web enquiry goes directly to the supplier.`,
+    status: "Locked",
+    statusClass: "grow"
+  });
+
+  return asks.slice(0, 6);
+}
+
+function renderBuyerWorkbench() {
+  const model = getBuyerWorkbenchModel();
+  setText("#buyerWorkbenchTitle", model.title);
+  setText("#buyerWorkbenchBadge", model.badge);
+
+  document.querySelector("#buyerWorkbenchScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#buyerWorkbenchNext").innerHTML = `
+    <span>Next best move</span>
+    <strong>${escapeHtml(model.nextStage.label)}</strong>
+    <p>${escapeHtml(model.nextStage.detail)}</p>
+    <button type="button" class="solid-button" data-buyer-target="${escapeHtml(model.nextStage.anchor)}" data-buyer-label="${escapeHtml(model.nextStage.label)}">${escapeHtml(model.nextStage.action)}</button>
+  `;
+
+  document.querySelector("#buyerWorkbenchFlow").innerHTML = model.stages.map((stage, index) => `
+    <button type="button" class="buyer-workbench-step ${escapeHtml(stage.statusClass)}" data-buyer-target="${escapeHtml(stage.anchor)}" data-buyer-label="${escapeHtml(stage.label)}">
+      <em>${index + 1}</em>
+      <span>
+        <strong>${escapeHtml(stage.label)}</strong>
+        ${escapeHtml(stage.detail)}
+      </span>
+      <b>${stage.score}/100</b>
+      <small>${escapeHtml(stage.status)}</small>
+    </button>
+  `).join("");
+
+  document.querySelector("#buyerWorkbenchPacket").innerHTML = model.packet.map((item) => `
+    <div>
+      <span>${escapeHtml(item.label)}</span>
+      <strong>${escapeHtml(item.value)}</strong>
+    </div>
+  `).join("");
+
+  document.querySelectorAll("[data-buyer-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.buyerTarget);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.buyerTarget;
+      showToast(`${button.dataset.buyerLabel || "Buyer step"} opened.`);
+    });
+  });
+}
+
+function getBuyerWorkbenchModel() {
+  const selected = getSelectedListing();
+  const filtered = getFilteredListings();
+  const nearby = getNearbyListings();
+  const jobsite = getJobsiteModel();
+  const passport = getTrustPassport(selected);
+  const rfq = getRfqModel();
+  const award = getAwardModel();
+  const quote = getQuoteGuardModel();
+  const mobilize = getMobilizationModel();
+  const marketplaceScore = filtered.length
+    ? Math.min(96, 68 + Math.min(filtered.length, 7) * 4 + (selected.verified ? 4 : 0))
+    : nearby.length
+      ? 56
+      : 38;
+  const rfqCoverageScore = Math.min(100, Math.round(
+    rfq.averageScore * 0.72
+    + Math.min(rfq.listings.length, 3) * 7
+    + rfq.verifiedCount * 3
+    + rfq.availableCount * 2
+  ));
+  const stages = [
+    makeBuyerStage({
+      label: "Search signal",
+      anchor: "#marketplace",
+      score: marketplaceScore,
+      detail: filtered.length
+        ? `${filtered.length} listing${filtered.length === 1 ? "" : "s"} visible for the current search.`
+        : `${nearby.length} nearby option${nearby.length === 1 ? "" : "s"} found; capture missing demand if buyer needs exact supply.`,
+      action: filtered.length ? "Review listings" : "Capture demand"
+    }),
+    makeBuyerStage({
+      label: "Jobsite package",
+      anchor: "#jobsite",
+      score: jobsite.packageScore,
+      detail: `${jobsite.matchedCount}/${jobsite.roles.length} machine role${jobsite.roles.length === 1 ? "" : "s"} covered for ${jobsite.region}.`,
+      action: jobsite.gaps.length ? "Fill package gaps" : "Send package"
+    }),
+    makeBuyerStage({
+      label: "Trust Passport",
+      anchor: "#passport",
+      score: passport.score,
+      detail: `${selected.name} is ${passport.verdict.toLowerCase()} with ${passport.proofItems.filter((item) => !item.ready).length} proof gap${passport.proofItems.filter((item) => !item.ready).length === 1 ? "" : "s"}.`,
+      action: passport.score >= 84 ? "Use proof" : "Close proof"
+    }),
+    makeBuyerStage({
+      label: "RFQ coverage",
+      anchor: "#rfq",
+      score: rfqCoverageScore,
+      detail: `${rfq.listings.length} supplier option${rfq.listings.length === 1 ? "" : "s"}, ${rfq.verifiedCount} verified, ${rfq.availableCount} available now.`,
+      action: rfq.listings.length >= 2 ? "Review RFQ" : "Add supplier option"
+    }),
+    makeBuyerStage({
+      label: "Award clarity",
+      anchor: "#award",
+      score: award.winner.total,
+      detail: `${award.winner.listing.supplier} leads with ${award.badge.toLowerCase()} status.`,
+      action: award.winner.total >= 84 ? "Review winner" : "Clarify award"
+    }),
+    makeBuyerStage({
+      label: "Quote terms",
+      anchor: "#quote-guard",
+      score: quote.score,
+      detail: `${quote.missingCount} quote term${quote.missingCount === 1 ? "" : "s"} still need clearer wording.`,
+      action: quote.missingCount ? "Clarify quote" : "Use quote"
+    }),
+    makeBuyerStage({
+      label: "Mobilization",
+      anchor: "#mobilize",
+      score: mobilize.score,
+      detail: `${mobilize.checks.filter((check) => check.status === "Ready").length}/${mobilize.checks.length} dispatch gate${mobilize.checks.length === 1 ? "" : "s"} ready.`,
+      action: mobilize.score >= 84 ? "Copy handoff" : "Lock dispatch"
+    })
+  ];
+  const score = Math.round(stages.reduce((total, stage) => total + stage.score, 0) / stages.length);
+  const nextStage = [...stages]
+    .filter((stage) => stage.status !== "Ready")
+    .sort((a, b) => a.score - b.score)[0] || stages[stages.length - 1];
+  const badge = score >= 84 ? "Buyer-ready" : score >= 68 ? "Control path" : "Rescue path";
+  const summary = `${selected.name} for ${getJobsiteRegion()} with ${state.jobsiteUrgency.toLowerCase()} start window and ${state.shortlistIds.length} saved option${state.shortlistIds.length === 1 ? "" : "s"}.`;
+
+  return {
+    selected,
+    badge,
+    score,
+    title: `${selected.name} buyer desk`,
+    summary,
+    stages,
+    nextStage,
+    packet: [
+      { label: "Selected machine", value: `${selected.name} - ${selected.supplier}` },
+      { label: "Project", value: `${jobsite.blueprint.label} in ${jobsite.region}` },
+      { label: "Shortlist", value: `${rfq.listings.length} option${rfq.listings.length === 1 ? "" : "s"} / ${rfq.verifiedCount} verified` },
+      { label: "Recommended award", value: `${award.winner.listing.supplier} - ${award.winner.total}/100` },
+      { label: "Quote control", value: `${quote.badge}, ${quote.missingCount} missing term${quote.missingCount === 1 ? "" : "s"}` },
+      { label: "Payment rule", value: "Buyer pays supplier direct; Heavyster does not collect rental payment" }
+    ]
+  };
+}
+
+function makeBuyerStage(stage) {
+  const status = stage.score >= 84 ? "Ready" : stage.score >= 64 ? "Review" : "Gap";
+  return {
+    ...stage,
+    status,
+    statusClass: status.toLowerCase()
   };
 }
 
@@ -2494,7 +4375,10 @@ function toggleShortlist(id) {
   renderLeadPacket();
   renderRfqRoom();
   renderAwardRoom();
+  renderQuoteGuard();
   renderMobilizationTower();
+  renderDealTrail();
+  renderBuyerWorkbench();
   showToast(exists ? "Removed from shortlist." : "Saved to shortlist.");
 }
 
@@ -3077,6 +4961,230 @@ function getMobilizationModel() {
   };
 }
 
+function renderDealTrail() {
+  const model = getDealTrailModel();
+
+  setText("#dealTrailTitle", model.title);
+  setText("#dealTrailBadge", model.badge);
+
+  document.querySelector("#dealTrailScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#dealTrailMetrics").innerHTML = model.metrics.map((metric) => `
+    <span><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
+  `).join("");
+
+  document.querySelector("#dealTrailSteps").innerHTML = model.steps.map((step, index) => `
+    <button type="button" class="deal-trail-step ${escapeHtml(step.statusClass)}" data-deal-target="${escapeHtml(step.anchor)}">
+      <em>${index + 1}</em>
+      <span>
+        <strong>${escapeHtml(step.label)}</strong>
+        ${escapeHtml(step.detail)}
+      </span>
+      <b>${step.score}/100</b>
+      <small>${escapeHtml(step.status)}</small>
+    </button>
+  `).join("");
+
+  document.querySelector("#dealTrailGates").innerHTML = model.gates.map((gate, index) => `
+    <div class="deal-trail-gate ${escapeHtml(gate.statusClass)}">
+      <em>${index + 1}</em>
+      <span>
+        <strong>${escapeHtml(gate.label)}</strong>
+        ${escapeHtml(gate.detail)}
+      </span>
+      <b>${escapeHtml(gate.owner)}</b>
+      <small>${escapeHtml(gate.status)}</small>
+    </div>
+  `).join("");
+
+  document.querySelector("#dealTrailPacket").innerHTML = buildDealTrailText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-deal-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.dealTarget);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.dealTarget;
+      showToast("Deal proof step opened.");
+    });
+  });
+}
+
+function getDealTrailModel() {
+  const selected = getSelectedListing();
+  const passport = getTrustPassport(selected);
+  const rfq = getRfqModel();
+  const award = getAwardModel();
+  const quote = getQuoteGuardModel();
+  const mobilize = getMobilizationModel();
+  const leadDesk = getLeadDeskModel(award.winner.listing);
+  const activeLead = leadDesk.active;
+  const readyMobilize = mobilize.checks.filter((check) => check.status === "Ready").length;
+  const clearQuoteTerms = quote.board.filter((item) => item.status === "Ready" || item.status === "Direct").length;
+  const paymentRule = "Buyer pays rental company directly; Heavyster records workflow proof, clarity, and handoff only.";
+  const enquiryScore = Math.min(100, Math.round(55 + passport.score * 0.18 + (state.projectNote ? 18 : 6) + (selected.availability === "available" ? 8 : 2)));
+  const futureFeeReady = quote.gapCount === 0 && quote.score >= 86 && award.winner.total >= 86 && mobilize.score >= 86 && activeLead.score >= 84;
+  const steps = [
+    getDealTrailStep({
+      label: "Enquiry captured",
+      anchor: "#marketplace",
+      score: enquiryScore,
+      detail: `Selected ${selected.name} from ${selected.supplier}; ${state.projectNote ? "project note is attached" : "project note still needs buyer context"}.`,
+      action: "Open listing"
+    }),
+    getDealTrailStep({
+      label: "Trust proof",
+      anchor: "#passport",
+      score: passport.score,
+      detail: `${passport.verdict}; ${passport.proofItems.filter((item) => item.ready).length}/${passport.proofItems.length} proof items ready.`,
+      action: "Check proof"
+    }),
+    getDealTrailStep({
+      label: "RFQ packet",
+      anchor: "#rfq",
+      score: rfq.averageScore,
+      detail: `${rfq.listings.length} machine${rfq.listings.length === 1 ? "" : "s"}, ${rfq.verifiedCount} verified supplier${rfq.verifiedCount === 1 ? "" : "s"}, ${rfq.availableCount} available now.`,
+      action: "Review RFQ"
+    }),
+    getDealTrailStep({
+      label: "Award intent",
+      anchor: "#award",
+      score: award.winner.total,
+      detail: `${award.winner.listing.supplier} leads the decision board with ${award.badge.toLowerCase()} status.`,
+      action: "Review award"
+    }),
+    getDealTrailStep({
+      label: "Quote clarity",
+      anchor: "#quote-guard",
+      score: quote.score,
+      detail: `${clearQuoteTerms}/${quote.board.length} quote controls are ready or direct; ${quote.missingCount} term${quote.missingCount === 1 ? "" : "s"} unclear.`,
+      action: "Clean quote"
+    }),
+    getDealTrailStep({
+      label: "Supplier response",
+      anchor: "#lead-desk",
+      score: activeLead.score,
+      detail: `${leadDesk.profile.supplier} has ${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"}; active route is ${activeLead.lead.channel}.`,
+      action: "Open lead"
+    }),
+    getDealTrailStep({
+      label: "Mobilization",
+      anchor: "#mobilize",
+      score: mobilize.score,
+      detail: `${readyMobilize}/${mobilize.checks.length} dispatch gates ready before the buyer depends on the machine.`,
+      action: "Lock dispatch"
+    })
+  ];
+  const gates = [
+    getDealTrailGate({
+      label: "No payment collection",
+      owner: "Founder",
+      status: "Locked",
+      detail: paymentRule,
+      statusClass: "ready"
+    }),
+    getDealTrailGate({
+      label: "Supplier contact route",
+      owner: "Supplier",
+      status: activeLead.lead.channel ? "Ready" : "Review",
+      detail: `Reply channel: ${activeLead.lead.channel || "not set"}. Buyer can still settle directly with the rental company.`,
+      statusClass: activeLead.lead.channel ? "ready" : "review"
+    }),
+    getDealTrailGate({
+      label: "Quote trail",
+      owner: "Buyer",
+      status: quote.gapCount ? "Fix" : "Ready",
+      detail: quote.gapCount ? `${quote.gapCount} quote gap${quote.gapCount === 1 ? "" : "s"} before a clean booking trail.` : "Quote terms are clear enough to attach to the trail.",
+      statusClass: quote.gapCount ? "gap" : "ready"
+    }),
+    getDealTrailGate({
+      label: "Award decision",
+      owner: "Buyer",
+      status: award.winner.total >= 86 ? "Ready" : award.winner.total >= 74 ? "Review" : "Hold",
+      detail: `${award.winner.listing.supplier} score is ${award.winner.total}/100 with ${award.badge.toLowerCase()} status.`,
+      statusClass: award.winner.total >= 86 ? "ready" : award.winner.total >= 74 ? "review" : "gap"
+    }),
+    getDealTrailGate({
+      label: "Dispatch proof",
+      owner: "Ops",
+      status: mobilize.score >= 86 ? "Ready" : mobilize.score >= 66 ? "Review" : "Hold",
+      detail: `${readyMobilize}/${mobilize.checks.length} mobilization gates ready; use this before promising the start window.`,
+      statusClass: mobilize.score >= 86 ? "ready" : mobilize.score >= 66 ? "review" : "gap"
+    }),
+    getDealTrailGate({
+      label: "Future 1% eligibility",
+      owner: "Founder",
+      status: futureFeeReady ? "Earned" : "Not yet",
+      detail: futureFeeReady ? "The workflow has enough proof to later justify a success-fee conversation." : "Keep phase one clean until quote, award, supplier response, and mobilization proof are stronger.",
+      statusClass: futureFeeReady ? "ready" : "review"
+    })
+  ];
+  const stepAverage = Math.round(steps.reduce((total, step) => total + step.score, 0) / steps.length);
+  const readyGateShare = Math.round((gates.filter((gate) => gate.statusClass === "ready").length / gates.length) * 100);
+  const score = Math.max(0, Math.min(100, Math.round(stepAverage * 0.72 + readyGateShare * 0.28)));
+  const badge = score >= 86 && futureFeeReady
+    ? "Workflow earned"
+    : score >= 72
+      ? "Proof trail"
+      : "Gaps remain";
+  const summary = `${award.winner.listing.name} has a ${badge.toLowerCase()} path: ${steps.filter((step) => step.status === "Ready").length}/${steps.length} workflow steps ready, with rental payment still direct.`;
+
+  return {
+    title: `${award.winner.listing.name} deal trail`,
+    badge,
+    score,
+    summary,
+    selected,
+    passport,
+    rfq,
+    award,
+    quote,
+    mobilize,
+    leadDesk,
+    activeLead,
+    steps,
+    gates,
+    paymentRule,
+    futureFeeReady,
+    metrics: [
+      { label: "Supplier response", value: `${activeLead.score}/100` },
+      { label: "Quote clarity", value: `${quote.score}/100` },
+      { label: "Mobilization", value: `${mobilize.score}/100` },
+      { label: "Payment take", value: "0%" }
+    ]
+  };
+}
+
+function getDealTrailStep({ label, anchor, score, detail, action }) {
+  const status = score >= 84 ? "Ready" : score >= 62 ? "Review" : "Gap";
+  return {
+    label,
+    anchor,
+    score,
+    detail,
+    action,
+    status,
+    statusClass: status.toLowerCase()
+  };
+}
+
+function getDealTrailGate({ label, owner, status, detail, statusClass }) {
+  return {
+    label,
+    owner,
+    status,
+    detail,
+    statusClass
+  };
+}
+
 function renderYardAvailability() {
   const model = getYardModel();
   setText("#yardTitle", model.title);
@@ -3260,6 +5368,166 @@ function getSupplierStorefrontModel(listing = getSelectedListing()) {
     yardScore,
     score,
     badge
+  };
+}
+
+function renderSupplierWorkbench() {
+  const model = getSupplierWorkbenchModel();
+  setText("#supplierWorkbenchTitle", model.title);
+  setText("#supplierWorkbenchBadge", model.badge);
+
+  document.querySelector("#supplierWorkbenchScore").innerHTML = `
+    <strong>${model.score}/100</strong>
+    <span>${escapeHtml(model.summary)}</span>
+  `;
+
+  document.querySelector("#supplierWorkbenchNext").innerHTML = `
+    <span>Next best move</span>
+    <strong>${escapeHtml(model.nextStage.label)}</strong>
+    <p>${escapeHtml(model.nextStage.detail)}</p>
+    <button type="button" class="solid-button" data-supplier-target="${escapeHtml(model.nextStage.anchor)}" data-supplier-label="${escapeHtml(model.nextStage.label)}">${escapeHtml(model.nextStage.action)}</button>
+  `;
+
+  document.querySelector("#supplierWorkbenchFlow").innerHTML = model.stages.map((stage, index) => `
+    <button type="button" class="supplier-workbench-step ${escapeHtml(stage.statusClass)}" data-supplier-target="${escapeHtml(stage.anchor)}" data-supplier-label="${escapeHtml(stage.label)}">
+      <em>${index + 1}</em>
+      <span>
+        <strong>${escapeHtml(stage.label)}</strong>
+        ${escapeHtml(stage.detail)}
+      </span>
+      <b>${stage.score}/100</b>
+      <small>${escapeHtml(stage.status)}</small>
+    </button>
+  `).join("");
+
+  document.querySelector("#supplierWorkbenchPacket").innerHTML = model.packet.map((item) => `
+    <div>
+      <span>${escapeHtml(item.label)}</span>
+      <strong>${escapeHtml(item.value)}</strong>
+    </div>
+  `).join("");
+
+  document.querySelectorAll("[data-supplier-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(button.dataset.supplierTarget);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.hash = button.dataset.supplierTarget;
+      showToast(`${button.dataset.supplierLabel || "Supplier step"} opened.`);
+    });
+  });
+}
+
+function getSupplierWorkbenchModel() {
+  const selected = getSelectedListing();
+  const profile = getSupplierProfile(selected.supplier);
+  const studio = getSupplierStudioModel(selected);
+  const storefront = getSupplierStorefrontModel(selected);
+  const fleetImport = getFleetImportModel(selected);
+  const proofVault = getProofVaultModel(selected);
+  const revenueDesk = getRevenueDeskModel(selected);
+  const leadDesk = getLeadDeskModel(selected);
+  const accountHealth = getAccountHealthModel(selected);
+  const stages = [
+    makeSupplierStage({
+      label: "Studio profile",
+      anchor: "#studio",
+      score: studio.profileCompletion,
+      detail: `${studio.listings.length} visible listing${studio.listings.length === 1 ? "" : "s"}, ${studio.docGaps} proof gap${studio.docGaps === 1 ? "" : "s"}, ${studio.availabilityGaps} availability item${studio.availabilityGaps === 1 ? "" : "s"} to confirm.`,
+      action: studio.profileCompletion >= 84 ? "Review studio" : "Complete profile"
+    }),
+    makeSupplierStage({
+      label: "Storefront",
+      anchor: "#storefront",
+      score: storefront.score,
+      detail: `/suppliers/${profile.slug}/ with ${storefront.visibleFleetCount} public listing${storefront.visibleFleetCount === 1 ? "" : "s"} and Trust Passport average ${storefront.averagePassport}/100.`,
+      action: storefront.score >= 84 ? "Use storefront" : "Improve storefront"
+    }),
+    makeSupplierStage({
+      label: "Fleet import",
+      anchor: "#fleet-import",
+      score: fleetImport.score,
+      detail: `${fleetImport.readyListings} import-ready paid listing${fleetImport.readyListings === 1 ? "" : "s"} can add USD ${fleetImport.annualRevenue.toLocaleString()} ARR.`,
+      action: fleetImport.readyListings ? "Publish rows" : "Clean import"
+    }),
+    makeSupplierStage({
+      label: "Proof Vault",
+      anchor: "#proof-vault",
+      score: proofVault.score,
+      detail: `${proofVault.readyCount} buyer-ready proof item${proofVault.readyCount === 1 ? "" : "s"}, ${proofVault.expiringCount} expiring, ${proofVault.missingCount} missing.`,
+      action: proofVault.expiringCount || proofVault.missingCount ? "Clean proof" : "Use proof"
+    }),
+    makeSupplierStage({
+      label: "Revenue Desk",
+      anchor: "#revenue-desk",
+      score: revenueDesk.score,
+      detail: `${revenueDesk.paidListings} paid listing${revenueDesk.paidListings === 1 ? "" : "s"}, USD ${revenueDesk.annualRevenue.toLocaleString()} ARR, ${revenueDesk.renewalRiskCount} renewal risk.`,
+      action: revenueDesk.renewalRiskCount ? "Save renewals" : "Grow listings"
+    }),
+    makeSupplierStage({
+      label: "Lead Desk",
+      anchor: "#lead-desk",
+      score: leadDesk.active.score,
+      detail: `${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"}, USD ${leadDesk.totalBudget.toLocaleString()} direct enquiry pipeline.`,
+      action: leadDesk.hotCount ? "Reply now" : "Review leads"
+    }),
+    makeSupplierStage({
+      label: "Account Health",
+      anchor: "#account-health",
+      score: accountHealth.score,
+      detail: `${accountHealth.riskCount} risk signal${accountHealth.riskCount === 1 ? "" : "s"} before renewal, with USD ${accountHealth.expansionArr.toLocaleString()} expansion ARR visible.`,
+      action: accountHealth.riskCount ? "Fix account" : "Expand account"
+    }),
+    makeSupplierStage({
+      label: "Yard freshness",
+      anchor: "#yard",
+      score: studio.yardScore,
+      detail: `${studio.freshnessLabel}. Reconfirm availability before routing serious buyer enquiries.`,
+      action: studio.yardScore >= 84 ? "Keep fresh" : "Refresh yard"
+    })
+  ];
+  const score = Math.round(stages.reduce((total, stage) => total + stage.score, 0) / stages.length);
+  const nextStage = [...stages]
+    .filter((stage) => stage.status !== "Ready")
+    .sort((a, b) => a.score - b.score)[0] || stages[stages.length - 1];
+  const badge = score >= 84 ? "Supplier-ready" : score >= 68 ? "Revenue path" : "Repair desk";
+  const proofGaps = proofVault.expiringCount + proofVault.missingCount;
+  const summary = `${profile.supplier} has USD ${revenueDesk.annualRevenue.toLocaleString()} listing ARR, USD ${leadDesk.totalBudget.toLocaleString()} direct pipeline, ${proofGaps} proof risk${proofGaps === 1 ? "" : "s"}, and ${fleetImport.readyListings} import-ready listing${fleetImport.readyListings === 1 ? "" : "s"}.`;
+
+  return {
+    selected,
+    profile,
+    studio,
+    storefront,
+    fleetImport,
+    proofVault,
+    revenueDesk,
+    leadDesk,
+    accountHealth,
+    score,
+    badge,
+    title: `${profile.supplier} supplier desk`,
+    summary,
+    stages,
+    nextStage,
+    packet: [
+      { label: "Supplier", value: `${profile.supplier} - ${profile.branch}` },
+      { label: "Public profile", value: `/suppliers/${profile.slug}/` },
+      { label: "Current listing ARR", value: `USD ${revenueDesk.annualRevenue.toLocaleString()}` },
+      { label: "Direct enquiry pipeline", value: `USD ${leadDesk.totalBudget.toLocaleString()} / ${leadDesk.hotCount} hot lead${leadDesk.hotCount === 1 ? "" : "s"}` },
+      { label: "Import upside", value: `USD ${fleetImport.annualRevenue.toLocaleString()} ARR from ${fleetImport.readyListings} ready listing${fleetImport.readyListings === 1 ? "" : "s"}` },
+      { label: "Next action", value: `${nextStage.label}: ${nextStage.action}` },
+      { label: "Payment rule", value: "Supplier keeps rental payment direct; Heavyster earns listing SaaS revenue" }
+    ]
+  };
+}
+
+function makeSupplierStage(stage) {
+  const status = stage.score >= 84 ? "Ready" : stage.score >= 64 ? "Review" : "Gap";
+  return {
+    ...stage,
+    status,
+    statusClass: status.toLowerCase()
   };
 }
 
@@ -3839,6 +6107,7 @@ function saveDemandSignal(source = "Buyer request", readInputs = true) {
   renderDemandCapture();
   renderDemandRadar();
   renderSupplierHunt();
+  renderMarketSignalMatrix();
   renderMarketMaker();
   renderPageFactory();
   renderLaunchRoom();
@@ -3850,6 +6119,10 @@ function saveDemandSignal(source = "Buyer request", readInputs = true) {
   renderSupplierCommitmentRoom();
   renderListingActivationRoom();
   renderTrustRevenueLedger();
+  renderFounderWorkbench();
+  renderFounderMorningBrief();
+  renderFounderDailyMoves();
+  renderFounderCallSheet();
   showToast(`${equipment} demand saved for ${region}.`);
 }
 
@@ -4691,6 +6964,7 @@ function renderDemandRadar() {
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketSignalMatrix();
       renderMarketMaker();
       renderPageFactory();
       renderLaunchRoom();
@@ -4702,6 +6976,10 @@ function renderDemandRadar() {
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
       renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
       document.querySelector("#growth").scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -4753,6 +7031,7 @@ function renderSupplierHunt() {
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketSignalMatrix();
       renderMarketMaker();
       renderPageFactory();
       renderLaunchRoom();
@@ -4764,6 +7043,10 @@ function renderSupplierHunt() {
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
       renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
     });
   });
 }
@@ -4814,6 +7097,231 @@ function getHuntPlan(signal) {
   };
 }
 
+function renderMarketSignalMatrix() {
+  const root = document.querySelector("#marketSignalMatrix");
+  if (!root) return;
+
+  const model = getMarketSignalMatrixModel();
+  const active = model.activeCell;
+  if (!active) return;
+
+  setText("#marketSignalTitle", `${active.region} ${active.category}`);
+  setText("#marketSignalBadge", active.status);
+
+  document.querySelector("#marketSignalMetrics").innerHTML = [
+    ["Demand", `${model.totalDemand} signals`],
+    ["Live supply", `${model.totalSupply} listings`],
+    ["Verified", `${model.totalVerified} listings`],
+    ["Matrix ARR", `USD ${model.totalArr.toLocaleString()}`]
+  ].map(([label, value]) => `
+    <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
+  `).join("");
+
+  document.querySelector("#marketSignalFocus").innerHTML = `
+    <strong>${active.score}/100</strong>
+    <span>${escapeHtml(active.summary)}</span>
+    <button type="button" class="solid-button" data-matrix-key="${escapeHtml(active.key)}">${escapeHtml(active.action)}</button>
+  `;
+
+  root.innerHTML = [
+    `<div class="market-signal-head">Region</div>`,
+    ...model.categories.map((category) => `<div class="market-signal-head">${escapeHtml(category)}</div>`),
+    ...model.rows.flatMap((row) => [
+      `<div class="market-signal-region">${escapeHtml(row.region)}</div>`,
+      ...row.cells.map((cell) => `
+        <button type="button" class="market-signal-cell ${cell.statusClass} ${cell.key === active.key ? "is-active" : ""}" data-matrix-key="${escapeHtml(cell.key)}">
+          <strong>${cell.score}/100</strong>
+          <span>${cell.demandCount} demand / ${cell.visibleSupply} supply</span>
+          <small>${escapeHtml(cell.action)}</small>
+        </button>
+      `)
+    ])
+  ].join("");
+
+  document.querySelector("#marketSignalMoves").innerHTML = model.topCells.map((cell, index) => `
+    <button type="button" class="market-signal-move ${cell.statusClass} ${cell.key === active.key ? "is-active" : ""}" data-matrix-key="${escapeHtml(cell.key)}">
+      <strong>${index + 1}</strong>
+      <span>
+        ${escapeHtml(cell.region)} ${escapeHtml(cell.category)}
+        <small>${escapeHtml(cell.summary)}</small>
+      </span>
+      <em>USD ${cell.annualRevenue.toLocaleString()}</em>
+      <b>${escapeHtml(cell.status)}</b>
+    </button>
+  `).join("");
+
+  document.querySelector("#marketSignalBrief").innerHTML = buildMarketSignalMatrixText(model)
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${escapeHtml(line)}</p>`)
+    .join("");
+
+  document.querySelectorAll("[data-matrix-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.matrixKey;
+      const cell = getMarketSignalMatrixModel().cells.find((item) => item.key === key);
+      if (!cell) return;
+      state.activeMatrixKey = key;
+      if (cell.opportunity) {
+        state.activeMarketKey = key;
+        if (cell.signalKey) state.activeDemandKey = cell.signalKey;
+      }
+      saveState();
+      renderDemandRadar();
+      renderSupplierHunt();
+      renderMarketSignalMatrix();
+      renderMarketMaker();
+      renderPageFactory();
+      renderLaunchRoom();
+      renderMarketTwin();
+      renderLiquidityFlywheel();
+      renderFounderAutopilot();
+      renderDemandExchange();
+      renderProofDemandRoom();
+      renderSupplierCommitmentRoom();
+      renderListingActivationRoom();
+      renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
+      showToast(cell.opportunity ? `${cell.region} ${cell.category} market focused.` : `${cell.region} ${cell.category} needs demand capture first.`);
+    });
+  });
+}
+
+function getMarketSignalMatrixModel() {
+  const opportunities = getMarketOpportunities();
+  const opportunityMap = new Map(opportunities.map((opportunity) => [opportunity.key, opportunity]));
+  const demandSignals = getDemandSignals();
+  const categories = getMarketSignalCategories(demandSignals);
+  const regions = getMarketSignalRegions(demandSignals);
+  const cells = [];
+  const rows = regions.map((region) => {
+    const rowCells = categories.map((category) => {
+      const cell = getMarketSignalCell(region, category, opportunityMap, demandSignals);
+      cells.push(cell);
+      return cell;
+    });
+    return { region, cells: rowCells };
+  });
+  const topCells = [...cells]
+    .sort((a, b) => b.priorityScore - a.priorityScore || b.annualRevenue - a.annualRevenue || a.key.localeCompare(b.key))
+    .slice(0, 5);
+  const activeCell = cells.find((cell) => cell.key === state.activeMatrixKey)
+    || cells.find((cell) => cell.key === state.activeMarketKey)
+    || topCells[0]
+    || cells[0];
+
+  if (activeCell) state.activeMatrixKey = activeCell.key;
+
+  return {
+    categories,
+    regions,
+    rows,
+    cells,
+    topCells,
+    activeCell,
+    totalDemand: cells.reduce((total, cell) => total + cell.demandCount, 0),
+    totalSupply: cells.reduce((total, cell) => total + cell.visibleSupply, 0),
+    totalVerified: cells.reduce((total, cell) => total + cell.verifiedSupply, 0),
+    totalArr: cells.reduce((total, cell) => total + (cell.demandCount || cell.visibleSupply ? cell.annualRevenue : 0), 0)
+  };
+}
+
+function getMarketSignalCategories(demandSignals) {
+  const categories = new Set([
+    ...categoryDirectory.map((category) => category.group),
+    ...listings.map((listing) => listing.category),
+    ...demandSignals.map((signal) => getHuntPlan(signal).category)
+  ]);
+  return [...categories].sort((a, b) => {
+    const order = ["Earthmoving", "Lifting", "Roadwork", "Power", "Transport"];
+    const diff = order.indexOf(a) - order.indexOf(b);
+    return diff || a.localeCompare(b);
+  });
+}
+
+function getMarketSignalRegions(demandSignals) {
+  const regions = new Set([
+    ...listings.map((listing) => listing.region),
+    ...demandSignals.map((signal) => signal.region)
+  ]);
+  categoryDirectory.forEach((category) => {
+    category.regions.split(",").map((region) => region.trim()).filter(Boolean).forEach((region) => regions.add(region));
+  });
+  return [...regions].sort();
+}
+
+function getMarketSignalCell(region, category, opportunityMap, demandSignals) {
+  const key = `${region}::${category}`;
+  const opportunity = opportunityMap.get(key);
+  const signals = demandSignals.filter((signal) => signal.region === region && getHuntPlan(signal).category === category);
+  const demandCount = signals.reduce((total, signal) => total + Number(signal.count || 1), 0);
+  const urgentCount = signals.filter((signal) => signal.urgency === "This week" || signal.urgency === "Next week").length;
+  const visibleListings = listings.filter((listing) => listing.region === region && listing.category === category);
+  const visibleSupply = visibleListings.length;
+  const verifiedSupply = visibleListings.filter((listing) => listing.verified).length;
+  const pendingProof = visibleListings.reduce((total, listing) =>
+    total + listing.documents.filter((document) => document.toLowerCase().includes("pending")).length, 0
+  );
+  const directoryMatches = categoryDirectory.filter((item) =>
+    item.group === category && item.regions.split(",").map((regionName) => regionName.trim()).includes(region)
+  );
+  const modeledInventory = directoryMatches.reduce((total, item) =>
+    total + Math.max(1, Math.round(item.count / Math.max(1, item.regions.split(",").length))), 0
+  );
+  const launchTarget = opportunity?.launchListings
+    || Math.max(visibleSupply, demandCount ? demandCount * 4 : Math.ceil(modeledInventory / 20));
+  const supplyGap = Math.max(0, launchTarget - visibleSupply);
+  const annualRevenue = opportunity?.annualRevenue || Math.max(1, launchTarget) * 99;
+  const proofScore = visibleSupply
+    ? Math.max(0, Math.min(100, Math.round((verifiedSupply / visibleSupply) * 100 - pendingProof * 14)))
+    : 0;
+  const demandScore = Math.min(42, demandCount * 8 + urgentCount * 6);
+  const supplyScore = visibleSupply ? Math.min(22, visibleSupply * 7) : 0;
+  const revenueScore = Math.min(18, Math.round(annualRevenue / 90));
+  const gapPenalty = Math.min(20, supplyGap * 2);
+  const score = Math.max(0, Math.min(100, Math.round(18 + demandScore + supplyScore + proofScore * 0.18 + revenueScore - gapPenalty)));
+  const statusClass = score >= 76 && demandCount ? "ready" : score >= 52 || demandCount || visibleSupply ? "review" : "gap";
+  const action = demandCount && !visibleSupply ? "Recruit supply"
+    : demandCount && supplyGap > 0 ? "Fill gap"
+      : visibleSupply && proofScore < 70 ? "Clean proof"
+        : demandCount ? "Launch page"
+          : visibleSupply ? "Protect supply"
+            : "Capture demand";
+  const status = statusClass === "ready" ? "Launch" : statusClass === "review" ? "Work" : "Listen";
+  const summary = demandCount
+    ? `${demandCount} demand signal${demandCount === 1 ? "" : "s"}, ${visibleSupply} visible listing${visibleSupply === 1 ? "" : "s"}, ${supplyGap} supply gap${supplyGap === 1 ? "" : "s"}, proof ${proofScore}/100.`
+    : visibleSupply
+      ? `${visibleSupply} visible listing${visibleSupply === 1 ? "" : "s"} with proof ${proofScore}/100; capture demand before heavier growth.`
+      : `No active signal yet; monitor modeled ${category.toLowerCase()} inventory in ${region}.`;
+
+  return {
+    key,
+    region,
+    category,
+    opportunity: Boolean(opportunity),
+    signalKey: opportunity?.signalKey || (signals[0] ? getDemandKey(signals[0]) : ""),
+    demandCount,
+    urgentCount,
+    visibleSupply,
+    verifiedSupply,
+    pendingProof,
+    modeledInventory,
+    launchTarget,
+    supplyGap,
+    annualRevenue,
+    proofScore,
+    score,
+    priorityScore: score + demandCount * 5 + (demandCount && supplyGap ? 10 : 0) + (statusClass === "ready" ? 8 : 0),
+    status,
+    statusClass,
+    action,
+    summary
+  };
+}
+
 function renderMarketMaker() {
   const opportunities = getMarketOpportunities();
   if (!opportunities.length) return;
@@ -4858,6 +7366,7 @@ function renderMarketMaker() {
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketSignalMatrix();
       renderMarketMaker();
       renderPageFactory();
       renderLaunchRoom();
@@ -4869,6 +7378,10 @@ function renderMarketMaker() {
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
       renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
     });
   });
 }
@@ -4989,6 +7502,7 @@ function renderPageFactory() {
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketSignalMatrix();
       renderMarketMaker();
       renderPageFactory();
       renderLaunchRoom();
@@ -5000,6 +7514,10 @@ function renderPageFactory() {
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
       renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
       document.querySelector("#page-factory").scrollIntoView({ behavior: "smooth", block: "start" });
       showToast("Market page factory focused.");
     });
@@ -5366,6 +7884,36 @@ function renderMarketTwin() {
     </div>
   `).join("");
 
+  document.querySelector("#marketTwinVerdict").innerHTML = `
+    <div class="market-twin-verdict-head ${escapeHtml(model.verdict.statusClass)}">
+      <span>
+        <strong>${escapeHtml(model.verdict.label)}</strong>
+        ${escapeHtml(model.verdict.detail)}
+        <small>${escapeHtml(model.verdict.rule)}</small>
+      </span>
+      <b>${model.verdict.score}/100</b>
+    </div>
+    <div class="market-twin-verdict-grid">
+      ${model.verdict.controls.map((control) => `
+        <div class="market-twin-verdict-control ${escapeHtml(control.statusClass)}">
+          <span>
+            <strong>${escapeHtml(control.label)}</strong>
+            ${escapeHtml(control.detail)}
+          </span>
+          <em>${escapeHtml(control.status)}</em>
+        </div>
+      `).join("")}
+    </div>
+    <div class="market-twin-verdict-actions">
+      ${model.verdict.actions.map((action, index) => `
+        <div>
+          <strong>${index + 1}</strong>
+          <span>${escapeHtml(action)}</span>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
   document.querySelector("#marketTwinPacket").innerHTML = buildMarketTwinText(model)
     .split("\n")
     .filter(Boolean)
@@ -5384,6 +7932,10 @@ function renderMarketTwin() {
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
       renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
       showToast(`${button.textContent.trim().split(/\s+/)[0]} twin selected.`);
     });
   });
@@ -5422,6 +7974,18 @@ function getMarketTwinModel() {
     responseScore,
     annualArr
   });
+  const verdict = getMarketTwinVerdict({
+    active,
+    scenario,
+    risks,
+    totalListings,
+    demandCoverage,
+    trustScore,
+    responseScore,
+    annualArr,
+    monthlyRevenue,
+    score
+  });
   const summary = score >= 86
     ? `${scenario.label} can turn ${active.title} into a defensible page-led market wedge.`
     : score >= 72
@@ -5442,6 +8006,7 @@ function getMarketTwinModel() {
     score,
     badge,
     risks,
+    verdict,
     summary
   };
 }
@@ -5538,6 +8103,102 @@ function getMarketTwinRisk(label, score, detail, action) {
     action,
     statusClass,
     status: statusClass === "ready" ? "Ready" : statusClass === "review" ? "Watch" : "Gap"
+  };
+}
+
+function getMarketTwinVerdict(context) {
+  const riskGaps = context.risks.filter((risk) => risk.statusClass === "gap").length;
+  const readyRisks = context.risks.filter((risk) => risk.statusClass === "ready").length;
+  const supplyShortfall = Math.max(0, context.active.launchListings - context.totalListings);
+  const proofGap = Math.max(0, context.active.proofGap);
+  const responseShortfall = Math.max(0, 72 - context.responseScore);
+  const annualTarget = Math.max(990, context.active.launchListings * 99);
+  const revenueShortfall = Math.max(0, annualTarget - context.annualArr);
+  const statusClass = context.score >= 86 && riskGaps === 0
+    ? "ready"
+    : context.score >= 72 && riskGaps <= 1
+      ? "review"
+      : "gap";
+  const label = statusClass === "ready"
+    ? "Scale the wedge"
+    : statusClass === "review"
+      ? "Open carefully"
+      : "Build proof first";
+  const detail = statusClass === "ready"
+    ? `${context.scenario.label} can open traffic while the founder protects annual listing conversion.`
+    : statusClass === "review"
+      ? `${context.scenario.label} can start, but only with controlled enquiry routing and active supplier follow-up.`
+      : `${context.scenario.label} should stay in proof mode until supply, trust, response, and revenue pull improve.`;
+  const rule = statusClass === "ready"
+    ? "Route verified enquiries, measure replies, and push annual listing plans after proof is visible."
+    : statusClass === "review"
+      ? "Open the page, cap traffic, recruit suppliers, and route only proof-backed direct enquiries."
+      : "Hold heavy traffic; recruit verified listings and close proof gaps before scaling.";
+  const controls = [
+    getMarketTwinVerdictControl({
+      label: "Traffic gate",
+      status: context.demandCoverage >= 70 && riskGaps <= 1 ? "Open" : "Hold",
+      statusClass: context.demandCoverage >= 70 && riskGaps <= 1 ? "ready" : "gap",
+      detail: `${context.demandCoverage}% demand coverage with ${riskGaps} gap${riskGaps === 1 ? "" : "s"} on the twin.`
+    }),
+    getMarketTwinVerdictControl({
+      label: "Supplier gate",
+      status: supplyShortfall ? "Recruit" : "Ready",
+      statusClass: supplyShortfall ? "gap" : "ready",
+      detail: supplyShortfall ? `${supplyShortfall} more verified paid listing${supplyShortfall === 1 ? "" : "s"} needed.` : "Launch target is covered by modeled listings."
+    }),
+    getMarketTwinVerdictControl({
+      label: "Proof gate",
+      status: proofGap ? "Fix" : "Ready",
+      statusClass: proofGap ? "review" : "ready",
+      detail: proofGap ? `${proofGap} document or proof gap${proofGap === 1 ? "" : "s"} still affects trust.` : "Proof burden is clean for this twin."
+    }),
+    getMarketTwinVerdictControl({
+      label: "Response gate",
+      status: responseShortfall ? "Chase" : "Ready",
+      statusClass: responseShortfall ? "gap" : "ready",
+      detail: responseShortfall ? `Supplier response needs ${responseShortfall} more point${responseShortfall === 1 ? "" : "s"}.` : "Response score can support direct enquiries."
+    }),
+    getMarketTwinVerdictControl({
+      label: "Revenue gate",
+      status: revenueShortfall ? "Build" : "Ready",
+      statusClass: revenueShortfall ? "review" : "ready",
+      detail: revenueShortfall ? `USD ${revenueShortfall.toLocaleString()} ARR short of the first credible wedge.` : `USD ${context.annualArr.toLocaleString()} modeled annual listing revenue.`
+    }),
+    getMarketTwinVerdictControl({
+      label: "Payment gate",
+      status: "Locked",
+      statusClass: "ready",
+      detail: "0% rental take; buyer pays the rental company directly."
+    })
+  ];
+  const actions = [
+    supplyShortfall ? `Recruit ${supplyShortfall} more verified paid listing${supplyShortfall === 1 ? "" : "s"} before opening serious traffic.` : "Keep supplier density fresh and ask each anchor supplier for annual listing commitment.",
+    proofGap ? `Close ${proofGap} proof gap${proofGap === 1 ? "" : "s"} before routing high-value buyers.` : "Use proof strength in the supplier pitch and buyer page.",
+    responseShortfall ? "Keep founder follow-up tight until supplier replies can support buyer expectations." : "Route direct enquiries and measure supplier reply speed.",
+    revenueShortfall ? "Keep USD 9/99 pricing simple and sell demand proof before upsell." : "Convert the strongest suppliers to annual listing plans after first proof.",
+    "Do not introduce rental commission until the direct deal trail proves quote, award, response, and mobilization value."
+  ];
+
+  return {
+    label,
+    detail,
+    rule,
+    score: context.score,
+    statusClass,
+    readyRisks,
+    riskGaps,
+    controls,
+    actions
+  };
+}
+
+function getMarketTwinVerdictControl({ label, status, statusClass, detail }) {
+  return {
+    label,
+    status,
+    statusClass,
+    detail
   };
 }
 
@@ -5937,6 +8598,7 @@ function renderDemandExchange() {
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
+      renderMarketSignalMatrix();
       renderMarketMaker();
       renderPageFactory();
       renderLaunchRoom();
@@ -5948,6 +8610,10 @@ function renderDemandExchange() {
       renderSupplierCommitmentRoom();
       renderListingActivationRoom();
       renderTrustRevenueLedger();
+      renderFounderWorkbench();
+      renderFounderMorningBrief();
+      renderFounderDailyMoves();
+      renderFounderCallSheet();
       showToast("Demand Exchange market selected.");
     });
   });
@@ -6896,6 +9562,23 @@ function buildLeadText() {
   ].join("\n");
 }
 
+function buildBuyerWorkbenchText(model = getBuyerWorkbenchModel()) {
+  return [
+    "Heavyster Buyer Workbench",
+    `Buyer desk status: ${model.badge} - ${model.score}/100`,
+    `Selected machine: ${model.selected.name}`,
+    `Supplier: ${model.selected.supplier}`,
+    `Location: ${model.selected.city}, ${model.selected.region}`,
+    `Project note: ${state.projectNote || "No project note provided"}`,
+    `Next best move: ${model.nextStage.label} - ${model.nextStage.action}`,
+    "Decision path:",
+    ...model.stages.map((stage) => `- ${stage.status}: ${stage.label}, ${stage.score}/100. ${stage.detail}`),
+    "Control brief:",
+    ...model.packet.map((item) => `- ${item.label}: ${item.value}`),
+    "Operating rule: keep the buyer-supplier rental payment direct in phase one. Heavyster supports search, proof, RFQ, award, quote clarity, and mobilization control."
+  ].join("\n");
+}
+
 function buildTrustPassportText() {
   const listing = getSelectedListing();
   const passport = getTrustPassport(listing);
@@ -6989,6 +9672,27 @@ function buildMobilizationText(model = getMobilizationModel()) {
   ].join("\n");
 }
 
+function buildDealTrailText(model = getDealTrailModel()) {
+  return [
+    "Heavyster Direct Deal Trail",
+    `Trail status: ${model.badge} - ${model.score}/100`,
+    `Equipment: ${model.award.winner.listing.name}`,
+    `Supplier: ${model.award.winner.listing.supplier}`,
+    `Location: ${model.award.winner.listing.city}, ${model.award.winner.listing.region}`,
+    `Project note: ${state.projectNote || "No project note provided"}`,
+    `Award signal: ${model.award.badge} - ${model.award.winner.total}/100`,
+    `Quote Guard: ${model.quote.score}/100, ${model.quote.missingCount} unclear term${model.quote.missingCount === 1 ? "" : "s"}`,
+    `Supplier response: ${model.activeLead.score}/100 by ${model.activeLead.lead.channel}`,
+    `Mobilization: ${model.mobilize.score}/100`,
+    `Payment rule: ${model.paymentRule}`,
+    `Future success fee: ${model.futureFeeReady ? "eligible to discuss later after workflow proof" : "not active; keep paid listings first"}`,
+    "Workflow steps:",
+    ...model.steps.map((step) => `- ${step.status}: ${step.label}, ${step.score}/100. ${step.detail} Action: ${step.action}`),
+    "Control gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.label} (${gate.owner}) - ${gate.detail}`)
+  ].join("\n");
+}
+
 function buildYardUpdateText(model = getYardModel()) {
   return [
     "Heavyster Yard Availability OS",
@@ -7026,6 +9730,154 @@ function buildSupplierStorefrontText(model = getSupplierStorefrontModel()) {
     "Proof stack:",
     ...model.profile.proof.map((proof) => `- ${proof}`),
     "Phase one rule: buyers contact the supplier directly and payment stays between buyer and rental company. Heavyster sells verified listing visibility and supplier storefront tools."
+  ].join("\n");
+}
+
+function buildSupplierWorkbenchText(model = getSupplierWorkbenchModel()) {
+  return [
+    "Heavyster Supplier Workbench",
+    `Supplier desk status: ${model.badge} - ${model.score}/100`,
+    `Supplier: ${model.profile.supplier}`,
+    `Branch: ${model.profile.branch}`,
+    `Public profile: /suppliers/${model.profile.slug}/`,
+    `Current listing ARR: USD ${model.revenueDesk.annualRevenue.toLocaleString()}`,
+    `Direct enquiry pipeline: USD ${model.leadDesk.totalBudget.toLocaleString()}`,
+    `Import upside: USD ${model.fleetImport.annualRevenue.toLocaleString()} ARR from ${model.fleetImport.readyListings} ready listing${model.fleetImport.readyListings === 1 ? "" : "s"}`,
+    `Next best move: ${model.nextStage.label} - ${model.nextStage.action}`,
+    "Supplier revenue path:",
+    ...model.stages.map((stage) => `- ${stage.status}: ${stage.label}, ${stage.score}/100. ${stage.detail}`),
+    "Operating brief:",
+    ...model.packet.map((item) => `- ${item.label}: ${item.value}`),
+    "Operating rule: supplier keeps the rental relationship and rental payment direct. Heavyster earns phase-one SaaS listing revenue from clean, verified, active inventory."
+  ].join("\n");
+}
+
+function buildFounderWorkbenchText(model = getFounderWorkbenchModel()) {
+  return [
+    "Heavyster Founder Workbench",
+    `Founder desk status: ${model.badge} - ${model.score}/100`,
+    `Market: ${model.marketLabel}`,
+    `Demand signals: ${model.market.demandCount}`,
+    `Active listing ARR: USD ${model.ledger.activeListingArr.toLocaleString()}`,
+    `Direct enquiry pipeline: USD ${model.ledger.directPipeline.toLocaleString()}`,
+    `Trust debt: ${model.ledger.trustDebt} gap${model.ledger.trustDebt === 1 ? "" : "s"}`,
+    `Current bottleneck: ${model.flywheel.bottleneck?.label || "Collect market proof"}`,
+    `Next best move: ${model.nextStage.label} - ${model.nextStage.action}`,
+    "Scale path:",
+    ...model.stages.map((stage) => `- ${stage.status}: ${stage.label}, ${stage.score}/100. ${stage.detail}`),
+    "Founder operating brief:",
+    ...model.packet.map((item) => `- ${item.label}: ${item.value}`),
+    "Operating rule: scale paid listing revenue only as fast as supply, trust, response, and activation can support. Rental payment stays direct between buyer and rental company in phase one."
+  ].join("\n");
+}
+
+function buildFounderMorningBriefText(model = getFounderMorningBriefModel()) {
+  return [
+    "Heavyster Founder Morning Brief",
+    `Morning status: ${model.badge} - ${model.score}/100`,
+    `Market: ${model.daily.marketLabel}`,
+    `First move: ${model.firstMove.label} - ${model.firstMove.detail}`,
+    `Guardrail to protect: ${model.firstGuardrail.label} - ${model.firstGuardrail.detail}`,
+    `ARR in focus: USD ${model.daily.arrAtStake.toLocaleString()}`,
+    `Risk signals: ${model.gapCount + model.reviewCount}`,
+    "Overnight signals:",
+    ...model.signals.map((signal) => `- ${signal.status}: ${signal.label}, ${signal.value}. ${signal.detail}`),
+    "Today script:",
+    ...model.script.map((line) => `- ${line.label}: ${line.detail}`),
+    "Action lanes:",
+    ...model.lanes.map((lane) => `- ${lane.status}: ${lane.label}. ${lane.detail}`),
+    "Founder rule:",
+    "Move supplier, trust, activation, and market proof forward before opening more traffic. Phase one remains listing SaaS: buyer and rental company keep rental payment direct and Heavyster takes 0% rental commission."
+  ].join("\n");
+}
+
+function buildFounderDailyMovesText(model = getFounderDailyMovesModel()) {
+  return [
+    "Heavyster Founder Daily Moves",
+    `Daily status: ${model.badge} - ${model.score}/100`,
+    `Market: ${model.marketLabel}`,
+    `Open moves: ${model.openMoveCount}`,
+    `Blocked guardrails: ${model.blockedGuardrails}`,
+    `ARR at stake: USD ${model.arrAtStake.toLocaleString()}`,
+    "Move queue:",
+    ...model.moves.map((move) => `- ${move.status}: ${move.label}. Owner ${move.owner}, due ${move.due}, priority ${move.priority}/100, impact USD ${Number(move.impact || 0).toLocaleString()}. ${move.detail}`),
+    "Guardrails:",
+    ...model.guardrails.map((guardrail) => `- ${guardrail.status}: ${guardrail.label} (${guardrail.owner}) - ${guardrail.detail}`),
+    "Today instruction:",
+    `Start with ${model.moves[0].label}. Then protect the 0% payment-take rule while fixing the highest trust, supplier, launch, or activation gap.`,
+    "Phase-one rule: Heavyster earns listing SaaS revenue first. Buyer and rental company keep rental payment direct."
+  ].join("\n");
+}
+
+function buildFounderCallSheetText(model = getFounderCallSheetModel()) {
+  return [
+    "Heavyster Founder Supplier Call Sheet",
+    `Call sheet status: ${model.badge} - ${model.score}/100`,
+    `Market: ${model.marketLabel}`,
+    `Recommended package: ${model.recommendedPackage.label}, ${model.recommendedPackage.listings} listings, USD ${model.recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${model.recommendedPackage.annualRevenue.toLocaleString()}/year`,
+    `First call: ${model.cards[0].supplier}`,
+    "Supplier call queue:",
+    ...model.cards.map((card, index) => `${index + 1}. ${card.status}: ${card.supplier}, value USD ${card.value.toLocaleString()}. ${card.hook} Ask: ${card.ask}`),
+    "Close script:",
+    ...model.script.map((line) => `- ${line.label}: ${line.detail}`),
+    "Proof asks:",
+    ...model.proofAsks.map((ask) => `- ${ask.status}: ${ask.label} - ${ask.detail}`),
+    "Phase-one rule:",
+    "Charge for active listings only. Buyer and rental company keep rental payment direct. Heavyster takes 0% rental commission until a later confirmed-booking workflow is proven."
+  ].join("\n");
+}
+
+function buildDemoFlightDeckText(model = getDemoFlightDeckModel()) {
+  return [
+    "Heavyster Demo Flight Deck",
+    `Demo status: ${model.badge} - ${model.score}/100`,
+    `Current story: ${model.summary}`,
+    "Guided scenes:",
+    ...model.scenes.map((scene, index) => `${index + 1}. ${scene.role}: ${scene.label} - ${scene.signal} Outcome: ${scene.outcome}`),
+    "Talk track:",
+    ...model.script.map((line) => `- ${line}`),
+    "Close:",
+    "Heavyster is a paid-listing SaaS first. It helps buyers find verified rental supply, helps suppliers publish and respond, and helps founders scale markets from demand proof while keeping rental payment direct."
+  ].join("\n");
+}
+
+function buildBoardroomSnapshotText(model = getBoardroomSnapshotModel()) {
+  return [
+    "Heavyster Boardroom Snapshot",
+    `Market: ${model.marketLabel}`,
+    `Status: ${model.badge} - ${model.score}/100`,
+    `Summary: ${model.summary}`,
+    "Metrics:",
+    ...model.metrics.map((metric) => `- ${metric.label}: ${metric.value}`),
+    "Founder thesis:",
+    ...model.thesis.map((item) => `- ${item.status}: ${item.label}. ${item.detail}`),
+    "Diligence gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.label}. ${gate.detail}`),
+    "Next move:",
+    model.nextMove,
+    "Phase-one rule:",
+    "Heavyster earns from active equipment listings first. Buyer and rental company keep rental payment direct; commission stays at 0% until booking workflow proof is earned."
+  ].join("\n");
+}
+
+function buildPilotPackText(model = getPilotPackModel()) {
+  return [
+    "Heavyster 30-Day Pilot Pack",
+    `Market: ${model.marketLabel}`,
+    `Pilot status: ${model.badge} - ${model.score}/100`,
+    `Summary: ${model.summary}`,
+    `First supplier: ${model.firstSupplier}`,
+    `Pilot package: ${model.recommendedPackage.label}, ${model.recommendedPackage.listings} listing${model.recommendedPackage.listings === 1 ? "" : "s"}, USD ${model.recommendedPackage.monthlyRevenue.toLocaleString()}/month or USD ${model.recommendedPackage.annualRevenue.toLocaleString()}/year`,
+    "Metrics:",
+    ...model.metrics.map((metric) => `- ${metric.label}: ${metric.value}`),
+    "30-day sprint:",
+    ...model.weeks.map((week) => `- ${week.window}: ${week.status} - ${week.label}. Owner ${week.owner}. ${week.detail}`),
+    "Pilot gates:",
+    ...model.gates.map((gate) => `- ${gate.status}: ${gate.label}. ${gate.detail}`),
+    "Next move:",
+    model.nextMove,
+    "Phase-one rule:",
+    "Keep the pilot as listing SaaS. Buyer and rental company keep rental payment direct; Heavyster takes 0% rental commission."
   ].join("\n");
 }
 
@@ -7194,6 +10046,32 @@ function buildMarketBriefText(opportunity = getActiveMarketOpportunity()) {
   ].join("\n");
 }
 
+function buildMarketSignalMatrixText(model = getMarketSignalMatrixModel()) {
+  const active = model.activeCell;
+  if (!active) return "Heavyster Market Signal Matrix\nNo market signals are ready yet.";
+
+  return [
+    "Heavyster Market Signal Matrix",
+    `Selected wedge: ${active.region} ${active.category}`,
+    `Matrix status: ${active.status} - ${active.score}/100`,
+    `Demand: ${active.demandCount} signal${active.demandCount === 1 ? "" : "s"}`,
+    `Visible supply: ${active.visibleSupply} listing${active.visibleSupply === 1 ? "" : "s"}`,
+    `Verified supply: ${active.verifiedSupply} listing${active.verifiedSupply === 1 ? "" : "s"}`,
+    `Supply gap: ${active.supplyGap} listing${active.supplyGap === 1 ? "" : "s"}`,
+    `Proof score: ${active.proofScore}/100`,
+    `Modeled listing ARR: USD ${active.annualRevenue.toLocaleString()}`,
+    `Recommended action: ${active.action}`,
+    "Top market moves:",
+    ...model.topCells.map((cell, index) => `${index + 1}. ${cell.region} ${cell.category}: ${cell.status}, ${cell.score}/100, ${cell.demandCount} demand, ${cell.visibleSupply} supply, USD ${cell.annualRevenue.toLocaleString()} ARR. ${cell.action}.`),
+    "Matrix totals:",
+    `- Demand signals: ${model.totalDemand}`,
+    `- Live supply: ${model.totalSupply}`,
+    `- Verified listings: ${model.totalVerified}`,
+    `- Modeled matrix ARR: USD ${model.totalArr.toLocaleString()}`,
+    "Operating rule: choose markets from demand, supply, proof, and listing ARR together. Scale paid listings and verified direct enquiries before any rental payment or commission workflow."
+  ].join("\n");
+}
+
 function buildPageFactoryText(model = getPageFactoryModel()) {
   const active = model.active;
   if (!active) return "Heavyster Market Page Factory\nNo market pages are ready yet.";
@@ -7252,6 +10130,13 @@ function buildMarketTwinText(model = getMarketTwinModel()) {
     `Demand coverage: ${model.demandCoverage}% of the launch target`,
     `Trust score: ${model.trustScore}/100`,
     `Lead response score: ${model.responseScore}/100`,
+    "Launch verdict:",
+    `- Founder move: ${model.verdict.label}, ${model.verdict.score}/100. ${model.verdict.detail}`,
+    `- Traffic rule: ${model.verdict.rule}`,
+    "Verdict gates:",
+    ...model.verdict.controls.map((control) => `- ${control.status}: ${control.label} - ${control.detail}`),
+    "Next 72 hours:",
+    ...model.verdict.actions.map((action) => `- ${action}`),
     "Risk map:",
     ...model.risks.map((risk) => `- ${risk.status}: ${risk.label}, ${risk.score}/100. ${risk.detail} Action: ${risk.action}`),
     "Founder decision:",

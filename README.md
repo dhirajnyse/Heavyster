@@ -17,7 +17,18 @@ This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
 - Command Center with role workspaces for buyer, supplier, and founder workflows
+- Workflow Dock that keeps buyer, supplier, and founder paths visible as a compact operating rail
+- Demo Flight Deck that turns the full buyer, supplier, and founder product story into five clickable scenes and a copy-ready talk track
+- Boardroom Snapshot that turns wedge, listing ARR, direct pipeline, trust debt, and the next founder move into an investable operating memo
+- 30-Day Pilot Pack that converts the boardroom story into supplier calls, listing activation, controlled enquiries, pilot gates, and a copy-ready sprint memo
+- Founder Workbench that connects demand, supplier success, page factory, launch, twin, flywheel, autopilot, exchange, proof, commitment, activation, and ledger into one scale-control path
+- Founder Morning Brief that turns overnight supplier, trust, activation, launch, and market signals into one start-of-day operating read
+- Founder Daily Moves that ranks the few actions to do today across supplier success, Market Twin verdict, autopilot, activation, ledger, and market matrix
+- Founder Supplier Call Sheet that turns demand proof, supplier health, and package math into call-ready close scripts for paid listings
+- Buyer Workbench that connects search, shortlist, Jobsite Planner, Trust Passport, RFQ, Award, Quote Guard, Mobilization, and Direct Deal Trail into one decision path
+- Supplier Workbench that connects Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness into one supplier revenue path
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
+- Grouped workflow navigation so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX
 - Smart Match Rescue on the hero search for zero-result buyer recovery
 - Smart no-results recovery with nearby matches and one-click filter relaxation
@@ -28,6 +39,7 @@ This folder contains a static product prototype with:
 - Award Intelligence for supplier ranking and copy-ready buyer award memos
 - Quote Guard for rental quote clarity, hidden cost detection, and copy-ready supplier clarification
 - Mobilization Control Tower for pre-dispatch readiness and buyer-supplier handoff
+- Direct Deal Trail for no-commission booking proof, direct-payment rules, and future success-fee eligibility discipline
 - Yard Availability OS for supplier freshness scoring and copy-ready update queues
 - Supplier Fleet Storefront for verified supplier mini-sites, fleet lanes, proof stack, and buyer-ready profile packets
 - Fleet Import Console for bulk machine intake, validation gaps, and paid-listing revenue preview
@@ -42,7 +54,7 @@ This folder contains a static product prototype with:
 - Market Maker Mode for region/category expansion scoring and launch briefs
 - Market Page Factory for turning demand gaps into launch-ready SEO pages, proof gates, supplier targets, and copy-ready page packs
 - Market Launch Room for seven-day founder launch sprints, supplier strike lists, proof gaps, and first-week listing ARR targets
-- Market Twin for simulating launch intensity, paid listing density, trust risk, demand coverage, and listing ARR before scaling a category page
+- Market Twin for simulating launch intensity, paid listing density, trust risk, demand coverage, listing ARR, and founder go/no-go launch verdicts before scaling a category page
 - Liquidity Flywheel for detecting whether demand, supply, trust, response, and listing revenue are compounding or blocked by a founder bottleneck
 - Founder Autopilot for turning flywheel bottlenecks into owner-assigned weekly commands with ARR impact and copy-ready operating briefs
 - Demand Exchange for turning unmet buyer searches into supplier-facing opportunity tickets, proof requests, and copy-ready listing invites
@@ -50,6 +62,7 @@ This folder contains a static product prototype with:
 - Supplier Commitment Room for converting proof into paid listing packages, go-live gates, and copy-ready close notes
 - Listing Activation Room for turning paid listing commitments into activation queues, billing gates, publish readiness, and copy-ready go-live plans
 - Trust & Revenue Ledger for showing listing ARR, direct enquiry pipeline, trust debt, renewal exposure, and scale gates in one founder view
+- Market Signal Matrix for scanning region-by-category demand, visible supply, proof strength, supply gap, and modeled listing ARR before opening the next wedge
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

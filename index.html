@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260518-trust-ledger" />
+    <link rel="stylesheet" href="styles.css?v=20260519-pilot-pack" />
   </head>
   <body>
     <div class="app-shell">
@@ -39,27 +39,62 @@
         </a>
 
         <nav class="topnav" aria-label="Primary">
-          <a href="#marketplace">Marketplace</a>
-          <a href="#command-center">Command</a>
-          <a href="#jobsite">Jobsite</a>
-          <a href="#studio">Supplier Studio</a>
-          <a href="#revenue-desk">Revenue</a>
-          <a href="#account-health">Health</a>
-          <a href="#supplier-success">Success</a>
-          <a href="#page-factory">Pages</a>
-          <a href="#launch-room">Launch</a>
-          <a href="#market-twin">Twin</a>
-          <a href="#liquidity-flywheel">Flywheel</a>
-          <a href="#founder-autopilot">Autopilot</a>
-          <a href="#demand-exchange">Exchange</a>
-          <a href="#proof-demand">Proof Room</a>
-          <a href="#supplier-commitment">Commit</a>
-          <a href="#listing-activation">Activate</a>
-          <a href="#trust-revenue-ledger">Ledger</a>
-          <a href="#growth">Growth</a>
-          <a href="#market-maker">Market Map</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#roadmap">Roadmap</a>
+          <a href="#marketplace" data-nav-target="#marketplace">Marketplace</a>
+          <a href="#command-center" data-nav-target="#command-center">Command</a>
+          <a href="#demo-flight-deck" data-nav-target="#demo-flight-deck">Demo</a>
+          <a href="#boardroom-snapshot" data-nav-target="#boardroom-snapshot">Boardroom</a>
+          <a href="#pilot-pack" data-nav-target="#pilot-pack">Pilot</a>
+          <a href="#studio" data-nav-target="#studio">Supplier Studio</a>
+          <a href="#trust-revenue-ledger" data-nav-target="#trust-revenue-ledger">Ledger</a>
+          <a href="#pricing" data-nav-target="#pricing">Pricing</a>
+          <details class="workflow-menu" id="workflowMenu">
+            <summary>Workflows</summary>
+            <div class="workflow-menu-panel">
+              <div class="workflow-menu-group">
+                <span>Buyer</span>
+                <a href="#buyer-workbench" data-nav-target="#buyer-workbench">Buyer Desk</a>
+                <a href="#jobsite" data-nav-target="#jobsite">Jobsite</a>
+                <a href="#passport" data-nav-target="#passport">Passport</a>
+                <a href="#rfq" data-nav-target="#rfq">RFQ</a>
+                <a href="#award" data-nav-target="#award">Award</a>
+                <a href="#quote-guard" data-nav-target="#quote-guard">Quote Guard</a>
+                <a href="#mobilize" data-nav-target="#mobilize">Mobilize</a>
+                <a href="#deal-trail" data-nav-target="#deal-trail">Deal Trail</a>
+              </div>
+              <div class="workflow-menu-group">
+                <span>Supplier</span>
+                <a href="#supplier-workbench" data-nav-target="#supplier-workbench">Supplier Desk</a>
+                <a href="#storefront" data-nav-target="#storefront">Storefront</a>
+                <a href="#fleet-import" data-nav-target="#fleet-import">Import</a>
+                <a href="#proof-vault" data-nav-target="#proof-vault">Proof Vault</a>
+                <a href="#revenue-desk" data-nav-target="#revenue-desk">Revenue</a>
+                <a href="#lead-desk" data-nav-target="#lead-desk">Lead Desk</a>
+                <a href="#account-health" data-nav-target="#account-health">Health</a>
+                <a href="#yard" data-nav-target="#yard">Yard Board</a>
+              </div>
+              <div class="workflow-menu-group">
+                <span>Founder</span>
+                <a href="#founder-workbench" data-nav-target="#founder-workbench">Founder Desk</a>
+                <a href="#founder-morning" data-nav-target="#founder-morning">Morning Brief</a>
+                <a href="#founder-daily" data-nav-target="#founder-daily">Daily Moves</a>
+                <a href="#founder-call-sheet" data-nav-target="#founder-call-sheet">Call Sheet</a>
+                <a href="#supplier-success" data-nav-target="#supplier-success">Success</a>
+                <a href="#page-factory" data-nav-target="#page-factory">Pages</a>
+                <a href="#launch-room" data-nav-target="#launch-room">Launch</a>
+                <a href="#market-twin" data-nav-target="#market-twin">Twin</a>
+                <a href="#liquidity-flywheel" data-nav-target="#liquidity-flywheel">Flywheel</a>
+                <a href="#founder-autopilot" data-nav-target="#founder-autopilot">Autopilot</a>
+                <a href="#demand-exchange" data-nav-target="#demand-exchange">Exchange</a>
+                <a href="#proof-demand" data-nav-target="#proof-demand">Proof Room</a>
+                <a href="#supplier-commitment" data-nav-target="#supplier-commitment">Commit</a>
+                <a href="#listing-activation" data-nav-target="#listing-activation">Activate</a>
+                <a href="#market-signal-matrix" data-nav-target="#market-signal-matrix">Matrix</a>
+                <a href="#growth" data-nav-target="#growth">Growth</a>
+                <a href="#market-maker" data-nav-target="#market-maker">Market Map</a>
+              </div>
+            </div>
+          </details>
+          <a href="#roadmap" data-nav-target="#roadmap">Roadmap</a>
         </nav>
 
         <div class="top-actions">
@@ -67,6 +102,24 @@
           <a class="solid-button" href="#studio">List equipment</a>
         </div>
       </header>
+
+      <section class="workflow-dock" id="workflowDock" aria-label="Heavyster workflow dock">
+        <div class="workflow-dock-mode">
+          <span>Workflow dock</span>
+          <div class="workflow-dock-tabs" id="workflowDockTabs"></div>
+        </div>
+        <div class="workflow-dock-path" id="workflowDockPath"></div>
+        <div class="workflow-dock-signal">
+          <span id="workflowDockSignal">Choose a workflow path.</span>
+          <button type="button" id="workflowDockSearchButton" aria-label="Open command search" title="Search Heavyster">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10.5 18a7.5 7.5 0 1 1 5.3-12.8 7.5 7.5 0 0 1-5.3 12.8Z" />
+              <path d="m16 16 4 4" />
+            </svg>
+            <strong>Search</strong>
+          </button>
+        </div>
+      </section>
 
       <main>
         <section class="hero" id="marketplace">
@@ -149,6 +202,107 @@
           </article>
         </section>
 
+        <section class="demo-flight-section" id="demo-flight-deck">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Demo Flight Deck</p>
+              <h2>Show the full Heavyster story in five controlled moves.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyDemoFlightButton">Copy demo script</button>
+          </div>
+          <div class="demo-flight-grid">
+            <article class="demo-flight-card demo-flight-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Boardroom path</p>
+                  <h3 id="demoFlightTitle">Heavyster guided demo</h3>
+                </div>
+                <span class="pill" id="demoFlightBadge">Ready</span>
+              </div>
+              <div class="demo-flight-score" id="demoFlightScore"></div>
+              <div class="demo-flight-metrics" id="demoFlightMetrics"></div>
+            </article>
+            <article class="demo-flight-card demo-flight-scenes-card">
+              <h3>Guided scenes</h3>
+              <div class="demo-flight-scenes" id="demoFlightScenes"></div>
+            </article>
+            <article class="demo-flight-card demo-flight-script-card">
+              <h3>Talk track</h3>
+              <div class="demo-flight-script" id="demoFlightScript"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="boardroom-section" id="boardroom-snapshot">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Boardroom Snapshot</p>
+              <h2>Turn the live marketplace loop into an investable operating brief.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyBoardroomButton">Copy boardroom memo</button>
+          </div>
+          <div class="boardroom-grid">
+            <article class="boardroom-card boardroom-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Investment read</p>
+                  <h3 id="boardroomTitle">Heavyster boardroom view</h3>
+                </div>
+                <span class="pill" id="boardroomBadge">Review</span>
+              </div>
+              <div class="boardroom-score" id="boardroomScore"></div>
+              <div class="boardroom-metrics" id="boardroomMetrics"></div>
+            </article>
+            <article class="boardroom-card">
+              <h3>Founder thesis</h3>
+              <div class="boardroom-thesis" id="boardroomThesis"></div>
+            </article>
+            <article class="boardroom-card">
+              <h3>Diligence gates</h3>
+              <div class="boardroom-gates" id="boardroomGates"></div>
+            </article>
+          </div>
+          <article class="boardroom-card boardroom-memo-card">
+            <h3>Copy-ready boardroom memo</h3>
+            <div class="boardroom-memo" id="boardroomMemo"></div>
+          </article>
+        </section>
+
+        <section class="pilot-pack-section" id="pilot-pack">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">30-Day Pilot Pack</p>
+              <h2>Turn the boardroom story into a founder execution sprint.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyPilotPackButton">Copy pilot pack</button>
+          </div>
+          <div class="pilot-pack-grid">
+            <article class="pilot-pack-card pilot-pack-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Pilot command</p>
+                  <h3 id="pilotPackTitle">Heavyster pilot pack</h3>
+                </div>
+                <span class="pill" id="pilotPackBadge">Plan</span>
+              </div>
+              <div class="pilot-pack-score" id="pilotPackScore"></div>
+              <div class="pilot-pack-metrics" id="pilotPackMetrics"></div>
+            </article>
+            <article class="pilot-pack-card pilot-pack-weeks-card">
+              <h3>30-day sprint</h3>
+              <div class="pilot-pack-weeks" id="pilotPackWeeks"></div>
+            </article>
+            <article class="pilot-pack-card">
+              <h3>Pilot gates</h3>
+              <div class="pilot-pack-gates" id="pilotPackGates"></div>
+            </article>
+          </div>
+          <article class="pilot-pack-card pilot-pack-memo-card">
+            <h3>Copy-ready pilot memo</h3>
+            <div class="pilot-pack-memo" id="pilotPackMemo"></div>
+          </article>
+        </section>
+
         <section class="command-section" id="command-center">
           <div class="section-header wide">
             <div>
@@ -171,6 +325,199 @@
               <div class="command-tabs" id="commandRoleTabs" aria-label="Command workspace role"></div>
               <div class="command-workspace" id="commandWorkspace"></div>
               <div class="command-module-rail" id="commandModuleRail"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="founder-workbench-section" id="founder-workbench">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Founder Workbench</p>
+              <h2>One scale desk for deciding what to push, protect, or repair next.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyFounderWorkbenchButton">Copy founder brief</button>
+          </div>
+          <div class="founder-workbench-grid">
+            <article class="founder-workbench-card founder-workbench-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Scale readiness</p>
+                  <h3 id="founderWorkbenchTitle">Founder mission</h3>
+                </div>
+                <span class="pill" id="founderWorkbenchBadge">Draft</span>
+              </div>
+              <div class="founder-workbench-score" id="founderWorkbenchScore"></div>
+              <div class="founder-workbench-next" id="founderWorkbenchNext"></div>
+            </article>
+
+            <article class="founder-workbench-card founder-workbench-flow-card">
+              <h3>Scale path</h3>
+              <div class="founder-workbench-flow" id="founderWorkbenchFlow"></div>
+            </article>
+
+            <article class="founder-workbench-card founder-workbench-packet-card">
+              <h3>Founder operating brief</h3>
+              <div class="founder-workbench-packet" id="founderWorkbenchPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="founder-morning-section" id="founder-morning">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Founder Morning Brief</p>
+              <h2>Start the day with one sharp read on revenue, trust, supply, and the next command.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyFounderMorningButton">Copy morning brief</button>
+          </div>
+
+          <div class="founder-morning-grid">
+            <article class="founder-morning-card founder-morning-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Morning command</p>
+                  <h3 id="founderMorningTitle">Morning brief</h3>
+                </div>
+                <span class="pill" id="founderMorningBadge">Draft</span>
+              </div>
+              <div class="founder-morning-score" id="founderMorningScore"></div>
+              <div class="founder-morning-metrics" id="founderMorningMetrics"></div>
+            </article>
+
+            <article class="founder-morning-card">
+              <h3>Overnight signals</h3>
+              <div class="founder-morning-signals" id="founderMorningSignals"></div>
+            </article>
+
+            <article class="founder-morning-card">
+              <h3>Today's script</h3>
+              <div class="founder-morning-script" id="founderMorningScript"></div>
+            </article>
+
+            <article class="founder-morning-card">
+              <h3>Action lanes</h3>
+              <div class="founder-morning-lanes" id="founderMorningLanes"></div>
+            </article>
+
+            <article class="founder-morning-card founder-morning-brief-card">
+              <h3>Copy-ready morning brief</h3>
+              <div class="founder-morning-brief" id="founderMorningBrief"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="founder-daily-section" id="founder-daily">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Founder Daily Moves</p>
+              <h2>Turn every Heavyster signal into the few actions that matter today.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyFounderDailyButton">Copy daily moves</button>
+          </div>
+
+          <div class="founder-daily-grid">
+            <article class="founder-daily-card founder-daily-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Today command</p>
+                  <h3 id="founderDailyTitle">Daily moves</h3>
+                </div>
+                <span class="pill" id="founderDailyBadge">Draft</span>
+              </div>
+              <div class="founder-daily-score" id="founderDailyScore"></div>
+              <div class="founder-daily-metrics" id="founderDailyMetrics"></div>
+            </article>
+
+            <article class="founder-daily-card">
+              <h3>Move queue</h3>
+              <div class="founder-daily-queue" id="founderDailyQueue"></div>
+            </article>
+
+            <article class="founder-daily-card">
+              <h3>Guardrails</h3>
+              <div class="founder-daily-guardrails" id="founderDailyGuardrails"></div>
+            </article>
+
+            <article class="founder-daily-card founder-daily-brief-card">
+              <h3>Copy-ready daily brief</h3>
+              <div class="founder-daily-brief" id="founderDailyBrief"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="founder-call-section" id="founder-call-sheet">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Founder Supplier Call Sheet</p>
+              <h2>Turn demand proof into the supplier calls that create paid listing revenue.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyFounderCallSheetButton">Copy call sheet</button>
+          </div>
+
+          <div class="founder-call-grid">
+            <article class="founder-call-card founder-call-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Call command</p>
+                  <h3 id="founderCallSheetTitle">Supplier call sheet</h3>
+                </div>
+                <span class="pill" id="founderCallSheetBadge">Draft</span>
+              </div>
+              <div class="founder-call-score" id="founderCallSheetScore"></div>
+              <div class="founder-call-metrics" id="founderCallSheetMetrics"></div>
+            </article>
+
+            <article class="founder-call-card founder-call-list-card">
+              <h3>Call queue</h3>
+              <div class="founder-call-list" id="founderCallSheetCards"></div>
+            </article>
+
+            <article class="founder-call-card">
+              <h3>Close script</h3>
+              <div class="founder-call-script" id="founderCallSheetScript"></div>
+            </article>
+
+            <article class="founder-call-card">
+              <h3>Proof asks</h3>
+              <div class="founder-call-proof" id="founderCallSheetProof"></div>
+            </article>
+
+            <article class="founder-call-card founder-call-brief-card">
+              <h3>Copy-ready supplier call sheet</h3>
+              <div class="founder-call-brief" id="founderCallSheetBrief"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="buyer-workbench-section" id="buyer-workbench">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Buyer Workbench</p>
+              <h2>One decision desk from first search to mobilization handoff.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyBuyerWorkbenchButton">Copy buyer brief</button>
+          </div>
+          <div class="buyer-workbench-grid">
+            <article class="buyer-workbench-card buyer-workbench-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Decision readiness</p>
+                  <h3 id="buyerWorkbenchTitle">Buyer mission</h3>
+                </div>
+                <span class="pill" id="buyerWorkbenchBadge">Draft</span>
+              </div>
+              <div class="buyer-workbench-score" id="buyerWorkbenchScore"></div>
+              <div class="buyer-workbench-next" id="buyerWorkbenchNext"></div>
+            </article>
+
+            <article class="buyer-workbench-card buyer-workbench-flow-card">
+              <h3>Decision path</h3>
+              <div class="buyer-workbench-flow" id="buyerWorkbenchFlow"></div>
+            </article>
+
+            <article class="buyer-workbench-card buyer-workbench-packet-card">
+              <h3>Control brief</h3>
+              <div class="buyer-workbench-packet" id="buyerWorkbenchPacket"></div>
             </article>
           </div>
         </section>
@@ -552,6 +899,45 @@
           </div>
         </section>
 
+        <section class="deal-trail-section" id="deal-trail">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Direct Deal Trail</p>
+              <h2>Prove the booking workflow without touching rental payment.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyDealTrailButton">Copy deal trail</button>
+          </div>
+
+          <div class="deal-trail-grid">
+            <article class="deal-trail-card deal-trail-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">No-commission booking proof</p>
+                  <h3 id="dealTrailTitle">Deal trail</h3>
+                </div>
+                <span class="pill" id="dealTrailBadge">Draft</span>
+              </div>
+              <div class="deal-trail-score" id="dealTrailScore"></div>
+              <div class="deal-trail-metrics" id="dealTrailMetrics"></div>
+            </article>
+
+            <article class="deal-trail-card">
+              <h3>Workflow trail</h3>
+              <div class="deal-trail-steps" id="dealTrailSteps"></div>
+            </article>
+
+            <article class="deal-trail-card">
+              <h3>Control gates</h3>
+              <div class="deal-trail-gates" id="dealTrailGates"></div>
+            </article>
+
+            <article class="deal-trail-card deal-trail-packet-card">
+              <h3>Copy-ready deal proof</h3>
+              <div class="deal-trail-packet" id="dealTrailPacket"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="yard-section" id="yard">
           <div class="section-header wide">
             <div>
@@ -623,6 +1009,39 @@
             <article class="storefront-card storefront-packet-card">
               <h3>Buyer-ready supplier packet</h3>
               <div class="storefront-packet" id="storefrontPacket"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="supplier-workbench-section" id="supplier-workbench">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Supplier Workbench</p>
+              <h2>One revenue desk for turning a rental yard into paid listing SaaS.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copySupplierWorkbenchButton">Copy supplier brief</button>
+          </div>
+          <div class="supplier-workbench-grid">
+            <article class="supplier-workbench-card supplier-workbench-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Supplier readiness</p>
+                  <h3 id="supplierWorkbenchTitle">Supplier mission</h3>
+                </div>
+                <span class="pill" id="supplierWorkbenchBadge">Draft</span>
+              </div>
+              <div class="supplier-workbench-score" id="supplierWorkbenchScore"></div>
+              <div class="supplier-workbench-next" id="supplierWorkbenchNext"></div>
+            </article>
+
+            <article class="supplier-workbench-card supplier-workbench-flow-card">
+              <h3>Revenue path</h3>
+              <div class="supplier-workbench-flow" id="supplierWorkbenchFlow"></div>
+            </article>
+
+            <article class="supplier-workbench-card supplier-workbench-packet-card">
+              <h3>Supplier operating brief</h3>
+              <div class="supplier-workbench-packet" id="supplierWorkbenchPacket"></div>
             </article>
           </div>
         </section>
@@ -1059,6 +1478,11 @@
               <div class="market-twin-risks" id="marketTwinRisks"></div>
             </article>
 
+            <article class="market-twin-card market-twin-verdict-card">
+              <h3>Launch verdict</h3>
+              <div class="market-twin-verdict" id="marketTwinVerdict"></div>
+            </article>
+
             <article class="market-twin-card market-twin-packet-card">
               <h3>Copy-ready twin memo</h3>
               <div class="market-twin-packet" id="marketTwinPacket"></div>
@@ -1467,6 +1891,45 @@
           </div>
         </section>
 
+        <section class="market-signal-section" id="market-signal-matrix">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Market Signal Matrix</p>
+              <h2>See region-by-category demand, supply, proof, and listing ARR before choosing the next wedge.</h2>
+            </div>
+            <button type="button" class="ghost-button" id="copyMarketMatrixButton">Copy matrix brief</button>
+          </div>
+
+          <div class="market-signal-grid">
+            <article class="market-signal-card market-signal-score-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Selected wedge</p>
+                  <h3 id="marketSignalTitle">Market matrix</h3>
+                </div>
+                <span class="pill" id="marketSignalBadge">Scan</span>
+              </div>
+              <div class="market-signal-metrics" id="marketSignalMetrics"></div>
+              <div class="market-signal-focus" id="marketSignalFocus"></div>
+            </article>
+
+            <article class="market-signal-card market-signal-table-card">
+              <h3>Region x category matrix</h3>
+              <div class="market-signal-matrix" id="marketSignalMatrix"></div>
+            </article>
+
+            <article class="market-signal-card">
+              <h3>Next market moves</h3>
+              <div class="market-signal-moves" id="marketSignalMoves"></div>
+            </article>
+
+            <article class="market-signal-card market-signal-brief-card">
+              <h3>Copy-ready matrix brief</h3>
+              <div class="market-signal-brief" id="marketSignalBrief"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="pricing-section" id="pricing">
           <div class="section-header wide">
             <div>
@@ -1597,6 +2060,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260518-trust-ledger" defer></script>
+    <script src="app.js?v=20260519-pilot-pack" defer></script>
   </body>
 </html>

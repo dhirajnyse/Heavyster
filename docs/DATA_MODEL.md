@@ -54,6 +54,43 @@ Use this when the supplier manages its fleet, profile readiness, storefront publ
 - modeled_listing_revenue_upside
 - updated_at
 
+## SupplierWorkbench
+
+Use this when a rental company needs one supplier-facing revenue desk across Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness.
+
+- id
+- supplier_id
+- active_listing_id
+- studio_workspace_id
+- storefront_id
+- fleet_import_batch_id
+- proof_vault_score
+- listing_revenue_desk_id
+- supplier_lead_desk_id
+- supplier_account_health_id
+- yard_freshness_score
+- readiness_score
+- readiness_status: supplier_ready, revenue_path, repair_desk
+- next_best_stage
+- copied_at
+- created_at
+- updated_at
+
+## SupplierWorkbenchStage
+
+Use this to score each supplier operating step before Heavyster pushes more paid listings, renewal work, or buyer demand.
+
+- id
+- supplier_workbench_id
+- stage_label
+- stage_anchor
+- stage_score
+- stage_status: ready, review, gap
+- stage_detail
+- stage_action
+- created_at
+- updated_at
+
 ## ListingRevenueDesk
 
 Use this when Heavyster tracks phase-one listing subscription revenue without touching the rental payment.
@@ -285,6 +322,233 @@ Use this when Heavyster needs one simple control layer across buyer, supplier, a
 - created_at
 - updated_at
 
+## BuyerWorkbench
+
+Use this when a renter needs one decision desk across search, package planning, proof, RFQ, award, quote clarity, and mobilization readiness.
+
+- id
+- user_id
+- selected_listing_id
+- project_note
+- jobsite_package_id
+- trust_passport_id
+- rfq_packet_id
+- award_decision_id
+- quote_guard_id
+- mobilization_packet_id
+- readiness_score
+- readiness_status: buyer_ready, control_path, rescue_path
+- next_best_stage
+- copied_at
+- created_at
+- updated_at
+
+## BuyerWorkbenchStage
+
+Use this to score each step in the renter decision path.
+
+- id
+- buyer_workbench_id
+- stage_label
+- stage_anchor
+- stage_score
+- stage_status: ready, review, gap
+- stage_detail
+- stage_action
+- created_at
+- updated_at
+
+## FounderWorkbench
+
+Use this when the founder needs one scale-control desk across demand proof, supplier success, market pages, launch, market twin, liquidity flywheel, autopilot, demand exchange, proof, commitment, activation, and trust ledger.
+
+- id
+- active_market_opportunity_id
+- supplier_success_queue_id
+- market_page_factory_page_id
+- market_launch_room_id
+- market_twin_id
+- liquidity_flywheel_id
+- founder_autopilot_id
+- demand_exchange_id
+- proof_of_demand_room_id
+- supplier_commitment_room_id
+- listing_activation_room_id
+- trust_revenue_ledger_id
+- readiness_score
+- readiness_status: scale_ready, founder_control, fix_first
+- next_best_stage
+- copied_at
+- created_at
+- updated_at
+
+## FounderWorkbenchStage
+
+Use this to score each founder growth step before Heavyster pushes more supplier outreach, category traffic, or paid listing activation.
+
+- id
+- founder_workbench_id
+- stage_label
+- stage_anchor
+- stage_score
+- stage_status: ready, review, gap
+- stage_detail
+- stage_action
+- created_at
+- updated_at
+
+## FounderMorningBrief
+
+Use this when Heavyster needs a start-of-day operating read across supplier urgency, trust, launch verdict, activation, market wedge, revenue focus, and phase-one direct-payment discipline.
+
+- id
+- market_key
+- founder_workbench_id
+- founder_daily_moves_id
+- morning_score
+- morning_status: open_carefully, tight_day, ready_day
+- first_move_label
+- protected_guardrail_label
+- arr_in_focus
+- risk_signal_count
+- copied_at
+- created_at
+- updated_at
+
+## FounderMorningSignal
+
+Use this to store the risk and opportunity signals included in the morning read.
+
+- id
+- founder_morning_brief_id
+- signal_label
+- signal_value
+- signal_detail
+- anchor
+- signal_status: ready, watch, fix
+- status_class: ready, review, gap
+- created_at
+- updated_at
+
+## FounderMorningLane
+
+Use this to store the morning action lanes the founder can open from the brief.
+
+- id
+- founder_morning_brief_id
+- lane_label
+- lane_detail
+- lane_status
+- anchor
+- status_class: ready, review, gap
+- opened_at
+- created_at
+- updated_at
+
+## FounderDailyMoves
+
+Use this when Heavyster needs one daily operating queue across supplier health, market verdict, activation, trust ledger, and market matrix.
+
+- id
+- market_key
+- founder_workbench_id
+- daily_score
+- daily_status: work_today, clean_day, tighten
+- first_move_label
+- open_move_count
+- blocked_guardrail_count
+- arr_at_stake
+- daily_brief_copy
+- copied_at
+- created_at
+- updated_at
+
+## FounderDailyMove
+
+Use this to store each ranked daily founder action.
+
+- id
+- founder_daily_moves_id
+- move_label
+- move_detail
+- owner_role
+- due_window
+- anchor
+- priority_score
+- modeled_arr_impact
+- move_status: dispatch, tighten, protect
+- status_class: ready, review, gap
+- completed_at
+- created_at
+- updated_at
+
+## FounderDailyGuardrail
+
+Use this to keep the daily queue from pushing growth ahead of phase-one monetization discipline.
+
+- id
+- founder_daily_moves_id
+- guardrail_label
+- guardrail_detail
+- owner_role
+- guardrail_status
+- status_class: ready, review, gap
+- created_at
+- updated_at
+
+## FounderSupplierCallSheet
+
+Use this when Heavyster turns founder demand proof and supplier health into close-ready paid listing calls.
+
+- id
+- market_key
+- founder_morning_brief_id
+- founder_daily_moves_id
+- supplier_success_queue_id
+- proof_of_demand_room_id
+- supplier_commitment_room_id
+- call_sheet_score
+- call_sheet_status: close_today, call_first, build_proof
+- first_supplier_id
+- recommended_package_id
+- offer_arr
+- copied_at
+- created_at
+- updated_at
+
+## FounderSupplierCallCard
+
+Use this to store each supplier conversation in the founder call sheet.
+
+- id
+- founder_supplier_call_sheet_id
+- supplier_id
+- listing_id
+- call_priority
+- demand_hook
+- package_ask
+- proof_ask
+- modeled_arr_value
+- call_status: call_now, pitch, warm
+- status_class: hot, watch, grow
+- opened_at
+- created_at
+- updated_at
+
+## FounderSupplierCallProofAsk
+
+Use this to keep the call sheet honest about proof needed before verified supplier visibility.
+
+- id
+- founder_supplier_call_sheet_id
+- proof_label
+- proof_detail
+- proof_status
+- status_class: hot, watch, grow
+- completed_at
+- created_at
+- updated_at
+
 ## UniversalCommandPaletteEvent
 
 Use this when Heavyster needs to understand how users find equipment, suppliers, markets, and workflow modules.
@@ -301,6 +565,95 @@ Use this when Heavyster needs to understand how users find equipment, suppliers,
 - selected_market_opportunity_id
 - launched_at
 - created_at
+
+## NavigationMenuEvent
+
+Use this when Heavyster needs to learn which primary links and grouped workflow modules help users move through the product.
+
+- id
+- user_id
+- source: primary_nav, workflow_menu, command_palette, floating_action
+- target_anchor
+- target_role: buyer, supplier, founder, general
+- target_label
+- previous_anchor
+- current_hash
+- opened_menu
+- created_at
+
+## WorkflowDockState
+
+Use this when Heavyster needs to persist or analyze the compact workflow rail that switches between buyer, supplier, and founder paths.
+
+- id
+- user_id
+- active_role: buyer, supplier, founder
+- active_anchor
+- visible_step_count
+- selected_step_label
+- selected_step_anchor
+- command_search_opened
+- previous_role
+- created_at
+- updated_at
+
+## DemoFlightDeckEvent
+
+Use this when Heavyster needs to understand how prospects, investors, suppliers, or internal operators move through the guided demo story.
+
+- id
+- user_id
+- scene_label
+- scene_role: buyer, supplier, founder
+- scene_anchor
+- selected_listing_id
+- copied_script
+- started_at
+- completed_at
+- created_at
+
+## BoardroomSnapshotMemo
+
+Use this when Heavyster needs to save or share the current investor/operator read for a market wedge.
+
+- id
+- user_id
+- market_label
+- snapshot_score
+- active_listing_arr
+- direct_enquiry_pipeline
+- next_package_arr
+- trust_debt_count
+- demand_signal_count
+- first_supplier_to_call
+- next_founder_move
+- memo_text
+- copied_at
+- created_at
+
+## ThirtyDayPilotPack
+
+Use this when Heavyster needs to run a controlled market pilot from boardroom proof into supplier activation and direct enquiry routing.
+
+- id
+- user_id
+- market_label
+- pilot_score
+- pilot_status
+- first_supplier_id
+- recommended_package_label
+- target_listing_count
+- target_listing_arr
+- trust_debt_count
+- week_1_action
+- week_2_action
+- week_3_action
+- week_4_action
+- gate_statuses
+- memo_text
+- copied_at
+- created_at
+- updated_at
 
 ## EquipmentListing
 
@@ -479,6 +832,58 @@ Use this when the buyer needs a pre-dispatch control packet after award but befo
 - copied_at
 - created_at
 
+## DirectDealTrail
+
+Use this when Heavyster needs to prove enquiry, proof, RFQ, award, quote clarity, supplier response, and mobilization value without collecting rental payment.
+
+- id
+- listing_id
+- supplier_id
+- buyer_workbench_id
+- rfq_packet_id
+- award_decision_id
+- quote_guard_review_id
+- mobilization_handoff_id
+- supplier_lead_id
+- trail_score
+- trail_status: workflow_earned, proof_trail, gaps_remain
+- payment_rule
+- future_success_fee_eligibility
+- copy_ready_deal_proof
+- copied_at
+- created_at
+- updated_at
+
+## DirectDealTrailStep
+
+Use this to track each proof step in a no-commission booking trail.
+
+- id
+- direct_deal_trail_id
+- step_label
+- step_anchor
+- step_score
+- step_status: ready, review, gap
+- step_detail
+- step_action
+- owner_role
+- created_at
+- updated_at
+
+## DirectDealTrailGate
+
+Use this to hold phase-one monetization discipline before Heavyster considers any success fee.
+
+- id
+- direct_deal_trail_id
+- gate_label
+- owner_role
+- gate_status
+- status_class: ready, review, gap
+- gate_detail
+- created_at
+- updated_at
+
 ## AvailabilityRefresh
 
 Use this when a supplier or founder reconfirms listing freshness before serious enquiries are routed.
@@ -548,6 +953,50 @@ Use this to decide which region and equipment category deserves a launch page an
 - launch_steps
 - launch_brief
 - opportunity_status
+- created_at
+- updated_at
+
+## MarketSignalMatrix
+
+Use this when founders need a compact region-by-category grid before deciding which wedge deserves supplier outreach, page traffic, or paid listing activation.
+
+- id
+- active_market_key
+- total_demand_signal_count
+- total_visible_supply_count
+- total_verified_supply_count
+- total_modeled_listing_arr
+- selected_region
+- selected_category
+- selected_score
+- selected_action
+- copy_ready_matrix_brief
+- copied_at
+- created_at
+- updated_at
+
+## MarketSignalMatrixCell
+
+Use this to score one region/category cell inside the market matrix.
+
+- id
+- market_signal_matrix_id
+- region
+- category
+- demand_signal_count
+- urgent_signal_count
+- visible_supply_count
+- verified_supply_count
+- pending_proof_count
+- modeled_inventory_count
+- launch_target_listing_count
+- supply_gap_count
+- proof_score
+- modeled_listing_arr
+- cell_score
+- cell_status: launch, work, listen
+- recommended_action
+- linked_market_opportunity_id
 - created_at
 - updated_at
 
@@ -649,7 +1098,41 @@ Use this to simulate whether a market page is strong enough to scale.
 - trust_score
 - response_score
 - founder_decision
+- launch_verdict_id
+- verdict_status: scale_wedge, open_carefully, build_proof_first
+- traffic_rule
 - twin_memo_copy
+- created_at
+- updated_at
+
+## MarketTwinVerdict
+
+Use this to turn market simulation into a founder go/no-go launch decision.
+
+- id
+- market_twin_id
+- verdict_label
+- verdict_score
+- verdict_status: ready, review, gap
+- verdict_detail
+- traffic_rule
+- ready_risk_count
+- risk_gap_count
+- next_72_hour_actions
+- created_at
+- updated_at
+
+## MarketTwinVerdictControl
+
+Use this to hold the launch gates that must pass before scaling traffic or monetization.
+
+- id
+- market_twin_verdict_id
+- control_label
+- control_status
+- status_class: ready, review, gap
+- control_detail
+- owner_role
 - created_at
 - updated_at
 
