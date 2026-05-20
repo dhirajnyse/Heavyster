@@ -16,7 +16,11 @@ The first version is intentionally simple:
 This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
+- Marketplace Search Assist for one-click machine, category, supplier, and demand-gap routes while buyers type
+- Marketplace Supply Lens that summarizes strongest regions, categories, availability, and verified supply for the current result set
 - Marketplace Smart Views for one-click buyer shortcuts into useful fleet and demand views
+- Active marketplace filter trail so buyers can see, remove, or reset filters without losing context
+- Marketplace Result Intelligence that explains whether a search is supply-ready, supply-watch, or should become a demand signal
 - Command Center with role workspaces for buyer, supplier, and founder workflows
 - Workflow Dock that keeps buyer, supplier, and founder paths visible as a compact operating rail
 - Guided workflow movement that shows the current room, step progress, and previous/next actions
@@ -30,11 +34,21 @@ This folder contains a static product prototype with:
 - Buyer Workbench that connects search, shortlist, Jobsite Planner, Trust Passport, RFQ, Award, Quote Guard, Mobilization, and Direct Deal Trail into one decision path
 - Supplier Workbench that connects Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness into one supplier revenue path
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
-- Searchable grouped workflow navigation with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
+- Compact searchable workflow launcher with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX
 - Smart Match Rescue on the hero search for zero-result buyer recovery
 - Smart no-results recovery with nearby matches and one-click filter relaxation
-- Buyer shortlist and comparison tray
+- Buyer Fit Score on listing cards, compact rows, and the enquiry detail so renters can rank options faster
+- Buyer shortlist and comparison tray with scored options, saved badges, and suggested machines to add
+- Direct Enquiry Composer with quick, proof-first, and quote-ready messages that keep supplier payment direct
+- Supplier Response Route that shows first contact channel, response target, backup route, and follow-up timing
+- Direct Enquiry Response Tracker for copied, sent, replied, and follow-up states per selected machine
+- Supplier Reply Quality Gate that scores supplier answers for availability, rate terms, operator, documents, validity, and direct-payment readiness before award
+- Supplier Reply Clarifier that converts reply gaps into a copy-ready chase, clarification, or handoff message
+- Buyer Decision Receipt that packages fit, proof, reply quality, quote clarity, risk, and the no-commission payment rule into a copy-ready buyer note
+- Buyer Decision Action Router that sends the buyer to the next best move: chase, clarify, RFQ, quote guard, award, or mobilization
+- Supplier Listing ROI Proof that turns buyer intent, reply proof, decision movement, lead value, and direct-payment discipline into a renewal-ready supplier note
+- Supplier Renewal Close Pack that converts ROI proof into a renewal save, annual upgrade, or proof-first supplier close note
 - Jobsite Planner that turns a project note into a package of matched machines and supply gaps
 - Trust Passport with machine readiness score, proof stack, and buyer risk radar
 - RFQ Command Room for shortlist readiness and copy-ready supplier quote packets

@@ -4,7 +4,21 @@
 
 - Supplier signup and company profile
 - Equipment categories and listing pages
+- Marketplace Search Assist for keeping large inventory discovery simple as supply grows
+- Marketplace Supply Lens for making inventory density and trust quality understandable in one glance
 - Marketplace Smart Views for one-click discovery across common fleet, verified supply, and demand-gap views
+- Active marketplace filter trail for visible filter state and fast recovery from narrow searches
+- Marketplace Result Intelligence for translating search quality into the next buyer or founder action
+- Buyer Fit Score for ranking visible machines by intent, proof, availability, and trust
+- Direct Enquiry Composer for turning selected listings into supplier-ready messages while keeping payment direct
+- Supplier Response Route for showing channel, response promise, backup path, and follow-up timing
+- Direct Enquiry Response Tracker for copied, sent, replied, and follow-up states
+- Supplier Reply Quality Gate for deciding whether a supplier answer is ready for RFQ, award, quote guard, or mobilization
+- Supplier Reply Clarifier for turning supplier reply gaps into a copy-ready chase, clarification, or handoff message
+- Buyer Decision Receipt for packaging fit, proof, reply quality, quote clarity, risk, and direct-payment rules into a shareable buyer note
+- Buyer Decision Action Router for moving each receipt state into chase, clarification, RFQ, quote guard, award, or mobilization
+- Supplier Listing ROI Proof for converting buyer workflow progress into renewal-ready paid-listing evidence
+- Supplier Renewal Close Pack for converting ROI proof into renewal save, annual upgrade, or proof-first supplier close actions
 - Command Center role workspaces for simple buyer, supplier, and founder navigation
 - Workflow Dock that keeps active role paths visible while advanced modules stay discoverable through grouped navigation and command search
 - Guided workflow movement for current-room awareness, step progress, and previous/next path controls
@@ -18,10 +32,10 @@
 - Buyer Workbench for one guided renter decision path from search to mobilization handoff and direct deal trail
 - Supplier Workbench for one guided rental-yard revenue path from profile readiness to listing ARR, lead response, proof, and freshness
 - Universal Command Palette for instant access to equipment, suppliers, markets, pricing, activation, and workflow modules
-- Searchable grouped workflow menu that keeps the expanding product simple as buyer, supplier, and founder rooms grow
+- Compact searchable workflow launcher that keeps the expanding product simple as buyer, supplier, and founder rooms grow
 - Compact catalog UI for thousands of listings
 - Smart Match Rescue for zero-result searches
-- Smart empty-state recovery and shortlist comparison
+- Smart empty-state recovery and shortlist comparison matrix with next-best machine suggestions
 - Jobsite Planner that turns project notes into rental packages
 - Trust Passport for every active machine
 - RFQ Command Room for shortlist-based quote packets
@@ -66,7 +80,22 @@
 - Buyer Workbench analytics for path drop-off, proof gaps, RFQ readiness, award confidence, and quote clarity
 - Supplier Workbench analytics for revenue-path gaps, proof debt, lead response, import readiness, renewal risk, and yard freshness
 - Universal Command Palette analytics for search intent, failed searches, module launches, and workflow discovery
+- Search Assist analytics for machine, category, supplier, and demand-gap suggestion clicks
+- Supply Lens analytics for which region, category, availability, verified, and demand-gap shortcuts create enquiries
 - Marketplace Smart View analytics for which preset views create enquiries, demand signals, and supplier leads
+- Active filter trail analytics for filter removals, reset events, and no-result recovery behavior
+- Result Intelligence analytics for supply-ready searches, supply-watch searches, demand-signal clicks, and best-match opens
+- Buyer Fit Score analytics for score distribution, best-fit clicks, and fit-sort usage
+- Direct Enquiry Composer analytics for message mode selection, readiness gates, and copy events
+- Supplier Response Route analytics for channel selection, response targets, backup paths, and follow-up timing
+- Direct Enquiry Response Tracker analytics for sent status, reply status, follow-up delay, and supplier chase loops
+- Supplier Reply Quality Gate analytics for reply completeness, missing terms, supplier clarification loops, and award readiness
+- Supplier Reply Clarifier analytics for copied clarifications, missing-gate frequency, and reply-to-award conversion
+- Buyer Decision Receipt analytics for receipt score, risk frequency, copy events, and movement into RFQ, award, or mobilization
+- Buyer Decision Action Router analytics for next-best action clicks, route choice, copy events, and workflow movement after a receipt
+- Supplier Listing ROI Proof analytics for renewal-proof score, lead value, buyer movement, copy events, and supplier retention impact
+- Supplier Renewal Close Pack analytics for annual upgrade asks, renewal saves, close pack copy events, and supplier conversion
+- Shortlist Compare analytics for saved machines, suggested additions, best-score winners, and RFQ movement
 - Guided workflow movement analytics for previous/next usage, skipped rooms, and path completion
 - Workflow navigation analytics for role paths, menu searches, active-section changes, and module discovery friction
 - Trust Passport expiry and confidence history

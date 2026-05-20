@@ -35,7 +35,11 @@ Equipment listing:
 Marketplace:
 
 - Search by equipment, region, category, availability
+- Marketplace Search Assist for machine, category, supplier, and demand-gap suggestions directly under the search controls
+- Marketplace Supply Lens for showing strongest regions, categories, verified supplier depth, availability, and demand gaps without opening a separate report
 - Marketplace Smart Views for one-click filtered routes such as available now, UAE supply, verified lifting, earthmoving ready, and demand gaps
+- Active marketplace filter trail that shows the current view, active filters, one-click removals, and full reset
+- Marketplace Result Intelligence that turns every result set into a clear next action: open the best match, watch thin supply, or capture missing demand
 - Command Center that turns the growing product into role workspaces for buyer decision flow, supplier revenue flow, and founder growth flow
 - Workflow Dock that keeps the active buyer, supplier, or founder path visible without crowding the primary header
 - Guided workflow movement that gives users previous/next controls, step progress, and the next recommended room
@@ -49,12 +53,22 @@ Marketplace:
 - Buyer Workbench that gives renters a single decision desk from search to shortlist, jobsite package, proof, RFQ, award, quote clarity, mobilization handoff, and direct deal trail
 - Supplier Workbench that gives rental yards one revenue desk across Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness
 - Universal Command Palette that lets users jump to equipment, suppliers, markets, pricing, activation, and workflow modules from one search surface
-- Searchable grouped workflow navigation with role filters that keeps buyer, supplier, and founder modules organized without turning the header into a wall of links
+- Compact searchable workflow launcher with role filters that keeps buyer, supplier, and founder modules organized without turning the header into a wall of links
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
+- Buyer Fit Score that ranks each listing against current search, region, category, availability, verification, and proof
 - Smart Match Rescue on the hero search when exact supply is unavailable
 - Smart no-results recovery with nearby matches
-- Shortlist and comparison tray
+- Shortlist comparison matrix with saved listing badges, award-style scores, proof summaries, and suggested alternatives
+- Direct Enquiry Composer that turns a selected machine and project note into quick, proof-first, or quote-ready supplier messages
+- Supplier Response Route that gives buyers a first channel, backup channel, response target, and follow-up timing before sending an enquiry
+- Direct Enquiry Response Tracker that remembers copied, sent, replied, and follow-up timing for the selected machine
+- Supplier Reply Quality Gate that judges whether a supplier reply is complete enough for RFQ, award, quote guard, or mobilization
+- Supplier Reply Clarifier that turns missing reply gates into a copy-ready supplier follow-up or clean handoff note
+- Buyer Decision Receipt that combines buyer fit, Trust Passport, reply quality, quote clarity, open risks, and direct-payment rules into a shareable decision note
+- Buyer Decision Action Router that converts the receipt into next-best actions across chase, clarification, RFQ, Quote Guard, Award, and Mobilization
+- Supplier Listing ROI Proof that converts serious buyer movement into renewal evidence for paid listings without touching rental payment
+- Supplier Renewal Close Pack that turns listing ROI proof into a renewal save, annual upgrade, or proof-first close message for the rental company
 - Jobsite Planner that converts a project note into a multi-machine rental package
 - Trust Passport with readiness score, document proof, risk radar, and next verification actions
 - RFQ Command Room that turns a shortlist into a multi-supplier quote packet

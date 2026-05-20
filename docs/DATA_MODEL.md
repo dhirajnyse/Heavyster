@@ -584,6 +584,301 @@ Use this when Heavyster needs to learn which one-click marketplace views help bu
 - selected_listing_id
 - created_at
 
+## MarketplaceSearchAssistEvent
+
+Use this when Heavyster needs to learn which search suggestions help buyers move from rough intent into useful supply, supplier pages, categories, or demand capture.
+
+- id
+- user_id
+- query_text
+- suggestion_type: machine, category, supplier, demand_gap, view
+- suggestion_label
+- suggestion_value
+- previous_region_filter
+- previous_availability_filter
+- previous_category_filter
+- result_count_after
+- selected_listing_id
+- created_at
+
+## MarketplaceSupplyLensEvent
+
+Use this when Heavyster needs to learn which visible supply-density cues help buyers narrow the marketplace without feeling lost.
+
+- id
+- user_id
+- lens_kind: region, category, proof
+- lens_value
+- lens_label
+- source_mode: exact_results, nearby_recovery
+- search_text
+- previous_region_filter
+- previous_availability_filter
+- previous_category_filter
+- result_count_before
+- result_count_after
+- selected_listing_id
+- created_at
+
+## ShortlistCompareEvent
+
+Use this when Heavyster needs to learn which saved machines buyers compare before moving into RFQ, award, or direct enquiry workflows.
+
+- id
+- user_id
+- selected_listing_id
+- compared_listing_ids
+- compared_count
+- best_listing_id
+- best_supplier_id
+- best_score
+- ready_count
+- suggested_listing_id
+- action: open_compare, hide_compare, select_listing, add_suggestion
+- created_at
+
+## BuyerFitScoreEvent
+
+Use this when Heavyster needs to learn which match reasons and scores help buyers choose machines faster inside a large catalog.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- search_text
+- region_filter
+- availability_filter
+- category_filter
+- sort_mode
+- fit_score
+- fit_status
+- fit_reasons
+- clicked_from: card, compact_row, lead_packet, detail_panel, sort
+- created_at
+
+## DirectEnquiryComposerEvent
+
+Use this when Heavyster needs to learn which message modes and readiness gates help buyers send cleaner supplier enquiries.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- enquiry_mode: quick, proof, quote
+- composer_score
+- composer_status
+- ready_gate_count
+- project_note_present
+- buyer_fit_score
+- trust_score
+- quote_score
+- action: mode_change, preview, copy
+- created_at
+
+## SupplierResponseRouteEvent
+
+Use this when Heavyster needs to learn which supplier contact routes, response targets, and follow-up timing help direct enquiries get answered.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- primary_channel
+- backup_channel
+- response_target
+- follow_up_after
+- route_score
+- route_status
+- composer_score
+- action: view, copy_enquiry, select_listing
+- created_at
+
+## DirectEnquiryResponseTrackerEvent
+
+Use this when Heavyster needs to learn whether copied direct enquiries become sent messages, supplier replies, and follow-up loops.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- tracker_status: draft, copied, sent, replied
+- copied_at
+- sent_at
+- follow_up_at
+- reply_at
+- primary_channel
+- backup_channel
+- action: copy, mark_sent, log_followup, mark_replied, reset
+- created_at
+
+## SupplierReplyQualityGateEvent
+
+Use this when Heavyster needs to learn whether supplier replies are complete enough for quote guard, award, RFQ, or mobilization.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- tracker_status: draft, copied, sent, replied
+- reply_quality_score
+- reply_status: awaiting_supplier_reply, move_forward, clarify_before_award, hold_and_chase
+- ready_gate_count
+- gate_count
+- missing_gates
+- quote_score
+- trust_score
+- route_score
+- next_action
+- action: view, mark_replied, clarify, move_forward, hold_dispatch
+- created_at
+
+## SupplierReplyClarifierEvent
+
+Use this when Heavyster needs to learn which missing supplier reply terms create clarification messages and whether those messages help buyers move forward.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- clarifier_mode: chase, clarify, handoff
+- reply_quality_score
+- missing_gates
+- channel
+- urgency
+- focus
+- copied_text_length
+- action: view, copy_followup, copy_handoff
+- created_at
+
+## BuyerDecisionReceiptEvent
+
+Use this when Heavyster needs to learn which proof signals and reply gaps help a buyer move from a listing into RFQ, award, quote guard, or mobilization while payment stays direct.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- receipt_score
+- receipt_status: waiting_on_supplier, decision_ready, proceed_with_controls, hold_decision
+- buyer_fit_score
+- trust_score
+- reply_quality_score
+- quote_score
+- route_score
+- ready_evidence_count
+- risk_count
+- risks
+- payment_rule: direct_supplier_payment
+- next_action
+- action: view, copy_receipt, open_rfq, open_award, open_mobilization
+- created_at
+
+## BuyerDecisionActionRouterEvent
+
+Use this when Heavyster needs to learn which next-best action buyers choose after a decision receipt and which route moves them into the next workflow.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- receipt_score
+- receipt_status
+- router_title
+- destination: reply, RFQ, quote_guard, award, mobilization
+- route_count
+- selected_route_label
+- selected_route_action: copy_clarifier, copy_receipt, copy_router, open
+- selected_route_anchor
+- risk_count
+- payment_rule: direct_supplier_payment
+- action: view, click_route, copy_route_plan
+- created_at
+
+## SupplierListingRoiProofEvent
+
+Use this when Heavyster needs to learn which buyer workflow signals help a supplier understand paid listing value and renew active equipment listings.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- roi_proof_score
+- roi_status: renewal_grade_proof, useful_proof, build_more_proof
+- listing_annual_value
+- lead_budget
+- buyer_receipt_score
+- supplier_lead_score
+- revenue_desk_score
+- response_tracker_status
+- decision_destination
+- renewal_signal: strong, warm, weak
+- proof_gaps
+- payment_rule: direct_supplier_payment
+- action: view, copy_roi_proof, open_lead_desk, open_revenue_desk
+- created_at
+
+## SupplierRenewalClosePackEvent
+
+Use this when Heavyster needs to learn which ROI proof and revenue signals convert suppliers into renewal saves or annual listing plans.
+
+- id
+- user_id
+- listing_id
+- supplier_id
+- close_score
+- close_status: close_now, warm_close, build_proof_first
+- close_type: renewal_save, annual_upgrade, proof_close, proof_nurture
+- close_value
+- paid_listing_count
+- current_listing_arr
+- monthly_listing_count
+- renewal_risk_value
+- annual_plan_value
+- annual_savings
+- roi_proof_score
+- lead_budget
+- selected_action: copy_close_pack, open_pricing, open_revenue_desk
+- payment_rule: direct_supplier_payment
+- created_at
+
+## MarketplaceFilterTrailEvent
+
+Use this when Heavyster needs to learn which active filters buyers remove or reset while moving from a narrow search back to useful supply.
+
+- id
+- user_id
+- action: remove_filter, reset_all
+- removed_filter_key: search, region, availability, category, sort, all
+- previous_search_text
+- previous_region_filter
+- previous_availability_filter
+- previous_category_filter
+- previous_sort_mode
+- result_count_before
+- result_count_after
+- current_hash
+- created_at
+
+## MarketplaceResultIntelligenceEvent
+
+Use this when Heavyster needs to learn how buyers respond to supply-ready, supply-watch, and demand-signal guidance inside the marketplace.
+
+- id
+- user_id
+- intelligence_status: supply_ready, supply_watch, demand_signal
+- headline_text
+- search_text
+- region_filter
+- availability_filter
+- category_filter
+- result_count
+- available_count
+- verified_supplier_count
+- nearby_option_count
+- action_clicked: open_best_match, open_closest_match, capture_demand
+- selected_listing_id
+- created_at
+
 ## NavigationMenuEvent
 
 Use this when Heavyster needs to learn which primary links and grouped workflow modules help users move through the product.

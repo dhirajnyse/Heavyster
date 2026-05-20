@@ -24,8 +24,23 @@ Recommended launch pricing:
 - Supplier Workbench makes the listing subscription feel like an operating desk by showing each rental yard the exact revenue, proof, lead, import, and freshness step to fix next
 - Command Center role workspaces make the product easier to demo, sell, and expand without confusing suppliers with too many separate tools
 - Universal Command Palette keeps the product fast as modules grow, which helps suppliers and founders reach revenue workflows without training overhead
+- Marketplace Search Assist reduces buyer friction by routing vague searches toward supply, supplier pages, categories, or demand capture
+- Marketplace Supply Lens makes inventory density visible, helping buyers find strong supply faster and helping founders see which paid-listing lanes need recruitment
 - Marketplace Smart Views make verified supply and demand gaps easier to reach, which improves direct enquiry volume and supplier listing conversion
-- Searchable grouped workflow navigation reduces training and support friction as the product grows from listing SaaS into buyer, supplier, and founder operating rooms
+- Active marketplace filter trails reduce buyer drop-off after narrow searches by making every filter visible and removable
+- Marketplace Result Intelligence helps buyers understand whether to enquire, relax expectations, or create a demand signal, protecting conversion as inventory grows
+- Buyer Fit Score makes the marketplace feel advisory instead of directory-like, improving buyer confidence before direct enquiries
+- Direct Enquiry Composer makes the first supplier contact cleaner, increasing the value suppliers feel from paid listings while payment remains direct
+- Supplier Response Route turns contact speed into visible supplier value, helping paid listings prove lead quality without Heavyster collecting rental money
+- Direct Enquiry Response Tracker helps prove buyer follow-through and supplier responsiveness before any future booking-fee workflow
+- Supplier Reply Quality Gate turns supplier answers into measurable buyer readiness before quote, award, or dispatch, increasing listing ROI without charging rental commission
+- Supplier Reply Clarifier reduces buyer drop-off after incomplete supplier replies by turning missing terms into a clean supplier follow-up message
+- Buyer Decision Receipt gives suppliers visible proof that paid listings create buyer-ready decisions while Heavyster keeps rental payment direct
+- Buyer Decision Action Router helps buyers move from proof to the next workflow step, increasing the visible value of paid listings without introducing rental commission
+- Supplier Listing ROI Proof turns buyer workflow activity into renewal evidence, helping Heavyster sell and retain paid listings before any booking-fee model exists
+- Supplier Renewal Close Pack turns ROI proof into the actual supplier ask: save the renewal, move monthly listings to annual, or finish proof before renewal
+- Shortlist Compare helps serious buyers compare saved machines by trust, availability, proof, and award score before the RFQ, making listing visibility feel more valuable to suppliers
+- Compact searchable workflow launcher reduces training and support friction as the product grows from listing SaaS into buyer, supplier, and founder operating rooms
 - Guided workflow movement helps new suppliers and buyers finish revenue-producing paths without needing training calls
 
 This is deliberately easy to understand. A supplier with 10 machines pays USD 90/month or USD 990/year. That is low enough for independent rental yards and still creates clean recurring revenue.
@@ -37,9 +52,24 @@ Add these only after basic supplier onboarding works:
 - Featured category placement
 - Verified supplier badge
 - Trust Passport and proof stack on each active listing
+- Search Assist that guides buyers from rough equipment intent into the right listing, category, supplier, or demand signal
+- Supply Lens that shows buyers where supply is strongest before they abandon or over-filter a search
 - Smart View presets that surface high-intent supply and demand gaps without requiring buyers to build every filter manually
+- Active filter trail that helps buyers recover from over-filtered searches before they leave the marketplace
+- Result Intelligence that summarizes supply quality and routes buyers to the next best action before they abandon a search
+- Buyer Fit Score that highlights the best machines for the current intent without adding rental payment complexity
+- Direct Enquiry Composer that turns marketplace intent into a better supplier message without touching rental money
+- Supplier Response Route that helps buyers send through the best channel and chase at the right time
+- Direct Enquiry Response Tracker that turns copied enquiries into measurable follow-up discipline
+- Supplier Reply Quality Gate that scores supplier answers before buyers move into RFQ, award, quote guard, or mobilization
+- Supplier Reply Clarifier that writes the next supplier follow-up from the missing reply gates
+- Buyer Decision Receipt that makes the no-commission value proof visible to buyer, supplier, and founder
+- Buyer Decision Action Router that sends buyer intent into the next no-commission workflow instead of letting it stall
+- Supplier Listing ROI Proof that gives rental companies a copy-ready reason to keep paying for active listings
+- Supplier Renewal Close Pack that helps founders convert proof into USD 99 annual listing conversations
 - Smart Match Rescue that converts missing supply into supplier acquisition signals
 - Jobsite package planning for buyers with multi-machine needs
+- Shortlist comparison matrix for high-intent buyers who need to choose the safest machine quickly
 - Buyer Workbench for serious renters who need one clean path from search to proof, RFQ, award, quote clarity, and mobilization
 - RFQ routing and quote packet tools for serious buyers
 - Award memo and decision support tools for serious buyers
@@ -61,7 +91,7 @@ Add these only after basic supplier onboarding works:
 - Founder Daily Moves that turns market, supplier, activation, ledger, and matrix signals into one daily operating queue with ARR at stake
 - Founder Supplier Call Sheet that packages demand proof, trust asks, and listing offers into call-ready supplier close scripts
 - Command Center supplier workspace that helps a supplier understand the full paid-listing workspace quickly
-- Searchable grouped workflow menu that makes paid supplier tools discoverable without making the product feel complicated
+- Compact searchable workflow launcher that makes paid supplier tools discoverable without making the product feel complicated
 - Previous/next workflow guide that keeps suppliers moving from profile to proof to paid listing activation
 - Extra regions or branch pages
 - Lead response analytics

@@ -4,7 +4,11 @@
 
 - Landing page with clear phase-one thesis
 - Marketplace search prototype
+- Marketplace Search Assist for one-click machine, category, supplier, and demand-gap routes
+- Marketplace Supply Lens for quick region, category, availability, verified, and demand-gap filtering at scale
 - Marketplace Smart Views for fast pre-filtered discovery at high inventory volume
+- Active marketplace filter trail for removable search, region, availability, category, and sort chips
+- Marketplace Result Intelligence for supply-ready, supply-watch, and demand-signal guidance on every search
 - Command Center role workspaces for buyer, supplier, and founder workflow navigation
 - Workflow Dock for switching buyer, supplier, and founder paths from one compact operating rail
 - Guided workflow movement for current-room awareness, step progress, and previous/next navigation
@@ -18,16 +22,26 @@
 - Buyer Workbench that scores search, package, proof, RFQ, award, quote, mobilization, and direct deal readiness in one renter-facing path
 - Supplier Workbench that scores Studio, Storefront, Import, Proof, Revenue, Leads, Health, and Yard Freshness in one supplier-facing revenue path
 - Universal Command Palette for fast navigation across equipment, suppliers, markets, pricing, and workflow modules
-- Searchable grouped workflow navigation for buyer, supplier, and founder modules so the header can scale without visual crowding
+- Compact searchable workflow launcher for buyer, supplier, and founder modules so the header can scale without visual crowding
 - Supplier Studio 2.0 workspace with supplier-specific fleet, readiness, gaps, and revenue preview
 - Supplier Lead Desk with direct enquiry scoring, response urgency, and copy-ready replies
 - 3D logo and brand system
 - Pricing calculator
 - Phase-two 1% success fee calculator
+- Buyer Fit Score on cards, compact rows, and selected listing detail
+- Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
+- Supplier Response Route for contact channel, response target, backup route, and follow-up timing
+- Direct Enquiry Response Tracker for sent, replied, reset, and follow-up states
+- Supplier Reply Quality Gate for scoring supplier answers before RFQ, award, quote guard, or dispatch
+- Supplier Reply Clarifier for copy-ready chase, clarification, and handoff messages tied to reply quality gates
+- Buyer Decision Receipt for packaging fit, proof, reply quality, quote clarity, risk, and no-commission rules into a buyer note
+- Buyer Decision Action Router for turning each receipt state into the next action: chase, clarify, RFQ, quote guard, award, or mobilization
+- Supplier Listing ROI Proof for turning buyer movement, lead value, receipt score, and renewal economics into a supplier-facing proof note
+- Supplier Renewal Close Pack for converting ROI proof into renewal save, annual upgrade, and proof-first supplier close messages
 - Compact catalog rows for large inventory UX
 - Category directory and founder admin board
 - Smart Match Rescue for zero-result hero searches
-- Smart no-results guidance and shortlist comparison
+- Smart no-results guidance and shortlist comparison matrix with next-best machine suggestions
 - Jobsite Planner for project-to-package matching
 - Trust Passport for buyer confidence and verification gaps
 - RFQ Command Room for multi-supplier quote packets
@@ -82,6 +96,7 @@
 - Equipment detail page
 - Compact list/table view for large catalogs
 - Smart View presets for common buyer searches, verified supply, and demand-gap recovery
+- Active filter trail so buyers can understand and clear complex marketplace states quickly
 - Helpful empty state that suggests near matches
 - Hero-level Smart Match Rescue for first-screen recovery
 - Buyer shortlist and comparison tray
