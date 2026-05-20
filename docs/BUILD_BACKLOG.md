@@ -4,8 +4,10 @@
 
 - Landing page with clear phase-one thesis
 - Marketplace search prototype
+- Marketplace Smart Views for fast pre-filtered discovery at high inventory volume
 - Command Center role workspaces for buyer, supplier, and founder workflow navigation
 - Workflow Dock for switching buyer, supplier, and founder paths from one compact operating rail
+- Guided workflow movement for current-room awareness, step progress, and previous/next navigation
 - Demo Flight Deck for opening the five-scene buyer, supplier, and founder walkthrough with a copy-ready script
 - Boardroom Snapshot for packaging wedge, ARR, pipeline, trust debt, and next founder move into a copy-ready investor memo
 - 30-Day Pilot Pack for turning the boardroom snapshot into supplier calls, listing activation, controlled enquiry routing, pilot gates, and month-end ARR review
@@ -16,7 +18,7 @@
 - Buyer Workbench that scores search, package, proof, RFQ, award, quote, mobilization, and direct deal readiness in one renter-facing path
 - Supplier Workbench that scores Studio, Storefront, Import, Proof, Revenue, Leads, Health, and Yard Freshness in one supplier-facing revenue path
 - Universal Command Palette for fast navigation across equipment, suppliers, markets, pricing, and workflow modules
-- Grouped workflow navigation for buyer, supplier, and founder modules so the header can scale without visual crowding
+- Searchable grouped workflow navigation for buyer, supplier, and founder modules so the header can scale without visual crowding
 - Supplier Studio 2.0 workspace with supplier-specific fleet, readiness, gaps, and revenue preview
 - Supplier Lead Desk with direct enquiry scoring, response urgency, and copy-ready replies
 - 3D logo and brand system
@@ -79,6 +81,7 @@
 - Category pages
 - Equipment detail page
 - Compact list/table view for large catalogs
+- Smart View presets for common buyer searches, verified supply, and demand-gap recovery
 - Helpful empty state that suggests near matches
 - Hero-level Smart Match Rescue for first-screen recovery
 - Buyer shortlist and comparison tray
@@ -117,7 +120,8 @@
 - Founder Supplier Call Sheet connected to Supplier Success, Demand Exchange, Proof of Demand, Supplier Commitment, and Listing Activation so supplier outreach can close paid listings
 - Command Center role launcher so large-feature UX stays simple as the marketplace grows
 - Universal Command Palette connected to listings, suppliers, market opportunities, and workflow modules so power does not make the interface feel heavy
-- Workflow navigation telemetry connected to role, module, and active-section state so the team can see which rooms users actually use
+- Guided workflow movement connected to role paths so users always have a safe next step
+- Workflow navigation telemetry connected to role, menu search, module, and active-section state so the team can see which rooms users actually use
 - Saved demand request flow for zero-result searches
 - Supplier profile page
 - Direct enquiry form

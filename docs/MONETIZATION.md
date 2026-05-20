@@ -24,7 +24,9 @@ Recommended launch pricing:
 - Supplier Workbench makes the listing subscription feel like an operating desk by showing each rental yard the exact revenue, proof, lead, import, and freshness step to fix next
 - Command Center role workspaces make the product easier to demo, sell, and expand without confusing suppliers with too many separate tools
 - Universal Command Palette keeps the product fast as modules grow, which helps suppliers and founders reach revenue workflows without training overhead
-- Grouped workflow navigation reduces training and support friction as the product grows from listing SaaS into buyer, supplier, and founder operating rooms
+- Marketplace Smart Views make verified supply and demand gaps easier to reach, which improves direct enquiry volume and supplier listing conversion
+- Searchable grouped workflow navigation reduces training and support friction as the product grows from listing SaaS into buyer, supplier, and founder operating rooms
+- Guided workflow movement helps new suppliers and buyers finish revenue-producing paths without needing training calls
 
 This is deliberately easy to understand. A supplier with 10 machines pays USD 90/month or USD 990/year. That is low enough for independent rental yards and still creates clean recurring revenue.
 
@@ -35,6 +37,7 @@ Add these only after basic supplier onboarding works:
 - Featured category placement
 - Verified supplier badge
 - Trust Passport and proof stack on each active listing
+- Smart View presets that surface high-intent supply and demand gaps without requiring buyers to build every filter manually
 - Smart Match Rescue that converts missing supply into supplier acquisition signals
 - Jobsite package planning for buyers with multi-machine needs
 - Buyer Workbench for serious renters who need one clean path from search to proof, RFQ, award, quote clarity, and mobilization
@@ -58,7 +61,8 @@ Add these only after basic supplier onboarding works:
 - Founder Daily Moves that turns market, supplier, activation, ledger, and matrix signals into one daily operating queue with ARR at stake
 - Founder Supplier Call Sheet that packages demand proof, trust asks, and listing offers into call-ready supplier close scripts
 - Command Center supplier workspace that helps a supplier understand the full paid-listing workspace quickly
-- Grouped workflow menu that makes paid supplier tools discoverable without making the product feel complicated
+- Searchable grouped workflow menu that makes paid supplier tools discoverable without making the product feel complicated
+- Previous/next workflow guide that keeps suppliers moving from profile to proof to paid listing activation
 - Extra regions or branch pages
 - Lead response analytics
 - Demand radar showing unmet buyer searches by equipment and region

@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260519-heavyster-pilot-pack-v51";
+const DATA_VERSION = "20260519-heavyster-smart-views-v54";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -91,6 +91,59 @@ const categoryDirectory = [
   { name: "Rollers", group: "Roadwork", count: 132, regions: "India, UAE, USA", intent: "Roadwork and compaction" },
   { name: "Generators", group: "Power", count: 205, regions: "UAE, USA, UK", intent: "Event, backup, and site power" },
   { name: "Lowbed trailers", group: "Transport", count: 77, regions: "UAE, India, USA", intent: "Equipment transport support" }
+];
+
+const marketplaceSmartViews = [
+  {
+    id: "uae-supply",
+    label: "UAE supply",
+    search: "",
+    region: "UAE",
+    availability: "all",
+    category: "all",
+    sort: "verified",
+    cue: "Verified local options"
+  },
+  {
+    id: "available-now",
+    label: "Available now",
+    search: "",
+    region: "all",
+    availability: "available",
+    category: "all",
+    sort: "available",
+    cue: "Fastest direct enquiry path"
+  },
+  {
+    id: "verified-lifting",
+    label: "Verified lifting",
+    search: "",
+    region: "all",
+    availability: "all",
+    category: "Lifting",
+    sort: "verified",
+    cue: "Crane and reach proof"
+  },
+  {
+    id: "earthmoving-ready",
+    label: "Earthmoving ready",
+    search: "",
+    region: "all",
+    availability: "available",
+    category: "Earthmoving",
+    sort: "available",
+    cue: "Excavators, loaders, dozers"
+  },
+  {
+    id: "uae-crane-gap",
+    label: "UAE crane gap",
+    search: "crane",
+    region: "UAE",
+    availability: "available",
+    category: "all",
+    sort: "verified",
+    cue: "Demand signal if supply is short"
+  }
 ];
 
 const supplierProfiles = [
@@ -426,8 +479,10 @@ const commandRoutes = [
       { label: "Search", anchor: "#marketplace" },
       { label: "Desk", anchor: "#buyer-workbench" },
       { label: "Jobsite", anchor: "#jobsite" },
+      { label: "Passport", anchor: "#passport" },
       { label: "RFQ", anchor: "#rfq" },
       { label: "Award", anchor: "#award" },
+      { label: "Quote Guard", anchor: "#quote-guard" },
       { label: "Mobilize", anchor: "#mobilize" },
       { label: "Deal Trail", anchor: "#deal-trail" }
     ]
@@ -848,6 +903,8 @@ const listingRevenueRows = [
 let state = loadState();
 let toastTimer = 0;
 let commandPaletteQuery = "";
+let workflowMenuQuery = "";
+let workflowMenuRole = "all";
 
 document.addEventListener("DOMContentLoaded", () => {
   bindControls();
@@ -858,6 +915,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stabilizeHashScroll();
     syncNavigationState();
     renderWorkflowDock();
+    renderWorkflowGuide();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -949,6 +1007,8 @@ function bindControls() {
   const builderRegion = document.querySelector("#builderRegion");
   const builderAvailability = document.querySelector("#builderAvailability");
   const commandPaletteInput = document.querySelector("#commandPaletteInput");
+  const workflowMenuSearch = document.querySelector("#workflowMenuSearch");
+  const workflowMenuFilters = document.querySelector("#workflowMenuFilters");
   const jobsiteType = document.querySelector("#jobsiteType");
   const jobsiteRegion = document.querySelector("#jobsiteRegion");
   const jobsiteUrgency = document.querySelector("#jobsiteUrgency");
@@ -1461,15 +1521,39 @@ function bindControls() {
 
   document.querySelector("#quickSearchButton").addEventListener("click", () => openCommandPalette());
   document.querySelector("#workflowDockSearchButton").addEventListener("click", () => openCommandPalette());
+  document.querySelector("#workflowDockPrevButton").addEventListener("click", () => openWorkflowGuideTarget("previous"));
+  document.querySelector("#workflowDockNextButton").addEventListener("click", () => openWorkflowGuideTarget("next"));
   document.querySelector("#commandPaletteCloseButton").addEventListener("click", () => closeCommandPalette());
   document.querySelector("#commandPaletteBackdrop").addEventListener("click", () => closeCommandPalette());
   const workflowMenu = document.querySelector("#workflowMenu");
   if (workflowMenu) {
+    workflowMenu.addEventListener("toggle", () => {
+      if (!workflowMenu.open) {
+        resetWorkflowMenu();
+        return;
+      }
+      renderWorkflowMenu();
+      window.setTimeout(() => workflowMenuSearch?.focus(), 20);
+    });
     workflowMenu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => closeWorkflowMenu());
     });
     document.addEventListener("click", (event) => {
       if (workflowMenu.open && !workflowMenu.contains(event.target)) closeWorkflowMenu();
+    });
+  }
+  if (workflowMenuSearch) {
+    workflowMenuSearch.addEventListener("input", (event) => {
+      workflowMenuQuery = event.target.value;
+      renderWorkflowMenu();
+    });
+  }
+  if (workflowMenuFilters) {
+    workflowMenuFilters.querySelectorAll("[data-workflow-filter]").forEach((button) => {
+      button.addEventListener("click", () => {
+        workflowMenuRole = button.dataset.workflowFilter || "all";
+        renderWorkflowMenu();
+      });
     });
   }
   commandPaletteInput.addEventListener("input", (event) => renderCommandPalette(event.target.value));
@@ -1573,6 +1657,7 @@ function render() {
   reconcileShortlist();
   renderCommandCenter();
   renderWorkflowDock();
+  renderWorkflowGuide();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -1581,6 +1666,7 @@ function render() {
   renderFounderDailyMoves();
   renderFounderCallSheet();
   renderCategoryButtons();
+  renderMarketplaceSmartViews();
   renderMarketplaceStats();
   renderCatalog();
   renderLeadPacket();
@@ -1626,6 +1712,7 @@ function render() {
   renderMarketMaker();
   renderPricingCalculator();
   renderCommissionCalculator();
+  renderWorkflowMenu();
   document.body.classList.toggle("supplier-view", state.supplierView);
   syncNavigationState();
 }
@@ -1647,6 +1734,58 @@ function stabilizeHashScroll() {
 function closeWorkflowMenu() {
   const menu = document.querySelector("#workflowMenu");
   if (menu) menu.open = false;
+  resetWorkflowMenu();
+}
+
+function resetWorkflowMenu() {
+  workflowMenuQuery = "";
+  workflowMenuRole = "all";
+  const search = document.querySelector("#workflowMenuSearch");
+  if (search) search.value = "";
+  renderWorkflowMenu();
+}
+
+function renderWorkflowMenu() {
+  const menu = document.querySelector("#workflowMenu");
+  if (!menu) return;
+
+  const normalizedQuery = workflowMenuQuery.trim().toLowerCase();
+  const queryParts = normalizedQuery.split(/\s+/).filter(Boolean);
+  let visibleCount = 0;
+
+  menu.querySelectorAll(".workflow-menu-group").forEach((group) => {
+    const role = group.dataset.workflowRole || "";
+    let groupVisible = false;
+
+    group.querySelectorAll("a[data-nav-target]").forEach((link) => {
+      const searchableText = [
+        link.textContent || "",
+        role,
+        link.dataset.navTarget || "",
+        link.getAttribute("href") || ""
+      ].join(" ").toLowerCase();
+      const matchesRole = workflowMenuRole === "all" || workflowMenuRole === role;
+      const matchesQuery = !queryParts.length || queryParts.every((part) => searchableText.includes(part));
+      const isVisible = matchesRole && matchesQuery;
+      link.hidden = !isVisible;
+      link.classList.toggle("is-filtered", isVisible && queryParts.length > 0);
+      if (isVisible) {
+        visibleCount += 1;
+        groupVisible = true;
+      }
+    });
+
+    group.hidden = !groupVisible;
+    const count = group.querySelector("[data-workflow-count]");
+    if (count) count.textContent = String(group.querySelectorAll("a[data-nav-target]:not([hidden])").length);
+  });
+
+  menu.querySelectorAll("[data-workflow-filter]").forEach((button) => {
+    button.classList.toggle("is-active", (button.dataset.workflowFilter || "all") === workflowMenuRole);
+  });
+
+  const empty = document.querySelector("#workflowMenuEmpty");
+  if (empty) empty.hidden = visibleCount > 0;
 }
 
 function syncNavigationState() {
@@ -1701,18 +1840,55 @@ function renderWorkflowDock() {
 
   pathRoot.querySelectorAll("[data-workflow-anchor]").forEach((button) => {
     button.addEventListener("click", () => {
-      const target = document.querySelector(button.dataset.workflowAnchor);
-      if (!target) return;
-      state.commandRole = model.activeRole;
-      saveState();
-      renderCommandCenter();
-      renderWorkflowDock();
-      closeWorkflowMenu();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.location.hash = button.dataset.workflowAnchor;
-      showToast(`${button.dataset.workflowLabel || "Workflow step"} opened.`);
+      openWorkflowStep(button.dataset.workflowAnchor, button.dataset.workflowLabel, model.activeRole);
     });
   });
+}
+
+function renderWorkflowGuide() {
+  const guide = document.querySelector("#workflowDockGuide");
+  if (!guide) return;
+
+  const model = getWorkflowGuideModel();
+  const previousButton = document.querySelector("#workflowDockPrevButton");
+  const nextButton = document.querySelector("#workflowDockNextButton");
+  setText("#workflowDockCurrentRoom", `${model.role} path`);
+  setText("#workflowDockNextMove", model.moveText);
+  setText("#workflowDockProgress", model.progressText);
+
+  if (previousButton) {
+    previousButton.disabled = !model.previous;
+    previousButton.dataset.workflowGuideAnchor = model.previous?.anchor || "";
+    previousButton.dataset.workflowGuideLabel = model.previous?.label || "";
+    previousButton.dataset.workflowGuideRole = model.role;
+  }
+  if (nextButton) {
+    nextButton.disabled = !model.next;
+    nextButton.dataset.workflowGuideAnchor = model.next?.anchor || "";
+    nextButton.dataset.workflowGuideLabel = model.next?.label || "";
+    nextButton.dataset.workflowGuideRole = model.role;
+  }
+}
+
+function openWorkflowGuideTarget(direction) {
+  const button = document.querySelector(direction === "previous" ? "#workflowDockPrevButton" : "#workflowDockNextButton");
+  if (!button || button.disabled) return;
+  openWorkflowStep(button.dataset.workflowGuideAnchor, button.dataset.workflowGuideLabel, button.dataset.workflowGuideRole);
+}
+
+function openWorkflowStep(anchor, label, role) {
+  if (!anchor) return;
+  const target = document.querySelector(anchor);
+  if (!target) return;
+  if (role && commandRoles.includes(role)) state.commandRole = role;
+  saveState();
+  renderCommandCenter();
+  renderWorkflowDock();
+  renderWorkflowGuide();
+  closeWorkflowMenu();
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  window.location.hash = anchor;
+  showToast(`${label || "Workflow step"} opened.`);
 }
 
 function getWorkflowDockModel() {
@@ -1745,7 +1921,7 @@ function getWorkflowDockSteps(route, activeHash) {
   if (!route) return [];
 
   const priorityByRole = {
-    Buyer: ["Search", "Desk", "Jobsite", "RFQ", "Award", "Mobilize", "Deal Trail"],
+    Buyer: ["Search", "Desk", "Jobsite", "Passport", "RFQ", "Award", "Quote Guard", "Mobilize", "Deal Trail"],
     Supplier: ["Desk", "Storefront", "Import", "Proof", "Revenue", "Health", "Studio", "Lead Desk", "Yard"],
     Founder: ["Desk", "Morning", "Daily", "Call Sheet", "Success", "Launch", "Twin", "Flywheel", "Autopilot", "Exchange", "Proof Room", "Commit", "Activate", "Ledger", "Matrix", "Growth"]
   };
@@ -1758,6 +1934,36 @@ function getWorkflowDockSteps(route, activeHash) {
   }
 
   return chosen;
+}
+
+function getWorkflowGuideModel() {
+  const activeHash = window.location.hash || "#marketplace";
+  const route = getWorkflowRouteForHash(activeHash)
+    || commandRoutes.find((item) => item.role === state.commandRole)
+    || commandRoutes[0];
+  const steps = route.steps;
+  const activeIndex = steps.findIndex((step) => step.anchor === activeHash);
+  const currentIndex = activeIndex >= 0 ? activeIndex : 0;
+  const current = steps[currentIndex] || route.steps[0];
+  const previous = currentIndex > 0 ? steps[currentIndex - 1] : null;
+  const next = currentIndex < steps.length - 1 ? steps[currentIndex + 1] : null;
+  const progressText = `Step ${Math.min(currentIndex + 1, steps.length)} of ${steps.length}`;
+  const moveText = next
+    ? `${current.label} to ${next.label}`
+    : `${current.label} completes this path`;
+
+  return {
+    role: route.role,
+    current,
+    previous,
+    next,
+    progressText,
+    moveText
+  };
+}
+
+function getWorkflowRouteForHash(activeHash) {
+  return commandRoutes.find((route) => route.steps.some((step) => step.anchor === activeHash));
 }
 
 function renderDemoFlightDeck() {
@@ -3757,7 +3963,15 @@ function reconcileShortlist() {
 }
 
 function getFilteredListings() {
-  const query = state.search.toLowerCase();
+  return getListingsForFilters(state);
+}
+
+function getListingsForFilters(filters) {
+  const query = String(filters.search || "").toLowerCase();
+  const region = filters.region || "all";
+  const availability = filters.availability || "all";
+  const category = filters.category || "all";
+  const sort = filters.sort || "available";
   const filtered = listings.filter((listing) => {
     const searchable = [
       listing.name,
@@ -3769,14 +3983,14 @@ function getFilteredListings() {
     ].join(" ").toLowerCase();
 
     return (!query || searchable.includes(query))
-      && (state.region === "all" || listing.region === state.region)
-      && (state.availability === "all" || listing.availability === state.availability)
-      && (state.category === "all" || listing.category === state.category);
+      && (region === "all" || listing.region === region)
+      && (availability === "all" || listing.availability === availability)
+      && (category === "all" || listing.category === category);
   });
   return filtered.sort((a, b) => {
-    if (state.sort === "available") return availabilityScore(a) - availabilityScore(b) || a.name.localeCompare(b.name);
-    if (state.sort === "verified") return Number(b.verified) - Number(a.verified) || a.name.localeCompare(b.name);
-    if (state.sort === "region") return a.region.localeCompare(b.region) || a.city.localeCompare(b.city);
+    if (sort === "available") return availabilityScore(a) - availabilityScore(b) || a.name.localeCompare(b.name);
+    if (sort === "verified") return Number(b.verified) - Number(a.verified) || a.name.localeCompare(b.name);
+    if (sort === "region") return a.region.localeCompare(b.region) || a.city.localeCompare(b.city);
     return a.name.localeCompare(b.name);
   });
 }
@@ -3811,6 +4025,59 @@ function renderCategoryButtons() {
   document.querySelectorAll(".category-button").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.category === state.category);
   });
+}
+
+function renderMarketplaceSmartViews() {
+  const root = document.querySelector("#marketSmartViews");
+  if (!root) return;
+
+  const activeId = getActiveSmartViewId();
+  root.innerHTML = marketplaceSmartViews.map((view) => {
+    const matches = getListingsForFilters(view);
+    const verifiedCount = new Set(matches.filter((listing) => listing.verified).map((listing) => listing.supplier)).size;
+    const gapLabel = matches.length ? `${matches.length} listing${matches.length === 1 ? "" : "s"}` : "Gap";
+    return `
+      <button type="button" class="smart-view-card ${activeId === view.id ? "is-active" : ""}" data-smart-view="${escapeHtml(view.id)}">
+        <span>${escapeHtml(view.label)}</span>
+        <strong>${escapeHtml(gapLabel)}</strong>
+        <small>${escapeHtml(view.cue)} - ${verifiedCount} verified</small>
+      </button>
+    `;
+  }).join("");
+
+  root.querySelectorAll("[data-smart-view]").forEach((button) => {
+    button.addEventListener("click", () => applyMarketplaceSmartView(button.dataset.smartView));
+  });
+}
+
+function getActiveSmartViewId() {
+  const normalize = (value) => String(value || "");
+  const active = marketplaceSmartViews.find((view) =>
+    normalize(state.search) === normalize(view.search)
+    && state.region === view.region
+    && state.availability === view.availability
+    && state.category === view.category
+    && state.sort === view.sort
+  );
+  return active?.id || "";
+}
+
+function applyMarketplaceSmartView(viewId) {
+  const view = marketplaceSmartViews.find((item) => item.id === viewId);
+  if (!view) return;
+
+  state.search = view.search;
+  state.region = view.region;
+  state.availability = view.availability;
+  state.category = view.category;
+  state.sort = view.sort;
+  const matches = getListingsForFilters(state);
+  if (matches.length) state.selectedListingId = matches[0].id;
+  saveState();
+  syncFilterInputs();
+  render();
+  document.querySelector("#catalogTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(`${view.label} Smart View opened.`);
 }
 
 function renderMarketplaceStats() {
@@ -4002,6 +4269,8 @@ function syncFilterInputs() {
   document.querySelector("#equipmentSearch").value = state.search;
   document.querySelector("#regionFilter").value = state.region;
   document.querySelector("#availabilityFilter").value = state.availability;
+  const sortFilter = document.querySelector("#sortFilter");
+  if (sortFilter) sortFilter.value = state.sort;
 }
 
 function renderCatalog() {

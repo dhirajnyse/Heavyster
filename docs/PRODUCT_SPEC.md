@@ -35,8 +35,10 @@ Equipment listing:
 Marketplace:
 
 - Search by equipment, region, category, availability
+- Marketplace Smart Views for one-click filtered routes such as available now, UAE supply, verified lifting, earthmoving ready, and demand gaps
 - Command Center that turns the growing product into role workspaces for buyer decision flow, supplier revenue flow, and founder growth flow
 - Workflow Dock that keeps the active buyer, supplier, or founder path visible without crowding the primary header
+- Guided workflow movement that gives users previous/next controls, step progress, and the next recommended room
 - Demo Flight Deck that lets an operator, investor, or supplier run the product story through five clickable scenes with a copy-ready talk track
 - Boardroom Snapshot that converts active wedge, listing ARR, direct enquiry pipeline, trust debt, and next founder move into a copy-ready investor/operator memo
 - 30-Day Pilot Pack that turns the boardroom read into supplier calls, listing shells, controlled direct enquiries, pilot gates, and month-end ARR review
@@ -47,7 +49,7 @@ Marketplace:
 - Buyer Workbench that gives renters a single decision desk from search to shortlist, jobsite package, proof, RFQ, award, quote clarity, mobilization handoff, and direct deal trail
 - Supplier Workbench that gives rental yards one revenue desk across Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness
 - Universal Command Palette that lets users jump to equipment, suppliers, markets, pricing, activation, and workflow modules from one search surface
-- Grouped workflow navigation that keeps buyer, supplier, and founder modules organized without turning the header into a wall of links
+- Searchable grouped workflow navigation with role filters that keeps buyer, supplier, and founder modules organized without turning the header into a wall of links
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Smart Match Rescue on the hero search when exact supply is unavailable

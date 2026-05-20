@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260519-pilot-pack" />
+    <link rel="stylesheet" href="styles.css?v=20260519-smart-views" />
   </head>
   <body>
     <div class="app-shell">
@@ -50,48 +50,66 @@
           <details class="workflow-menu" id="workflowMenu">
             <summary>Workflows</summary>
             <div class="workflow-menu-panel">
-              <div class="workflow-menu-group">
-                <span>Buyer</span>
-                <a href="#buyer-workbench" data-nav-target="#buyer-workbench">Buyer Desk</a>
-                <a href="#jobsite" data-nav-target="#jobsite">Jobsite</a>
-                <a href="#passport" data-nav-target="#passport">Passport</a>
-                <a href="#rfq" data-nav-target="#rfq">RFQ</a>
-                <a href="#award" data-nav-target="#award">Award</a>
-                <a href="#quote-guard" data-nav-target="#quote-guard">Quote Guard</a>
-                <a href="#mobilize" data-nav-target="#mobilize">Mobilize</a>
-                <a href="#deal-trail" data-nav-target="#deal-trail">Deal Trail</a>
+              <div class="workflow-menu-tools">
+                <label class="screen-reader-only" for="workflowMenuSearch">Search workflows</label>
+                <input
+                  id="workflowMenuSearch"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="Search workflows, modules, roles..."
+                />
+                <div class="workflow-menu-filters" id="workflowMenuFilters" aria-label="Workflow role filter">
+                  <button type="button" class="is-active" data-workflow-filter="all">All</button>
+                  <button type="button" data-workflow-filter="Buyer">Buyer</button>
+                  <button type="button" data-workflow-filter="Supplier">Supplier</button>
+                  <button type="button" data-workflow-filter="Founder">Founder</button>
+                </div>
               </div>
-              <div class="workflow-menu-group">
-                <span>Supplier</span>
-                <a href="#supplier-workbench" data-nav-target="#supplier-workbench">Supplier Desk</a>
-                <a href="#storefront" data-nav-target="#storefront">Storefront</a>
-                <a href="#fleet-import" data-nav-target="#fleet-import">Import</a>
-                <a href="#proof-vault" data-nav-target="#proof-vault">Proof Vault</a>
-                <a href="#revenue-desk" data-nav-target="#revenue-desk">Revenue</a>
-                <a href="#lead-desk" data-nav-target="#lead-desk">Lead Desk</a>
-                <a href="#account-health" data-nav-target="#account-health">Health</a>
-                <a href="#yard" data-nav-target="#yard">Yard Board</a>
+              <div class="workflow-menu-groups" id="workflowMenuGroups">
+                <div class="workflow-menu-group" data-workflow-role="Buyer">
+                  <span>Buyer <b data-workflow-count>8</b></span>
+                  <a href="#buyer-workbench" data-nav-target="#buyer-workbench">Buyer Desk</a>
+                  <a href="#jobsite" data-nav-target="#jobsite">Jobsite</a>
+                  <a href="#passport" data-nav-target="#passport">Passport</a>
+                  <a href="#rfq" data-nav-target="#rfq">RFQ</a>
+                  <a href="#award" data-nav-target="#award">Award</a>
+                  <a href="#quote-guard" data-nav-target="#quote-guard">Quote Guard</a>
+                  <a href="#mobilize" data-nav-target="#mobilize">Mobilize</a>
+                  <a href="#deal-trail" data-nav-target="#deal-trail">Deal Trail</a>
+                </div>
+                <div class="workflow-menu-group" data-workflow-role="Supplier">
+                  <span>Supplier <b data-workflow-count>8</b></span>
+                  <a href="#supplier-workbench" data-nav-target="#supplier-workbench">Supplier Desk</a>
+                  <a href="#storefront" data-nav-target="#storefront">Storefront</a>
+                  <a href="#fleet-import" data-nav-target="#fleet-import">Import</a>
+                  <a href="#proof-vault" data-nav-target="#proof-vault">Proof Vault</a>
+                  <a href="#revenue-desk" data-nav-target="#revenue-desk">Revenue</a>
+                  <a href="#lead-desk" data-nav-target="#lead-desk">Lead Desk</a>
+                  <a href="#account-health" data-nav-target="#account-health">Health</a>
+                  <a href="#yard" data-nav-target="#yard">Yard Board</a>
+                </div>
+                <div class="workflow-menu-group" data-workflow-role="Founder">
+                  <span>Founder <b data-workflow-count>17</b></span>
+                  <a href="#founder-workbench" data-nav-target="#founder-workbench">Founder Desk</a>
+                  <a href="#founder-morning" data-nav-target="#founder-morning">Morning Brief</a>
+                  <a href="#founder-daily" data-nav-target="#founder-daily">Daily Moves</a>
+                  <a href="#founder-call-sheet" data-nav-target="#founder-call-sheet">Call Sheet</a>
+                  <a href="#supplier-success" data-nav-target="#supplier-success">Success</a>
+                  <a href="#page-factory" data-nav-target="#page-factory">Pages</a>
+                  <a href="#launch-room" data-nav-target="#launch-room">Launch</a>
+                  <a href="#market-twin" data-nav-target="#market-twin">Twin</a>
+                  <a href="#liquidity-flywheel" data-nav-target="#liquidity-flywheel">Flywheel</a>
+                  <a href="#founder-autopilot" data-nav-target="#founder-autopilot">Autopilot</a>
+                  <a href="#demand-exchange" data-nav-target="#demand-exchange">Exchange</a>
+                  <a href="#proof-demand" data-nav-target="#proof-demand">Proof Room</a>
+                  <a href="#supplier-commitment" data-nav-target="#supplier-commitment">Commit</a>
+                  <a href="#listing-activation" data-nav-target="#listing-activation">Activate</a>
+                  <a href="#market-signal-matrix" data-nav-target="#market-signal-matrix">Matrix</a>
+                  <a href="#growth" data-nav-target="#growth">Growth</a>
+                  <a href="#market-maker" data-nav-target="#market-maker">Market Map</a>
+                </div>
               </div>
-              <div class="workflow-menu-group">
-                <span>Founder</span>
-                <a href="#founder-workbench" data-nav-target="#founder-workbench">Founder Desk</a>
-                <a href="#founder-morning" data-nav-target="#founder-morning">Morning Brief</a>
-                <a href="#founder-daily" data-nav-target="#founder-daily">Daily Moves</a>
-                <a href="#founder-call-sheet" data-nav-target="#founder-call-sheet">Call Sheet</a>
-                <a href="#supplier-success" data-nav-target="#supplier-success">Success</a>
-                <a href="#page-factory" data-nav-target="#page-factory">Pages</a>
-                <a href="#launch-room" data-nav-target="#launch-room">Launch</a>
-                <a href="#market-twin" data-nav-target="#market-twin">Twin</a>
-                <a href="#liquidity-flywheel" data-nav-target="#liquidity-flywheel">Flywheel</a>
-                <a href="#founder-autopilot" data-nav-target="#founder-autopilot">Autopilot</a>
-                <a href="#demand-exchange" data-nav-target="#demand-exchange">Exchange</a>
-                <a href="#proof-demand" data-nav-target="#proof-demand">Proof Room</a>
-                <a href="#supplier-commitment" data-nav-target="#supplier-commitment">Commit</a>
-                <a href="#listing-activation" data-nav-target="#listing-activation">Activate</a>
-                <a href="#market-signal-matrix" data-nav-target="#market-signal-matrix">Matrix</a>
-                <a href="#growth" data-nav-target="#growth">Growth</a>
-                <a href="#market-maker" data-nav-target="#market-maker">Market Map</a>
-              </div>
+              <p class="workflow-menu-empty" id="workflowMenuEmpty" hidden>No matching workflow yet.</p>
             </div>
           </details>
           <a href="#roadmap" data-nav-target="#roadmap">Roadmap</a>
@@ -117,6 +135,23 @@
               <path d="m16 16 4 4" />
             </svg>
             <strong>Search</strong>
+          </button>
+        </div>
+        <div class="workflow-dock-guide" id="workflowDockGuide" aria-label="Guided workflow movement">
+          <button type="button" id="workflowDockPrevButton" aria-label="Open previous workflow step" title="Previous workflow step">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div>
+            <span id="workflowDockCurrentRoom">Buyer path</span>
+            <strong id="workflowDockNextMove">Search to Buyer Desk</strong>
+            <small id="workflowDockProgress">Step 1 of 7</small>
+          </div>
+          <button type="button" id="workflowDockNextButton" aria-label="Open next workflow step" title="Next workflow step">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="m9 6 6 6-6 6" />
+            </svg>
           </button>
         </div>
       </section>
@@ -174,6 +209,7 @@
                 <span><strong id="verifiedCount">0</strong> verified suppliers</span>
                 <span><strong>0%</strong> rental commission</span>
               </div>
+              <div class="smart-views" id="marketSmartViews" aria-label="Marketplace Smart Views"></div>
               <div class="search-rescue" id="searchRescue" aria-live="polite"></div>
             </div>
           </div>
@@ -2060,6 +2096,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260519-pilot-pack" defer></script>
+    <script src="app.js?v=20260519-smart-views" defer></script>
   </body>
 </html>

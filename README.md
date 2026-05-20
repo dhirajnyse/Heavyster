@@ -16,8 +16,10 @@ The first version is intentionally simple:
 This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
+- Marketplace Smart Views for one-click buyer shortcuts into useful fleet and demand views
 - Command Center with role workspaces for buyer, supplier, and founder workflows
 - Workflow Dock that keeps buyer, supplier, and founder paths visible as a compact operating rail
+- Guided workflow movement that shows the current room, step progress, and previous/next actions
 - Demo Flight Deck that turns the full buyer, supplier, and founder product story into five clickable scenes and a copy-ready talk track
 - Boardroom Snapshot that turns wedge, listing ARR, direct pipeline, trust debt, and the next founder move into an investable operating memo
 - 30-Day Pilot Pack that converts the boardroom story into supplier calls, listing activation, controlled enquiries, pilot gates, and a copy-ready sprint memo
@@ -28,7 +30,7 @@ This folder contains a static product prototype with:
 - Buyer Workbench that connects search, shortlist, Jobsite Planner, Trust Passport, RFQ, Award, Quote Guard, Mobilization, and Direct Deal Trail into one decision path
 - Supplier Workbench that connects Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness into one supplier revenue path
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
-- Grouped workflow navigation so buyer, supplier, and founder modules stay easy to reach without crowding the header
+- Searchable grouped workflow navigation with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX
 - Smart Match Rescue on the hero search for zero-result buyer recovery
 - Smart no-results recovery with nearby matches and one-click filter relaxation

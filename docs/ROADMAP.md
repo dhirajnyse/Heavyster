@@ -4,8 +4,10 @@
 
 - Supplier signup and company profile
 - Equipment categories and listing pages
+- Marketplace Smart Views for one-click discovery across common fleet, verified supply, and demand-gap views
 - Command Center role workspaces for simple buyer, supplier, and founder navigation
 - Workflow Dock that keeps active role paths visible while advanced modules stay discoverable through grouped navigation and command search
+- Guided workflow movement for current-room awareness, step progress, and previous/next path controls
 - Demo Flight Deck for guided investor, supplier, and internal team walkthroughs across the full marketplace loop
 - Boardroom Snapshot for investor/operator review of wedge, monetization, trust risk, and next 30-day founder action
 - 30-Day Pilot Pack for converting the boardroom snapshot into a controlled launch sprint with supplier calls, listing activation, enquiry routing, and ARR review
@@ -16,7 +18,7 @@
 - Buyer Workbench for one guided renter decision path from search to mobilization handoff and direct deal trail
 - Supplier Workbench for one guided rental-yard revenue path from profile readiness to listing ARR, lead response, proof, and freshness
 - Universal Command Palette for instant access to equipment, suppliers, markets, pricing, activation, and workflow modules
-- Grouped workflow menu that keeps the expanding product simple as buyer, supplier, and founder rooms grow
+- Searchable grouped workflow menu that keeps the expanding product simple as buyer, supplier, and founder rooms grow
 - Compact catalog UI for thousands of listings
 - Smart Match Rescue for zero-result searches
 - Smart empty-state recovery and shortlist comparison
@@ -64,7 +66,9 @@
 - Buyer Workbench analytics for path drop-off, proof gaps, RFQ readiness, award confidence, and quote clarity
 - Supplier Workbench analytics for revenue-path gaps, proof debt, lead response, import readiness, renewal risk, and yard freshness
 - Universal Command Palette analytics for search intent, failed searches, module launches, and workflow discovery
-- Workflow navigation analytics for role paths, active-section changes, and module discovery friction
+- Marketplace Smart View analytics for which preset views create enquiries, demand signals, and supplier leads
+- Guided workflow movement analytics for previous/next usage, skipped rooms, and path completion
+- Workflow navigation analytics for role paths, menu searches, active-section changes, and module discovery friction
 - Trust Passport expiry and confidence history
 - Quote templates
 - Multi-machine package templates by jobsite type

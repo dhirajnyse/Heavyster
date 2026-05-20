@@ -566,6 +566,24 @@ Use this when Heavyster needs to understand how users find equipment, suppliers,
 - launched_at
 - created_at
 
+## MarketplaceSmartViewEvent
+
+Use this when Heavyster needs to learn which one-click marketplace views help buyers find supply, expose demand gaps, or move into direct enquiries.
+
+- id
+- user_id
+- smart_view_id
+- smart_view_label
+- search_text
+- region_filter
+- availability_filter
+- category_filter
+- sort_mode
+- result_count
+- verified_supplier_count
+- selected_listing_id
+- created_at
+
 ## NavigationMenuEvent
 
 Use this when Heavyster needs to learn which primary links and grouped workflow modules help users move through the product.
@@ -579,6 +597,21 @@ Use this when Heavyster needs to learn which primary links and grouped workflow 
 - previous_anchor
 - current_hash
 - opened_menu
+- created_at
+
+## WorkflowMenuSearchEvent
+
+Use this when Heavyster needs to understand which workflow modules users search for inside the grouped menu before choosing a buyer, supplier, or founder room.
+
+- id
+- user_id
+- query_text
+- active_role_filter: all, buyer, supplier, founder
+- visible_result_count
+- selected_anchor
+- selected_label
+- selected_role: buyer, supplier, founder
+- current_hash
 - created_at
 
 ## WorkflowDockState
@@ -596,6 +629,22 @@ Use this when Heavyster needs to persist or analyze the compact workflow rail th
 - previous_role
 - created_at
 - updated_at
+
+## WorkflowGuideEvent
+
+Use this when Heavyster needs to learn whether previous/next movement helps buyers, suppliers, and founders finish the right path without getting lost.
+
+- id
+- user_id
+- active_role: buyer, supplier, founder
+- current_anchor
+- current_label
+- direction: previous, next
+- target_anchor
+- target_label
+- step_index
+- total_steps
+- created_at
 
 ## DemoFlightDeckEvent
 
