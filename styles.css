@@ -394,11 +394,11 @@ a {
 .workflow-dock {
   display: grid;
   grid-template-columns:
-    minmax(160px, 230px)
-    minmax(340px, 1fr)
-    minmax(300px, 430px)
-    minmax(156px, 180px);
-  gap: 7px;
+    minmax(286px, 330px)
+    minmax(320px, 1fr)
+    minmax(190px, 280px)
+    minmax(170px, 220px);
+  gap: 8px;
   align-items: center;
   min-height: 46px;
   padding: 5px 18px;
@@ -412,6 +412,10 @@ a {
   min-width: 0;
 }
 
+.workflow-dock-rail {
+  overflow: visible;
+}
+
 .workflow-dock-mode > span {
   display: none;
   margin-bottom: 4px;
@@ -423,7 +427,7 @@ a {
 
 .workflow-dock-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(86px, 1fr));
   gap: 4px;
   padding: 3px;
   border: 1px solid var(--line);
@@ -446,19 +450,30 @@ a {
   display: grid;
   gap: 2px;
   min-height: 34px;
-  padding: 3px 6px;
+  padding: 3px 5px;
+  overflow: visible;
 }
 
 .workflow-dock-tabs span,
 .workflow-dock-tabs b {
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.workflow-dock-tabs span {
+  font-size: 0.8rem;
 }
 
 .workflow-dock-tabs b {
   color: var(--muted);
   font-size: 0.72rem;
+}
+
+.workflow-role-short {
+  display: none;
+}
+
+.workflow-role-full {
+  display: inline;
 }
 
 .workflow-dock-tabs button:hover,
@@ -474,6 +489,8 @@ a {
   min-width: 0;
   overflow-x: auto;
   padding: 2px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
   scrollbar-width: thin;
 }
 
@@ -486,6 +503,7 @@ a {
   padding: 4px 9px;
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.7);
+  scroll-snap-align: center;
   white-space: nowrap;
 }
 
@@ -518,6 +536,7 @@ a {
   grid-template-columns: 1fr;
   gap: 0;
   align-items: center;
+  justify-items: stretch;
 }
 
 .workflow-dock-signal > span {
@@ -531,6 +550,7 @@ a {
 
 .workflow-dock-signal button {
   min-height: 34px;
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -632,6 +652,162 @@ a {
   font-size: 0.8rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.simplicity-bar {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.05fr) minmax(260px, 0.72fr) minmax(300px, 0.88fr) max-content;
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.simplicity-copy,
+.simplicity-intents,
+.simplicity-metrics span {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.simplicity-copy {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+}
+
+.simplicity-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.simplicity-copy strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.simplicity-copy small {
+  color: var(--ink-2);
+  font-size: 0.84rem;
+  line-height: 1.38;
+}
+
+.simplicity-intents {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  padding: 7px;
+}
+
+.simplicity-intents button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  min-height: 40px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--ink);
+  text-align: left;
+}
+
+.simplicity-intents button:hover,
+.simplicity-intents button.is-active {
+  border-color: rgba(25, 113, 109, 0.42);
+  background: var(--teal-soft);
+}
+
+.simplicity-intents strong,
+.simplicity-intents span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.simplicity-intents strong {
+  font-size: 0.86rem;
+}
+
+.simplicity-intents span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.simplicity-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.simplicity-metrics span {
+  display: grid;
+  align-content: center;
+  min-height: 76px;
+  padding: 10px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 850;
+}
+
+.simplicity-metrics strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 0.96rem;
+  line-height: 1.15;
+}
+
+.simplicity-actions {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.simplicity-actions button {
+  min-height: 42px;
+  padding: 0 13px;
+  white-space: nowrap;
+}
+
+.simplicity-bar[data-role="supplier"] .simplicity-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.simplicity-bar[data-role="founder"] .simplicity-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+body.simple-mode .workflow-dock {
+  display: none;
+}
+
+body.simple-mode .simplicity-bar {
+  border-bottom-color: rgba(25, 113, 109, 0.34);
+  background: linear-gradient(135deg, rgba(236, 248, 246, 0.96), rgba(255, 250, 240, 0.96));
+}
+
+body.simple-mode .topnav > a[data-nav-target="#demo-flight-deck"],
+body.simple-mode .topnav > a[data-nav-target="#boardroom-snapshot"],
+body.simple-mode .topnav > a[data-nav-target="#pilot-pack"],
+body.simple-mode .topnav > a[data-nav-target="#trust-revenue-ledger"] {
+  display: none;
 }
 
 .top-actions,
@@ -11102,6 +11278,106 @@ button.admin-row {
   line-height: 1.48;
 }
 
+.market-signal-command {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.1fr) minmax(360px, 1fr) max-content;
+  gap: 10px;
+  align-items: stretch;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.3);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(236, 248, 246, 0.96), rgba(255, 250, 240, 0.96));
+  box-shadow: var(--shadow-soft);
+}
+
+.market-signal-command-main,
+.market-signal-command-metrics span {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.market-signal-command-main {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.market-signal-command-main span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.market-signal-command-main strong {
+  color: var(--ink);
+  font-size: 1.15rem;
+  line-height: 1.18;
+}
+
+.market-signal-command-main small {
+  color: var(--ink-2);
+  font-size: 0.86rem;
+  line-height: 1.38;
+}
+
+.market-signal-command-main.ready {
+  border-color: rgba(25, 113, 109, 0.4);
+}
+
+.market-signal-command-main.review {
+  border-color: rgba(181, 109, 22, 0.4);
+}
+
+.market-signal-command-main.gap {
+  border-color: rgba(168, 73, 43, 0.32);
+}
+
+.market-signal-command-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.market-signal-command-metrics span {
+  display: grid;
+  align-content: center;
+  min-height: 76px;
+  padding: 10px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.market-signal-command-metrics strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.12;
+}
+
+.market-signal-command-actions {
+  display: grid;
+  gap: 8px;
+  min-width: 170px;
+}
+
+.market-signal-command-actions button {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
 .market-signal-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.45fr) minmax(0, 0.95fr);
@@ -11704,6 +11980,39 @@ button.admin-row {
   stroke-linejoin: round;
 }
 
+@media (max-width: 1500px) {
+  .topnav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .topnav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .simplicity-bar {
+    grid-template-columns: minmax(320px, 1fr) minmax(300px, 0.95fr);
+  }
+
+  .simplicity-copy {
+    grid-row: span 2;
+  }
+
+  .simplicity-intents {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .simplicity-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .simplicity-actions button {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1180px) {
   .topbar {
     grid-template-columns: 1fr;
@@ -11741,19 +12050,34 @@ button.admin-row {
 
   .workflow-dock {
     grid-template-columns:
-      minmax(138px, 180px)
-      minmax(240px, 1fr)
-      minmax(240px, 330px)
-      minmax(76px, 86px);
+      minmax(250px, 0.95fr)
+      minmax(320px, 1.25fr)
+      minmax(150px, 0.6fr);
     align-items: center;
     gap: 6px;
     padding: 5px 12px;
+  }
+
+  .workflow-dock-tabs {
+    grid-template-columns: repeat(3, minmax(72px, 1fr));
+  }
+
+  .workflow-role-full {
+    display: none;
+  }
+
+  .workflow-role-short {
+    display: inline;
   }
 
   .workflow-dock-guide {
     grid-template-columns: 32px 32px;
     grid-column: auto;
     justify-content: end;
+  }
+
+  .workflow-dock-signal {
+    display: none;
   }
 
   .workflow-dock-guide div {
@@ -11764,10 +12088,37 @@ button.admin-row {
     grid-template-columns: minmax(0, 1fr) max-content;
   }
 
+  .simplicity-bar {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
+  }
+
+  .simplicity-copy {
+    grid-row: auto;
+  }
+
+  .simplicity-intents,
+  .simplicity-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .simplicity-actions button {
+    width: 100%;
+  }
+
   .market-search-assist,
   .search-assist-list,
   .market-supply-lens {
     grid-template-columns: 1fr;
+  }
+
+  .market-signal-command {
+    grid-template-columns: 1fr;
+  }
+
+  .market-signal-command-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-width: 0;
   }
 
   .supply-lens-groups {
@@ -12043,6 +12394,14 @@ button.admin-row {
     grid-template-columns: 1fr;
   }
 
+  .workflow-role-full {
+    display: inline;
+  }
+
+  .workflow-role-short {
+    display: none;
+  }
+
   .workflow-dock {
     grid-template-columns: 1fr;
     align-items: stretch;
@@ -12106,6 +12465,17 @@ button.admin-row {
 
   .pilot-command-main,
   .pilot-command-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .simplicity-metrics,
+  .simplicity-intents,
+  .simplicity-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .market-signal-command-metrics,
+  .market-signal-command-actions {
     grid-template-columns: 1fr;
   }
 

@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260520-heavyster-workflow-drawer-v78";
+const DATA_VERSION = "20260521-heavyster-intent-launcher-v85";
 const STORAGE_KEY = "heavyster.marketplace.v1";
 
 const listings = [
@@ -916,6 +916,7 @@ document.addEventListener("DOMContentLoaded", () => {
     syncNavigationState();
     renderWorkflowDock();
     renderWorkflowGuide();
+    renderSimplicityBar();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -975,6 +976,7 @@ function defaultState() {
     marketTwinScenario: "balanced",
     commandRole: "Buyer",
     supplierView: false,
+    simpleMode: false,
     trustChecked: [true, true, true, false, false, false]
   };
 }
@@ -1548,6 +1550,26 @@ function bindControls() {
   document.querySelector("#workflowDockSearchButton").addEventListener("click", () => openCommandPalette());
   document.querySelector("#workflowDockPrevButton").addEventListener("click", () => openWorkflowGuideTarget("previous"));
   document.querySelector("#workflowDockNextButton").addEventListener("click", () => openWorkflowGuideTarget("next"));
+  document.querySelector("#simplicityIntents").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-simplicity-intent]");
+    if (!button) return;
+    handleSimplicityIntent(button.dataset.simplicityIntent);
+  });
+  document.querySelector("#simplicityPrimaryButton").addEventListener("click", () => {
+    const button = document.querySelector("#simplicityPrimaryButton");
+    openSimplicityTarget(button.dataset.simplicityAnchor, button.textContent.trim());
+  });
+  document.querySelector("#simplicitySecondaryButton").addEventListener("click", () => {
+    const button = document.querySelector("#simplicitySecondaryButton");
+    openSimplicityTarget(button.dataset.simplicityAnchor, button.textContent.trim());
+  });
+  document.querySelector("#simplicityModeButton").addEventListener("click", () => {
+    state.simpleMode = !state.simpleMode;
+    saveState();
+    renderSimplicityBar();
+    document.body.classList.toggle("simple-mode", state.simpleMode);
+    showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
+  });
   document.querySelector("#commandPaletteCloseButton").addEventListener("click", () => closeCommandPalette());
   document.querySelector("#commandPaletteBackdrop").addEventListener("click", () => closeCommandPalette());
   const workflowMenu = document.querySelector("#workflowMenu");
@@ -1691,6 +1713,7 @@ function render() {
   renderCommandCenter();
   renderWorkflowDock();
   renderWorkflowGuide();
+  renderSimplicityBar();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -1761,6 +1784,7 @@ function render() {
   renderCommissionCalculator();
   renderWorkflowMenu();
   document.body.classList.toggle("supplier-view", state.supplierView);
+  document.body.classList.toggle("simple-mode", state.simpleMode);
   syncNavigationState();
 }
 
@@ -1898,18 +1922,20 @@ function renderWorkflowDock() {
   setText("#workflowDockSignal", model.signal);
 
   tabsRoot.innerHTML = model.roles.map((role) => `
-    <button type="button" class="${role.isActive ? "is-active" : ""}" data-workflow-role="${escapeHtml(role.role)}" aria-pressed="${role.isActive ? "true" : "false"}">
-      <span>${escapeHtml(role.role)}</span>
+    <button type="button" class="${role.isActive ? "is-active" : ""}" data-workflow-role="${escapeHtml(role.role)}" aria-pressed="${role.isActive ? "true" : "false"}" aria-label="${escapeHtml(role.role)} workflow readiness ${escapeHtml(role.score)}" title="${escapeHtml(role.role)} workflow readiness ${escapeHtml(role.score)}">
+      <span class="workflow-role-full" aria-hidden="true">${escapeHtml(role.role)}</span>
+      <span class="workflow-role-short" aria-hidden="true">${escapeHtml(getWorkflowRoleShortLabel(role.role))}</span>
       <b>${escapeHtml(role.score)}</b>
     </button>
   `).join("");
 
   pathRoot.innerHTML = model.steps.map((step) => `
-    <button type="button" class="workflow-dock-step ${step.isActive ? "is-active" : ""}" data-workflow-anchor="${escapeHtml(step.anchor)}" data-workflow-label="${escapeHtml(step.label)}">
+    <button type="button" class="workflow-dock-step ${step.isActive ? "is-active" : ""}" data-workflow-anchor="${escapeHtml(step.anchor)}" data-workflow-label="${escapeHtml(step.label)}" title="Open ${escapeHtml(model.activeRole)} ${escapeHtml(step.label)}">
       <em>${String(step.index + 1).padStart(2, "0")}</em>
       <strong>${escapeHtml(step.label)}</strong>
     </button>
   `).join("");
+  centerWorkflowDockStep(pathRoot);
 
   tabsRoot.querySelectorAll("[data-workflow-role]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -1926,6 +1952,25 @@ function renderWorkflowDock() {
       openWorkflowStep(button.dataset.workflowAnchor, button.dataset.workflowLabel, model.activeRole);
     });
   });
+}
+
+function centerWorkflowDockStep(pathRoot = document.querySelector("#workflowDockPath")) {
+  if (!pathRoot) return;
+  const activeStep = pathRoot.querySelector(".workflow-dock-step.is-active");
+  if (!activeStep) return;
+  window.requestAnimationFrame(() => {
+    const pathRect = pathRoot.getBoundingClientRect();
+    const stepRect = activeStep.getBoundingClientRect();
+    const left = pathRoot.scrollLeft
+      + stepRect.left
+      - pathRect.left
+      - Math.max(0, (pathRoot.clientWidth - stepRect.width) / 2);
+    pathRoot.scrollTo({ left: Math.max(0, left), behavior: "auto" });
+  });
+}
+
+function getWorkflowRoleShortLabel(role) {
+  return role === "Supplier" ? "Supp." : role === "Founder" ? "Found." : role;
 }
 
 function renderWorkflowGuide() {
@@ -1953,6 +1998,134 @@ function renderWorkflowGuide() {
   }
 }
 
+function renderSimplicityBar() {
+  const root = document.querySelector("#simplicityBar");
+  if (!root) return;
+
+  const model = getSimplicityBarModel();
+  root.dataset.role = model.role.toLowerCase();
+  setText("#simplicityRole", model.roleLabel);
+  setText("#simplicityHeadline", model.headline);
+  setText("#simplicityDetail", model.detail);
+
+  document.querySelector("#simplicityIntents").innerHTML = getSimplicityIntents().map((intent) => `
+    <button type="button" class="${intent.role === model.role ? "is-active" : ""}" data-simplicity-intent="${escapeHtml(intent.id)}" aria-pressed="${intent.role === model.role ? "true" : "false"}">
+      <strong>${escapeHtml(intent.label)}</strong>
+      <span>${escapeHtml(intent.signal)}</span>
+    </button>
+  `).join("");
+
+  document.querySelector("#simplicityMetrics").innerHTML = model.metrics.map((metric) => `
+    <span><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#simplicityPrimaryButton");
+  const secondaryButton = document.querySelector("#simplicitySecondaryButton");
+  const modeButton = document.querySelector("#simplicityModeButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.dataset.simplicityAnchor = model.primary.anchor;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+  secondaryButton.textContent = model.secondary.label;
+  secondaryButton.dataset.simplicityAnchor = model.secondary.anchor;
+  secondaryButton.setAttribute("aria-label", model.secondary.aria);
+  modeButton.textContent = state.simpleMode ? "Show workflow" : "Quiet view";
+  modeButton.setAttribute("aria-pressed", state.simpleMode ? "true" : "false");
+}
+
+function getSimplicityBarModel() {
+  const command = getCommandCenterModel();
+  const guide = getWorkflowGuideModel();
+  const role = guide.role || command.activeRole;
+  const roleScore = command.routes.find((route) => route.role === role)?.score || command.workspace.score;
+  const defaults = getSimplicityDefaults(role);
+  const isMarketplaceStart = guide.current?.anchor === "#marketplace";
+  const primary = isMarketplaceStart || !guide.next
+    ? defaults.primary
+    : {
+        label: `Next: ${guide.next.label}`,
+        anchor: guide.next.anchor,
+        aria: `Open next ${role} workflow step, ${guide.next.label}`
+      };
+
+  return {
+    role,
+    roleLabel: `${role} path`,
+    headline: defaults.headline,
+    detail: isMarketplaceStart
+      ? defaults.startDetail
+      : `${guide.moveText}. ${defaults.detail}`,
+    primary,
+    secondary: defaults.secondary,
+    metrics: [
+      { value: roleScore, label: "readiness" },
+      { value: guide.progressText, label: "workflow step" },
+      { value: defaults.ruleValue, label: defaults.ruleLabel }
+    ]
+  };
+}
+
+function getSimplicityDefaults(role) {
+  if (role === "Supplier") {
+    return {
+      headline: "List one machine, verify proof, then receive direct enquiries.",
+      detail: "Keep supplier work inside listing, proof, availability, and lead response.",
+      startDetail: "A supplier should know exactly where to add equipment, proof, and availability.",
+      ruleValue: "USD 9",
+      ruleLabel: "per listing",
+      primary: { label: "List equipment", anchor: "#studio", aria: "Open supplier listing workspace" },
+      secondary: { label: "Supplier desk", anchor: "#supplier-workbench", aria: "Open supplier desk" }
+    };
+  }
+
+  if (role === "Founder") {
+    return {
+      headline: "Choose the next market by demand, supply, trust, and listing ARR.",
+      detail: "Founder work should stay focused on proof, launch gates, and phase-one listing revenue.",
+      startDetail: "Use the command layer to choose where Heavyster should grow without adding noise.",
+      ruleValue: "Trust first",
+      ruleLabel: "scale rule",
+      primary: { label: "Market command", anchor: "#market-signal-matrix", aria: "Open market signal command" },
+      secondary: { label: "Founder desk", anchor: "#founder-workbench", aria: "Open founder desk" }
+    };
+  }
+
+  return {
+    headline: "Search, compare proof, and send a direct enquiry.",
+    detail: "Buyer work should stay inside search, shortlist, proof, RFQ, and award.",
+    startDetail: "A buyer should see the fastest path to verified equipment and direct supplier contact.",
+    ruleValue: "0%",
+    ruleLabel: "rental take",
+    primary: { label: "Search equipment", anchor: "#marketplace", aria: "Open marketplace search" },
+    secondary: { label: "Buyer desk", anchor: "#buyer-workbench", aria: "Open buyer desk" }
+  };
+}
+
+function getSimplicityIntents() {
+  return [
+    { id: "find", role: "Buyer", label: "Find equipment", signal: "Search and enquire", anchor: "#marketplace" },
+    { id: "list", role: "Supplier", label: "List equipment", signal: "Add fleet and proof", anchor: "#studio" },
+    { id: "grow", role: "Founder", label: "Grow market", signal: "Pick the next wedge", anchor: "#market-signal-matrix" }
+  ];
+}
+
+function handleSimplicityIntent(intentId) {
+  const intent = getSimplicityIntents().find((item) => item.id === intentId);
+  if (!intent) return;
+  state.commandRole = intent.role;
+  saveState();
+  renderCommandCenter();
+  renderWorkflowDock();
+  renderWorkflowGuide();
+  renderSimplicityBar();
+  openWorkflowStep(intent.anchor, intent.label, intent.role);
+}
+
+function openSimplicityTarget(anchor, label) {
+  if (!anchor) return;
+  const route = getWorkflowRouteForHash(anchor);
+  openWorkflowStep(anchor, label, route?.role || state.commandRole);
+}
+
 function openWorkflowGuideTarget(direction) {
   const button = document.querySelector(direction === "previous" ? "#workflowDockPrevButton" : "#workflowDockNextButton");
   if (!button || button.disabled) return;
@@ -1968,6 +2141,7 @@ function openWorkflowStep(anchor, label, role) {
   renderCommandCenter();
   renderWorkflowDock();
   renderWorkflowGuide();
+  renderSimplicityBar();
   closeWorkflowMenu();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.location.hash = anchor;
@@ -10258,6 +10432,7 @@ function renderMarketSignalMatrix() {
   const active = model.activeCell;
   if (!active) return;
 
+  renderMarketSignalCommand(model);
   setText("#marketSignalTitle", `${active.region} ${active.category}`);
   setText("#marketSignalBadge", active.status);
 
@@ -10309,7 +10484,7 @@ function renderMarketSignalMatrix() {
     .map((line) => `<p>${escapeHtml(line)}</p>`)
     .join("");
 
-  document.querySelectorAll("[data-matrix-key]").forEach((button) => {
+  document.querySelectorAll("[data-matrix-key]:not([data-matrix-command-action])").forEach((button) => {
     button.addEventListener("click", () => {
       const key = button.dataset.matrixKey;
       const cell = getMarketSignalMatrixModel().cells.find((item) => item.key === key);
@@ -10341,6 +10516,135 @@ function renderMarketSignalMatrix() {
       showToast(cell.opportunity ? `${cell.region} ${cell.category} market focused.` : `${cell.region} ${cell.category} needs demand capture first.`);
     });
   });
+}
+
+function renderMarketSignalCommand(model = getMarketSignalMatrixModel()) {
+  const root = document.querySelector("#marketSignalCommand");
+  if (!root) return;
+
+  const active = model.activeCell;
+  if (!active) {
+    root.innerHTML = "";
+    return;
+  }
+
+  const command = getMarketSignalCommand(active, model);
+  root.innerHTML = `
+    <div class="market-signal-command-main ${active.statusClass}">
+      <span>${escapeHtml(command.label)}</span>
+      <strong>${escapeHtml(command.headline)}</strong>
+      <small>${escapeHtml(command.detail)}</small>
+    </div>
+    <div class="market-signal-command-metrics" aria-label="Selected market metrics">
+      <span><strong>${active.score}/100</strong>readiness</span>
+      <span><strong>${active.demandCount}</strong>demand signals</span>
+      <span><strong>${active.supplyGap}</strong>supply gap</span>
+      <span><strong>USD ${active.annualRevenue.toLocaleString()}</strong>listing ARR</span>
+    </div>
+    <div class="market-signal-command-actions">
+      <button type="button" class="ghost-button" data-matrix-command-action="hunt" data-matrix-key="${escapeHtml(active.key)}">Open supplier hunt</button>
+      <button type="button" class="ghost-button" data-matrix-command-action="launch" data-matrix-key="${escapeHtml(active.key)}">Build launch brief</button>
+      <button type="button" class="solid-button" data-matrix-command-action="copy" data-matrix-key="${escapeHtml(active.key)}">Copy command</button>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-matrix-command-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      handleMarketSignalCommandAction(button.dataset.matrixCommandAction, button.dataset.matrixKey);
+    });
+  });
+}
+
+function getMarketSignalCommand(active, model) {
+  const topCell = model.topCells[0] || active;
+  const leaderText = topCell.key === active.key
+    ? "This is the highest-priority wedge in the current matrix."
+    : `${topCell.region} ${topCell.category} is the current highest-priority wedge.`;
+
+  if (active.demandCount && active.supplyGap > 0) {
+    return {
+      label: "Founder command",
+      headline: `Fill ${active.region} ${active.category} supply before traffic`,
+      detail: `${active.demandCount} demand signals can support paid listings, but ${active.supplyGap} verified machines should be recruited first. ${leaderText}`
+    };
+  }
+
+  if (active.visibleSupply && active.proofScore < 70) {
+    return {
+      label: "Trust command",
+      headline: `Clean proof for ${active.region} ${active.category}`,
+      detail: `${active.visibleSupply} visible listings are useful, but proof is only ${active.proofScore}/100. Fix documents before routing serious buyer demand.`
+    };
+  }
+
+  if (active.demandCount) {
+    return {
+      label: "Launch command",
+      headline: `Launch ${active.region} ${active.category} as a focused page`,
+      detail: `Demand is visible and the current wedge can model USD ${active.annualRevenue.toLocaleString()} in listing ARR without touching rental payments.`
+    };
+  }
+
+  if (active.visibleSupply) {
+    return {
+      label: "Demand command",
+      headline: `Turn ${active.region} ${active.category} supply into demand`,
+      detail: `${active.visibleSupply} listings already exist. Use search pages, direct enquiries, and proof to create buyer pull before scaling.`
+    };
+  }
+
+  return {
+    label: "Listening command",
+    headline: `Capture demand before building ${active.region} ${active.category}`,
+    detail: `No live signal is strong yet. Keep the wedge in the matrix and use unmet searches to prove buyer demand first.`
+  };
+}
+
+async function handleMarketSignalCommandAction(action, key) {
+  const model = getMarketSignalMatrixModel();
+  const cell = model.cells.find((item) => item.key === key) || model.activeCell;
+  if (!cell) return;
+
+  state.activeMatrixKey = cell.key;
+  if (cell.opportunity) {
+    state.activeMarketKey = cell.key;
+    if (cell.signalKey) state.activeDemandKey = cell.signalKey;
+  }
+  saveState();
+  renderDemandRadar();
+  renderSupplierHunt();
+  renderMarketSignalMatrix();
+  renderMarketMaker();
+  renderPageFactory();
+  renderLaunchRoom();
+  renderMarketTwin();
+  renderLiquidityFlywheel();
+  renderFounderAutopilot();
+  renderDemandExchange();
+  renderProofDemandRoom();
+  renderSupplierCommitmentRoom();
+  renderListingActivationRoom();
+  renderTrustRevenueLedger();
+  renderFounderWorkbench();
+  renderFounderMorningBrief();
+  renderFounderDailyMoves();
+  renderFounderCallSheet();
+
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildMarketSignalMatrixText(getMarketSignalMatrixModel()));
+      showToast("Market matrix command copied.");
+    } catch {
+      showToast("Copy is blocked here, but the matrix command is visible.");
+    }
+    return;
+  }
+
+  const targetSelector = action === "hunt" ? "#growth" : "#market-maker";
+  document.querySelector(targetSelector)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(action === "hunt"
+    ? `${cell.region} ${cell.category} supplier hunt opened.`
+    : `${cell.region} ${cell.category} launch brief opened.`);
 }
 
 function getMarketSignalMatrixModel() {

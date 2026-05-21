@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260520-workflow-drawer-fit" />
+    <link rel="stylesheet" href="styles.css?v=20260521-intent-launcher-v85" />
   </head>
   <body>
     <div class="app-shell">
@@ -127,7 +127,7 @@
       </header>
 
       <section class="workflow-dock" id="workflowDock" aria-label="Heavyster workflow dock">
-        <div class="workflow-dock-mode">
+        <div class="workflow-dock-mode workflow-dock-rail">
           <span>Workflow dock</span>
           <div class="workflow-dock-tabs" id="workflowDockTabs"></div>
         </div>
@@ -158,6 +158,21 @@
               <path d="m9 6 6 6-6 6" />
             </svg>
           </button>
+        </div>
+      </section>
+
+      <section class="simplicity-bar" id="simplicityBar" aria-label="Simple next action">
+        <div class="simplicity-copy">
+          <span id="simplicityRole">Buyer path</span>
+          <strong id="simplicityHeadline">One clear next move.</strong>
+          <small id="simplicityDetail">Choose the next action without opening every workflow.</small>
+        </div>
+        <div class="simplicity-intents" id="simplicityIntents" aria-label="Choose Heavyster intent"></div>
+        <div class="simplicity-metrics" id="simplicityMetrics" aria-label="Simple workflow metrics"></div>
+        <div class="simplicity-actions">
+          <button type="button" class="solid-button" id="simplicityPrimaryButton">Start</button>
+          <button type="button" class="ghost-button" id="simplicitySecondaryButton">Open desk</button>
+          <button type="button" class="ghost-button" id="simplicityModeButton" aria-pressed="false">Quiet view</button>
         </div>
       </section>
 
@@ -1978,6 +1993,8 @@
             <button type="button" class="ghost-button" id="copyMarketMatrixButton">Copy matrix brief</button>
           </div>
 
+          <div class="market-signal-command" id="marketSignalCommand" aria-label="Market matrix command summary"></div>
+
           <div class="market-signal-grid">
             <article class="market-signal-card market-signal-score-card">
               <div class="section-header compact">
@@ -2138,6 +2155,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260520-workflow-drawer-fit" defer></script>
+    <script src="app.js?v=20260521-intent-launcher-v85" defer></script>
   </body>
 </html>

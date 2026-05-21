@@ -56,6 +56,7 @@ assert(index.includes('id="quickSearchButton"') && index.includes('id="scrollTop
 assert(index.includes('id="commandPulse"') && index.includes('id="commandRoutes"') && index.includes('id="commandRoleTabs"') && index.includes('id="commandWorkspace"') && index.includes('id="commandModuleRail"'), "index.html is missing Command Center controls.");
 assert(index.includes('id="workflowDock"') && index.includes('id="workflowDockTabs"') && index.includes('id="workflowDockPath"') && index.includes('id="workflowDockSearchButton"'), "index.html is missing Workflow Dock controls.");
 assert(index.includes('id="workflowDockGuide"') && index.includes('id="workflowDockPrevButton"') && index.includes('id="workflowDockNextButton"'), "index.html is missing guided workflow movement controls.");
+assert(index.includes('id="simplicityBar"') && index.includes('id="simplicityIntents"') && index.includes('id="simplicityPrimaryButton"') && index.includes('id="simplicityModeButton"'), "index.html is missing Simplicity Bar controls.");
 assert(index.includes('id="demoFlightScenes"') && index.includes('id="copyDemoFlightButton"'), "index.html is missing Demo Flight Deck controls.");
 assert(index.includes('id="boardroomThesis"') && index.includes('id="boardroomGates"') && index.includes('id="copyBoardroomButton"'), "index.html is missing Boardroom Snapshot controls.");
 assert(index.includes('id="pilotPackWeeks"') && index.includes('id="pilotPackGates"') && index.includes('id="copyPilotPackButton"'), "index.html is missing 30-Day Pilot Pack controls.");
@@ -92,7 +93,7 @@ assert(index.includes('id="proofDemandEvidence"') && index.includes('id="copyPro
 assert(index.includes('id="supplierCommitmentPackages"') && index.includes('id="copySupplierCommitmentButton"'), "index.html is missing Supplier Commitment Room controls.");
 assert(index.includes('id="listingActivationQueue"') && index.includes('id="copyListingActivationButton"'), "index.html is missing Listing Activation Room controls.");
 assert(index.includes('id="trustLedgerRows"') && index.includes('id="copyTrustLedgerButton"'), "index.html is missing Trust & Revenue Ledger controls.");
-assert(index.includes('id="marketSignalMatrix"') && index.includes('id="copyMarketMatrixButton"'), "index.html is missing Market Signal Matrix controls.");
+assert(index.includes('id="marketSignalMatrix"') && index.includes('id="marketSignalCommand"') && index.includes('id="copyMarketMatrixButton"'), "index.html is missing Market Signal Matrix controls.");
 assert(index.includes('id="commandPaletteInput"') && index.includes('id="commandPaletteResults"'), "index.html is missing Universal Command Palette controls.");
 assert(index.includes('id="workflowMenu"') && index.includes('data-nav-target="#trust-revenue-ledger"'), "index.html is missing grouped workflow navigation.");
 assert(index.includes('id="workflowMenuSearch"') && index.includes('id="workflowMenuFilters"') && index.includes('id="workflowMenuEmpty"'), "index.html is missing searchable workflow menu controls.");
@@ -103,8 +104,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260520-workflow-drawer-fit"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260520-workflow-drawer-fit"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260521-intent-launcher-v85"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260521-intent-launcher-v85"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -118,7 +119,7 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260520-heavyster-workflow-drawer-v78";'), "app.js DATA_VERSION is missing or changed.");
+assert(app.includes('const DATA_VERSION = "20260521-heavyster-intent-launcher-v85";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");
@@ -133,6 +134,7 @@ assert(app.includes("renderCompactCatalog") && app.includes("renderCategoryDirec
 assert(app.includes("renderCommandCenter") && app.includes("getCommandCenterModel") && app.includes("getCommandWorkspace"), "app.js is missing Command Center rendering or model logic.");
 assert(app.includes("renderWorkflowDock") && app.includes("getWorkflowDockModel") && app.includes("getWorkflowDockSteps"), "app.js is missing Workflow Dock rendering or model logic.");
 assert(app.includes("renderWorkflowGuide") && app.includes("getWorkflowGuideModel") && app.includes("openWorkflowGuideTarget"), "app.js is missing guided workflow movement logic.");
+assert(app.includes("renderSimplicityBar") && app.includes("getSimplicityBarModel") && app.includes("getSimplicityIntents") && app.includes("handleSimplicityIntent") && app.includes("openSimplicityTarget") && css.includes(".simplicity-bar") && css.includes(".simplicity-intents") && css.includes("body.simple-mode"), "Project is missing Simplicity Bar logic or styling.");
 assert(app.includes("renderDemoFlightDeck") && app.includes("getDemoFlightDeckModel") && app.includes("buildDemoFlightDeckText"), "app.js is missing Demo Flight Deck rendering or copy text.");
 assert(app.includes("renderBoardroomSnapshot") && app.includes("getBoardroomSnapshotModel") && app.includes("buildBoardroomSnapshotText"), "app.js is missing Boardroom Snapshot rendering or copy text.");
 assert(app.includes("renderPilotPack") && app.includes("getPilotPackModel") && app.includes("buildPilotPackText"), "app.js is missing 30-Day Pilot Pack rendering or copy text.");
@@ -146,6 +148,7 @@ assert(app.includes("openCommandPalette") && app.includes("renderCommandPalette"
 assert(app.includes("syncNavigationState") && app.includes("closeWorkflowMenu") && app.includes("renderWorkflowMenu"), "app.js is missing workflow navigation state handling.");
 assert(app.includes("workflowMenuQuery") && app.includes("workflowMenuRole"), "app.js is missing workflow menu search state.");
 assert(index.includes('id="workflowMenuStatus"') && app.includes("updateWorkflowMenuStatus") && css.includes(".workflow-menu-status"), "Project is missing Workflow Drawer status polish.");
+assert(css.includes(".workflow-dock-rail") && css.includes(".workflow-role-short") && app.includes("centerWorkflowDockStep"), "Project is missing Workflow Dock usability polish.");
 assert(app.includes("stabilizeHashScroll") && app.includes("hashchange"), "app.js is missing stable hash scrolling.");
 assert(app.includes("renderNoResultsAdvisor") && app.includes("renderShortlistTray"), "app.js is missing buyer recovery or shortlist renderers.");
 assert(app.includes("renderShortlistCompare") && app.includes("getShortlistCompareModel") && app.includes("getShortlistSuggestion"), "app.js is missing shortlist compare logic.");
@@ -185,7 +188,7 @@ assert(app.includes("renderProofDemandRoom") && app.includes("buildProofDemandTe
 assert(app.includes("renderSupplierCommitmentRoom") && app.includes("buildSupplierCommitmentText"), "app.js is missing Supplier Commitment Room rendering or copy text.");
 assert(app.includes("renderListingActivationRoom") && app.includes("buildListingActivationText"), "app.js is missing Listing Activation Room rendering or copy text.");
 assert(app.includes("renderTrustRevenueLedger") && app.includes("buildTrustLedgerText"), "app.js is missing Trust & Revenue Ledger rendering or copy text.");
-assert(app.includes("renderMarketSignalMatrix") && app.includes("getMarketSignalMatrixModel") && app.includes("buildMarketSignalMatrixText"), "app.js is missing Market Signal Matrix rendering or copy text.");
+assert(app.includes("renderMarketSignalMatrix") && app.includes("renderMarketSignalCommand") && app.includes("handleMarketSignalCommandAction") && app.includes("getMarketSignalMatrixModel") && app.includes("buildMarketSignalMatrixText"), "app.js is missing Market Signal Matrix rendering or copy text.");
 assert(app.includes("saveDemandSignal") && app.includes("renderDemandRadar"), "app.js is missing demand signal capture or radar rendering.");
 assert(app.includes("renderSupplierHunt") && app.includes("buildSupplierHuntText"), "app.js is missing supplier hunt rendering or copy text.");
 assert(app.includes("renderMarketMaker") && app.includes("buildMarketBriefText"), "app.js is missing market maker rendering or launch brief text.");
