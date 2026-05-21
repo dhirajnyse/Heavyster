@@ -1,5 +1,6 @@
-const DATA_VERSION = "20260521-heavyster-intent-launcher-v85";
+const DATA_VERSION = "20260521-heavyster-simple-first-v86";
 const STORAGE_KEY = "heavyster.marketplace.v1";
+const SIMPLE_UX_RELEASE = "20260521-simple-first-v86";
 
 const listings = [
   {
@@ -976,7 +977,8 @@ function defaultState() {
     marketTwinScenario: "balanced",
     commandRole: "Buyer",
     supplierView: false,
-    simpleMode: false,
+    simpleMode: true,
+    simplicityRelease: SIMPLE_UX_RELEASE,
     trustChecked: [true, true, true, false, false, false]
   };
 }
@@ -986,6 +988,10 @@ function loadState() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
     const base = defaultState();
     const merged = { ...base, ...(saved || {}) };
+    if (!saved || saved.simplicityRelease !== SIMPLE_UX_RELEASE) {
+      merged.simpleMode = true;
+      merged.simplicityRelease = SIMPLE_UX_RELEASE;
+    }
     merged.quoteIncludes = { ...base.quoteIncludes, ...(merged.quoteIncludes || {}) };
     merged.responseTracker = { ...base.responseTracker, ...(merged.responseTracker || {}) };
     if (!Array.isArray(merged.demandSignals)) merged.demandSignals = base.demandSignals;
@@ -1565,6 +1571,7 @@ function bindControls() {
   });
   document.querySelector("#simplicityModeButton").addEventListener("click", () => {
     state.simpleMode = !state.simpleMode;
+    state.simplicityRelease = SIMPLE_UX_RELEASE;
     saveState();
     renderSimplicityBar();
     document.body.classList.toggle("simple-mode", state.simpleMode);
@@ -2028,7 +2035,7 @@ function renderSimplicityBar() {
   secondaryButton.textContent = model.secondary.label;
   secondaryButton.dataset.simplicityAnchor = model.secondary.anchor;
   secondaryButton.setAttribute("aria-label", model.secondary.aria);
-  modeButton.textContent = state.simpleMode ? "Show workflow" : "Quiet view";
+  modeButton.textContent = state.simpleMode ? "Full workflow" : "Quiet view";
   modeButton.setAttribute("aria-pressed", state.simpleMode ? "true" : "false");
 }
 
@@ -2112,11 +2119,14 @@ function handleSimplicityIntent(intentId) {
   const intent = getSimplicityIntents().find((item) => item.id === intentId);
   if (!intent) return;
   state.commandRole = intent.role;
+  state.simpleMode = true;
+  state.simplicityRelease = SIMPLE_UX_RELEASE;
   saveState();
   renderCommandCenter();
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  document.body.classList.add("simple-mode");
   openWorkflowStep(intent.anchor, intent.label, intent.role);
 }
 

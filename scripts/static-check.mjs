@@ -104,8 +104,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260521-intent-launcher-v85"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260521-intent-launcher-v85"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260521-simple-first-v86"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260521-simple-first-v86"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -119,7 +119,7 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260521-heavyster-intent-launcher-v85";'), "app.js DATA_VERSION is missing or changed.");
+assert(app.includes('const DATA_VERSION = "20260521-heavyster-simple-first-v86";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");
@@ -134,7 +134,7 @@ assert(app.includes("renderCompactCatalog") && app.includes("renderCategoryDirec
 assert(app.includes("renderCommandCenter") && app.includes("getCommandCenterModel") && app.includes("getCommandWorkspace"), "app.js is missing Command Center rendering or model logic.");
 assert(app.includes("renderWorkflowDock") && app.includes("getWorkflowDockModel") && app.includes("getWorkflowDockSteps"), "app.js is missing Workflow Dock rendering or model logic.");
 assert(app.includes("renderWorkflowGuide") && app.includes("getWorkflowGuideModel") && app.includes("openWorkflowGuideTarget"), "app.js is missing guided workflow movement logic.");
-assert(app.includes("renderSimplicityBar") && app.includes("getSimplicityBarModel") && app.includes("getSimplicityIntents") && app.includes("handleSimplicityIntent") && app.includes("openSimplicityTarget") && css.includes(".simplicity-bar") && css.includes(".simplicity-intents") && css.includes("body.simple-mode"), "Project is missing Simplicity Bar logic or styling.");
+assert(app.includes("renderSimplicityBar") && app.includes("getSimplicityBarModel") && app.includes("getSimplicityIntents") && app.includes("handleSimplicityIntent") && app.includes("openSimplicityTarget") && app.includes("SIMPLE_UX_RELEASE") && css.includes(".simplicity-bar") && css.includes(".simplicity-intents") && css.includes("body.simple-mode"), "Project is missing Simplicity Bar logic or styling.");
 assert(app.includes("renderDemoFlightDeck") && app.includes("getDemoFlightDeckModel") && app.includes("buildDemoFlightDeckText"), "app.js is missing Demo Flight Deck rendering or copy text.");
 assert(app.includes("renderBoardroomSnapshot") && app.includes("getBoardroomSnapshotModel") && app.includes("buildBoardroomSnapshotText"), "app.js is missing Boardroom Snapshot rendering or copy text.");
 assert(app.includes("renderPilotPack") && app.includes("getPilotPackModel") && app.includes("buildPilotPackText"), "app.js is missing 30-Day Pilot Pack rendering or copy text.");
