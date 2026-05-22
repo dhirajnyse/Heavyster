@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260521-simple-first-v86" />
+    <link rel="stylesheet" href="styles.css?v=20260522-supplier-decision-v92" />
   </head>
   <body>
     <div class="app-shell">
@@ -224,6 +224,10 @@
                   </select>
                 </label>
               </div>
+              <div class="market-decision" id="marketDecisionCard" aria-label="Simple buyer decision card"></div>
+              <div class="market-answer" id="marketAnswer" aria-label="Marketplace answer"></div>
+              <div class="market-enquiry-starter" id="marketEnquiryStarter" aria-label="Quick direct enquiry starter"></div>
+              <div class="market-confidence" id="marketConfidenceStrip" aria-label="Buyer confidence strip"></div>
               <div class="market-search-assist" id="marketSearchAssist" aria-label="Marketplace search assist"></div>
               <div class="market-stats">
                 <span><strong id="resultCount">0</strong> matching listings</span>
@@ -1164,6 +1168,7 @@
                     <button type="button" id="addListingButton">Add listing</button>
                   </div>
                 </div>
+                <div class="supplier-decision" id="supplierDecisionCard" aria-label="Simple supplier listing decision card"></div>
                 <div class="studio-health" id="studioHealth"></div>
                 <div class="studio-ops" id="studioOps"></div>
                 <div class="supplier-table" id="supplierTable"></div>
@@ -2155,6 +2160,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260521-simple-first-v86" defer></script>
+    <script src="app.js?v=20260522-supplier-decision-v92" defer></script>
   </body>
 </html>

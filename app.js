@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260521-heavyster-simple-first-v86";
+const DATA_VERSION = "20260522-heavyster-supplier-decision-v92";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260521-simple-first-v86";
+const SIMPLE_UX_RELEASE = "20260522-supplier-decision-v92";
 
 const listings = [
   {
@@ -1094,6 +1094,9 @@ function bindControls() {
     renderBuyerWorkbench();
     renderDirectEnquiryComposer();
     renderSupplierResponseRoute();
+    renderMarketplaceDecisionCard();
+    renderMarketplaceEnquiryStarter();
+    renderMarketplaceConfidenceStrip();
   });
 
   enquiryMode.addEventListener("change", (event) => {
@@ -1101,6 +1104,9 @@ function bindControls() {
     saveState();
     renderDirectEnquiryComposer();
     renderSupplierResponseRoute();
+    renderMarketplaceDecisionCard();
+    renderMarketplaceEnquiryStarter();
+    renderMarketplaceConfidenceStrip();
   });
 
   listingCount.addEventListener("input", (event) => {
@@ -1671,6 +1677,7 @@ function updateBuilderState() {
   state.builderAvailability = document.querySelector("#builderAvailability").value;
   saveState();
   renderBuilderSummary();
+  renderSupplierDecisionCard();
 }
 
 function updateJobsiteState() {
@@ -1729,6 +1736,10 @@ function render() {
   renderFounderDailyMoves();
   renderFounderCallSheet();
   renderCategoryButtons();
+  renderMarketplaceDecisionCard();
+  renderMarketplaceAnswer();
+  renderMarketplaceEnquiryStarter();
+  renderMarketplaceConfidenceStrip();
   renderMarketplaceSearchAssist();
   renderMarketplaceSmartViews();
   renderMarketplaceFilterTrail();
@@ -1778,6 +1789,7 @@ function render() {
   renderListingActivationRoom();
   renderTrustRevenueLedger();
   renderDemandCapture();
+  renderSupplierDecisionCard();
   renderSupplierTable();
   renderTrustChecklist();
   renderOnboardingFlow();
@@ -4710,6 +4722,631 @@ function renderMarketplaceSearchAssist() {
   });
 }
 
+function renderMarketplaceDecisionCard() {
+  const root = document.querySelector("#marketDecisionCard");
+  if (!root) return;
+
+  const model = getMarketplaceDecisionModel();
+  root.innerHTML = `
+    <div class="market-decision-card ${escapeHtml(model.statusClass)}">
+      <div class="market-decision-main">
+        <span>${escapeHtml(model.label)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="market-decision-steps" aria-label="Buyer decision checks">
+        ${model.steps.map((step) => `
+          <b class="${step.ready ? "is-ready" : "is-gap"}">
+            <span>${escapeHtml(step.label)}</span>
+            <strong>${escapeHtml(step.value)}</strong>
+          </b>
+        `).join("")}
+      </div>
+      <label class="market-decision-note">
+        <span>${escapeHtml(model.noteLabel)}</span>
+        <textarea id="marketDecisionNote" rows="2" placeholder="${escapeHtml(model.placeholder)}">${escapeHtml(state.projectNote || "")}</textarea>
+      </label>
+      <div class="market-decision-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-market-decision="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  const note = root.querySelector("#marketDecisionNote");
+  if (note) {
+    note.addEventListener("input", (event) => {
+      state.projectNote = event.target.value;
+      const fullNote = document.querySelector("#projectNote");
+      const starterNote = document.querySelector("#marketProjectNote");
+      if (fullNote && fullNote.value !== state.projectNote) fullNote.value = state.projectNote;
+      if (starterNote && starterNote.value !== state.projectNote) starterNote.value = state.projectNote;
+      saveState();
+      renderDirectEnquiryComposer();
+      renderSupplierResponseRoute();
+      renderResponseTracker();
+      renderReplyQualityGate();
+      renderDecisionReceipt();
+      renderBuyerWorkbench();
+    });
+  }
+
+  root.querySelectorAll("[data-market-decision]").forEach((button) => {
+    button.addEventListener("click", () => handleMarketplaceDecisionAction(button.dataset.marketDecision, model));
+  });
+}
+
+function getMarketplaceDecisionModel() {
+  const answer = getMarketplaceAnswerModel();
+  const confidence = getMarketplaceConfidenceModel();
+  const enquiry = getMarketplaceEnquiryStarterModel();
+  const filtered = getFilteredListings();
+  const listing = confidence.listing || enquiry.listing || getSelectedListing();
+  const exactMode = filtered.length > 0;
+  const readySteps = confidence.gates.filter((gate) => gate.ready).length;
+  const statusClass = !exactMode ? "is-gap" : readySteps >= 3 ? "is-ready" : "is-watch";
+  const machine = listing?.name || getDemandEquipmentFromSearch();
+  const supplier = listing?.supplier || "verified supplier";
+  const region = state.region === "all" ? listing?.region || "selected region" : state.region;
+  const primaryAction = exactMode
+    ? confidence.actions.find((action) => action.primary) || { id: "packet", label: "Open packet", primary: true }
+    : { id: "demand", label: "Save need", primary: true };
+  const secondaryAction = exactMode
+    ? { id: "proof", label: "Check proof" }
+    : { id: "hunt", label: "Find suppliers" };
+
+  if (!exactMode) {
+    return {
+      listing,
+      statusClass,
+      label: "Buyer decision",
+      headline: `No exact ${getDemandEquipmentFromSearch().toLowerCase()} supply yet.`,
+      detail: `Save this ${region} need, recruit verified suppliers, and keep the buyer path honest.`,
+      noteLabel: "Buyer need",
+      placeholder: "Machine, region, dates, duration, operator, urgency",
+      steps: [
+        { label: "Match", value: "Gap", ready: false },
+        { label: "Trust", value: `${confidence.gates[1]?.value || "Review"}`, ready: Boolean(confidence.gates[1]?.ready) },
+        { label: "Next", value: "Recruit", ready: true }
+      ],
+      actions: [
+        primaryAction,
+        secondaryAction,
+        { id: "available", label: "Any availability" }
+      ]
+    };
+  }
+
+  const exactActions = primaryAction.id === "packet"
+    ? [
+        primaryAction,
+        secondaryAction
+      ]
+    : [
+        primaryAction,
+        { id: "packet", label: "Open packet" },
+        secondaryAction
+      ];
+
+  return {
+    listing,
+    statusClass,
+    label: "Buyer decision",
+    headline: `${machine} is the cleanest path.`,
+    detail: `${supplier} in ${region}. ${answer.detail}`,
+    noteLabel: "Project note",
+    placeholder: "Need machine with operator, dates, site, duration, delivery",
+    steps: [
+      { label: "Match", value: answer.facts[0]?.value || String(filtered.length), ready: filtered.length > 0 },
+      { label: "Trust", value: confidence.gates.find((gate) => gate.label === "Proof")?.value || "Review", ready: confidence.gates.find((gate) => gate.label === "Proof")?.ready || false },
+      { label: "Message", value: confidence.gates.find((gate) => gate.label === "Message")?.value || `${enquiry.direct.score}/100`, ready: confidence.gates.find((gate) => gate.label === "Message")?.ready || false }
+    ],
+    actions: exactActions
+  };
+}
+
+async function handleMarketplaceDecisionAction(action, model) {
+  if (model.listing) state.selectedListingId = model.listing.id;
+
+  if (action === "copy") {
+    saveState();
+    try {
+      await navigator.clipboard.writeText(buildLeadText());
+      markEnquiryCopied();
+      renderMarketplaceDecisionCard();
+      showToast("Direct enquiry copied from the buyer decision card.");
+    } catch {
+      showToast("Copy is blocked here, but the enquiry packet is visible.");
+    }
+    return;
+  }
+
+  if (action === "packet") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#leadTitle"), 130);
+    showToast("Direct enquiry packet opened.");
+    return;
+  }
+
+  if (action === "proof") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#passport"), 120);
+    showToast("Trust proof opened.");
+    return;
+  }
+
+  if (action === "available") {
+    state.availability = "all";
+    state.sort = "available";
+    saveState();
+    syncFilterInputs();
+    render();
+    showToast("Showing wider availability options.");
+    return;
+  }
+
+  if (action === "demand" || action === "hunt") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Buyer decision supplier hunt" : "Buyer decision demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened from buyer need." : "Buyer need saved.");
+  }
+}
+
+function renderMarketplaceAnswer() {
+  const root = document.querySelector("#marketAnswer");
+  if (!root) return;
+
+  const model = getMarketplaceAnswerModel();
+  root.innerHTML = `
+    <div class="market-answer-card ${escapeHtml(model.statusClass)}">
+      <div class="market-answer-copy">
+        <span>${escapeHtml(model.label)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="market-answer-facts">
+        ${model.facts.map((fact) => `
+          <b>
+            <strong>${escapeHtml(fact.value)}</strong>
+            <small>${escapeHtml(fact.label)}</small>
+          </b>
+        `).join("")}
+      </div>
+      <div class="market-answer-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-market-answer="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-market-answer]").forEach((button) => {
+    button.addEventListener("click", () => handleMarketplaceAnswerAction(button.dataset.marketAnswer, model));
+  });
+}
+
+function renderMarketplaceEnquiryStarter() {
+  const root = document.querySelector("#marketEnquiryStarter");
+  if (!root) return;
+
+  const model = getMarketplaceEnquiryStarterModel();
+  root.innerHTML = `
+    <div class="market-enquiry-card ${escapeHtml(model.statusClass)}">
+      <div class="market-enquiry-copy">
+        <span>${escapeHtml(model.label)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <label class="market-enquiry-note">
+        <span>${escapeHtml(model.noteLabel)}</span>
+        <textarea id="marketProjectNote" rows="2" placeholder="${escapeHtml(model.placeholder)}">${escapeHtml(state.projectNote || "")}</textarea>
+      </label>
+      <div class="market-enquiry-controls">
+        <div class="market-enquiry-modes" aria-label="Direct enquiry mode">
+          ${model.modes.map((mode) => `
+            <button type="button" class="${mode.id === model.mode ? "is-active" : ""}" data-enquiry-starter-mode="${escapeHtml(mode.id)}">
+              ${escapeHtml(mode.label)}
+            </button>
+          `).join("")}
+        </div>
+        <div class="market-enquiry-actions">
+          ${model.actions.map((action) => `
+            <button type="button" class="${action.primary ? "is-primary" : ""}" data-enquiry-starter-action="${escapeHtml(action.id)}">
+              ${escapeHtml(action.label)}
+            </button>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+
+  const note = root.querySelector("#marketProjectNote");
+  if (note) {
+    note.addEventListener("input", (event) => {
+      state.projectNote = event.target.value;
+      const fullNote = document.querySelector("#projectNote");
+      if (fullNote && fullNote.value !== state.projectNote) fullNote.value = state.projectNote;
+      saveState();
+      renderDirectEnquiryComposer();
+      renderSupplierResponseRoute();
+      renderResponseTracker();
+      renderReplyQualityGate();
+      renderDecisionReceipt();
+      renderBuyerWorkbench();
+      renderMarketplaceDecisionCard();
+      renderMarketplaceConfidenceStrip();
+    });
+  }
+
+  root.querySelectorAll("[data-enquiry-starter-mode]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.enquiryMode = button.dataset.enquiryStarterMode;
+      const fullMode = document.querySelector("#enquiryMode");
+      if (fullMode) fullMode.value = state.enquiryMode;
+      saveState();
+      renderMarketplaceDecisionCard();
+      renderMarketplaceEnquiryStarter();
+      renderMarketplaceConfidenceStrip();
+      renderDirectEnquiryComposer();
+      renderSupplierResponseRoute();
+      renderResponseTracker();
+      renderReplyQualityGate();
+      showToast(`${button.textContent.trim()} enquiry mode selected.`);
+    });
+  });
+
+  root.querySelectorAll("[data-enquiry-starter-action]").forEach((button) => {
+    button.addEventListener("click", () => handleMarketplaceEnquiryStarterAction(button.dataset.enquiryStarterAction, model));
+  });
+}
+
+function renderMarketplaceConfidenceStrip() {
+  const root = document.querySelector("#marketConfidenceStrip");
+  if (!root) return;
+
+  const model = getMarketplaceConfidenceModel();
+  root.innerHTML = `
+    <div class="market-confidence-card ${escapeHtml(model.statusClass)}">
+      <div class="market-confidence-copy">
+        <span>${escapeHtml(model.label)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="market-confidence-gates">
+        ${model.gates.map((gate) => `
+          <b class="${gate.ready ? "is-ready" : "is-gap"}">
+            <strong>${escapeHtml(gate.value)}</strong>
+            <small>${escapeHtml(gate.label)}</small>
+          </b>
+        `).join("")}
+      </div>
+      <div class="market-confidence-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-market-confidence="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-market-confidence]").forEach((button) => {
+    button.addEventListener("click", () => handleMarketplaceConfidenceAction(button.dataset.marketConfidence, model));
+  });
+}
+
+function getMarketplaceConfidenceModel() {
+  const answer = getMarketplaceAnswerModel();
+  const filtered = getFilteredListings();
+  const listing = listings.find((item) => item.id === answer.listingId) || getSelectedListing();
+  const passport = getTrustPassport(listing);
+  const direct = getDirectEnquiryModel();
+  const fit = getBuyerFitScore(listing);
+  const exactMode = filtered.length > 0;
+  const availabilityReady = exactMode && listing.availability === "available";
+  const proofReady = passport.score >= 74;
+  const messageReady = direct.score >= 86;
+  const fitReady = fit.score >= 68;
+  const statusClass = !exactMode ? "is-gap" : availabilityReady && proofReady && messageReady && fitReady ? "is-ready" : "is-watch";
+  const readyCount = [availabilityReady, proofReady, messageReady, fitReady].filter(Boolean).length;
+  const region = state.region === "all" ? listing.region : state.region;
+  const primaryAction = proofReady && messageReady
+    ? { id: "copy", label: "Copy enquiry", primary: true }
+    : proofReady
+      ? { id: "packet", label: "Open packet", primary: true }
+      : { id: "proof", label: "Check proof", primary: true };
+  const secondaryAction = primaryAction.id === "packet"
+    ? { id: "proof", label: "Check proof" }
+    : { id: "packet", label: "Open packet" };
+
+  if (!exactMode) {
+    return {
+      listing,
+      statusClass,
+      label: "Buyer confidence",
+      headline: "Do not force a weak match.",
+      detail: `No exact ${getDemandEquipmentFromSearch().toLowerCase()} supply in ${region}. Save the need and use it to recruit verified suppliers.`,
+      gates: [
+        { label: "Supply", value: "Gap", ready: false },
+        { label: "Proof", value: `${passport.score}/100`, ready: proofReady },
+        { label: "Next", value: "Recruit", ready: true }
+      ],
+      actions: [
+        { id: "demand", label: "Save need", primary: true },
+        { id: "hunt", label: "Find suppliers" }
+      ]
+    };
+  }
+
+  return {
+    listing,
+    statusClass,
+    label: "Buyer confidence",
+    headline: readyCount >= 3 ? "Safe to ask direct." : "Ask one clean check first.",
+    detail: `${readyCount}/4 confidence gates ready for ${listing.name}. Keep payment direct and let the supplier confirm terms.`,
+    gates: [
+      { label: "Supply", value: availabilityReady ? "Live" : "Check", ready: availabilityReady },
+      { label: "Proof", value: `${passport.score}/100`, ready: proofReady },
+      { label: "Message", value: `${direct.score}/100`, ready: messageReady },
+      { label: "Fit", value: `${fit.score}/100`, ready: fitReady }
+    ],
+    actions: [
+      primaryAction,
+      secondaryAction
+    ]
+  };
+}
+
+async function handleMarketplaceConfidenceAction(action, model) {
+  if (model.listing) state.selectedListingId = model.listing.id;
+
+  if (action === "copy") {
+    saveState();
+    try {
+      await navigator.clipboard.writeText(buildLeadText());
+      markEnquiryCopied();
+      renderMarketplaceConfidenceStrip();
+      showToast("Direct enquiry copied with confidence checks.");
+    } catch {
+      showToast("Copy is blocked here, but the enquiry packet is visible.");
+    }
+    return;
+  }
+
+  if (action === "packet") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#leadTitle"), 130);
+    showToast("Direct enquiry packet opened.");
+    return;
+  }
+
+  if (action === "proof") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#passport"), 120);
+    showToast("Trust proof opened.");
+    return;
+  }
+
+  if (action === "demand" || action === "hunt") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Buyer confidence supplier hunt" : "Buyer confidence demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened from buyer need." : "Buyer need saved.");
+  }
+}
+
+function getMarketplaceEnquiryStarterModel() {
+  const answer = getMarketplaceAnswerModel();
+  const filtered = getFilteredListings();
+  const listing = listings.find((item) => item.id === answer.listingId) || getSelectedListing();
+  const direct = getDirectEnquiryModel();
+  const exactMode = filtered.length > 0;
+  const ready = direct.score >= 86;
+  const statusClass = exactMode ? ready ? "is-ready" : "is-watch" : "is-gap";
+  const supplier = listing?.supplier || "supplier";
+  const machine = listing?.name || getDemandEquipmentFromSearch();
+  return {
+    answer,
+    listing,
+    direct,
+    exactMode,
+    statusClass,
+    mode: state.enquiryMode || "proof",
+    label: exactMode ? "Enquiry starter" : "Demand starter",
+    headline: exactMode ? `Ask ${supplier} about ${machine}.` : `Capture this ${getDemandEquipmentFromSearch().toLowerCase()} request.`,
+    detail: exactMode
+      ? `${direct.score}/100 message readiness. One note here updates the full direct enquiry packet.`
+      : "No exact supply yet. Save the buyer need and use it to recruit verified suppliers.",
+    noteLabel: exactMode ? "Project note" : "Buyer need",
+    placeholder: exactMode ? "Need machine with operator for 5 days near Jebel Ali" : "Needed machine, location, dates, duration, and urgency",
+    modes: [
+      { id: "quick", label: "Quick" },
+      { id: "proof", label: "Proof" },
+      { id: "quote", label: "Quote" }
+    ],
+    actions: exactMode
+      ? [
+          { id: "copy", label: "Copy enquiry", primary: true },
+          { id: "packet", label: "Full packet" }
+        ]
+      : [
+          { id: "demand", label: "Save demand", primary: true },
+          { id: "hunt", label: "Supplier hunt" }
+        ]
+  };
+}
+
+async function handleMarketplaceEnquiryStarterAction(action, model) {
+  if (action === "copy") {
+    if (model.listing) state.selectedListingId = model.listing.id;
+    saveState();
+    try {
+      await navigator.clipboard.writeText(buildLeadText());
+      markEnquiryCopied();
+      renderMarketplaceEnquiryStarter();
+      showToast("Direct enquiry copied from marketplace.");
+    } catch {
+      showToast("Copy is blocked here, but the enquiry packet is visible.");
+    }
+    return;
+  }
+
+  if (action === "packet") {
+    if (model.listing) state.selectedListingId = model.listing.id;
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#leadTitle"), 130);
+    showToast("Full direct enquiry packet opened.");
+    return;
+  }
+
+  if (action === "demand" || action === "hunt") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Marketplace enquiry starter supplier hunt" : "Marketplace enquiry starter demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened from buyer need." : "Buyer demand saved.");
+  }
+}
+
+function getMarketplaceAnswerModel() {
+  const filtered = getFilteredListings();
+  const nearby = filtered.length ? [] : getNearbyListings();
+  const exactCount = filtered.length;
+  const source = filtered.length ? filtered : nearby;
+  const best = source[0] || getSelectedListing();
+  const fit = getBuyerFitScore(best);
+  const availableCount = filtered.filter((listing) => listing.availability === "available").length;
+  const verifiedSuppliers = new Set(filtered.filter((listing) => listing.verified).map((listing) => listing.supplier)).size;
+  const equipment = getDemandEquipmentFromSearch();
+  const region = state.region === "all" ? "all regions" : state.region;
+
+  if (!exactCount) {
+    return {
+      label: "Best answer",
+      statusClass: "is-gap",
+      headline: `No exact ${equipment.toLowerCase()} match in ${region}.`,
+      detail: best
+        ? `Closest recovery is ${best.name} from ${best.supplier}. Capture demand if the buyer needs this exact lane.`
+        : "Capture the buyer demand and turn it into a supplier recruitment signal.",
+      listingId: best?.id || "",
+      facts: [
+        { value: "0", label: "exact matches" },
+        { value: String(nearby.length), label: "nearby options" },
+        { value: "Recruit", label: "next move" }
+      ],
+      actions: [
+        { id: "closest", label: "Show closest", primary: Boolean(best) },
+        { id: "demand", label: "Capture demand", primary: !best },
+        { id: "hunt", label: "Supplier hunt" }
+      ]
+    };
+  }
+
+  if (availableCount) {
+    return {
+      label: "Best answer",
+      statusClass: "is-ready",
+      headline: `${best.name} from ${best.supplier}`,
+      detail: `${best.city}, ${best.region}. ${fit.status}. Send a direct enquiry and keep rental payment between buyer and supplier.`,
+      listingId: best.id,
+      facts: [
+        { value: String(exactCount), label: "matches" },
+        { value: `${fit.score}/100`, label: "buyer fit" },
+        { value: "0%", label: "rental take" }
+      ],
+      actions: [
+        { id: "packet", label: "Open packet", primary: true },
+        { id: "proof", label: "Check proof" },
+        { id: "shortlist", label: state.shortlistIds.includes(best.id) ? "Saved" : "Save" }
+      ]
+    };
+  }
+
+  return {
+    label: "Best answer",
+    statusClass: "is-watch",
+    headline: `${best.name} is the closest current match.`,
+    detail: `${best.supplier} has ${best.availability === "soon" ? "available soon" : "non-live"} status. Ask for confirmed availability before RFQ or award.`,
+    listingId: best.id,
+    facts: [
+      { value: String(exactCount), label: "matches" },
+      { value: String(verifiedSuppliers), label: "verified suppliers" },
+      { value: "Confirm", label: "availability" }
+    ],
+    actions: [
+      { id: "packet", label: "Open packet", primary: true },
+      { id: "available", label: "Show available" },
+      { id: "demand", label: "Capture demand" }
+    ]
+  };
+}
+
+function handleMarketplaceAnswerAction(action, model) {
+  const listing = listings.find((item) => item.id === model.listingId);
+
+  if (["packet", "closest", "proof", "shortlist"].includes(action) && listing) {
+    state.selectedListingId = listing.id;
+  }
+
+  if (action === "packet" || action === "closest") {
+    if (action === "closest") state.availability = "all";
+    saveState();
+    syncFilterInputs();
+    render();
+    scrollToPageTarget(document.querySelector("#leadTitle"), 130);
+    showToast(action === "closest" ? "Closest supplier packet opened." : "Best supplier packet opened.");
+    return;
+  }
+
+  if (action === "proof") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#passport"), 120);
+    showToast("Trust proof opened.");
+    return;
+  }
+
+  if (action === "shortlist" && listing) {
+    if (!state.shortlistIds.includes(listing.id)) {
+      toggleShortlist(listing.id);
+    } else {
+      showToast("Already saved to shortlist.");
+    }
+    return;
+  }
+
+  if (action === "available") {
+    state.availability = "available";
+    state.sort = "available";
+    saveState();
+    syncFilterInputs();
+    render();
+    showToast("Showing available supply first.");
+    return;
+  }
+
+  if (action === "hunt" || action === "demand") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Answer-first supplier hunt" : "Answer-first demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened." : "Demand captured from search.");
+  }
+}
+
 function getMarketplaceSearchAssistItems() {
   const query = state.search.toLowerCase();
   const items = [];
@@ -7504,6 +8141,7 @@ function toggleShortlist(id) {
   renderMobilizationTower();
   renderDealTrail();
   renderBuyerWorkbench();
+  renderMarketplaceAnswer();
   showToast(exists ? "Removed from shortlist." : "Saved to shortlist.");
 }
 
@@ -9473,6 +10111,144 @@ function getDemandSignals() {
 function normalizeDemandEquipment(value) {
   const cleaned = String(value || "").trim().replace(/\s+/g, " ");
   return cleaned ? toTitleCase(cleaned) : "Heavy equipment";
+}
+
+function renderSupplierDecisionCard() {
+  const root = document.querySelector("#supplierDecisionCard");
+  if (!root) return;
+  const model = getSupplierDecisionModel();
+
+  root.innerHTML = `
+    <div class="supplier-decision-main ${model.statusClass}">
+      <span class="supplier-decision-kicker">${escapeHtml(model.badge)}</span>
+      <div>
+        <h3>${escapeHtml(model.title)}</h3>
+        <p>${escapeHtml(model.detail)}</p>
+      </div>
+      <strong>${model.score}/100</strong>
+    </div>
+    <div class="supplier-decision-steps">
+      ${model.steps.map((step) => `
+        <span class="${step.ready ? "is-ready" : "needs-work"}">
+          <b>${escapeHtml(step.value)}</b>
+          ${escapeHtml(step.label)}
+          <small>${escapeHtml(step.detail)}</small>
+        </span>
+      `).join("")}
+    </div>
+    <div class="supplier-decision-actions">
+      ${model.actions.map((action, index) => `
+        <button type="button" class="${index === 0 ? "primary" : ""}" data-supplier-decision-action="${escapeHtml(action.type)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-supplier-decision-action]").forEach((button) => {
+    button.addEventListener("click", () => handleSupplierDecisionAction(button.dataset.supplierDecisionAction));
+  });
+}
+
+function getSupplierDecisionModel(listing = getSelectedListing()) {
+  const studio = getSupplierStudioModel(listing);
+  const passport = getTrustPassport(listing);
+  const revenue = studio.revenueDesk;
+  const listingCount = studio.listings.length;
+  const availableCount = studio.listings.filter((item) => item.availability === "available").length;
+  const verifiedCount = studio.listings.filter((item) => item.verified).length;
+  const readyCount = [
+    studio.profileCompletion >= 82,
+    passport.score >= 84,
+    studio.docGaps === 0,
+    availableCount > 0,
+    revenue.paidListings > 0
+  ].filter(Boolean).length;
+  const score = Math.round((readyCount / 5) * 100);
+  const primaryGap = studio.docGaps
+    ? `${studio.docGaps} proof gap${studio.docGaps === 1 ? "" : "s"}`
+    : availableCount === 0
+      ? "availability needs confirmation"
+      : revenue.paidListings === 0
+        ? "billing needs activation"
+        : "ready to publish";
+  const title = score >= 80
+    ? `${studio.profile.supplier} can publish with confidence.`
+    : `Make ${listing.name} publish-ready before pushing demand.`;
+  const detail = score >= 80
+    ? `Keep the direct enquiry route clean: ${listing.name} has proof, supply, and listing revenue signals aligned.`
+    : `Focus on ${primaryGap}, then show the supplier storefront to buyers without touching rental payment.`;
+  const badge = score >= 80 ? "Supplier next move" : "Supplier focus";
+  const statusClass = score >= 80 ? "ready" : score >= 60 ? "watch" : "gap";
+
+  return {
+    studio,
+    listing,
+    score,
+    badge,
+    title,
+    detail,
+    statusClass,
+    steps: [
+      {
+        label: "Profile",
+        value: `${studio.profileCompletion}/100`,
+        detail: studio.profileCompletion >= 82 ? "company page ready" : "complete supplier profile",
+        ready: studio.profileCompletion >= 82
+      },
+      {
+        label: "Proof",
+        value: `${passport.score}/100`,
+        detail: studio.docGaps ? `${studio.docGaps} gap${studio.docGaps === 1 ? "" : "s"}` : "documents clean",
+        ready: passport.score >= 84 && studio.docGaps === 0
+      },
+      {
+        label: "Availability",
+        value: `${availableCount}/${listingCount}`,
+        detail: availableCount ? "machines visible" : "confirm first machine",
+        ready: availableCount > 0
+      },
+      {
+        label: "Revenue",
+        value: `USD ${studio.annualRevenue.toLocaleString()}`,
+        detail: `${revenue.paidListings} paid listing${revenue.paidListings === 1 ? "" : "s"}`,
+        ready: revenue.paidListings > 0
+      }
+    ],
+    actions: [
+      studio.docGaps ? { label: "Fix proof", type: "proof" }
+        : availableCount === 0 ? { label: "Confirm availability", type: "builder" }
+          : revenue.paidListings === 0 ? { label: "Activate billing", type: "billing" }
+            : { label: "View storefront", type: "storefront" },
+      { label: "Add listing", type: "builder" },
+      { label: "Revenue desk", type: "revenue" }
+    ],
+    verifiedCount
+  };
+}
+
+function handleSupplierDecisionAction(action) {
+  const targetMap = {
+    proof: "#trustChecklist",
+    builder: "#listingBuilder",
+    billing: "#pricing",
+    storefront: "#storefront",
+    revenue: "#revenue-desk"
+  };
+  const target = document.querySelector(targetMap[action] || "#studio");
+  if (action === "storefront") renderSupplierStorefront();
+  if (target) target.scrollIntoView({ behavior: "smooth", block: action === "proof" ? "center" : "start" });
+  if (action === "builder") {
+    window.setTimeout(() => document.querySelector("#builderModel")?.focus(), 260);
+  }
+  const messages = {
+    proof: "Proof checklist opened.",
+    builder: "Listing builder opened.",
+    billing: "Pricing path opened.",
+    storefront: "Supplier storefront opened.",
+    revenue: "Revenue desk opened."
+  };
+  showToast(messages[action] || "Supplier next move opened.");
 }
 
 function renderSupplierTable() {

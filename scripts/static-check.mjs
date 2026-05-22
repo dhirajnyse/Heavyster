@@ -41,6 +41,10 @@ assert(index.includes("USD 9") && index.includes("USD 99"), "index.html is missi
 assert(index.includes("1% confirmed-booking success fee"), "index.html is missing the phase-two success fee model.");
 assert(index.includes('id="listingGrid"'), "index.html is missing the marketplace listing grid.");
 assert(index.includes('id="marketSearchAssist"'), "index.html is missing Marketplace Search Assist.");
+assert(index.includes('id="marketDecisionCard"'), "index.html is missing the simple Marketplace Decision Card.");
+assert(index.includes('id="marketAnswer"'), "index.html is missing Marketplace Answer layer.");
+assert(index.includes('id="marketEnquiryStarter"'), "index.html is missing Marketplace Enquiry Starter.");
+assert(index.includes('id="marketConfidenceStrip"'), "index.html is missing Marketplace Buyer Confidence Strip.");
 assert(index.includes('id="marketSupplyLens"'), "index.html is missing Marketplace Supply Lens.");
 assert(index.includes('id="marketSmartViews"'), "index.html is missing Marketplace Smart Views.");
 assert(index.includes('id="marketFilterTrail"'), "index.html is missing the active marketplace filter trail.");
@@ -49,7 +53,7 @@ assert(index.includes('id="compactCatalog"'), "index.html is missing the compact
 assert(index.includes('id="listingBuilder"'), "index.html is missing the supplier listing builder.");
 assert(index.includes('id="categoryDirectory"'), "index.html is missing the category directory.");
 assert(index.includes('id="adminSupplierQueue"'), "index.html is missing the founder admin queue.");
-assert(index.includes('id="supplierTable"') && index.includes('id="studioHealth"') && index.includes('id="studioOps"'), "index.html is missing the Supplier Studio 2.0 workspace.");
+assert(index.includes('id="supplierTable"') && index.includes('id="studioHealth"') && index.includes('id="studioOps"') && index.includes('id="supplierDecisionCard"'), "index.html is missing the Supplier Studio 2.0 workspace.");
 assert(index.includes('id="trustChecklist"'), "index.html is missing the verification checklist.");
 assert(index.includes('id="bookingFeeOutput"'), "index.html is missing the commission calculator.");
 assert(index.includes('id="quickSearchButton"') && index.includes('id="scrollTopButton"'), "index.html is missing floating quick actions.");
@@ -104,8 +108,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260521-simple-first-v86"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260521-simple-first-v86"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260522-supplier-decision-v92"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260522-supplier-decision-v92"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -119,10 +123,15 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260521-heavyster-simple-first-v86";'), "app.js DATA_VERSION is missing or changed.");
+assert(app.includes('const DATA_VERSION = "20260522-heavyster-supplier-decision-v92";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");
+assert(app.includes("renderMarketplaceDecisionCard") && app.includes("getMarketplaceDecisionModel") && app.includes("handleMarketplaceDecisionAction") && css.includes(".market-decision"), "app.js is missing simple Marketplace Decision Card logic.");
+assert(app.includes("renderSupplierDecisionCard") && app.includes("getSupplierDecisionModel") && app.includes("handleSupplierDecisionAction") && css.includes(".supplier-decision"), "app.js is missing simple Supplier Decision Card logic.");
+assert(app.includes("renderMarketplaceAnswer") && app.includes("getMarketplaceAnswerModel") && app.includes("handleMarketplaceAnswerAction") && css.includes(".market-answer"), "app.js is missing Marketplace Answer logic.");
+assert(app.includes("renderMarketplaceEnquiryStarter") && app.includes("getMarketplaceEnquiryStarterModel") && app.includes("handleMarketplaceEnquiryStarterAction") && css.includes(".market-enquiry-starter"), "app.js is missing Marketplace Enquiry Starter logic.");
+assert(app.includes("renderMarketplaceConfidenceStrip") && app.includes("getMarketplaceConfidenceModel") && app.includes("handleMarketplaceConfidenceAction") && css.includes(".market-confidence"), "app.js is missing Marketplace Buyer Confidence Strip logic.");
 assert(app.includes("renderMarketplaceSupplyLens") && app.includes("getMarketplaceSupplyLensModel") && app.includes("applyMarketplaceSupplyLens"), "app.js is missing Marketplace Supply Lens logic.");
 assert(app.includes("marketplaceSmartViews") && app.includes("renderMarketplaceSmartViews") && app.includes("applyMarketplaceSmartView"), "app.js is missing Marketplace Smart Views logic.");
 assert(app.includes("renderMarketplaceFilterTrail") && app.includes("clearMarketplaceFilter") && app.includes("clearAllMarketplaceFilters"), "app.js is missing active filter trail logic.");
