@@ -17,6 +17,8 @@ function assert(condition, message) {
   "index.html",
   "styles.css",
   "app.js",
+  ".nojekyll",
+  ".github/workflows/pages.yml",
   "site.webmanifest",
   "assets/favicon.svg",
   "assets/heavyster-logo-3d.svg",
@@ -34,6 +36,7 @@ const index = read("index.html");
 const css = read("styles.css");
 const app = read("app.js");
 const manifest = read("site.webmanifest");
+const workflow = read(".github/workflows/pages.yml");
 
 assert(index.includes("Content-Security-Policy"), "index.html is missing the CSP meta tag.");
 assert(index.includes("Heavyster | Heavy Equipment Rental Listings"), "index.html has the wrong title.");
@@ -117,8 +120,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260523-catalog-page-v112"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260523-catalog-page-v112"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260523-deploy-guard-v113"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260523-deploy-guard-v113"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -132,7 +135,9 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260523-heavyster-catalog-page-v112";'), "app.js DATA_VERSION is missing or changed.");
+assert(app.includes('const DATA_VERSION = "20260523-heavyster-deploy-guard-v113";'), "app.js DATA_VERSION is missing or changed.");
+assert(workflow.includes("actions/configure-pages@v5") && workflow.includes("actions/upload-pages-artifact@v3") && workflow.includes("actions/deploy-pages@v4"), "Pages workflow is missing the official Pages deploy actions.");
+assert(workflow.includes("npm run check") && workflow.includes('find _site -name "*.zip" -delete') && workflow.includes('find _site -name "*.log" -delete'), "Pages workflow is missing static verification or artifact cleanup.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");

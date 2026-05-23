@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260523-heavyster-catalog-page-v112";
+const DATA_VERSION = "20260523-heavyster-deploy-guard-v113";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260523-catalog-page-v112";
+const SIMPLE_UX_RELEASE = "20260523-deploy-guard-v113";
 
 const listings = [
   {

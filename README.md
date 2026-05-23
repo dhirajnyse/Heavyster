@@ -94,6 +94,7 @@ This folder contains a static product prototype with:
 - Pricing calculator for the listing model
 - Phase-two commission calculator for confirmed bookings
 - 3D-style corporate SVG logo and social card
+- GitHub Pages deploy guard workflow that verifies the static bundle and publishes only clean site files
 
 ## Founder Docs
 
@@ -117,3 +118,7 @@ npm start
 ```bash
 npm run check
 ```
+
+## GitHub Pages Upload
+
+Upload the full folder contents, including `.nojekyll` and `.github/workflows/pages.yml`. The Pages workflow runs `npm run check`, removes local ZIP/log files from the deploy artifact, and publishes the static site from a clean `_site` folder.
