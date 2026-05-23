@@ -17,6 +17,11 @@ This folder contains a static product prototype with:
 
 - Marketplace search and filtered equipment listings
 - Marketplace Search Assist for one-click machine, category, supplier, and demand-gap routes while buyers type
+- Simple Marketplace Result Brief that turns each search into one best path, three proof facts, and the next buyer action
+- Buyer Enquiry Receipt that packages one selected machine, proof status, message readiness, availability, and the direct-payment rule into a copy-ready buyer note
+- Marketplace Scale Guard that keeps large-result searches simple by recommending best path, compact rows, widened search, or demand capture before the buyer gets buried in inventory
+- Catalog Focus Bar for one-click best-fit, verified, available, saved, and demand-gap views before buyers scan large equipment lists
+- Catalog Pager that keeps card view and compact rows page-based with simple row-count controls for future large inventories
 - Marketplace Supply Lens that summarizes strongest regions, categories, availability, and verified supply for the current result set
 - Marketplace Smart Views for one-click buyer shortcuts into useful fleet and demand views
 - Active marketplace filter trail so buyers can see, remove, or reset filters without losing context
@@ -33,6 +38,9 @@ This folder contains a static product prototype with:
 - Founder Supplier Call Sheet that turns demand proof, supplier health, and package math into call-ready close scripts for paid listings
 - Buyer Workbench that connects search, shortlist, Jobsite Planner, Trust Passport, RFQ, Award, Quote Guard, Mobilization, and Direct Deal Trail into one decision path
 - Supplier Workbench that connects Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness into one supplier revenue path
+- Supplier Listing Starter that turns one selected machine into a proof, availability, and USD 99/year listing brief before deeper setup
+- Supplier Activation Receipt that confirms billable listings, listing SaaS value, proof score, freshness gaps, and direct rental payment rules inside Supplier Studio
+- Paid Listing Activation that turns supplier count, monthly SaaS, annual SaaS, and 0% rental take into a copy-ready approval note
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
 - Compact searchable workflow launcher with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX

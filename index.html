@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260523-compact-tools-v102" />
+    <link rel="stylesheet" href="styles.css?v=20260523-catalog-page-v112" />
   </head>
   <body>
     <div class="app-shell">
@@ -226,7 +226,10 @@
                 </label>
               </div>
               <div class="market-quick-presets" id="marketQuickPresets" aria-label="Fast marketplace searches"></div>
+              <div class="market-result-brief" id="marketResultBrief" aria-label="Simple marketplace result brief"></div>
               <div class="market-decision" id="marketDecisionCard" aria-label="Simple buyer decision card"></div>
+              <div class="buyer-enquiry-receipt" id="buyerEnquiryReceipt" aria-label="Buyer enquiry receipt"></div>
+              <div class="market-scale-guard" id="marketScaleGuard" aria-label="Marketplace scale guard"></div>
               <div class="market-answer" id="marketAnswer" aria-label="Marketplace answer"></div>
               <div class="market-enquiry-starter" id="marketEnquiryStarter" aria-label="Quick direct enquiry starter"></div>
               <div class="market-confidence" id="marketConfidenceStrip" aria-label="Buyer confidence strip"></div>
@@ -628,6 +631,8 @@
               <button type="button" class="ghost-button" id="viewToggleButton">Compact rows</button>
               <span id="catalogSummary">0 listings loaded</span>
             </div>
+            <div class="catalog-focus-bar" id="catalogFocusBar" aria-label="Catalog focus bar"></div>
+            <div class="catalog-pager" id="catalogPager" aria-label="Catalog page controls"></div>
             <div class="fleet-index" id="fleetIndexPanel" aria-label="Fleet index"></div>
             <div class="listing-grid" id="listingGrid"></div>
             <div class="compact-catalog" id="compactCatalog" aria-label="Compact equipment rows"></div>
@@ -1154,6 +1159,7 @@
               </div>
               <span class="pill dark">MVP scope</span>
             </div>
+            <div class="supplier-listing-starter" id="supplierListingStarter" aria-label="Simple supplier listing starter"></div>
             <div class="workspace-preview">
               <div class="workspace-rail">
                 <span class="is-active">Listings</span>
@@ -1171,6 +1177,7 @@
                   </div>
                 </div>
                 <div class="supplier-decision" id="supplierDecisionCard" aria-label="Simple supplier listing decision card"></div>
+                <div class="supplier-activation-receipt" id="supplierActivationReceipt" aria-label="Supplier activation receipt"></div>
                 <div class="studio-health" id="studioHealth"></div>
                 <div class="studio-ops" id="studioOps"></div>
                 <div class="supplier-table" id="supplierTable"></div>
@@ -2040,6 +2047,8 @@
             </div>
           </div>
 
+          <div class="paid-listing-activation" id="paidListingActivation" aria-label="Paid listing activation preview"></div>
+
           <div class="pricing-grid">
             <article class="price-card">
               <span>Monthly</span>
@@ -2157,11 +2166,12 @@
         </div>
         <label class="screen-reader-only" for="commandPaletteInput">Search Heavyster</label>
         <input id="commandPaletteInput" type="search" autocomplete="off" placeholder="Search equipment, supplier, workflow, market..." />
+        <div class="command-palette-quick" id="commandPaletteQuick" aria-label="Quick commands"></div>
         <div class="command-palette-results" id="commandPaletteResults"></div>
       </section>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260523-compact-tools-v102" defer></script>
+    <script src="app.js?v=20260523-catalog-page-v112" defer></script>
   </body>
 </html>

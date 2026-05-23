@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260523-heavyster-compact-tools-v102";
+const DATA_VERSION = "20260523-heavyster-catalog-page-v112";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260523-compact-tools-v102";
+const SIMPLE_UX_RELEASE = "20260523-catalog-page-v112";
 
 const listings = [
   {
@@ -979,6 +979,9 @@ function defaultState() {
     category: "all",
     sort: "available",
     compactView: false,
+    catalogPage: 1,
+    catalogPageSize: 6,
+    catalogPageSignature: "",
     selectedListingId: "HY-EX-001",
     shortlistIds: ["HY-EX-001"],
     shortlistCompareOpen: false,
@@ -1072,6 +1075,7 @@ function bindControls() {
   const builderRegion = document.querySelector("#builderRegion");
   const builderAvailability = document.querySelector("#builderAvailability");
   const commandPaletteInput = document.querySelector("#commandPaletteInput");
+  const commandPaletteQuick = document.querySelector("#commandPaletteQuick");
   const workflowMenuSearch = document.querySelector("#workflowMenuSearch");
   const workflowMenuFilters = document.querySelector("#workflowMenuFilters");
   const jobsiteType = document.querySelector("#jobsiteType");
@@ -1111,18 +1115,21 @@ function bindControls() {
 
   search.addEventListener("input", (event) => {
     state.search = event.target.value.trim();
+    resetCatalogPage();
     saveState();
     render();
   });
 
   region.addEventListener("change", (event) => {
     state.region = event.target.value;
+    resetCatalogPage();
     saveState();
     render();
   });
 
   availability.addEventListener("change", (event) => {
     state.availability = event.target.value;
+    resetCatalogPage();
     saveState();
     render();
   });
@@ -1141,6 +1148,7 @@ function bindControls() {
     renderDirectEnquiryComposer();
     renderSupplierResponseRoute();
     renderMarketplaceDecisionCard();
+    renderBuyerEnquiryReceipt();
     renderMarketplaceEnquiryStarter();
     renderMarketplaceConfidenceStrip();
   });
@@ -1151,6 +1159,7 @@ function bindControls() {
     renderDirectEnquiryComposer();
     renderSupplierResponseRoute();
     renderMarketplaceDecisionCard();
+    renderBuyerEnquiryReceipt();
     renderMarketplaceEnquiryStarter();
     renderMarketplaceConfidenceStrip();
   });
@@ -1159,6 +1168,8 @@ function bindControls() {
     state.listingCount = Number(event.target.value);
     saveState();
     renderPricingCalculator();
+    renderPaidListingActivation();
+    renderSupplierActivationReceipt();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -1183,6 +1194,7 @@ function bindControls() {
 
   sort.addEventListener("change", (event) => {
     state.sort = event.target.value;
+    resetCatalogPage();
     saveState();
     render();
   });
@@ -1216,6 +1228,7 @@ function bindControls() {
   document.querySelectorAll(".category-button").forEach((button) => {
     button.addEventListener("click", () => {
       state.category = button.dataset.category;
+      resetCatalogPage();
       saveState();
       render();
     });
@@ -1644,6 +1657,7 @@ function bindControls() {
         resetWorkflowMenu();
         return;
       }
+      prepareWorkflowMenuForOpen();
       renderWorkflowMenu();
       window.setTimeout(() => workflowMenuSearch?.focus(), 20);
     });
@@ -1676,6 +1690,13 @@ function bindControls() {
     }
     if (event.key === "Escape") closeCommandPalette();
   });
+  if (commandPaletteQuick) {
+    commandPaletteQuick.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-palette-quick-index]");
+      if (!button) return;
+      activateCommandPaletteQuickAction(button.dataset.paletteQuickIndex);
+    });
+  }
   document.addEventListener("keydown", (event) => {
     const target = event.target;
     const isTyping = target && ["INPUT", "SELECT", "TEXTAREA"].includes(target.tagName);
@@ -1723,6 +1744,8 @@ function bindControls() {
     state.listingCount = Math.min(80, state.listingCount + 1);
     saveState();
     renderPricingCalculator();
+    renderPaidListingActivation();
+    renderSupplierActivationReceipt();
     showToast("Draft listing added to the supplier calculator.");
   });
 }
@@ -1734,7 +1757,9 @@ function updateBuilderState() {
   state.builderAvailability = document.querySelector("#builderAvailability").value;
   saveState();
   renderBuilderSummary();
+  renderSupplierListingStarter();
   renderSupplierDecisionCard();
+  renderSupplierActivationReceipt();
 }
 
 function updateJobsiteState() {
@@ -1794,10 +1819,13 @@ function render() {
   renderFounderCallSheet();
   renderCategoryButtons();
   renderMarketplaceDecisionCard();
+  renderBuyerEnquiryReceipt();
+  renderMarketplaceScaleGuard();
   renderMarketplaceAnswer();
   renderMarketplaceEnquiryStarter();
   renderMarketplaceConfidenceStrip();
   renderMarketplaceQuickPresets();
+  renderMarketplaceResultBrief();
   renderMarketplaceSearchAssist();
   renderMarketplaceSmartViews();
   renderMarketplaceFilterTrail();
@@ -1847,7 +1875,9 @@ function render() {
   renderListingActivationRoom();
   renderTrustRevenueLedger();
   renderDemandCapture();
+  renderSupplierListingStarter();
   renderSupplierDecisionCard();
+  renderSupplierActivationReceipt();
   renderSupplierTable();
   renderTrustChecklist();
   renderOnboardingFlow();
@@ -1857,6 +1887,7 @@ function render() {
   renderSupplierHunt();
   renderMarketSignalMatrix();
   renderMarketMaker();
+  renderPaidListingActivation();
   renderPricingCalculator();
   renderCommissionCalculator();
   renderWorkflowMenu();
@@ -1902,6 +1933,11 @@ function resetWorkflowMenu() {
 function getDefaultWorkflowMenuRole() {
   if (!state.simpleMode) return "all";
   return getActiveWorkflowRole();
+}
+
+function prepareWorkflowMenuForOpen() {
+  if (!state.simpleMode || workflowMenuQuery.trim() || workflowMenuRole !== "all") return;
+  workflowMenuRole = getDefaultWorkflowMenuRole();
 }
 
 function getActiveWorkflowRole() {
@@ -1977,24 +2013,43 @@ function updateWorkflowMenuStatus(visibleCount, hasQuery) {
   if (!status) return;
 
   const activeAnchor = window.location.hash || "#marketplace";
-  const activeLink = [...document.querySelectorAll(".workflow-menu [data-nav-target]")]
-    .find((link) => link.dataset.navTarget === activeAnchor);
+  const activeLink = getVisibleWorkflowActiveLink(activeAnchor);
   const activeRole = activeLink?.closest(".workflow-menu-group")?.dataset.workflowRole || workflowMenuRole;
   const label = workflowMenuRole === "all" ? "Workflow map" : `${workflowMenuRole} path`;
   const headline = hasQuery
     ? `${visibleCount} matching module${visibleCount === 1 ? "" : "s"}`
     : activeLink
       ? `${activeLink.textContent.trim()} is active`
-      : `${visibleCount} module${visibleCount === 1 ? "" : "s"} ready`;
+      : getWorkflowMenuFallbackHeadline(visibleCount);
   const helper = activeLink
     ? `${activeRole} workflow. Search, filter, or jump without losing the current page.`
-    : "Search by buyer, supplier, founder, module name, or page anchor.";
+    : getWorkflowMenuFallbackHelper();
 
   status.innerHTML = `
     <span>${escapeHtml(label)}</span>
     <strong>${escapeHtml(headline)}</strong>
     <small>${escapeHtml(helper)}</small>
   `;
+}
+
+function getVisibleWorkflowActiveLink(activeAnchor) {
+  const activeLink = [...document.querySelectorAll(".workflow-menu [data-nav-target]")]
+    .find((link) => link.dataset.navTarget === activeAnchor);
+  return activeLink && !activeLink.hidden ? activeLink : null;
+}
+
+function getWorkflowMenuFallbackHeadline(visibleCount) {
+  if (workflowMenuRole === "all") {
+    return `${visibleCount} module${visibleCount === 1 ? "" : "s"} ready`;
+  }
+  return `${visibleCount} ${workflowMenuRole.toLowerCase()} tool${visibleCount === 1 ? "" : "s"} ready`;
+}
+
+function getWorkflowMenuFallbackHelper() {
+  if (workflowMenuRole === "all") {
+    return "Search by buyer, supplier, founder, module name, or page anchor.";
+  }
+  return `${workflowMenuRole} tools only. Switch filters or search to find another module.`;
 }
 
 function syncNavigationState() {
@@ -3156,7 +3211,7 @@ function renderCommandPalette(query = commandPaletteQuery) {
 
   document.querySelectorAll("[data-command-index]").forEach((button) => {
     button.addEventListener("click", () => activateCommandPaletteItem(button.dataset.commandIndex));
-    });
+  });
 }
 
 function renderCommandPaletteContext() {
@@ -3173,6 +3228,7 @@ function renderCommandPaletteContext() {
   title.textContent = model.title;
   input.placeholder = model.placeholder;
   input.setAttribute("aria-label", model.aria);
+  renderCommandPaletteQuickActions(role);
 }
 
 function getCommandPaletteContextModel(role) {
@@ -3198,6 +3254,76 @@ function getCommandPaletteContextModel(role) {
     placeholder: "Search crane, supplier, passport, RFQ...",
     aria: "Search buyer equipment and workflow tools"
   };
+}
+
+function renderCommandPaletteQuickActions(role) {
+  const root = document.querySelector("#commandPaletteQuick");
+  if (!root) return;
+
+  root.innerHTML = getCommandPaletteQuickActions(role).map((action, index) => `
+    <button type="button" class="${escapeHtml(action.typeClass)}" data-palette-quick-index="${index}">
+      <strong>${escapeHtml(action.label)}</strong>
+      <span>${escapeHtml(action.detail)}</span>
+    </button>
+  `).join("");
+}
+
+function getCommandPaletteQuickActions(role) {
+  if (role === "Supplier") {
+    return [
+      { label: "Supplier desk", detail: "Control revenue", anchor: "#supplier-workbench", typeClass: "supplier" },
+      { label: "Add listing", detail: "Fleet and proof", anchor: "#studio", typeClass: "supplier" },
+      { label: "Proof vault", detail: "Verify docs", anchor: "#proof-vault", typeClass: "supplier" },
+      { label: "Lead desk", detail: "Reply fast", anchor: "#lead-desk", typeClass: "supplier" }
+    ];
+  }
+
+  if (role === "Founder") {
+    return [
+      { label: "Founder desk", detail: "Scale control", anchor: "#founder-workbench", typeClass: "founder" },
+      { label: "Market matrix", detail: "Pick wedge", anchor: "#market-signal-matrix", typeClass: "founder" },
+      { label: "Call sheet", detail: "Close supply", anchor: "#founder-call-sheet", typeClass: "founder" },
+      { label: "Trust ledger", detail: "Protect ARR", anchor: "#trust-revenue-ledger", typeClass: "founder" }
+    ];
+  }
+
+  return [
+    { label: "Crane in UAE", detail: "Search supply", marketplace: { search: "crane", region: "UAE", availability: "all", category: "all" }, anchor: "#marketplace", typeClass: "buyer" },
+    { label: "Buyer desk", detail: "Control path", anchor: "#buyer-workbench", typeClass: "buyer" },
+    { label: "Trust passport", detail: "Check proof", anchor: "#passport", typeClass: "buyer" },
+    { label: "RFQ room", detail: "Ask suppliers", anchor: "#rfq", typeClass: "buyer" }
+  ];
+}
+
+function activateCommandPaletteQuickAction(index) {
+  const action = getCommandPaletteQuickActions(getActiveWorkflowRole())[Number(index)];
+  if (!action) return;
+
+  if (action.query) {
+    const input = document.querySelector("#commandPaletteInput");
+    commandPaletteQuery = action.query;
+    if (input) input.value = action.query;
+    renderCommandPalette(action.query);
+    showToast(`${action.label} loaded.`);
+    return;
+  }
+
+  if (action.marketplace) {
+    state.search = action.marketplace.search ?? state.search;
+    state.region = action.marketplace.region ?? state.region;
+    state.availability = action.marketplace.availability ?? state.availability;
+    state.category = action.marketplace.category ?? state.category;
+    saveState();
+    closeCommandPalette();
+    render();
+    const target = document.querySelector(action.anchor || "#marketplace");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast(`${action.label} opened.`);
+    return;
+  }
+
+  closeCommandPalette();
+  openSimplicityTarget(action.anchor, action.label);
 }
 
 function getCommandPaletteResults(query = "") {
@@ -4894,6 +5020,65 @@ function getFilteredListings() {
   return getListingsForFilters(state);
 }
 
+function getCatalogPageSignature() {
+  return [
+    state.search || "",
+    state.region || "all",
+    state.availability || "all",
+    state.category || "all",
+    state.sort || "available"
+  ].join("|");
+}
+
+function resetCatalogPage() {
+  state.catalogPage = 1;
+  state.catalogPageSignature = getCatalogPageSignature();
+}
+
+function getCatalogPageSize() {
+  const size = Number(state.catalogPageSize) || 6;
+  return [6, 12, 24, 48].includes(size) ? size : 6;
+}
+
+function getCatalogPagerModel() {
+  const signature = getCatalogPageSignature();
+  if (state.catalogPageSignature !== signature) {
+    state.catalogPage = 1;
+    state.catalogPageSignature = signature;
+  }
+
+  const filtered = getFilteredListings();
+  const pageSize = getCatalogPageSize();
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const page = Math.min(Math.max(Number(state.catalogPage) || 1, 1), totalPages);
+  state.catalogPage = page;
+  const startIndex = filtered.length ? (page - 1) * pageSize : 0;
+  const endIndex = Math.min(startIndex + pageSize, filtered.length);
+  const rows = filtered.slice(startIndex, endIndex);
+
+  return {
+    filtered,
+    rows,
+    page,
+    pageSize,
+    totalPages,
+    totalRows: filtered.length,
+    startLabel: filtered.length ? startIndex + 1 : 0,
+    endLabel: endIndex,
+    hasPrevious: page > 1,
+    hasNext: page < totalPages
+  };
+}
+
+function getPagedCatalogListings() {
+  return getCatalogPagerModel().rows;
+}
+
+function selectFirstPagedCatalogListing() {
+  const first = getPagedCatalogListings()[0];
+  if (first) state.selectedListingId = first.id;
+}
+
 function getListingsForFilters(filters) {
   const query = String(filters.search || "").toLowerCase();
   const region = filters.region || "all";
@@ -5116,6 +5301,149 @@ function applyMarketplaceQuickPreset(presetId) {
   showToast(`${preset.label} opened.`);
 }
 
+function renderMarketplaceResultBrief() {
+  const root = document.querySelector("#marketResultBrief");
+  if (!root) return;
+
+  const model = getMarketplaceResultBriefModel();
+  root.innerHTML = `
+    <div class="market-result-brief-card ${escapeHtml(model.statusClass)}">
+      <div class="market-result-brief-copy">
+        <span>${escapeHtml(model.label)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="market-result-brief-facts">
+        ${model.facts.map((fact) => `
+          <b class="${fact.ready ? "is-ready" : "is-gap"}">
+            <strong>${escapeHtml(fact.value)}</strong>
+            <small>${escapeHtml(fact.label)}</small>
+          </b>
+        `).join("")}
+      </div>
+      <div class="market-result-brief-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-market-result-brief="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-market-result-brief]").forEach((button) => {
+    button.addEventListener("click", () => handleMarketplaceResultBriefAction(button.dataset.marketResultBrief, model));
+  });
+}
+
+function getMarketplaceResultBriefModel() {
+  const filtered = getFilteredListings();
+  const selected = filtered.find((listing) => listing.id === state.selectedListingId) || filtered[0];
+  const exactMode = Boolean(selected);
+  const equipment = getDemandEquipmentFromSearch();
+  const region = state.region === "all" ? selected?.region || "all regions" : state.region;
+
+  if (!exactMode) {
+    const wider = getListingsForFilters({ ...state, availability: "all" });
+    const widest = wider.length ? wider : getListingsForFilters({ ...state, region: "all", availability: "all" });
+    return {
+      statusClass: "is-gap",
+      label: "Search result",
+      headline: `No exact ${equipment.toLowerCase()} result yet.`,
+      detail: widest.length
+        ? `${widest[0].name} is the closest recovery path. Capture demand or widen availability.`
+        : `Save the ${region} need and turn it into a supplier recruitment signal.`,
+      facts: [
+        { label: "Exact supply", value: "0", ready: false },
+        { label: "Recovery", value: widest.length ? String(widest.length) : "Gap", ready: widest.length > 0 },
+        { label: "Rental take", value: "0%", ready: true }
+      ],
+      actions: [
+        { id: "demand", label: "Save demand", primary: true },
+        { id: "hunt", label: "Find suppliers" },
+        { id: "widen", label: "Widen search" }
+      ]
+    };
+  }
+
+  const passport = getTrustPassport(selected);
+  const fit = getBuyerFitScore(selected);
+  const statusClass = passport.score >= 84 && selected.availability === "available" ? "is-ready" : "is-watch";
+  const availability = getAvailabilityLabel(selected.availability);
+
+  return {
+    listing: selected,
+    statusClass,
+    label: "Search result",
+    headline: `${selected.name} is the cleanest visible path.`,
+    detail: `${selected.supplier} in ${selected.city}, ${selected.region}. ${fit.summary || availability}.`,
+    facts: [
+      { label: "Matches", value: String(filtered.length), ready: filtered.length > 0 },
+      { label: "Trust", value: `${passport.score}/100`, ready: passport.score >= 84 },
+      { label: "Availability", value: availability, ready: selected.availability === "available" }
+    ],
+    actions: [
+      { id: "copy", label: "Copy enquiry", primary: true },
+      { id: "proof", label: "Check proof" },
+      { id: "desk", label: "Buyer desk" }
+    ]
+  };
+}
+
+async function handleMarketplaceResultBriefAction(action, model) {
+  if (model.listing) state.selectedListingId = model.listing.id;
+
+  if (action === "copy") {
+    saveState();
+    try {
+      await navigator.clipboard.writeText(buildLeadText());
+      markEnquiryCopied();
+      renderMarketplaceResultBrief();
+      renderBuyerEnquiryReceipt();
+      showToast("Direct enquiry copied from the search result brief.");
+    } catch {
+      showToast("Copy is blocked here, but the enquiry packet is visible.");
+    }
+    return;
+  }
+
+  if (action === "proof") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#passport"), 120);
+    showToast("Trust proof opened.");
+    return;
+  }
+
+  if (action === "desk") {
+    saveState();
+    openSimplicityTarget("#buyer-workbench", "Buyer desk");
+    return;
+  }
+
+  if (action === "widen") {
+    const wider = getListingsForFilters({ ...state, availability: "all" });
+    state.availability = "all";
+    if (!wider.length) state.region = "all";
+    state.sort = "fit";
+    const matches = getFilteredListings();
+    if (matches.length) state.selectedListingId = matches[0].id;
+    saveState();
+    syncFilterInputs();
+    render();
+    showToast("Wider search opened.");
+    return;
+  }
+
+  if (action === "demand" || action === "hunt") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Result brief supplier hunt" : "Result brief demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened from search result." : "Buyer demand saved.");
+  }
+}
+
 function renderMarketplaceDecisionCard() {
   const root = document.querySelector("#marketDecisionCard");
   if (!root) return;
@@ -5165,6 +5493,7 @@ function renderMarketplaceDecisionCard() {
       renderReplyQualityGate();
       renderDecisionReceipt();
       renderBuyerWorkbench();
+      renderBuyerEnquiryReceipt();
     });
   }
 
@@ -5251,6 +5580,7 @@ async function handleMarketplaceDecisionAction(action, model) {
       await navigator.clipboard.writeText(buildLeadText());
       markEnquiryCopied();
       renderMarketplaceDecisionCard();
+      renderBuyerEnquiryReceipt();
       showToast("Direct enquiry copied from the buyer decision card.");
     } catch {
       showToast("Copy is blocked here, but the enquiry packet is visible.");
@@ -5291,6 +5621,411 @@ async function handleMarketplaceDecisionAction(action, model) {
     if (target) scrollToPageTarget(target, 110);
     showToast(action === "hunt" ? "Supplier hunt opened from buyer need." : "Buyer need saved.");
   }
+}
+
+function renderBuyerEnquiryReceipt() {
+  const root = document.querySelector("#buyerEnquiryReceipt");
+  if (!root) return;
+
+  const model = getBuyerEnquiryReceiptModel();
+  root.innerHTML = `
+    <div class="buyer-receipt-card ${escapeHtml(model.statusClass)}">
+      <div class="buyer-receipt-main">
+        <div>
+          <span>${escapeHtml(model.badge)}</span>
+          <strong>${escapeHtml(model.headline)}</strong>
+          <small>${escapeHtml(model.detail)}</small>
+        </div>
+        <b>${escapeHtml(model.scoreLabel)}</b>
+      </div>
+      <div class="buyer-receipt-lines">
+        ${model.lines.map((line) => `
+          <span class="${line.ready ? "is-ready" : "is-watch"}">
+            <strong>${escapeHtml(line.value)}</strong>
+            ${escapeHtml(line.label)}
+            <small>${escapeHtml(line.detail)}</small>
+          </span>
+        `).join("")}
+      </div>
+      <div class="buyer-receipt-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-buyer-receipt-action="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-buyer-receipt-action]").forEach((button) => {
+    button.addEventListener("click", () => handleBuyerEnquiryReceiptAction(button.dataset.buyerReceiptAction, model));
+  });
+}
+
+function getBuyerEnquiryReceiptModel() {
+  const filtered = getFilteredListings();
+  const exactMode = filtered.length > 0;
+  const direct = getDirectEnquiryModel();
+  const route = getSupplierResponseRouteModel();
+  const tracker = getResponseTrackerModel();
+  const listing = direct.listing;
+  const availabilityLabel = getAvailabilityLabel(listing.availability);
+  const noteReady = Boolean(String(state.projectNote || "").trim());
+  const proofReady = direct.passport.score >= 74;
+  const messageReady = direct.score >= 86;
+  const availableReady = exactMode && listing.availability === "available";
+  const safeToSend = exactMode && proofReady && messageReady;
+  const score = exactMode
+    ? Math.min(100, Math.round(direct.score * 0.62 + direct.passport.score * 0.23 + direct.fit.score * 0.15))
+    : Math.max(28, Math.min(62, Math.round(direct.passport.score * 0.48 + direct.fit.score * 0.26)));
+  const statusClass = !exactMode ? "is-gap" : safeToSend ? "is-ready" : "is-watch";
+  const equipment = getDemandEquipmentFromSearch();
+  const region = state.region === "all" ? listing.region : state.region;
+  const receiptStatus = tracker.status === "replied"
+    ? "Replied"
+    : tracker.status === "sent"
+      ? "Sent"
+      : tracker.status === "copied"
+        ? "Copied"
+        : "Draft";
+
+  if (!exactMode) {
+    return {
+      listing,
+      direct,
+      route,
+      tracker,
+      exactMode,
+      statusClass,
+      score,
+      scoreLabel: "Gap",
+      badge: "Demand receipt",
+      headline: `Save ${equipment.toLowerCase()} demand before forcing a weak match.`,
+      detail: `No exact supply in ${region}. Capture the buyer need, recruit verified suppliers, and keep the path honest.`,
+      lines: [
+        { label: "Supply", value: "Gap", detail: "No exact match", ready: false },
+        { label: "Closest proof", value: `${direct.passport.score}/100`, detail: direct.passport.verdict, ready: proofReady },
+        { label: "Next", value: "Recruit", detail: "Use demand to find supply", ready: true },
+        { label: "Payment", value: "Direct", detail: "0% rental commission", ready: true }
+      ],
+      actions: [
+        { id: "demand", label: "Save demand", primary: true },
+        { id: "hunt", label: "Find suppliers" },
+        { id: "widen", label: "Widen search" }
+      ]
+    };
+  }
+
+  return {
+    listing,
+    direct,
+    route,
+    tracker,
+    exactMode,
+    statusClass,
+    score,
+    scoreLabel: `${score}/100`,
+    badge: receiptStatus === "Draft" ? "Enquiry receipt" : `${receiptStatus} receipt`,
+    headline: `${listing.name} enquiry is ready to control.`,
+    detail: `${listing.supplier} in ${listing.city}, ${listing.region}. Use ${route.primaryChannel} first; rental payment stays direct.`,
+    lines: [
+      { label: "Machine", value: String(filtered.length), detail: `${listing.category} match`, ready: true },
+      { label: "Proof", value: `${direct.passport.score}/100`, detail: direct.passport.verdict, ready: proofReady },
+      { label: "Message", value: `${direct.score}/100`, detail: noteReady ? "Buyer note attached" : "Add dates and site", ready: messageReady },
+      { label: "Availability", value: availabilityLabel, detail: availableReady ? "ready to ask" : "confirm before award", ready: availableReady }
+    ],
+    actions: [
+      { id: "copy", label: "Copy receipt", primary: true },
+      { id: "packet", label: "Open packet" },
+      { id: "proof", label: "Check proof" }
+    ]
+  };
+}
+
+async function handleBuyerEnquiryReceiptAction(action, model) {
+  if (model.listing) state.selectedListingId = model.listing.id;
+
+  if (action === "copy") {
+    saveState();
+    try {
+      await navigator.clipboard.writeText(buildBuyerEnquiryReceiptText(model));
+      markEnquiryCopied();
+      renderBuyerEnquiryReceipt();
+      renderMarketplaceDecisionCard();
+      showToast("Buyer enquiry receipt copied.");
+    } catch {
+      showToast("Copy is blocked here, but the buyer receipt is visible.");
+    }
+    return;
+  }
+
+  if (action === "packet") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#leadTitle"), 130);
+    showToast("Direct enquiry packet opened.");
+    return;
+  }
+
+  if (action === "proof") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#passport"), 120);
+    showToast("Trust proof opened.");
+    return;
+  }
+
+  if (action === "widen") {
+    state.availability = "all";
+    state.sort = "fit";
+    saveState();
+    syncFilterInputs();
+    render();
+    showToast("Wider search opened.");
+    return;
+  }
+
+  if (action === "demand" || action === "hunt") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Buyer receipt supplier hunt" : "Buyer receipt demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened from buyer receipt." : "Buyer demand saved from receipt.");
+  }
+}
+
+function buildBuyerEnquiryReceiptText(model = getBuyerEnquiryReceiptModel()) {
+  if (!model.exactMode) {
+    return [
+      "Heavyster Buyer Demand Receipt",
+      `Need: ${getDemandEquipmentFromSearch()}`,
+      `Region: ${state.region === "all" ? "selected market" : state.region}`,
+      `Closest recovery: ${model.listing.name} - ${model.listing.supplier}`,
+      `Proof: ${model.direct.passport.score}/100 - ${model.direct.passport.verdict}`,
+      "Next move: recruit verified suppliers or widen availability before routing a serious buyer.",
+      "Payment rule: buyer pays rental company directly; Heavyster takes 0% rental commission in phase one."
+    ].join("\n");
+  }
+
+  return [
+    "Heavyster Buyer Enquiry Receipt",
+    `Machine: ${model.listing.name}`,
+    `Supplier: ${model.listing.supplier}`,
+    `Location: ${model.listing.city}, ${model.listing.region}`,
+    `Availability: ${getAvailabilityLabel(model.listing.availability)}`,
+    `Proof: ${model.direct.passport.score}/100 - ${model.direct.passport.verdict}`,
+    `Buyer fit: ${model.direct.fit.score}/100 - ${model.direct.fit.status}`,
+    `Message: ${model.direct.score}/100 - ${model.direct.status}`,
+    `Route: ${model.route.primaryChannel} first, backup ${model.route.backupChannel}, follow up after ${model.route.followUp}`,
+    "Payment rule: buyer pays rental company directly; Heavyster takes 0% rental commission in phase one.",
+    "",
+    "Message:",
+    ...model.direct.message
+  ].join("\n");
+}
+
+function renderMarketplaceScaleGuard() {
+  const root = document.querySelector("#marketScaleGuard");
+  if (!root) return;
+
+  const model = getMarketplaceScaleGuardModel();
+  root.innerHTML = `
+    <div class="market-scale-card ${escapeHtml(model.statusClass)}">
+      <div class="market-scale-main">
+        <span>${escapeHtml(model.badge)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="market-scale-metrics">
+        ${model.metrics.map((metric) => `
+          <b class="${metric.ready ? "is-ready" : "is-watch"}">
+            <strong>${escapeHtml(metric.value)}</strong>
+            ${escapeHtml(metric.label)}
+            <small>${escapeHtml(metric.detail)}</small>
+          </b>
+        `).join("")}
+      </div>
+      <div class="market-scale-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-market-scale-action="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-market-scale-action]").forEach((button) => {
+    button.addEventListener("click", () => handleMarketplaceScaleGuardAction(button.dataset.marketScaleAction, model));
+  });
+}
+
+function getMarketplaceScaleGuardModel() {
+  const filtered = getFilteredListings();
+  const exactCount = filtered.length;
+  const availabilityWide = getListingsForFilters({ ...state, availability: "all" });
+  const marketWide = getListingsForFilters({ ...state, region: "all", availability: "all" });
+  const nearby = getNearbyListings();
+  const recovery = availabilityWide.length ? availabilityWide : marketWide.length ? marketWide : nearby;
+  const source = exactCount ? filtered : recovery;
+  const best = source[0] || getSelectedListing();
+  const equipment = getDemandEquipmentFromSearch();
+  const region = state.region === "all" ? "selected markets" : state.region;
+  const supplierCount = new Set(source.map((listing) => listing.supplier)).size;
+  const verifiedCount = source.filter((listing) => listing.verified).length;
+  const noExact = exactCount === 0;
+  const tooMany = exactCount >= 18;
+  const statusClass = noExact ? "is-gap" : tooMany ? "is-watch" : "is-ready";
+  const bestTrust = best ? getTrustPassport(best).score : 0;
+  const bestAvailability = best ? getAvailabilityLabel(best.availability) : "Unknown";
+
+  const headline = noExact
+    ? `No exact ${equipment.toLowerCase()} supply in ${region}.`
+    : tooMany
+      ? `${exactCount} matches found. Switch to compact rows first.`
+      : `${best.name} stays as the clean buyer path.`;
+
+  const detail = noExact
+    ? recovery.length
+      ? `${recovery.length} recovery option${recovery.length === 1 ? "" : "s"} found when filters loosen. Widen now or save the demand gap.`
+      : "No visible recovery path yet. Save the demand and use it to recruit suppliers."
+    : tooMany
+      ? "Use compact rows for scanning, then return to one best machine before sending a direct enquiry."
+      : `${best.supplier} in ${best.city}, ${best.region}; ${bestAvailability}; trust ${bestTrust}/100; 0% rental take.`;
+
+  return {
+    best,
+    exactCount,
+    noExact,
+    tooMany,
+    statusClass,
+    badge: "Scale guard",
+    headline,
+    detail,
+    metrics: [
+      {
+        label: "Visible",
+        value: String(exactCount),
+        detail: noExact ? "current filter gap" : "after filters",
+        ready: exactCount > 0
+      },
+      {
+        label: noExact ? "Recovery" : "Verified",
+        value: noExact ? String(recovery.length) : String(verifiedCount),
+        detail: noExact ? "looser filter paths" : `${supplierCount} supplier${supplierCount === 1 ? "" : "s"}`,
+        ready: noExact ? recovery.length > 0 : verifiedCount > 0
+      },
+      {
+        label: "Mode",
+        value: noExact ? "Demand" : tooMany ? "Rows" : "Best",
+        detail: noExact ? "save or widen" : tooMany ? "scan first" : "send clean",
+        ready: !noExact
+      }
+    ],
+    actions: noExact
+      ? [
+          { id: "widen", label: "Widen search", primary: true },
+          { id: "demand", label: "Save demand" },
+          { id: "rows", label: "Open rows" }
+        ]
+      : tooMany
+        ? [
+            { id: "rows", label: "Open rows", primary: true },
+            { id: "best", label: "Best path" },
+            { id: "copy", label: "Copy guard" }
+          ]
+        : [
+            { id: "best", label: "Keep best", primary: true },
+            { id: "rows", label: "Open rows" },
+            { id: "copy", label: "Copy guard" }
+          ]
+  };
+}
+
+async function handleMarketplaceScaleGuardAction(action, model) {
+  if (model.best) state.selectedListingId = model.best.id;
+
+  if (action === "best") {
+    state.sort = "fit";
+    saveState();
+    syncFilterInputs();
+    render();
+    showToast("Best buyer path kept in focus.");
+    return;
+  }
+
+  if (action === "rows") {
+    state.compactView = true;
+    state.sort = "fit";
+    if (model.noExact) {
+      state.availability = "all";
+      let matches = getListingsForFilters(state);
+      if (!matches.length) {
+        state.region = "all";
+        matches = getListingsForFilters(state);
+      }
+      if (matches.length) state.selectedListingId = matches[0].id;
+    }
+    saveState();
+    syncFilterInputs();
+    render();
+    scrollToPageTarget(document.querySelector("#compactCatalog"), 120);
+    showToast("Compact rows opened for larger inventory scanning.");
+    return;
+  }
+
+  if (action === "widen") {
+    state.availability = "all";
+    state.sort = "fit";
+    let matches = getListingsForFilters(state);
+    if (!matches.length) {
+      state.region = "all";
+      matches = getListingsForFilters(state);
+    }
+    if (matches.length) state.selectedListingId = matches[0].id;
+    saveState();
+    syncFilterInputs();
+    render();
+    showToast("Search widened without losing the buyer intent.");
+    return;
+  }
+
+  if (action === "demand") {
+    prepareDemandFromSearch();
+    saveDemandSignal("Marketplace scale guard demand", false);
+    const target = document.querySelector("#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast("Demand saved from the scale guard.");
+    return;
+  }
+
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildMarketplaceScaleGuardText(model));
+      showToast("Marketplace scale guard copied.");
+    } catch {
+      showToast("Copy is blocked here, but the scale guard is visible.");
+    }
+  }
+}
+
+function buildMarketplaceScaleGuardText(model = getMarketplaceScaleGuardModel()) {
+  const region = state.region === "all" ? "all regions" : state.region;
+  const bestLine = model.best
+    ? `${model.best.name} - ${model.best.supplier}, ${model.best.city}, ${model.best.region}`
+    : "No visible machine path";
+
+  return [
+    "Heavyster Marketplace Scale Guard",
+    `Search: ${state.search || "all equipment"}`,
+    `Region: ${region}`,
+    `Visible matches: ${model.exactCount}`,
+    `Recommended mode: ${model.metrics[2].value}`,
+    `Best path: ${bestLine}`,
+    model.detail,
+    "Rule: show one clean buyer path first, use compact rows for volume, and save demand when supply is missing.",
+    "Payment rule: buyer pays rental company directly; Heavyster takes 0% rental commission in phase one."
+  ].join("\n");
 }
 
 function renderMarketplaceAnswer() {
@@ -5377,6 +6112,7 @@ function renderMarketplaceEnquiryStarter() {
       renderDecisionReceipt();
       renderBuyerWorkbench();
       renderMarketplaceDecisionCard();
+      renderBuyerEnquiryReceipt();
       renderMarketplaceConfidenceStrip();
     });
   }
@@ -5388,6 +6124,7 @@ function renderMarketplaceEnquiryStarter() {
       if (fullMode) fullMode.value = state.enquiryMode;
       saveState();
       renderMarketplaceDecisionCard();
+      renderBuyerEnquiryReceipt();
       renderMarketplaceEnquiryStarter();
       renderMarketplaceConfidenceStrip();
       renderDirectEnquiryComposer();
@@ -5509,6 +6246,7 @@ async function handleMarketplaceConfidenceAction(action, model) {
       await navigator.clipboard.writeText(buildLeadText());
       markEnquiryCopied();
       renderMarketplaceConfidenceStrip();
+      renderBuyerEnquiryReceipt();
       showToast("Direct enquiry copied with confidence checks.");
     } catch {
       showToast("Copy is blocked here, but the enquiry packet is visible.");
@@ -5590,6 +6328,7 @@ async function handleMarketplaceEnquiryStarterAction(action, model) {
       await navigator.clipboard.writeText(buildLeadText());
       markEnquiryCopied();
       renderMarketplaceEnquiryStarter();
+      renderBuyerEnquiryReceipt();
       showToast("Direct enquiry copied from marketplace.");
     } catch {
       showToast("Copy is blocked here, but the enquiry packet is visible.");
@@ -6693,11 +7432,271 @@ function syncFilterInputs() {
   if (sortFilter) sortFilter.value = state.sort;
 }
 
+function renderCatalogFocusBar() {
+  const root = document.querySelector("#catalogFocusBar");
+  if (!root) return;
+
+  const model = getCatalogFocusBarModel();
+  root.innerHTML = `
+    <div class="catalog-focus-card ${escapeHtml(model.statusClass)}">
+      <div class="catalog-focus-copy">
+        <span>${escapeHtml(model.badge)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="catalog-focus-metrics">
+        ${model.metrics.map((metric) => `
+          <b class="${escapeHtml(metric.statusClass)}">
+            <strong>${escapeHtml(metric.value)}</strong>
+            ${escapeHtml(metric.label)}
+          </b>
+        `).join("")}
+      </div>
+      <div class="catalog-focus-actions">
+        ${model.actions.map((action) => `
+          <button
+            type="button"
+            class="${action.active ? "is-active" : ""} ${action.primary ? "is-primary" : ""}"
+            data-catalog-focus-action="${escapeHtml(action.id)}"
+          >
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-catalog-focus-action]").forEach((button) => {
+    button.addEventListener("click", () => handleCatalogFocusAction(button.dataset.catalogFocusAction, model));
+  });
+}
+
+function getCatalogFocusBarModel() {
+  const filtered = getFilteredListings();
+  const availabilityWide = getListingsForFilters({ ...state, availability: "all" });
+  const bestSource = filtered.length ? filtered : availabilityWide.length ? availabilityWide : listings;
+  const verifiedCount = filtered.filter((listing) => listing.verified).length;
+  const availableCount = filtered.filter((listing) => listing.availability === "available").length;
+  const savedIds = state.shortlistIds || [];
+  const savedVisible = savedIds.filter((id) => filtered.some((listing) => listing.id === id)).length;
+  const noRows = filtered.length === 0;
+  const largeSet = filtered.length >= 18;
+  const active = getCatalogFocusActive(noRows);
+  const statusClass = noRows ? "is-gap" : largeSet ? "is-watch" : "is-ready";
+  const best = bestSource[0] || getSelectedListing();
+  const headline = noRows
+    ? "No rows in this view."
+    : largeSet
+      ? `${filtered.length} rows. Scan compact first.`
+      : `${filtered.length} row${filtered.length === 1 ? "" : "s"} kept simple.`;
+  const detail = noRows
+    ? `${availabilityWide.length} recovery row${availabilityWide.length === 1 ? "" : "s"} if availability opens. Save the gap if supply is still missing.`
+    : `${availableCount} available now, ${verifiedCount} verified, ${savedIds.length} saved. Best path: ${best.name}.`;
+
+  return {
+    badge: "Catalog focus",
+    headline,
+    detail,
+    statusClass,
+    filteredCount: filtered.length,
+    availableCount,
+    verifiedCount,
+    savedCount: savedIds.length,
+    savedVisible,
+    best,
+    metrics: [
+      {
+        value: String(filtered.length),
+        label: filtered.length === 1 ? "row" : "rows",
+        statusClass: noRows ? "is-gap" : "is-ready"
+      },
+      {
+        value: String(verifiedCount),
+        label: "verified",
+        statusClass: verifiedCount ? "is-ready" : "is-watch"
+      },
+      {
+        value: String(savedIds.length),
+        label: savedVisible ? "saved here" : "saved",
+        statusClass: savedIds.length ? "is-ready" : "is-watch"
+      }
+    ],
+    actions: [
+      { id: "best", label: "Best fit", active: active === "best", primary: active === "best" },
+      { id: "verified", label: "Verified", active: active === "verified", primary: active === "verified" },
+      { id: "available", label: "Available", active: active === "available", primary: active === "available" },
+      { id: "saved", label: "Saved", active: active === "saved", primary: active === "saved" },
+      { id: "gap", label: "Save gap", active: active === "gap", primary: active === "gap" }
+    ]
+  };
+}
+
+function getCatalogFocusActive(noRows) {
+  if (noRows) return "gap";
+  if (state.shortlistCompareOpen) return "saved";
+  if (state.availability === "available") return "available";
+  if (state.sort === "verified") return "verified";
+  return "best";
+}
+
+async function handleCatalogFocusAction(action, model = getCatalogFocusBarModel()) {
+  if (action === "best") {
+    state.sort = "fit";
+    state.compactView = false;
+    resetCatalogPage();
+    const matches = getFilteredListings();
+    if (matches.length) state.selectedListingId = matches[0].id;
+    saveState();
+    syncFilterInputs();
+    render();
+    scrollToPageTarget(document.querySelector("#catalogTitle"), 112);
+    showToast("Best-fit catalog view opened.");
+    return;
+  }
+
+  if (action === "verified") {
+    state.sort = "verified";
+    state.compactView = true;
+    resetCatalogPage();
+    const matches = getFilteredListings();
+    if (matches.length) state.selectedListingId = matches[0].id;
+    saveState();
+    syncFilterInputs();
+    render();
+    scrollToPageTarget(document.querySelector("#catalogTitle"), 112);
+    showToast("Verified rows moved into compact view.");
+    return;
+  }
+
+  if (action === "available") {
+    state.availability = "available";
+    state.sort = "fit";
+    state.compactView = true;
+    resetCatalogPage();
+    const matches = getFilteredListings();
+    if (matches.length) state.selectedListingId = matches[0].id;
+    saveState();
+    syncFilterInputs();
+    render();
+    scrollToPageTarget(document.querySelector("#catalogTitle"), 112);
+    showToast(matches.length ? "Available-now rows opened." : "No available-now row yet. Save the demand gap.");
+    return;
+  }
+
+  if (action === "saved") {
+    state.shortlistCompareOpen = true;
+    state.compactView = true;
+    resetCatalogPage();
+    const saved = (state.shortlistIds || []).map((id) => listings.find((listing) => listing.id === id)).filter(Boolean);
+    if (saved.length) state.selectedListingId = saved[0].id;
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#shortlistTray"), 112);
+    showToast(saved.length ? "Saved machines opened for comparison." : "Save a machine first, then compare.");
+    return;
+  }
+
+  if (action === "gap") {
+    prepareDemandFromSearch();
+    saveDemandSignal("Catalog focus demand gap", false);
+    resetCatalogPage();
+    renderCatalogFocusBar();
+    scrollToPageTarget(document.querySelector("#demandRequest"), 112);
+    showToast("Catalog gap saved as demand.");
+    return;
+  }
+
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildCatalogFocusText(model));
+      showToast("Catalog focus copied.");
+    } catch {
+      showToast("Copy is blocked here, but the catalog focus is visible.");
+    }
+  }
+}
+
+function buildCatalogFocusText(model = getCatalogFocusBarModel()) {
+  const region = state.region === "all" ? "all regions" : state.region;
+  const category = state.category === "all" ? "all categories" : state.category;
+  const best = model.best ? `${model.best.name} - ${model.best.supplier}` : "No selected path";
+  return [
+    "Heavyster Catalog Focus Bar",
+    `Search: ${state.search || "all equipment"}`,
+    `Region: ${region}`,
+    `Category: ${category}`,
+    `Rows: ${model.filteredCount}`,
+    `Available now: ${model.availableCount}`,
+    `Verified: ${model.verifiedCount}`,
+    `Saved: ${model.savedCount}`,
+    `Best path: ${best}`,
+    "Rule: choose the buyer intent before scanning the catalog, then use compact rows, saved machines, or demand capture as inventory grows."
+  ].join("\n");
+}
+
+function renderCatalogPager() {
+  const root = document.querySelector("#catalogPager");
+  if (!root) return;
+
+  const model = getCatalogPagerModel();
+  root.innerHTML = `
+    <div class="catalog-page-summary">
+      <strong>${model.startLabel}-${model.endLabel} of ${model.totalRows}</strong>
+      <small>Page ${model.page} of ${model.totalPages}</small>
+    </div>
+    <div class="catalog-page-controls">
+      <button type="button" data-catalog-page-action="previous" ${model.hasPrevious ? "" : "disabled"}>Previous</button>
+      <label>
+        Rows
+        <select data-catalog-page-size>
+          <option value="6">6</option>
+          <option value="12">12</option>
+          <option value="24">24</option>
+          <option value="48">48</option>
+        </select>
+      </label>
+      <button type="button" data-catalog-page-action="next" ${model.hasNext ? "" : "disabled"}>Next</button>
+    </div>
+  `;
+
+  const size = root.querySelector("[data-catalog-page-size]");
+  if (size) {
+    size.value = String(model.pageSize);
+    size.addEventListener("change", (event) => {
+      state.catalogPageSize = Number(event.target.value);
+      resetCatalogPage();
+      selectFirstPagedCatalogListing();
+      saveState();
+      render();
+      scrollToPageTarget(document.querySelector("#catalogTitle"), 112);
+      showToast(`Showing ${state.catalogPageSize} catalog rows per page.`);
+    });
+  }
+
+  root.querySelectorAll("[data-catalog-page-action]").forEach((button) => {
+    button.addEventListener("click", () => handleCatalogPageAction(button.dataset.catalogPageAction, model));
+  });
+}
+
+function handleCatalogPageAction(action, model = getCatalogPagerModel()) {
+  if (!model.totalRows) return;
+  if (action === "previous" && model.hasPrevious) state.catalogPage = model.page - 1;
+  if (action === "next" && model.hasNext) state.catalogPage = model.page + 1;
+  selectFirstPagedCatalogListing();
+  saveState();
+  render();
+  scrollToPageTarget(document.querySelector("#catalogTitle"), 112);
+  showToast(`Catalog page ${state.catalogPage} of ${model.totalPages}.`);
+}
+
 function renderCatalog() {
+  renderCatalogFocusBar();
+  renderCatalogPager();
   renderFleetIndex();
   renderListings();
   renderCompactCatalog();
-  setText("#catalogSummary", `${getFilteredListings().length} listings loaded - ready for paged catalog growth`);
+  const page = getCatalogPagerModel();
+  setText("#catalogSummary", `${page.startLabel}-${page.endLabel} of ${page.totalRows} listings`);
   document.querySelector("#viewToggleButton").textContent = state.compactView ? "Card view" : "Compact rows";
   document.querySelector(".catalog-panel").classList.toggle("is-compact", state.compactView);
 }
@@ -6927,7 +7926,9 @@ function buildFleetIndexText() {
 }
 
 function renderListings() {
-  const filtered = getFilteredListings();
+  const pager = getCatalogPagerModel();
+  const filtered = pager.filtered;
+  const visibleRows = pager.rows;
   const grid = document.querySelector("#listingGrid");
 
   if (!filtered.length) {
@@ -6936,7 +7937,7 @@ function renderListings() {
     return;
   }
 
-  grid.innerHTML = filtered.map((listing) => {
+  grid.innerHTML = visibleRows.map((listing) => {
     const pillClass = listing.availability === "available" ? "good" : "wait";
     const isSaved = state.shortlistIds.includes(listing.id);
     const fit = getBuyerFitScore(listing);
@@ -6973,7 +7974,9 @@ function renderListings() {
 }
 
 function renderCompactCatalog() {
-  const filtered = getFilteredListings();
+  const pager = getCatalogPagerModel();
+  const filtered = pager.filtered;
+  const visibleRows = pager.rows;
   const rows = document.querySelector("#compactCatalog");
   if (!filtered.length) {
     rows.innerHTML = renderNoResultsAdvisor();
@@ -6990,7 +7993,7 @@ function renderCompactCatalog() {
       <span>Status</span>
       <span>Action</span>
     </div>
-    ${filtered.map((listing) => {
+    ${visibleRows.map((listing) => {
       const fit = getBuyerFitScore(listing);
       return `
         <button type="button" class="compact-row ${listing.id === state.selectedListingId ? "is-selected" : ""}" data-listing-id="${escapeHtml(listing.id)}">
@@ -7277,6 +8280,7 @@ function markEnquiryCopied() {
   renderReplyClarifier();
   renderDecisionReceipt();
   renderDecisionRouter();
+  renderBuyerEnquiryReceipt();
   renderListingRoiProof();
   renderSupplierRenewalClosePack();
 }
@@ -7295,6 +8299,7 @@ function handleResponseTrackerAction(action) {
     renderReplyClarifier();
     renderDecisionReceipt();
     renderDecisionRouter();
+    renderBuyerEnquiryReceipt();
     renderListingRoiProof();
     renderSupplierRenewalClosePack();
     showToast("Response tracker reset.");
@@ -7317,6 +8322,7 @@ function handleResponseTrackerAction(action) {
     renderReplyClarifier();
     renderDecisionReceipt();
     renderDecisionRouter();
+    renderBuyerEnquiryReceipt();
     renderListingRoiProof();
     renderSupplierRenewalClosePack();
     showToast(`Supplier chase set for ${route.followUp}.`);
@@ -7336,6 +8342,7 @@ function handleResponseTrackerAction(action) {
     renderReplyClarifier();
     renderDecisionReceipt();
     renderDecisionRouter();
+    renderBuyerEnquiryReceipt();
     renderListingRoiProof();
     renderSupplierRenewalClosePack();
     showToast("Follow-up logged and next chase reset.");
@@ -7355,6 +8362,7 @@ function handleResponseTrackerAction(action) {
     renderReplyClarifier();
     renderDecisionReceipt();
     renderDecisionRouter();
+    renderBuyerEnquiryReceipt();
     renderListingRoiProof();
     renderSupplierRenewalClosePack();
     showToast("Supplier reply recorded.");
@@ -10643,6 +11651,343 @@ function handleSupplierDecisionAction(action) {
     revenue: "Revenue desk opened."
   };
   showToast(messages[action] || "Supplier next move opened.");
+}
+
+function renderSupplierListingStarter() {
+  const root = document.querySelector("#supplierListingStarter");
+  if (!root) return;
+  const model = getSupplierListingStarterModel();
+
+  root.innerHTML = `
+    <div class="listing-starter-main ${escapeHtml(model.statusClass)}">
+      <div>
+        <span>${escapeHtml(model.badge)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <b>${model.score}/100</b>
+    </div>
+    <div class="listing-starter-facts">
+      ${model.facts.map((fact) => `
+        <span class="${fact.ready ? "is-ready" : "is-watch"}">
+          <strong>${escapeHtml(fact.value)}</strong>
+          ${escapeHtml(fact.label)}
+          <small>${escapeHtml(fact.detail)}</small>
+        </span>
+      `).join("")}
+    </div>
+    <div class="listing-starter-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-listing-starter-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-listing-starter-action]").forEach((button) => {
+    button.addEventListener("click", () => handleSupplierListingStarterAction(button.dataset.listingStarterAction, model));
+  });
+}
+
+function getSupplierListingStarterModel() {
+  const selected = getSelectedListing();
+  const studio = getSupplierStudioModel(selected);
+  const passport = getTrustPassport(selected);
+  const machine = state.builderModel || selected.name;
+  const category = state.builderCategory || selected.category;
+  const region = state.builderRegion || selected.region;
+  const availability = state.builderAvailability || selected.availability;
+  const machineReady = machine.trim().length >= 3;
+  const proofReady = passport.score >= 84 && studio.docGaps === 0;
+  const availabilityReady = availability === "available";
+  const revenueReady = true;
+  const readyCount = [machineReady, proofReady, availabilityReady, revenueReady].filter(Boolean).length;
+  const score = Math.round((readyCount / 4) * 100);
+  const statusClass = score >= 85 ? "is-ready" : score >= 60 ? "is-watch" : "is-gap";
+  const nextMove = !machineReady
+    ? "name the machine"
+    : !proofReady
+      ? "attach proof"
+      : !availabilityReady
+        ? "confirm availability"
+        : "publish as a paid listing";
+
+  return {
+    selected,
+    studio,
+    passport,
+    machine,
+    category,
+    region,
+    availability,
+    availabilityLabel: getAvailabilityLabel(availability),
+    score,
+    statusClass,
+    nextMove,
+    badge: "Listing starter",
+    headline: `List ${machine} in ${region}.`,
+    detail: `Next: ${nextMove}. Heavyster earns USD 99/year per active listing and keeps rental payment direct.`,
+    facts: [
+      {
+        label: "Machine",
+        value: machineReady ? "Ready" : "Name it",
+        detail: `${category} - ${region}`,
+        ready: machineReady
+      },
+      {
+        label: "Proof",
+        value: `${passport.score}/100`,
+        detail: proofReady ? "supplier proof clean" : `${studio.docGaps} proof gap${studio.docGaps === 1 ? "" : "s"}`,
+        ready: proofReady
+      },
+      {
+        label: "Availability",
+        value: availabilityReady ? "Now" : "Confirm",
+        detail: getAvailabilityLabel(availability),
+        ready: availabilityReady
+      },
+      {
+        label: "Listing revenue",
+        value: "USD 99/yr",
+        detail: "0% rental commission",
+        ready: revenueReady
+      }
+    ],
+    actions: [
+      { id: "selected", label: "Use selected machine", primary: true },
+      { id: "copy", label: "Copy listing brief" },
+      { id: proofReady ? "builder" : "proof", label: proofReady ? "Open builder" : "Open proof" }
+    ]
+  };
+}
+
+async function handleSupplierListingStarterAction(action, model) {
+  if (action === "selected") {
+    state.builderCategory = model.selected.category;
+    state.builderModel = model.selected.name;
+    state.builderRegion = model.selected.region;
+    state.builderAvailability = model.selected.availability;
+    saveState();
+    syncBuilderInputs();
+    renderBuilderSummary();
+    renderSupplierListingStarter();
+    scrollToPageTarget(document.querySelector("#listingBuilder"), 118);
+    document.querySelector("#builderModel")?.focus();
+    showToast("Selected machine loaded into the listing starter.");
+    return;
+  }
+
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildSupplierListingStarterText(model));
+      showToast("Supplier listing brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the listing brief is visible.");
+    }
+    return;
+  }
+
+  if (action === "proof") {
+    scrollToPageTarget(document.querySelector("#trustChecklist"), 118);
+    showToast("Proof checklist opened.");
+    return;
+  }
+
+  scrollToPageTarget(document.querySelector("#listingBuilder"), 118);
+  document.querySelector("#builderModel")?.focus();
+  showToast("Listing builder opened.");
+}
+
+function syncBuilderInputs() {
+  const category = document.querySelector("#builderCategory");
+  const model = document.querySelector("#builderModel");
+  const region = document.querySelector("#builderRegion");
+  const availability = document.querySelector("#builderAvailability");
+  if (category) category.value = state.builderCategory;
+  if (model) model.value = state.builderModel;
+  if (region) region.value = state.builderRegion;
+  if (availability) availability.value = state.builderAvailability;
+}
+
+function buildSupplierListingStarterText(model = getSupplierListingStarterModel()) {
+  return [
+    "Heavyster Supplier Listing Starter",
+    `Supplier: ${model.studio.profile.supplier} - ${model.studio.profile.branch}`,
+    `Machine: ${model.machine}`,
+    `Category / region: ${model.category} / ${model.region}`,
+    `Availability: ${model.availabilityLabel}`,
+    `Proof score: ${model.passport.score}/100`,
+    "Plan: USD 9/month or USD 99/year per active equipment listing",
+    "Payment rule: supplier keeps rental payment direct; Heavyster charges listing SaaS revenue only in phase one",
+    `Next move: ${model.nextMove}`
+  ].join("\n");
+}
+
+function renderSupplierActivationReceipt() {
+  const root = document.querySelector("#supplierActivationReceipt");
+  if (!root) return;
+  const model = getSupplierActivationReceiptModel();
+
+  root.innerHTML = `
+    <div class="supplier-receipt-main ${escapeHtml(model.statusClass)}">
+      <div>
+        <span>${escapeHtml(model.badge)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <b>${model.score}/100</b>
+    </div>
+    <div class="supplier-receipt-lines">
+      ${model.lines.map((line) => `
+        <span class="${line.ready ? "is-ready" : "is-watch"}">
+          <strong>${escapeHtml(line.value)}</strong>
+          ${escapeHtml(line.label)}
+          <small>${escapeHtml(line.detail)}</small>
+        </span>
+      `).join("")}
+    </div>
+    <div class="supplier-receipt-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-supplier-receipt-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-supplier-receipt-action]").forEach((button) => {
+    button.addEventListener("click", () => handleSupplierActivationReceiptAction(button.dataset.supplierReceiptAction, model));
+  });
+}
+
+function getSupplierActivationReceiptModel() {
+  const selected = getSelectedListing();
+  const studio = getSupplierStudioModel(selected);
+  const revenue = studio.revenueDesk;
+  const passport = getTrustPassport(selected);
+  const paidListings = revenue.paidListings;
+  const supplierListingCount = Math.max(1, studio.listings.length);
+  const activationCount = Math.max(1, paidListings || supplierListingCount);
+  const monthlyDue = paidListings ? revenue.monthlyRevenue : activationCount * 9;
+  const annualDue = paidListings ? revenue.annualRevenue : activationCount * 99;
+  const proofReady = passport.score >= 84 && studio.docGaps === 0;
+  const freshnessReady = studio.yardScore >= 82 && studio.availabilityGaps === 0;
+  const paidReady = paidListings > 0;
+  const score = Math.max(0, Math.min(100, Math.round(
+    revenue.score * 0.34
+    + studio.profileCompletion * 0.22
+    + studio.storefront.score * 0.18
+    + passport.score * 0.16
+    + (paidReady ? 10 : 0)
+    - studio.docGaps * 4
+    - studio.availabilityGaps * 3
+  )));
+  const statusClass = score >= 82 ? "ready" : score >= 64 ? "watch" : "gap";
+  const badge = paidReady ? "Activation receipt" : "Pre-activation receipt";
+  const headline = paidReady
+    ? `${studio.profile.supplier} has ${paidListings} paid listing${paidListings === 1 ? "" : "s"} live.`
+    : `${studio.profile.supplier} can activate ${activationCount} listing${activationCount === 1 ? "" : "s"}.`;
+  const detail = paidReady
+    ? `Current listing SaaS is USD ${monthlyDue.toLocaleString()}/mo or USD ${annualDue.toLocaleString()}/yr. Rental payment stays outside Heavyster.`
+    : `Use this receipt before billing: publish proof, confirm availability, then charge listing SaaS only.`;
+
+  return {
+    selected,
+    studio,
+    revenue,
+    passport,
+    paidListings,
+    supplierListingCount,
+    activationCount,
+    monthlyDue,
+    annualDue,
+    score,
+    statusClass,
+    badge,
+    headline,
+    detail,
+    lines: [
+      {
+        label: "Billable listings",
+        value: String(activationCount),
+        detail: paidReady ? `${paidListings} currently paid` : `${supplierListingCount} visible in Studio`,
+        ready: paidReady
+      },
+      {
+        label: "Listing SaaS",
+        value: `USD ${monthlyDue.toLocaleString()}/mo`,
+        detail: `USD ${annualDue.toLocaleString()}/yr if kept live`,
+        ready: monthlyDue > 0
+      },
+      {
+        label: "Proof",
+        value: `${passport.score}/100`,
+        detail: proofReady ? "clean enough for buyer view" : `${studio.docGaps} proof gap${studio.docGaps === 1 ? "" : "s"}`,
+        ready: proofReady
+      },
+      {
+        label: "Rental payment",
+        value: "Direct",
+        detail: "0% rental commission in phase one",
+        ready: true
+      }
+    ],
+    actions: [
+      { id: "copy", label: "Copy receipt", primary: true },
+      { id: "match-count", label: "Match pricing count" },
+      { id: freshnessReady ? "pricing" : "freshness", label: freshnessReady ? "Open pricing" : "Fix freshness" }
+    ]
+  };
+}
+
+async function handleSupplierActivationReceiptAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildSupplierActivationReceiptText(model));
+      showToast("Supplier activation receipt copied.");
+    } catch {
+      showToast("Copy is blocked here, but the receipt is visible.");
+    }
+    return;
+  }
+
+  if (action === "match-count") {
+    state.listingCount = Math.min(80, model.activationCount);
+    saveState();
+    renderPricingCalculator();
+    renderPaidListingActivation();
+    renderSupplierActivationReceipt();
+    showToast("Pricing count matched to this supplier receipt.");
+    return;
+  }
+
+  if (action === "freshness") {
+    scrollToPageTarget(document.querySelector("#studioOps"), 118);
+    showToast("Freshness and proof actions opened.");
+    return;
+  }
+
+  scrollToPageTarget(document.querySelector("#pricing"), 108);
+  showToast("Pricing opened.");
+}
+
+function buildSupplierActivationReceiptText(model = getSupplierActivationReceiptModel()) {
+  return [
+    "Heavyster Supplier Activation Receipt",
+    `Supplier: ${model.studio.profile.supplier} - ${model.studio.profile.branch}`,
+    `Selected machine: ${model.selected.name}`,
+    `Status: ${model.badge} - ${model.score}/100`,
+    `Billable listings: ${model.activationCount}`,
+    `Monthly listing SaaS: USD ${model.monthlyDue.toLocaleString()}`,
+    `Annual listing SaaS: USD ${model.annualDue.toLocaleString()}`,
+    `Proof score: ${model.passport.score}/100`,
+    `Freshness: ${model.studio.yardScore}/100 - ${model.studio.freshnessLabel}`,
+    `Document gaps: ${model.studio.docGaps}`,
+    `Availability gaps: ${model.studio.availabilityGaps}`,
+    "Payment rule: supplier keeps rental payment direct; Heavyster charges only listing SaaS revenue in phase one.",
+    "Supplier promise: publish visible machine proof, keep availability fresh, and respond to direct enquiries."
+  ].join("\n");
 }
 
 function renderSupplierTable() {
@@ -14164,6 +15509,163 @@ function getTrustLedgerMarketLabel(market) {
   return market.title || `${market.region} ${market.category}`;
 }
 
+
+function renderPaidListingActivation() {
+  const root = document.querySelector("#paidListingActivation");
+  if (!root) return;
+  const model = getPaidListingActivationModel();
+
+  root.innerHTML = `
+    <div class="paid-activation-main ${escapeHtml(model.statusClass)}">
+      <div>
+        <span>${escapeHtml(model.badge)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <b>${escapeHtml(model.plan)}</b>
+    </div>
+    <div class="paid-activation-metrics">
+      ${model.metrics.map((metric) => `
+        <span class="${metric.ready ? "is-ready" : "is-watch"}">
+          <strong>${escapeHtml(metric.value)}</strong>
+          ${escapeHtml(metric.label)}
+          <small>${escapeHtml(metric.detail)}</small>
+        </span>
+      `).join("")}
+    </div>
+    <div class="paid-activation-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-paid-activation-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-paid-activation-action]").forEach((button) => {
+    button.addEventListener("click", () => handlePaidListingActivationAction(button.dataset.paidActivationAction, model));
+  });
+}
+
+function getPaidListingActivationModel() {
+  const selected = getSelectedListing();
+  const studio = getSupplierStudioModel(selected);
+  const starter = getSupplierListingStarterModel();
+  const activeListings = Math.max(1, Number(state.listingCount) || 1);
+  const supplierListingCount = Math.max(1, studio.listings.length);
+  const monthlyRevenue = activeListings * 9;
+  const annualRevenue = activeListings * 99;
+  const annualSaving = activeListings * ((9 * 12) - 99);
+  const proofReady = starter.passport.score >= 84 && studio.docGaps === 0;
+  const availabilityReady = studio.availabilityGaps === 0 || starter.availability === "available";
+  const activationReady = proofReady && availabilityReady && activeListings >= supplierListingCount;
+  const statusClass = activationReady ? "is-ready" : proofReady ? "is-watch" : "is-gap";
+  const badge = activationReady ? "Ready to activate" : proofReady ? "Confirm availability" : "Proof before billing";
+  const headline = activationReady
+    ? `${studio.profile.supplier} can start paid listing revenue.`
+    : `${studio.profile.supplier} is one cleanup step from paid activation.`;
+  const detail = activationReady
+    ? `${activeListings} active listing${activeListings === 1 ? "" : "s"} = USD ${annualRevenue.toLocaleString()}/year, with rental payment staying direct to the supplier.`
+    : `Match the pricing count to the supplier fleet, close proof or freshness gaps, then activate without touching rental payments.`;
+
+  return {
+    selected,
+    studio,
+    starter,
+    activeListings,
+    supplierListingCount,
+    monthlyRevenue,
+    annualRevenue,
+    annualSaving,
+    proofReady,
+    availabilityReady,
+    activationReady,
+    statusClass,
+    badge,
+    headline,
+    detail,
+    plan: "USD 99/yr",
+    metrics: [
+      {
+        label: "Active listings",
+        value: String(activeListings),
+        detail: `${supplierListingCount} visible in supplier studio`,
+        ready: activeListings >= supplierListingCount
+      },
+      {
+        label: "Monthly SaaS",
+        value: `USD ${monthlyRevenue.toLocaleString()}`,
+        detail: "USD 9 per active listing",
+        ready: true
+      },
+      {
+        label: "Annual SaaS",
+        value: `USD ${annualRevenue.toLocaleString()}`,
+        detail: `USD ${annualSaving.toLocaleString()} saved vs monthly`,
+        ready: true
+      },
+      {
+        label: "Rental take",
+        value: "0%",
+        detail: "supplier keeps rental payment direct",
+        ready: true
+      }
+    ],
+    actions: [
+      { id: "supplier-count", label: "Use supplier count", primary: true },
+      { id: "copy", label: "Copy activation note" },
+      { id: proofReady ? "studio" : "proof", label: proofReady ? "Open Studio" : "Open proof" }
+    ]
+  };
+}
+
+async function handlePaidListingActivationAction(action, model) {
+  if (action === "supplier-count") {
+    state.listingCount = Math.min(80, Math.max(1, model.supplierListingCount));
+    saveState();
+    renderPricingCalculator();
+    renderPaidListingActivation();
+    scrollToPageTarget(document.querySelector("#pricing"), 110);
+    showToast("Pricing now matches the supplier's active listing count.");
+    return;
+  }
+
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildPaidListingActivationText(model));
+      showToast("Paid listing activation note copied.");
+    } catch {
+      showToast("Copy is blocked here, but the activation note is visible.");
+    }
+    return;
+  }
+
+  if (action === "proof") {
+    scrollToPageTarget(document.querySelector("#trustChecklist"), 118);
+    showToast("Proof checklist opened.");
+    return;
+  }
+
+  scrollToPageTarget(document.querySelector("#studio"), 108);
+  showToast("Supplier Studio opened.");
+}
+
+function buildPaidListingActivationText(model = getPaidListingActivationModel()) {
+  return [
+    "Heavyster Paid Listing Activation",
+    `Supplier: ${model.studio.profile.supplier} - ${model.studio.profile.branch}`,
+    `Machine focus: ${model.selected.name}`,
+    `Activation status: ${model.badge}`,
+    `Active listing count: ${model.activeListings}`,
+    `Supplier studio count: ${model.supplierListingCount}`,
+    `Monthly SaaS: USD ${model.monthlyRevenue.toLocaleString()}`,
+    `Annual SaaS: USD ${model.annualRevenue.toLocaleString()}`,
+    `Annual saving vs monthly: USD ${model.annualSaving.toLocaleString()}`,
+    "Payment rule: supplier keeps rental payment direct; Heavyster earns listing SaaS revenue only in phase one.",
+    "Phase two rule: consider 1% confirmed-booking success fee only after quote, enquiry, or payment workflow proof exists.",
+    `Next move: ${model.activationReady ? "activate paid listings" : "close proof, availability, or count alignment first"}`
+  ].join("\n");
+}
 
 function renderPricingCalculator() {
   const monthly = state.listingCount * 9;
