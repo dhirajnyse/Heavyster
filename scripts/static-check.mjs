@@ -41,6 +41,7 @@ assert(index.includes("USD 9") && index.includes("USD 99"), "index.html is missi
 assert(index.includes("1% confirmed-booking success fee"), "index.html is missing the phase-two success fee model.");
 assert(index.includes('id="listingGrid"'), "index.html is missing the marketplace listing grid.");
 assert(index.includes('id="marketSearchAssist"'), "index.html is missing Marketplace Search Assist.");
+assert(index.includes('id="marketQuickPresets"'), "index.html is missing Marketplace Quick Presets.");
 assert(index.includes('id="marketDecisionCard"'), "index.html is missing the simple Marketplace Decision Card.");
 assert(index.includes('id="marketAnswer"'), "index.html is missing Marketplace Answer layer.");
 assert(index.includes('id="marketEnquiryStarter"'), "index.html is missing Marketplace Enquiry Starter.");
@@ -60,7 +61,7 @@ assert(index.includes('id="quickSearchButton"') && index.includes('id="scrollTop
 assert(index.includes('id="commandPulse"') && index.includes('id="commandRoutes"') && index.includes('id="commandRoleTabs"') && index.includes('id="commandWorkspace"') && index.includes('id="commandModuleRail"'), "index.html is missing Command Center controls.");
 assert(index.includes('id="workflowDock"') && index.includes('id="workflowDockTabs"') && index.includes('id="workflowDockPath"') && index.includes('id="workflowDockSearchButton"'), "index.html is missing Workflow Dock controls.");
 assert(index.includes('id="workflowDockGuide"') && index.includes('id="workflowDockPrevButton"') && index.includes('id="workflowDockNextButton"'), "index.html is missing guided workflow movement controls.");
-assert(index.includes('id="simplicityBar"') && index.includes('id="simplicityIntents"') && index.includes('id="simplicityPrimaryButton"') && index.includes('id="simplicityModeButton"'), "index.html is missing Simplicity Bar controls.");
+assert(index.includes('id="simplicityBar"') && index.includes('id="simplicityIntents"') && index.includes('id="simplicityFocus"') && index.includes('id="simplicityPrimaryButton"') && index.includes('id="simplicityModeButton"'), "index.html is missing Simplicity Bar controls.");
 assert(index.includes('id="demoFlightScenes"') && index.includes('id="copyDemoFlightButton"'), "index.html is missing Demo Flight Deck controls.");
 assert(index.includes('id="boardroomThesis"') && index.includes('id="boardroomGates"') && index.includes('id="copyBoardroomButton"'), "index.html is missing Boardroom Snapshot controls.");
 assert(index.includes('id="pilotPackWeeks"') && index.includes('id="pilotPackGates"') && index.includes('id="copyPilotPackButton"'), "index.html is missing 30-Day Pilot Pack controls.");
@@ -98,7 +99,7 @@ assert(index.includes('id="supplierCommitmentPackages"') && index.includes('id="
 assert(index.includes('id="listingActivationQueue"') && index.includes('id="copyListingActivationButton"'), "index.html is missing Listing Activation Room controls.");
 assert(index.includes('id="trustLedgerRows"') && index.includes('id="copyTrustLedgerButton"'), "index.html is missing Trust & Revenue Ledger controls.");
 assert(index.includes('id="marketSignalMatrix"') && index.includes('id="marketSignalCommand"') && index.includes('id="copyMarketMatrixButton"'), "index.html is missing Market Signal Matrix controls.");
-assert(index.includes('id="commandPaletteInput"') && index.includes('id="commandPaletteResults"'), "index.html is missing Universal Command Palette controls.");
+assert(index.includes('id="commandPaletteEyebrow"') && index.includes('id="commandPaletteInput"') && index.includes('id="commandPaletteResults"'), "index.html is missing Universal Command Palette controls.");
 assert(index.includes('id="workflowMenu"') && index.includes('data-nav-target="#trust-revenue-ledger"'), "index.html is missing grouped workflow navigation.");
 assert(index.includes('id="workflowMenuSearch"') && index.includes('id="workflowMenuFilters"') && index.includes('id="workflowMenuEmpty"'), "index.html is missing searchable workflow menu controls.");
 assert(index.includes('data-workflow-role="Buyer"') && index.includes('data-workflow-role="Supplier"') && index.includes('data-workflow-role="Founder"'), "index.html is missing workflow role grouping metadata.");
@@ -108,8 +109,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260522-supplier-decision-v92"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260522-supplier-decision-v92"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260523-quick-presets-v101"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260523-quick-presets-v101"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -123,10 +124,11 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260522-heavyster-supplier-decision-v92";'), "app.js DATA_VERSION is missing or changed.");
+assert(app.includes('const DATA_VERSION = "20260523-heavyster-quick-presets-v101";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");
+assert(app.includes("marketplaceQuickPresets") && app.includes("renderMarketplaceQuickPresets") && app.includes("applyMarketplaceQuickPreset") && css.includes(".market-quick-presets"), "app.js is missing Marketplace Quick Presets logic.");
 assert(app.includes("renderMarketplaceDecisionCard") && app.includes("getMarketplaceDecisionModel") && app.includes("handleMarketplaceDecisionAction") && css.includes(".market-decision"), "app.js is missing simple Marketplace Decision Card logic.");
 assert(app.includes("renderSupplierDecisionCard") && app.includes("getSupplierDecisionModel") && app.includes("handleSupplierDecisionAction") && css.includes(".supplier-decision"), "app.js is missing simple Supplier Decision Card logic.");
 assert(app.includes("renderMarketplaceAnswer") && app.includes("getMarketplaceAnswerModel") && app.includes("handleMarketplaceAnswerAction") && css.includes(".market-answer"), "app.js is missing Marketplace Answer logic.");
@@ -143,7 +145,7 @@ assert(app.includes("renderCompactCatalog") && app.includes("renderCategoryDirec
 assert(app.includes("renderCommandCenter") && app.includes("getCommandCenterModel") && app.includes("getCommandWorkspace"), "app.js is missing Command Center rendering or model logic.");
 assert(app.includes("renderWorkflowDock") && app.includes("getWorkflowDockModel") && app.includes("getWorkflowDockSteps"), "app.js is missing Workflow Dock rendering or model logic.");
 assert(app.includes("renderWorkflowGuide") && app.includes("getWorkflowGuideModel") && app.includes("openWorkflowGuideTarget"), "app.js is missing guided workflow movement logic.");
-assert(app.includes("renderSimplicityBar") && app.includes("getSimplicityBarModel") && app.includes("getSimplicityIntents") && app.includes("handleSimplicityIntent") && app.includes("openSimplicityTarget") && app.includes("SIMPLE_UX_RELEASE") && css.includes(".simplicity-bar") && css.includes(".simplicity-intents") && css.includes("body.simple-mode"), "Project is missing Simplicity Bar logic or styling.");
+assert(app.includes("renderSimplicityBar") && app.includes("getSimplicityBarModel") && app.includes("getSimpleRouteSummary") && app.includes("getSimpleRouteFocus") && app.includes("getSimplicityIntents") && app.includes("handleSimplicityIntent") && app.includes("openSimplicityTarget") && app.includes("SIMPLE_UX_RELEASE") && css.includes(".simplicity-bar") && css.includes(".simplicity-intents") && css.includes(".simplicity-focus") && css.includes("body.simple-mode"), "Project is missing Simplicity Bar logic or styling.");
 assert(app.includes("renderDemoFlightDeck") && app.includes("getDemoFlightDeckModel") && app.includes("buildDemoFlightDeckText"), "app.js is missing Demo Flight Deck rendering or copy text.");
 assert(app.includes("renderBoardroomSnapshot") && app.includes("getBoardroomSnapshotModel") && app.includes("buildBoardroomSnapshotText"), "app.js is missing Boardroom Snapshot rendering or copy text.");
 assert(app.includes("renderPilotPack") && app.includes("getPilotPackModel") && app.includes("buildPilotPackText"), "app.js is missing 30-Day Pilot Pack rendering or copy text.");
@@ -153,8 +155,13 @@ assert(app.includes("renderFounderDailyMoves") && app.includes("getFounderDailyM
 assert(app.includes("renderFounderCallSheet") && app.includes("getFounderCallSheetModel") && app.includes("buildFounderCallSheetText"), "app.js is missing Founder Supplier Call Sheet rendering or copy text.");
 assert(app.includes("renderBuyerWorkbench") && app.includes("getBuyerWorkbenchModel") && app.includes("getBuyerMissionControlModel") && app.includes("getBuyerRentalMissionBriefModel") && app.includes("handleBuyerMissionAction") && app.includes("buildBuyerRentalMissionBriefText") && app.includes("buildBuyerWorkbenchText"), "app.js is missing Buyer Workbench rendering or copy text.");
 assert(app.includes("renderSupplierWorkbench") && app.includes("getSupplierWorkbenchModel") && app.includes("buildSupplierWorkbenchText"), "app.js is missing Supplier Workbench rendering or copy text.");
-assert(app.includes("openCommandPalette") && app.includes("renderCommandPalette") && app.includes("getCommandPaletteItems"), "app.js is missing Universal Command Palette logic.");
+assert(app.includes("openCommandPalette") && app.includes("renderCommandPalette") && app.includes("getCommandPaletteItems") && app.includes("renderCommandPaletteContext") && app.includes("getCommandPaletteContextModel") && app.includes("sortCommandPaletteForRole") && app.includes("getCommandPaletteItemRole"), "app.js is missing Universal Command Palette logic.");
 assert(app.includes("syncNavigationState") && app.includes("closeWorkflowMenu") && app.includes("renderWorkflowMenu"), "app.js is missing workflow navigation state handling.");
+assert(app.includes("renderSimpleNavigation") && app.includes("getSimpleNavigationTargets") && css.includes(".topnav.is-simple-nav"), "Project is missing role-aware simple navigation.");
+assert(app.includes("getDefaultWorkflowMenuRole") && app.includes("getActiveWorkflowRole") && css.includes("body.simple-mode .workflow-menu-filters button.is-active"), "Project is missing simple-mode focused workflow drawer filtering.");
+assert(index.includes('id="topPrimaryAction"') && index.includes('id="topSecondaryActionButton"') && app.includes("renderTopActions") && app.includes("getTopActionModel"), "Project is missing role-aware top actions.");
+assert(app.includes("syncCommandRoleToHash") && app.includes("const roleChanged = syncCommandRoleToHash()"), "Project is missing hash-aware command role syncing.");
+assert(index.includes('id="brandHomeLink"') && index.includes('id="brandSubtitle"') && app.includes("renderBrandContext") && app.includes("getBrandContextModel"), "Project is missing role-aware brand home context.");
 assert(app.includes("workflowMenuQuery") && app.includes("workflowMenuRole"), "app.js is missing workflow menu search state.");
 assert(index.includes('id="workflowMenuStatus"') && app.includes("updateWorkflowMenuStatus") && css.includes(".workflow-menu-status"), "Project is missing Workflow Drawer status polish.");
 assert(css.includes(".workflow-dock-rail") && css.includes(".workflow-role-short") && app.includes("centerWorkflowDockStep"), "Project is missing Workflow Dock usability polish.");

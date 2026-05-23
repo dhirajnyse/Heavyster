@@ -25,16 +25,16 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260522-supplier-decision-v92" />
+    <link rel="stylesheet" href="styles.css?v=20260523-quick-presets-v101" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#marketplace" aria-label="Heavyster home">
+        <a class="brand" id="brandHomeLink" href="#marketplace" aria-label="Heavyster buyer home">
           <img src="assets/heavyster-logo-3d.svg" alt="" />
           <span>
             <strong>Heavyster</strong>
-            <small>Heavy equipment rental listings</small>
+            <small id="brandSubtitle">Buyer path: search, proof, direct enquiry</small>
           </span>
         </a>
 
@@ -121,8 +121,8 @@
         </nav>
 
         <div class="top-actions">
-          <button type="button" class="ghost-button" id="supplierModeButton">Supplier view</button>
-          <a class="solid-button" href="#studio">List equipment</a>
+          <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
+          <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
         </div>
       </header>
 
@@ -168,6 +168,7 @@
           <small id="simplicityDetail">Choose the next action without opening every workflow.</small>
         </div>
         <div class="simplicity-intents" id="simplicityIntents" aria-label="Choose Heavyster intent"></div>
+        <div class="simplicity-focus" id="simplicityFocus" aria-live="polite"></div>
         <div class="simplicity-metrics" id="simplicityMetrics" aria-label="Simple workflow metrics"></div>
         <div class="simplicity-actions">
           <button type="button" class="solid-button" id="simplicityPrimaryButton">Start</button>
@@ -224,6 +225,7 @@
                   </select>
                 </label>
               </div>
+              <div class="market-quick-presets" id="marketQuickPresets" aria-label="Fast marketplace searches"></div>
               <div class="market-decision" id="marketDecisionCard" aria-label="Simple buyer decision card"></div>
               <div class="market-answer" id="marketAnswer" aria-label="Marketplace answer"></div>
               <div class="market-enquiry-starter" id="marketEnquiryStarter" aria-label="Quick direct enquiry starter"></div>
@@ -2143,7 +2145,7 @@
       <section class="command-palette-panel" role="dialog" aria-modal="true" aria-labelledby="commandPaletteTitle">
         <div class="command-palette-head">
           <div>
-            <p class="eyebrow">Heavyster Command</p>
+            <p class="eyebrow" id="commandPaletteEyebrow">Heavyster Command</p>
             <h2 id="commandPaletteTitle">Find equipment, suppliers, markets, and workflows.</h2>
           </div>
           <button type="button" class="command-palette-close" id="commandPaletteCloseButton" aria-label="Close command search">
@@ -2160,6 +2162,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260522-supplier-decision-v92" defer></script>
+    <script src="app.js?v=20260523-quick-presets-v101" defer></script>
   </body>
 </html>

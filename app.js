@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260522-heavyster-supplier-decision-v92";
+const DATA_VERSION = "20260523-heavyster-quick-presets-v101";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260522-supplier-decision-v92";
+const SIMPLE_UX_RELEASE = "20260523-quick-presets-v101";
 
 const listings = [
   {
@@ -144,6 +144,49 @@ const marketplaceSmartViews = [
     category: "all",
     sort: "verified",
     cue: "Demand signal if supply is short"
+  }
+];
+
+const marketplaceQuickPresets = [
+  {
+    id: "crane-uae",
+    label: "Crane in UAE",
+    signal: "Verified lifting route",
+    search: "crane",
+    region: "UAE",
+    availability: "all",
+    category: "all",
+    sort: "fit"
+  },
+  {
+    id: "excavator-ready",
+    label: "Excavator ready",
+    signal: "Earthmoving now",
+    search: "excavator",
+    region: "UAE",
+    availability: "available",
+    category: "Earthmoving",
+    sort: "fit"
+  },
+  {
+    id: "available-now",
+    label: "Available now",
+    signal: "Fast enquiry path",
+    search: "",
+    region: "all",
+    availability: "available",
+    category: "all",
+    sort: "available"
+  },
+  {
+    id: "proof-first",
+    label: "Proof first",
+    signal: "Verified suppliers",
+    search: "",
+    region: "all",
+    availability: "all",
+    category: "all",
+    sort: "verified"
   }
 ];
 
@@ -909,12 +952,15 @@ let workflowMenuRole = "all";
 
 document.addEventListener("DOMContentLoaded", () => {
   bindControls();
+  syncCommandRoleToHash();
   render();
   stabilizeHashScroll();
   syncNavigationState();
   window.addEventListener("hashchange", () => {
+    const roleChanged = syncCommandRoleToHash();
     stabilizeHashScroll();
     syncNavigationState();
+    if (roleChanged) renderCommandCenter();
     renderWorkflowDock();
     renderWorkflowGuide();
     renderSimplicityBar();
@@ -1567,6 +1613,11 @@ function bindControls() {
     if (!button) return;
     handleSimplicityIntent(button.dataset.simplicityIntent);
   });
+  document.querySelector("#simplicityFocus").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-simplicity-focus-anchor]");
+    if (!button) return;
+    openSimplicityTarget(button.dataset.simplicityFocusAnchor, button.textContent.trim());
+  });
   document.querySelector("#simplicityPrimaryButton").addEventListener("click", () => {
     const button = document.querySelector("#simplicityPrimaryButton");
     openSimplicityTarget(button.dataset.simplicityAnchor, button.textContent.trim());
@@ -1581,6 +1632,7 @@ function bindControls() {
     saveState();
     renderSimplicityBar();
     document.body.classList.toggle("simple-mode", state.simpleMode);
+    syncNavigationState();
     showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
   });
   document.querySelector("#commandPaletteCloseButton").addEventListener("click", () => closeCommandPalette());
@@ -1655,11 +1707,16 @@ function bindControls() {
     }, 0);
   });
 
-  document.querySelector("#supplierModeButton").addEventListener("click", () => {
-    state.supplierView = !state.supplierView;
-    saveState();
-    document.body.classList.toggle("supplier-view", state.supplierView);
-    showToast(state.supplierView ? "Supplier view active." : "Marketplace view active.");
+  document.querySelector("#topSecondaryActionButton").addEventListener("click", () => {
+    const button = document.querySelector("#topSecondaryActionButton");
+    openWorkflowStep(button.dataset.topActionAnchor, button.textContent.trim(), button.dataset.topActionRole);
+  });
+
+  document.querySelector("#topPrimaryAction").addEventListener("click", (event) => {
+    const link = document.querySelector("#topPrimaryAction");
+    if (!link.dataset.topActionAnchor) return;
+    event.preventDefault();
+    openWorkflowStep(link.dataset.topActionAnchor, link.textContent.trim(), link.dataset.topActionRole);
   });
 
   document.querySelector("#addListingButton").addEventListener("click", () => {
@@ -1740,6 +1797,7 @@ function render() {
   renderMarketplaceAnswer();
   renderMarketplaceEnquiryStarter();
   renderMarketplaceConfidenceStrip();
+  renderMarketplaceQuickPresets();
   renderMarketplaceSearchAssist();
   renderMarketplaceSmartViews();
   renderMarketplaceFilterTrail();
@@ -1835,15 +1893,38 @@ function closeWorkflowMenu() {
 
 function resetWorkflowMenu() {
   workflowMenuQuery = "";
-  workflowMenuRole = "all";
+  workflowMenuRole = getDefaultWorkflowMenuRole();
   const search = document.querySelector("#workflowMenuSearch");
   if (search) search.value = "";
   renderWorkflowMenu();
 }
 
+function getDefaultWorkflowMenuRole() {
+  if (!state.simpleMode) return "all";
+  return getActiveWorkflowRole();
+}
+
+function getActiveWorkflowRole() {
+  const activeHash = window.location.hash || "#marketplace";
+  return getWorkflowRouteForHash(activeHash)?.role || state.commandRole || "Buyer";
+}
+
+function syncCommandRoleToHash() {
+  const activeHash = window.location.hash || "#marketplace";
+  const route = getWorkflowRouteForHash(activeHash);
+  if (!route || state.commandRole === route.role) return false;
+  state.commandRole = route.role;
+  saveState();
+  return true;
+}
+
 function renderWorkflowMenu() {
   const menu = document.querySelector("#workflowMenu");
   if (!menu) return;
+
+  if (state.simpleMode && !menu.open && !workflowMenuQuery.trim()) {
+    workflowMenuRole = getDefaultWorkflowMenuRole();
+  }
 
   const normalizedQuery = workflowMenuQuery.trim().toLowerCase();
   const queryParts = normalizedQuery.split(/\s+/).filter(Boolean);
@@ -1915,6 +1996,9 @@ function updateWorkflowMenuStatus(visibleCount, hasQuery) {
 }
 
 function syncNavigationState() {
+  renderSimpleNavigation();
+  renderTopActions();
+  renderBrandContext();
   const activeAnchor = window.location.hash || "#marketplace";
   const links = [...document.querySelectorAll("[data-nav-target]")];
   links.forEach((link) => {
@@ -1928,6 +2012,108 @@ function syncNavigationState() {
       .some((link) => link.classList.contains("is-active"));
     workflowMenu.classList.toggle("has-active", hasActive);
   }
+}
+
+function renderBrandContext() {
+  const brandLink = document.querySelector("#brandHomeLink");
+  const subtitle = document.querySelector("#brandSubtitle");
+  if (!brandLink || !subtitle) return;
+
+  const role = getActiveWorkflowRole();
+  const model = getBrandContextModel(role);
+  brandLink.href = model.home;
+  brandLink.setAttribute("aria-label", model.aria);
+  subtitle.textContent = model.subtitle;
+}
+
+function getBrandContextModel(role) {
+  if (role === "Supplier") {
+    return {
+      home: "#studio",
+      aria: "Heavyster supplier home",
+      subtitle: "Supplier path: listings, proof, direct leads"
+    };
+  }
+  if (role === "Founder") {
+    return {
+      home: "#market-signal-matrix",
+      aria: "Heavyster founder home",
+      subtitle: "Founder path: demand, trust, listing ARR"
+    };
+  }
+  return {
+    home: "#marketplace",
+    aria: "Heavyster buyer home",
+    subtitle: "Buyer path: search, proof, direct enquiry"
+  };
+}
+
+function renderTopActions() {
+  const secondaryButton = document.querySelector("#topSecondaryActionButton");
+  const primaryLink = document.querySelector("#topPrimaryAction");
+  if (!secondaryButton || !primaryLink) return;
+
+  const role = getActiveWorkflowRole();
+  const model = getTopActionModel(role);
+  secondaryButton.textContent = model.secondary.label;
+  secondaryButton.dataset.topActionAnchor = model.secondary.anchor;
+  secondaryButton.dataset.topActionRole = role;
+  secondaryButton.setAttribute("aria-label", model.secondary.aria);
+  primaryLink.textContent = model.primary.label;
+  primaryLink.href = model.primary.anchor;
+  primaryLink.dataset.topActionAnchor = model.primary.anchor;
+  primaryLink.dataset.topActionRole = role;
+  primaryLink.setAttribute("aria-label", model.primary.aria);
+}
+
+function getTopActionModel(role) {
+  if (role === "Supplier") {
+    return {
+      secondary: { label: "Supplier desk", anchor: "#supplier-workbench", aria: "Open supplier desk" },
+      primary: { label: "List equipment", anchor: "#studio", aria: "Open supplier listing workspace" }
+    };
+  }
+  if (role === "Founder") {
+    return {
+      secondary: { label: "Founder desk", anchor: "#founder-workbench", aria: "Open founder desk" },
+      primary: { label: "Market command", anchor: "#market-signal-matrix", aria: "Open market signal command" }
+    };
+  }
+  return {
+    secondary: { label: "Buyer desk", anchor: "#buyer-workbench", aria: "Open buyer desk" },
+    primary: { label: "Search equipment", anchor: "#marketplace", aria: "Open marketplace search" }
+  };
+}
+
+function renderSimpleNavigation() {
+  const nav = document.querySelector(".topnav");
+  if (!nav) return;
+
+  const activeRole = getActiveWorkflowRole();
+  const allowedTargets = new Set(getSimpleNavigationTargets(activeRole));
+  nav.classList.toggle("is-simple-nav", state.simpleMode);
+  document.body.dataset.simpleRole = activeRole.toLowerCase();
+
+  nav.querySelectorAll(":scope > a[data-nav-target]").forEach((link) => {
+    const target = link.dataset.navTarget || link.getAttribute("href");
+    link.hidden = state.simpleMode && !allowedTargets.has(target);
+  });
+
+  const menuSummary = document.querySelector("#workflowMenu > summary");
+  if (menuSummary) {
+    menuSummary.textContent = state.simpleMode ? `${activeRole} tools` : "Workflows";
+  }
+}
+
+function getSimpleNavigationTargets(role) {
+  const shared = ["#marketplace", "#pricing", "#roadmap"];
+  if (role === "Supplier") {
+    return ["#marketplace", "#command-center", "#studio", "#pricing", "#roadmap"];
+  }
+  if (role === "Founder") {
+    return ["#command-center", "#trust-revenue-ledger", "#pricing", "#roadmap"];
+  }
+  return ["#marketplace", "#command-center", ...shared.slice(1)];
 }
 
 function renderWorkflowDock() {
@@ -2034,8 +2220,18 @@ function renderSimplicityBar() {
     </button>
   `).join("");
 
+  document.querySelector("#simplicityFocus").innerHTML = `
+    <div>
+      <span>${escapeHtml(model.focus.eyebrow)}</span>
+      <strong>${escapeHtml(model.focus.title)}</strong>
+      <small>${escapeHtml(model.focus.detail)}</small>
+    </div>
+    <em>${escapeHtml(model.focus.proof)}</em>
+    <button type="button" data-simplicity-focus-anchor="${escapeHtml(model.focus.anchor)}">${escapeHtml(model.focus.action)}</button>
+  `;
+
   document.querySelector("#simplicityMetrics").innerHTML = model.metrics.map((metric) => `
-    <span><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
+    <span class="${escapeHtml(metric.kind)}"><strong>${escapeHtml(metric.value)}</strong>${escapeHtml(metric.label)}</span>
   `).join("");
 
   const primaryButton = document.querySelector("#simplicityPrimaryButton");
@@ -2057,6 +2253,7 @@ function getSimplicityBarModel() {
   const role = guide.role || command.activeRole;
   const roleScore = command.routes.find((route) => route.role === role)?.score || command.workspace.score;
   const defaults = getSimplicityDefaults(role);
+  const routeSummary = getSimpleRouteSummary(role, guide, defaults, roleScore);
   const isMarketplaceStart = guide.current?.anchor === "#marketplace";
   const primary = isMarketplaceStart || !guide.next
     ? defaults.primary
@@ -2072,13 +2269,37 @@ function getSimplicityBarModel() {
     headline: defaults.headline,
     detail: isMarketplaceStart
       ? defaults.startDetail
-      : `${guide.moveText}. ${defaults.detail}`,
+      : routeSummary.detail,
     primary,
     secondary: defaults.secondary,
+    focus: isMarketplaceStart ? defaults.focus : getSimpleRouteFocus(role, guide, defaults),
+    metrics: routeSummary.metrics
+  };
+}
+
+function getSimpleRouteFocus(role, guide, defaults) {
+  const next = guide.next || defaults.primary;
+  const current = guide.current?.label || defaults.primary.label;
+  return {
+    eyebrow: "Do this next",
+    title: `Move from ${current} to ${next.label}.`,
+    detail: defaults.detail,
+    proof: defaults.focus.proof,
+    action: `Open ${next.label}`,
+    anchor: next.anchor
+  };
+}
+
+function getSimpleRouteSummary(role, guide, defaults, roleScore) {
+  const current = guide.current?.label || defaults.primary.label;
+  const next = guide.next?.label || "Complete";
+  return {
+    detail: `You are in ${current}. Next: ${next}. ${defaults.detail}`,
     metrics: [
-      { value: roleScore, label: "readiness" },
-      { value: guide.progressText, label: "workflow step" },
-      { value: defaults.ruleValue, label: defaults.ruleLabel }
+      { kind: "route-now", value: "Now", label: current },
+      { kind: "route-next", value: "Next", label: next },
+      { kind: "route-score", value: roleScore, label: "readiness" },
+      { kind: "route-rule", value: defaults.ruleValue, label: defaults.ruleLabel }
     ]
   };
 }
@@ -2092,7 +2313,15 @@ function getSimplicityDefaults(role) {
       ruleValue: "USD 9",
       ruleLabel: "per listing",
       primary: { label: "List equipment", anchor: "#studio", aria: "Open supplier listing workspace" },
-      secondary: { label: "Supplier desk", anchor: "#supplier-workbench", aria: "Open supplier desk" }
+      secondary: { label: "Supplier desk", anchor: "#supplier-workbench", aria: "Open supplier desk" },
+      focus: {
+        eyebrow: "Recommended next move",
+        title: "Confirm availability before routing serious enquiries.",
+        detail: "Gulf Lift Services has proof and revenue signals; freshness is the simple blocker.",
+        proof: "3 paid listings",
+        action: "Confirm availability",
+        anchor: "#supplier-workbench"
+      }
     };
   }
 
@@ -2104,7 +2333,15 @@ function getSimplicityDefaults(role) {
       ruleValue: "Trust first",
       ruleLabel: "scale rule",
       primary: { label: "Market command", anchor: "#market-signal-matrix", aria: "Open market signal command" },
-      secondary: { label: "Founder desk", anchor: "#founder-workbench", aria: "Open founder desk" }
+      secondary: { label: "Founder desk", anchor: "#founder-workbench", aria: "Open founder desk" },
+      focus: {
+        eyebrow: "Recommended next move",
+        title: "Protect UAE Lifting before adding more traffic.",
+        detail: "Demand is visible, but supply and trust gaps decide whether growth compounds cleanly.",
+        proof: "USD 6,615 listing ARR",
+        action: "Open trust ledger",
+        anchor: "#trust-revenue-ledger"
+      }
     };
   }
 
@@ -2115,7 +2352,15 @@ function getSimplicityDefaults(role) {
     ruleValue: "0%",
     ruleLabel: "rental take",
     primary: { label: "Search equipment", anchor: "#marketplace", aria: "Open marketplace search" },
-    secondary: { label: "Buyer desk", anchor: "#buyer-workbench", aria: "Open buyer desk" }
+    secondary: { label: "Buyer desk", anchor: "#buyer-workbench", aria: "Open buyer desk" },
+    focus: {
+      eyebrow: "Recommended next move",
+      title: "Use the cleanest crane path and send one direct enquiry.",
+      detail: "Liebherr 130T Mobile Crane has the strongest visible match, proof, and supplier route.",
+      proof: "Trust 88/100",
+      action: "Copy enquiry",
+      anchor: "#marketplace"
+    }
   };
 }
 
@@ -2867,6 +3112,7 @@ function openCommandPalette(query = "") {
   palette.classList.add("is-open");
   palette.setAttribute("aria-hidden", "false");
   document.body.classList.add("command-palette-open");
+  renderCommandPaletteContext();
   input.value = query;
   renderCommandPalette(query);
   window.setTimeout(() => {
@@ -2887,6 +3133,7 @@ function renderCommandPalette(query = commandPaletteQuery) {
   const root = document.querySelector("#commandPaletteResults");
   if (!root) return;
 
+  renderCommandPaletteContext();
   commandPaletteQuery = query;
   const results = getCommandPaletteResults(query);
   root.innerHTML = results.length ? results.map((item, index) => `
@@ -2907,20 +3154,68 @@ function renderCommandPalette(query = commandPaletteQuery) {
 
   document.querySelectorAll("[data-command-index]").forEach((button) => {
     button.addEventListener("click", () => activateCommandPaletteItem(button.dataset.commandIndex));
-  });
+    });
+}
+
+function renderCommandPaletteContext() {
+  const palette = document.querySelector("#commandPalette");
+  const eyebrow = document.querySelector("#commandPaletteEyebrow");
+  const title = document.querySelector("#commandPaletteTitle");
+  const input = document.querySelector("#commandPaletteInput");
+  if (!palette || !title || !input) return;
+
+  const role = getActiveWorkflowRole();
+  const model = getCommandPaletteContextModel(role);
+  palette.dataset.role = role.toLowerCase();
+  if (eyebrow) eyebrow.textContent = model.eyebrow;
+  title.textContent = model.title;
+  input.placeholder = model.placeholder;
+  input.setAttribute("aria-label", model.aria);
+}
+
+function getCommandPaletteContextModel(role) {
+  if (role === "Supplier") {
+    return {
+      eyebrow: "Supplier command",
+      title: "Open listings, proof, revenue, leads, and supplier tools.",
+      placeholder: "Search listing, proof, revenue, lead desk...",
+      aria: "Search supplier tools and listings"
+    };
+  }
+  if (role === "Founder") {
+    return {
+      eyebrow: "Founder command",
+      title: "Open demand, trust, launch, ARR, and growth tools.",
+      placeholder: "Search market, ledger, launch, supplier hunt...",
+      aria: "Search founder growth and control tools"
+    };
+  }
+  return {
+    eyebrow: "Buyer command",
+    title: "Find equipment, proof, RFQs, and buyer workflow steps.",
+    placeholder: "Search crane, supplier, passport, RFQ...",
+    aria: "Search buyer equipment and workflow tools"
+  };
 }
 
 function getCommandPaletteResults(query = "") {
   const normalized = query.trim().toLowerCase();
-  const items = getCommandPaletteItems();
+  const activeRole = getActiveWorkflowRole();
+  const items = sortCommandPaletteForRole(getCommandPaletteItems(), activeRole);
   if (!normalized) {
     return items
-      .filter((item) => item.default)
+      .filter((item) => item.default || getCommandPaletteItemRole(item) === activeRole)
       .slice(0, 12);
   }
 
   return items
-    .map((item) => ({ ...item, rank: getCommandPaletteRank(item, normalized) }))
+    .map((item) => {
+      const matchRank = getCommandPaletteRank(item, normalized);
+      return {
+        ...item,
+        rank: matchRank ? matchRank + getCommandPaletteRoleBoost(item, activeRole) : 0
+      };
+    })
     .filter((item) => item.rank > 0)
     .sort((a, b) => b.rank - a.rank || a.label.localeCompare(b.label))
     .slice(0, 12);
@@ -2933,6 +3228,49 @@ function getCommandPaletteRank(item, query) {
   if (label.startsWith(query)) return 86;
   if (haystack.includes(query)) return 64;
   return query.split(/\s+/).filter((part) => haystack.includes(part)).length * 18;
+}
+
+function sortCommandPaletteForRole(items, role) {
+  return items
+    .map((item, index) => ({ ...item, paletteOrder: index }))
+    .sort((a, b) => {
+      const roleDiff = getCommandPaletteRoleBoost(b, role) - getCommandPaletteRoleBoost(a, role);
+      if (roleDiff) return roleDiff;
+      const kindDiff = getCommandPaletteKindPriority(a, role) - getCommandPaletteKindPriority(b, role);
+      if (kindDiff) return kindDiff;
+      const defaultDiff = Number(Boolean(b.default)) - Number(Boolean(a.default));
+      if (defaultDiff) return defaultDiff;
+      return a.paletteOrder - b.paletteOrder;
+    });
+}
+
+function getCommandPaletteRoleBoost(item, role) {
+  const itemRole = getCommandPaletteItemRole(item);
+  if (itemRole === role) return 32;
+  if (itemRole === "Shared") return 12;
+  if (item.anchor === "#marketplace" && role === "Buyer") return 10;
+  if (item.anchor === "#pricing" && role === "Supplier") return 10;
+  return 0;
+}
+
+function getCommandPaletteKindPriority(item, role) {
+  if (item.default && getCommandPaletteItemRole(item) === role && !item.role) return 0;
+  if (item.role === role) return 1;
+  if (role === "Buyer" && item.kind === "Equipment") return 2;
+  if (role === "Supplier" && item.kind === "Supplier") return 2;
+  if (role === "Founder" && item.kind === "Market") return 2;
+  if (item.kind === "Action") return 3;
+  return 4;
+}
+
+function getCommandPaletteItemRole(item) {
+  if (item.role) return item.role;
+  if (item.kind === "Equipment") return "Buyer";
+  if (item.kind === "Supplier") return "Supplier";
+  if (item.kind === "Market") return "Founder";
+  if (item.kind === "Action" && item.anchor === "#pricing") return "Shared";
+  if (item.kind === "Action") return "Founder";
+  return "Shared";
 }
 
 function getCommandPaletteItems() {
@@ -4720,6 +5058,60 @@ function renderMarketplaceSearchAssist() {
   root.querySelectorAll("[data-search-assist]").forEach((button) => {
     button.addEventListener("click", () => applyMarketplaceSearchAssist(button));
   });
+}
+
+function renderMarketplaceQuickPresets() {
+  const root = document.querySelector("#marketQuickPresets");
+  if (!root) return;
+
+  const activeId = getActiveQuickPresetId();
+  root.innerHTML = `
+    <span>Quick search</span>
+    <div>
+      ${marketplaceQuickPresets.map((preset) => {
+        const count = getListingsForFilters(preset).length;
+        return `
+          <button type="button" class="${activeId === preset.id ? "is-active" : ""}" data-market-preset="${escapeHtml(preset.id)}">
+            <strong>${escapeHtml(preset.label)}</strong>
+            <small>${escapeHtml(preset.signal)} - ${count || "gap"} ${count === 1 ? "listing" : "listings"}</small>
+          </button>
+        `;
+      }).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-market-preset]").forEach((button) => {
+    button.addEventListener("click", () => applyMarketplaceQuickPreset(button.dataset.marketPreset));
+  });
+}
+
+function getActiveQuickPresetId() {
+  const active = marketplaceQuickPresets.find((preset) =>
+    String(state.search || "") === String(preset.search || "")
+    && state.region === preset.region
+    && state.availability === preset.availability
+    && state.category === preset.category
+    && state.sort === preset.sort
+  );
+  return active?.id || "";
+}
+
+function applyMarketplaceQuickPreset(presetId) {
+  const preset = marketplaceQuickPresets.find((item) => item.id === presetId);
+  if (!preset) return;
+
+  state.search = preset.search;
+  state.region = preset.region;
+  state.availability = preset.availability;
+  state.category = preset.category;
+  state.sort = preset.sort;
+  const matches = getListingsForFilters(state);
+  if (matches.length) state.selectedListingId = matches[0].id;
+  saveState();
+  syncFilterInputs();
+  render();
+  scrollToPageTarget(document.querySelector("#marketDecisionCard"), 120);
+  showToast(`${preset.label} opened.`);
 }
 
 function renderMarketplaceDecisionCard() {
