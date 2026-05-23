@@ -109,8 +109,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260523-quick-presets-v101"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260523-quick-presets-v101"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260523-compact-tools-v102"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260523-compact-tools-v102"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -124,7 +124,7 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260523-heavyster-quick-presets-v101";'), "app.js DATA_VERSION is missing or changed.");
+assert(app.includes('const DATA_VERSION = "20260523-heavyster-compact-tools-v102";'), "app.js DATA_VERSION is missing or changed.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");
@@ -162,7 +162,7 @@ assert(app.includes("getDefaultWorkflowMenuRole") && app.includes("getActiveWork
 assert(index.includes('id="topPrimaryAction"') && index.includes('id="topSecondaryActionButton"') && app.includes("renderTopActions") && app.includes("getTopActionModel"), "Project is missing role-aware top actions.");
 assert(app.includes("syncCommandRoleToHash") && app.includes("const roleChanged = syncCommandRoleToHash()"), "Project is missing hash-aware command role syncing.");
 assert(index.includes('id="brandHomeLink"') && index.includes('id="brandSubtitle"') && app.includes("renderBrandContext") && app.includes("getBrandContextModel"), "Project is missing role-aware brand home context.");
-assert(app.includes("workflowMenuQuery") && app.includes("workflowMenuRole"), "app.js is missing workflow menu search state.");
+assert(app.includes("workflowMenuQuery") && app.includes("workflowMenuRole") && app.includes("workflowScope") && css.includes(".workflow-menu.is-focused-role"), "app.js is missing workflow menu search state.");
 assert(index.includes('id="workflowMenuStatus"') && app.includes("updateWorkflowMenuStatus") && css.includes(".workflow-menu-status"), "Project is missing Workflow Drawer status polish.");
 assert(css.includes(".workflow-dock-rail") && css.includes(".workflow-role-short") && app.includes("centerWorkflowDockStep"), "Project is missing Workflow Dock usability polish.");
 assert(app.includes("stabilizeHashScroll") && app.includes("hashchange"), "app.js is missing stable hash scrolling.");

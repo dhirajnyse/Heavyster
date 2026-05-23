@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260523-heavyster-quick-presets-v101";
+const DATA_VERSION = "20260523-heavyster-compact-tools-v102";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260523-quick-presets-v101";
+const SIMPLE_UX_RELEASE = "20260523-compact-tools-v102";
 
 const listings = [
   {
@@ -1928,6 +1928,8 @@ function renderWorkflowMenu() {
 
   const normalizedQuery = workflowMenuQuery.trim().toLowerCase();
   const queryParts = normalizedQuery.split(/\s+/).filter(Boolean);
+  menu.dataset.workflowScope = workflowMenuRole.toLowerCase();
+  menu.classList.toggle("is-focused-role", workflowMenuRole !== "all");
   let visibleCount = 0;
 
   menu.querySelectorAll(".workflow-menu-group").forEach((group) => {

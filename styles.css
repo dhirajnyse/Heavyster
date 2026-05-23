@@ -217,6 +217,10 @@ a {
   display: grid;
 }
 
+.workflow-menu.is-focused-role .workflow-menu-panel {
+  width: min(560px, calc(100vw - 44px));
+}
+
 .workflow-menu-tools {
   display: grid;
   grid-template-columns: minmax(220px, 1fr) max-content;
@@ -307,6 +311,25 @@ a {
   border-color: rgba(25, 113, 109, 0.42);
   background: var(--teal-soft);
   color: var(--teal);
+}
+
+.workflow-menu.is-focused-role .workflow-menu-tools,
+.workflow-menu.is-focused-role .workflow-menu-groups {
+  grid-template-columns: 1fr;
+}
+
+.workflow-menu.is-focused-role .workflow-menu-status {
+  grid-template-columns: max-content minmax(0, 1fr);
+}
+
+.workflow-menu.is-focused-role .workflow-menu-status small {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.workflow-menu.is-focused-role .workflow-menu-filters {
+  grid-template-columns: repeat(4, max-content);
+  justify-content: start;
 }
 
 body.simple-mode .workflow-menu-filters button.is-active:not([data-workflow-filter="all"]) {
@@ -12953,6 +12976,10 @@ button.admin-row {
     width: min(720px, calc(100vw - 28px));
     max-height: min(500px, calc(100vh - 178px));
     transform: none;
+  }
+
+  .workflow-menu.is-focused-role .workflow-menu-panel {
+    width: min(560px, calc(100vw - 28px));
   }
 
   .workflow-menu-status {
