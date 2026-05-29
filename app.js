@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260523-heavyster-deploy-guard-v113";
+const DATA_VERSION = "20260529-heavyster-supplier-account-starter-v119";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260523-deploy-guard-v113";
+const SIMPLE_UX_RELEASE = "20260529-supplier-account-starter-v119";
 
 const listings = [
   {
@@ -574,6 +574,7 @@ const commandRoutes = [
       { label: "Hunt", anchor: "#growth" },
       { label: "Market Map", anchor: "#market-maker" },
       { label: "Categories", anchor: "#categories" },
+      { label: "Build Phase", anchor: "#build-phase" },
       { label: "Roadmap", anchor: "#roadmap" }
     ]
   }
@@ -619,6 +620,7 @@ const commandModules = [
   { role: "Founder", label: "Growth", anchor: "#growth", signal: "Recruit supply" },
   { role: "Founder", label: "Market Map", anchor: "#market-maker", signal: "Launch pages" },
   { role: "Founder", label: "Categories", anchor: "#categories", signal: "Plan inventory" },
+  { role: "Founder", label: "Build Phase", anchor: "#build-phase", signal: "Version status" },
   { role: "Founder", label: "Roadmap", anchor: "#roadmap", signal: "Build sequence" }
 ];
 
@@ -1745,6 +1747,7 @@ function bindControls() {
     saveState();
     renderPricingCalculator();
     renderPaidListingActivation();
+    renderSupplierAccountStarter();
     renderSupplierActivationReceipt();
     showToast("Draft listing added to the supplier calculator.");
   });
@@ -1757,6 +1760,7 @@ function updateBuilderState() {
   state.builderAvailability = document.querySelector("#builderAvailability").value;
   saveState();
   renderBuilderSummary();
+  renderSupplierAccountStarter();
   renderSupplierListingStarter();
   renderSupplierDecisionCard();
   renderSupplierActivationReceipt();
@@ -1875,6 +1879,7 @@ function render() {
   renderListingActivationRoom();
   renderTrustRevenueLedger();
   renderDemandCapture();
+  renderSupplierAccountStarter();
   renderSupplierListingStarter();
   renderSupplierDecisionCard();
   renderSupplierActivationReceipt();
@@ -2163,12 +2168,12 @@ function renderSimpleNavigation() {
 }
 
 function getSimpleNavigationTargets(role) {
-  const shared = ["#marketplace", "#pricing", "#roadmap"];
+  const shared = ["#marketplace", "#pricing", "#build-phase", "#roadmap"];
   if (role === "Supplier") {
-    return ["#marketplace", "#command-center", "#studio", "#pricing", "#roadmap"];
+    return ["#marketplace", "#command-center", "#studio", "#pricing", "#build-phase", "#roadmap"];
   }
   if (role === "Founder") {
-    return ["#command-center", "#trust-revenue-ledger", "#pricing", "#roadmap"];
+    return ["#command-center", "#trust-revenue-ledger", "#pricing", "#build-phase", "#roadmap"];
   }
   return ["#marketplace", "#command-center", ...shared.slice(1)];
 }
@@ -11513,6 +11518,188 @@ function getDemandSignals() {
 function normalizeDemandEquipment(value) {
   const cleaned = String(value || "").trim().replace(/\s+/g, " ");
   return cleaned ? toTitleCase(cleaned) : "Heavy equipment";
+}
+
+function renderSupplierAccountStarter() {
+  const root = document.querySelector("#supplierAccountStarter");
+  if (!root) return;
+  const model = getSupplierAccountStarterModel();
+
+  root.innerHTML = `
+    <div class="account-starter-main ${escapeHtml(model.statusClass)}">
+      <div>
+        <span>${escapeHtml(model.badge)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <b>${model.score}/100</b>
+    </div>
+    <div class="account-starter-steps">
+      ${model.steps.map((step) => `
+        <button type="button" class="${step.ready ? "is-ready" : "needs-work"}" data-account-starter-action="${escapeHtml(step.action)}">
+          <span>${escapeHtml(step.label)}</span>
+          <strong>${escapeHtml(step.value)}</strong>
+          <small>${escapeHtml(step.detail)}</small>
+        </button>
+      `).join("")}
+    </div>
+    <div class="account-starter-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-account-starter-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-account-starter-action]").forEach((button) => {
+    button.addEventListener("click", () => handleSupplierAccountStarterAction(button.dataset.accountStarterAction, model));
+  });
+}
+
+function getSupplierAccountStarterModel(listing = getSelectedListing()) {
+  const studio = getSupplierStudioModel(listing);
+  const starter = getSupplierListingStarterModel();
+  const passport = getTrustPassport(listing);
+  const paidListings = studio.revenueDesk.paidListings;
+  const availableListings = studio.listings.filter((item) => item.availability === "available").length;
+  const accountReady = studio.profileCompletion >= 82;
+  const proofReady = passport.score >= 84 && studio.docGaps === 0;
+  const machineReady = starter.machine.trim().length >= 3;
+  const paidReady = paidListings > 0;
+  const routeReady = studio.storefront.score >= 72 && availableListings > 0;
+  const steps = [
+    {
+      label: "Account",
+      value: `${studio.profileCompletion}/100`,
+      detail: `${studio.profile.supplier} profile`,
+      ready: accountReady,
+      action: "profile"
+    },
+    {
+      label: "Proof",
+      value: `${passport.score}/100`,
+      detail: proofReady
+        ? "documents clean"
+        : studio.docGaps
+          ? `${studio.docGaps} proof gap${studio.docGaps === 1 ? "" : "s"}`
+          : "proof score needs review",
+      ready: proofReady,
+      action: "proof"
+    },
+    {
+      label: "First machine",
+      value: starter.machine,
+      detail: `${starter.category} - ${starter.region}`,
+      ready: machineReady,
+      action: "builder"
+    },
+    {
+      label: "Paid listing",
+      value: "USD 99/yr",
+      detail: paidReady ? `${paidListings} active paid` : "activate after proof",
+      ready: paidReady,
+      action: "billing"
+    },
+    {
+      label: "Lead route",
+      value: "Direct",
+      detail: routeReady ? "buyer enquiry ready" : "confirm available machine",
+      ready: routeReady,
+      action: "leads"
+    }
+  ];
+  const readyCount = steps.filter((step) => step.ready).length;
+  const score = Math.round((readyCount / steps.length) * 100);
+  const nextStep = steps.find((step) => !step.ready) || steps[steps.length - 1];
+  const statusClass = score >= 80 ? "is-ready" : score >= 60 ? "is-watch" : "is-gap";
+  const headline = score >= 80
+    ? `${studio.profile.supplier} is close to a paid supplier account.`
+    : `Finish ${nextStep.label.toLowerCase()} before pushing buyer demand.`;
+  const detail = score >= 80
+    ? "Account, proof, first machine, paid listing, and direct enquiry route are visible in one setup path."
+    : `Next move: ${nextStep.detail}. Keep the supplier journey calm and direct.`;
+  const firstAction = score >= 80
+    ? { id: "copy", label: "Copy account plan", primary: true }
+    : { id: nextStep.action, label: getSupplierAccountActionLabel(nextStep.action), primary: true };
+
+  return {
+    studio,
+    starter,
+    passport,
+    score,
+    statusClass,
+    badge: "Supplier account starter",
+    headline,
+    detail,
+    nextStep,
+    steps,
+    actions: [
+      firstAction,
+      firstAction.id === "copy" ? { id: "billing", label: "Open pricing" } : { id: "copy", label: "Copy account plan" },
+      { id: routeReady ? "leads" : "builder", label: routeReady ? "Open lead desk" : "Open builder" }
+    ]
+  };
+}
+
+function getSupplierAccountActionLabel(action) {
+  const labels = {
+    profile: "Open storefront",
+    proof: "Check proof",
+    builder: "Open builder",
+    billing: "Open pricing",
+    leads: "Open lead desk"
+  };
+  return labels[action] || "Open next step";
+}
+
+async function handleSupplierAccountStarterAction(action, model = getSupplierAccountStarterModel()) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildSupplierAccountStarterText(model));
+      showToast("Supplier account plan copied.");
+    } catch {
+      showToast("Copy is blocked here, but the account plan is visible.");
+    }
+    return;
+  }
+
+  const targetMap = {
+    profile: "#storefront",
+    proof: "#trustChecklist",
+    builder: "#listingBuilder",
+    billing: "#pricing",
+    leads: "#lead-desk"
+  };
+  const target = document.querySelector(targetMap[action] || "#studio");
+  if (action === "profile") renderSupplierStorefront();
+  if (action === "billing") renderPricingCalculator();
+  if (action === "builder") syncBuilderInputs();
+  scrollToPageTarget(target || document.querySelector("#studio"), 118);
+  if (action === "builder") {
+    window.setTimeout(() => document.querySelector("#builderModel")?.focus(), 260);
+  }
+
+  const messages = {
+    profile: "Supplier storefront opened.",
+    proof: "Trust checklist opened.",
+    builder: "Listing builder opened.",
+    billing: "Pricing opened.",
+    leads: "Lead desk opened."
+  };
+  showToast(messages[action] || "Supplier account step opened.");
+}
+
+function buildSupplierAccountStarterText(model = getSupplierAccountStarterModel()) {
+  return [
+    "Heavyster Supplier Account Starter",
+    `Supplier: ${model.studio.profile.supplier} - ${model.studio.profile.branch}`,
+    `Status: ${model.score}/100`,
+    `Next move: ${model.nextStep.label} - ${model.nextStep.detail}`,
+    ...model.steps.map((step) => `${step.label}: ${step.value} - ${step.detail}`),
+    "Plan: USD 9/month or USD 99/year per active equipment listing",
+    "Payment rule: supplier keeps rental payment direct; Heavyster earns listing SaaS revenue in phase one"
+  ].join("\n");
 }
 
 function renderSupplierDecisionCard() {

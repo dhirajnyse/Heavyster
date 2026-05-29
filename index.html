@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260523-deploy-guard-v113" />
+    <link rel="stylesheet" href="styles.css?v=20260529-supplier-account-starter-v119" />
   </head>
   <body>
     <div class="app-shell">
@@ -47,6 +47,7 @@
           <a href="#studio" data-nav-target="#studio">Supplier Studio</a>
           <a href="#trust-revenue-ledger" data-nav-target="#trust-revenue-ledger">Ledger</a>
           <a href="#pricing" data-nav-target="#pricing">Pricing</a>
+          <a href="#build-phase" data-nav-target="#build-phase">Build Phase</a>
           <details class="workflow-menu" id="workflowMenu">
             <summary>Workflows</summary>
             <div class="workflow-menu-panel">
@@ -121,6 +122,10 @@
         </nav>
 
         <div class="top-actions">
+          <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
+            <span>Build</span>
+            <strong>v119</strong>
+          </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
         </div>
@@ -1159,6 +1164,7 @@
               </div>
               <span class="pill dark">MVP scope</span>
             </div>
+            <div class="supplier-account-starter" id="supplierAccountStarter" aria-label="Supplier account starter"></div>
             <div class="supplier-listing-starter" id="supplierListingStarter" aria-label="Simple supplier listing starter"></div>
             <div class="workspace-preview">
               <div class="workspace-rail">
@@ -2106,6 +2112,206 @@
           </div>
         </section>
 
+        <section class="build-phase-section" id="build-phase">
+          <div class="section-header wide">
+            <div>
+              <p class="eyebrow">Temporary build page</p>
+              <h2>Heavyster is in active build until the production platform is complete.</h2>
+            </div>
+            <span class="build-version-pill">Current version: v119</span>
+          </div>
+
+          <div class="build-control-strip" aria-label="Current build control summary">
+            <article>
+              <span>Phase</span>
+              <strong>Active prototype</strong>
+              <small>Static SaaS product shell with buyer, supplier, founder, pricing, and roadmap flows.</small>
+            </article>
+            <article>
+              <span>Version</span>
+              <strong>v119 Supplier Account Starter</strong>
+              <small>One simple setup path from supplier account to proof, first machine, paid listing, and direct lead route.</small>
+            </article>
+            <article>
+              <span>Test focus</span>
+              <strong>Simple path clarity</strong>
+              <small>Buyer search, supplier listing, pricing, and founder market command should stay easy.</small>
+            </article>
+            <article>
+              <span>Not production yet</span>
+              <strong>Backend pending</strong>
+              <small>Auth, database, uploads, billing, permissions, and real supplier accounts remain future work.</small>
+            </article>
+          </div>
+
+          <div class="build-cockpit-board" aria-label="Heavyster build cockpit">
+            <article class="build-cockpit-primary">
+              <span>Build cockpit</span>
+              <strong>Keep every release simple, testable, and upload-ready.</strong>
+              <p>
+                This temporary page is the working memory for Heavyster while we move from prototype to real SaaS:
+                what version is live, what changed, what to test, and what must exist before launch.
+              </p>
+            </article>
+            <article>
+              <span>Current version</span>
+              <strong>v119</strong>
+              <small>Supplier Account Starter</small>
+            </article>
+            <article>
+              <span>Latest package</span>
+              <strong>GitHub Pages ZIP</strong>
+              <small>Upload only app files, assets, docs, scripts, workflow, and `.nojekyll`.</small>
+            </article>
+            <article>
+              <span>Test pass</span>
+              <strong>Static gate</strong>
+              <small>Run syntax, static check, token scan, and package-content check before sharing.</small>
+            </article>
+            <article>
+              <span>Next build</span>
+              <strong>First real backend</strong>
+              <small>Supplier accounts, listing records, uploads, billing, admin review, and lead routing.</small>
+            </article>
+          </div>
+
+          <div class="saas-blueprint" aria-label="Heavyster SaaS foundation blueprint">
+            <article class="saas-blueprint-lead">
+              <span>v118 SaaS Foundation Blueprint</span>
+              <strong>Turn the prototype into the first real paid-listing SaaS.</strong>
+              <p>
+                The public product should stay simple. Behind it, these six foundations make Heavyster real:
+                accounts, listings, proof uploads, billing, approval, and direct lead routing.
+              </p>
+            </article>
+            <article>
+              <span>01</span>
+              <strong>Supplier accounts</strong>
+              <p>Rental companies sign in, manage company profile, regions, team contacts, and payment plan.</p>
+              <b>Backend</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Listing records</strong>
+              <p>Each machine gets category, make, model, location, availability, rate notes, and status.</p>
+              <b>Database</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Proof uploads</strong>
+              <p>Photos, licenses, insurance, inspection docs, operator certificates, and expiry dates.</p>
+              <b>Storage</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Paid listings</strong>
+              <p>USD 9 monthly or USD 99 yearly per active listing, with rental payment staying direct.</p>
+              <b>Billing</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Admin approval</strong>
+              <p>Review new suppliers, proof gaps, suspicious listings, visibility, and support notes.</p>
+              <b>Control</b>
+            </article>
+            <article>
+              <span>06</span>
+              <strong>Direct leads</strong>
+              <p>Buyer enquiries route to suppliers by phone, email, WhatsApp, and copied lead packet.</p>
+              <b>Routing</b>
+            </article>
+          </div>
+
+          <div class="release-ledger" aria-label="Heavyster release ledger">
+            <article class="release-ledger-card release-ledger-primary">
+              <span>Current build</span>
+              <strong>v119 Supplier Account Starter</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, and supplier setup tracker.</p>
+              <b>Package target: GitHub Pages upload</b>
+            </article>
+            <article class="release-ledger-card">
+              <span>What changed</span>
+              <strong>Supplier setup path</strong>
+              <p>Added a compact supplier account starter for account, proof, first machine, paid listing, and direct lead routing.</p>
+            </article>
+            <article class="release-ledger-card">
+              <span>Test this version</span>
+              <ul>
+                <li>Header shows Build v119.</li>
+                <li>Build Phase shows Current version: v119.</li>
+                <li>SaaS Foundation Blueprint appears before the Release Ledger.</li>
+                <li>Supplier Studio shows the Supplier Account Starter above the listing starter.</li>
+                <li>Marketplace search still opens cleanly.</li>
+                <li>Supplier Studio, Pricing, and Roadmap remain simple.</li>
+              </ul>
+            </article>
+            <article class="release-ledger-card">
+              <span>Next gates</span>
+              <ul>
+                <li>Real supplier account flow.</li>
+                <li>Machine image and document uploads.</li>
+                <li>Paid listing billing connection.</li>
+                <li>Admin approval and moderation queue.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="build-phase-grid">
+            <article class="build-phase-card build-phase-lead">
+              <span>Build phase</span>
+              <strong>Prototype to SaaS foundation</strong>
+              <p>
+                This page stays visible while we are building Heavyster. It records the current version, what is ready,
+                what is still prototype, and what must be finished before launch.
+              </p>
+              <b>Updated May 29, 2026</b>
+            </article>
+            <article class="build-phase-card">
+              <span>Current release</span>
+              <strong>v119 Supplier Account Starter</strong>
+              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, and this supplier setup path.</p>
+            </article>
+            <article class="build-phase-card">
+              <span>Launch rule</span>
+              <strong>Delete this page after completion</strong>
+              <p>When Heavyster is production ready, remove this page from navigation and keep the public experience focused on marketplace, supplier studio, pricing, and support.</p>
+            </article>
+          </div>
+
+          <div class="build-status-grid" aria-label="Heavyster build status">
+            <article>
+              <span>01</span>
+              <strong>Marketplace UX</strong>
+              <small>Buyer search, proof, direct enquiry, result guard, and catalog paging are prototype ready.</small>
+              <b>Ready</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Supplier SaaS</strong>
+              <small>Listing studio, proof checklist, revenue preview, activation receipt, and direct lead flow are in build.</small>
+              <b>In build</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Founder control</strong>
+              <small>Demand, trust, launch, matrix, ledger, and roadmap rooms are available for planning and pilot control.</small>
+              <b>In build</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Production backend</strong>
+              <small>Authentication, database, uploads, billing, supplier accounts, and admin permissions are still future work.</small>
+              <b>Pending</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Deployment guard</strong>
+              <small>GitHub Pages workflow, clean artifact packaging, cache tokens, and static checks are now protected.</small>
+              <b>Ready</b>
+            </article>
+          </div>
+        </section>
+
         <section class="roadmap-section" id="roadmap">
           <div class="section-header wide">
             <div>
@@ -2172,6 +2378,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260523-deploy-guard-v113" defer></script>
+    <script src="app.js?v=20260529-supplier-account-starter-v119" defer></script>
   </body>
 </html>

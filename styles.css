@@ -992,6 +992,36 @@ body.simple-mode .market-result-brief {
   min-width: max-content;
 }
 
+.build-badge {
+  min-height: 40px;
+  display: inline-grid;
+  grid-template-columns: max-content max-content;
+  gap: 6px;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  border-radius: var(--radius);
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.build-badge span {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.build-badge strong {
+  font-size: 0.88rem;
+}
+
+.build-badge:hover,
+.build-badge.is-active {
+  border-color: rgba(25, 113, 109, 0.48);
+  background: #eef9f7;
+}
+
 .solid-button,
 .ghost-button,
 .category-button,
@@ -9492,6 +9522,187 @@ button.compact-row.is-selected {
   min-height: 34px;
 }
 
+.supplier-account-starter {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.92fr) minmax(420px, 1.22fr) minmax(210px, 0.56fr);
+  gap: 10px;
+  align-items: stretch;
+  margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  border-radius: var(--radius);
+  background: rgba(236, 248, 246, 0.72);
+}
+
+.account-starter-main,
+.account-starter-steps,
+.account-starter-actions {
+  min-width: 0;
+}
+
+.account-starter-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.account-starter-main.is-ready {
+  border-color: rgba(25, 113, 109, 0.42);
+  background: var(--teal-soft);
+}
+
+.account-starter-main.is-watch {
+  border-color: rgba(181, 109, 22, 0.34);
+  background: var(--amber-soft);
+}
+
+.account-starter-main.is-gap {
+  border-color: rgba(168, 73, 43, 0.34);
+  background: var(--red-soft);
+}
+
+.account-starter-main div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.account-starter-main span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-starter-main strong,
+.account-starter-main small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-starter-main strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.account-starter-main small {
+  color: var(--ink-2);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.account-starter-main b {
+  display: grid;
+  place-items: center;
+  min-width: 68px;
+  min-height: 48px;
+  border-radius: var(--radius);
+  background: var(--coal);
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.account-starter-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.account-starter-steps button {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-height: 78px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+  text-align: left;
+}
+
+.account-starter-steps button.is-ready {
+  border-color: rgba(25, 113, 109, 0.32);
+  background: var(--teal-soft);
+}
+
+.account-starter-steps button.needs-work {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: #fffaf0;
+}
+
+.account-starter-steps button:hover {
+  border-color: var(--line-strong);
+}
+
+.account-starter-steps span,
+.account-starter-steps strong,
+.account-starter-steps small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-starter-steps span {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-starter-steps strong {
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.account-starter-steps small {
+  color: var(--muted);
+  font-size: 0.66rem;
+}
+
+.account-starter-actions {
+  display: grid;
+  gap: 7px;
+}
+
+.account-starter-actions button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.account-starter-actions button:hover {
+  border-color: var(--line-strong);
+  background: #fffaf0;
+}
+
+.account-starter-actions button.is-primary {
+  border-color: var(--coal);
+  background: var(--coal);
+  color: #ffffff;
+}
+
+.account-starter-actions button.is-primary:hover {
+  background: #313943;
+}
+
 .supplier-listing-starter {
   display: grid;
   grid-template-columns: minmax(260px, 0.92fr) minmax(360px, 1.12fr) minmax(210px, 0.62fr);
@@ -12818,6 +13029,7 @@ button.compact-row.is-selected {
 .growth-section,
 .market-section,
 .pricing-section,
+.build-phase-section,
 .roadmap-section {
   margin-top: 14px;
   border: 1px solid var(--line);
@@ -13770,6 +13982,319 @@ button.admin-row {
   color: var(--ink);
 }
 
+.build-version-pill {
+  justify-self: end;
+  align-self: start;
+  padding: 8px 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.78rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.build-control-strip {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.25fr) repeat(3, minmax(180px, 0.85fr));
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  border-radius: var(--radius);
+  background: rgba(228, 242, 239, 0.68);
+}
+
+.build-control-strip article {
+  display: grid;
+  gap: 6px;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.2);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.build-control-strip span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.build-control-strip strong {
+  font-size: 1.04rem;
+  line-height: 1.18;
+}
+
+.build-control-strip small {
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.build-cockpit-board {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.35fr) repeat(4, minmax(150px, 0.72fr));
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  border-radius: var(--radius);
+  background: rgba(228, 242, 239, 0.58);
+}
+
+.build-cockpit-board article {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-height: 126px;
+  padding: 13px;
+  border: 1px solid rgba(25, 113, 109, 0.22);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.build-cockpit-board .build-cockpit-primary {
+  border-color: rgba(25, 113, 109, 0.36);
+  background: var(--teal-soft);
+}
+
+.build-cockpit-board span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.build-cockpit-board strong {
+  color: var(--ink);
+  font-size: 1.04rem;
+  line-height: 1.18;
+}
+
+.build-cockpit-board p,
+.build-cockpit-board small {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.saas-blueprint {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.25fr) repeat(3, minmax(170px, 0.8fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.saas-blueprint article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 168px;
+  padding: 14px;
+  border: 1px solid rgba(25, 113, 109, 0.22);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.saas-blueprint .saas-blueprint-lead {
+  grid-row: span 2;
+  border-color: rgba(25, 113, 109, 0.38);
+  background: var(--teal-soft);
+}
+
+.saas-blueprint span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.saas-blueprint strong {
+  color: var(--ink);
+  font-size: 1.04rem;
+  line-height: 1.18;
+}
+
+.saas-blueprint p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.saas-blueprint b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(25, 113, 109, 0.12);
+  color: var(--teal);
+  font-size: 0.74rem;
+}
+
+.release-ledger {
+  display: grid;
+  grid-template-columns: minmax(270px, 1.1fr) repeat(3, minmax(190px, 0.9fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.release-ledger-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 190px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.release-ledger-primary {
+  border-color: rgba(181, 109, 22, 0.42);
+  background: var(--amber-soft);
+}
+
+.release-ledger-card span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.release-ledger-card strong {
+  font-size: 1.08rem;
+  line-height: 1.18;
+}
+
+.release-ledger-card p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.43;
+}
+
+.release-ledger-card b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--coal);
+  color: #ffffff;
+  font-size: 0.74rem;
+}
+
+.release-ledger-card ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink-2);
+}
+
+.release-ledger-card li {
+  line-height: 1.34;
+}
+
+.build-phase-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.1fr) repeat(2, minmax(220px, 0.7fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.build-phase-card,
+.build-status-grid article {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.build-phase-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 180px;
+  padding: 14px;
+}
+
+.build-phase-lead {
+  border-color: rgba(25, 113, 109, 0.34);
+  background: linear-gradient(135deg, var(--teal-soft), rgba(255, 255, 255, 0.95));
+}
+
+.build-phase-card span,
+.build-status-grid span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.build-phase-card strong {
+  font-size: 1.16rem;
+  line-height: 1.22;
+}
+
+.build-phase-card p,
+.build-status-grid small {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+
+.build-phase-card b {
+  width: fit-content;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--coal);
+  color: #ffffff;
+  font-size: 0.78rem;
+}
+
+.build-status-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.build-status-grid article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 168px;
+  padding: 12px;
+}
+
+.build-status-grid strong {
+  font-size: 1rem;
+  line-height: 1.22;
+}
+
+.build-status-grid b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--amber-soft);
+  color: var(--amber);
+  font-size: 0.72rem;
+  font-weight: 950;
+}
+
+.build-status-grid article:nth-child(1),
+.build-status-grid article:nth-child(5) {
+  border-color: rgba(25, 113, 109, 0.28);
+  background: var(--teal-soft);
+}
+
+.build-status-grid article:nth-child(1) b,
+.build-status-grid article:nth-child(5) b {
+  background: rgba(25, 113, 109, 0.12);
+  color: var(--teal);
+}
+
 .roadmap-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -14439,6 +14964,7 @@ button.admin-row {
     grid-template-columns: 1fr;
   }
 
+  .supplier-account-starter,
   .supplier-listing-starter,
   .buyer-receipt-card,
   .market-scale-card,
@@ -14446,6 +14972,7 @@ button.admin-row {
     grid-template-columns: 1fr;
   }
 
+  .account-starter-steps,
   .listing-starter-facts,
   .buyer-receipt-lines,
   .market-scale-metrics,
@@ -14459,13 +14986,19 @@ button.admin-row {
     grid-column: auto;
   }
 
+  .build-control-strip,
+  .build-cockpit-board,
+  .saas-blueprint,
+  .release-ledger,
   .metrics-strip,
-  .roadmap-grid {
+  .roadmap-grid,
+  .build-status-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .paid-listing-activation,
   .pricing-grid,
+  .build-phase-grid,
   .demo-flight-grid,
   .boardroom-grid,
   .pilot-pack-grid,
@@ -14586,6 +15119,7 @@ button.admin-row {
 
   .top-actions .solid-button,
   .top-actions .ghost-button,
+  .top-actions .build-badge,
   .hero-actions .solid-button,
   .hero-actions .ghost-button {
     width: 100%;
@@ -14835,6 +15369,10 @@ button.admin-row {
   .paid-activation-main,
   .paid-activation-metrics,
   .paid-activation-actions,
+  .supplier-account-starter,
+  .account-starter-main,
+  .account-starter-steps,
+  .account-starter-actions,
   .supplier-activation-receipt,
   .supplier-receipt-main,
   .supplier-receipt-lines,
@@ -14867,6 +15405,12 @@ button.admin-row {
   .metrics-strip,
   .listing-grid,
   .roadmap-grid,
+  .build-control-strip,
+  .build-cockpit-board,
+  .saas-blueprint,
+  .release-ledger,
+  .build-phase-grid,
+  .build-status-grid,
   .category-directory,
   .admin-grid,
   .passport-grid,
@@ -15000,6 +15544,10 @@ button.admin-row {
   .shortlist-compare-row,
   .lead-actions {
     grid-template-columns: 1fr;
+  }
+
+  .saas-blueprint .saas-blueprint-lead {
+    grid-row: auto;
   }
 
   .shortlist-command b {
