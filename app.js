@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260529-heavyster-supplier-account-starter-v119";
+const DATA_VERSION = "20260530-heavyster-backend-implementation-contract-v131";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260529-supplier-account-starter-v119";
+const SIMPLE_UX_RELEASE = "20260530-backend-implementation-contract-v131";
 
 const listings = [
   {
@@ -457,6 +457,33 @@ const huntBlueprints = [
     starterListings: 20,
     proof: ["Machine photos", "Attachment list", "Service record", "Operator availability"],
     hook: "earthmoving buyers compare availability, attachments, and local support first"
+  }
+];
+
+const huntOutcomeOptions = [
+  {
+    id: "agreed",
+    label: "Agreed",
+    cue: "Activate listings",
+    statusClass: "ready"
+  },
+  {
+    id: "proof",
+    label: "Proof missing",
+    cue: "Chase docs",
+    statusClass: "review"
+  },
+  {
+    id: "later",
+    label: "Call later",
+    cue: "Keep warm",
+    statusClass: "review"
+  },
+  {
+    id: "pass",
+    label: "Not a fit",
+    cue: "Next supplier",
+    statusClass: "gap"
   }
 ];
 
@@ -1025,6 +1052,8 @@ function defaultState() {
     activeDemandKey: "",
     activeMarketKey: "",
     activeMatrixKey: "",
+    activeHuntTarget: "",
+    huntOutcome: "agreed",
     marketTwinScenario: "balanced",
     commandRole: "Buyer",
     supplierView: false,
@@ -1050,6 +1079,8 @@ function loadState() {
     if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
     if (!merged.activeMarketKey) merged.activeMarketKey = getMarketKeyFromSignal(merged.demandSignals[0]);
     if (!merged.activeMatrixKey) merged.activeMatrixKey = merged.activeMarketKey;
+    if (!merged.activeHuntTarget) merged.activeHuntTarget = "";
+    if (!huntOutcomeOptions.some((option) => option.id === merged.huntOutcome)) merged.huntOutcome = base.huntOutcome;
     return merged;
   } catch {
     return defaultState();
@@ -1589,6 +1620,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyHuntCallSheetButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierHuntCallSheetText());
+      showToast("Supplier hunt call sheet copied.");
+    } catch {
+      showToast("Copy is blocked here, but the call sheet is visible.");
+    }
+  });
+
   document.querySelector("#copyMarketButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildMarketBriefText());
@@ -1604,6 +1644,87 @@ function bindControls() {
       showToast("Market matrix brief copied.");
     } catch {
       showToast("Copy is blocked here, but the matrix brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyLaunchReadinessButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLaunchReadinessText());
+      showToast("Launch readiness gate copied.");
+    } catch {
+      showToast("Copy is blocked here, but the launch readiness gate is visible.");
+    }
+  });
+
+  document.querySelector("#copyBackendSprintButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBackendSprintText());
+      showToast("Backend sprint board copied.");
+    } catch {
+      showToast("Copy is blocked here, but the backend sprint board is visible.");
+    }
+  });
+
+  document.querySelector("#copySupplierAccountMvpButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierAccountMvpText());
+      showToast("Supplier account MVP brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier account MVP preview is visible.");
+    }
+  });
+
+  document.querySelector("#copySupplierOnboardingButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierOnboardingRunwayText());
+      showToast("Supplier onboarding runway copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier onboarding runway is visible.");
+    }
+  });
+
+  document.querySelector("#copyBackendDataContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBackendDataContractText());
+      showToast("Backend data contract copied.");
+    } catch {
+      showToast("Copy is blocked here, but the backend data contract is visible.");
+    }
+  });
+
+  document.querySelector("#copySchemaApiBlueprintButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSchemaApiBlueprintText());
+      showToast("Schema and API blueprint copied.");
+    } catch {
+      showToast("Copy is blocked here, but the schema and API blueprint is visible.");
+    }
+  });
+
+  document.querySelector("#copyApiSmokeConsoleButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildApiSmokeConsoleText());
+      showToast("API smoke console copied.");
+    } catch {
+      showToast("Copy is blocked here, but the API smoke console is visible.");
+    }
+  });
+
+  document.querySelector("#copyBackendFixturePackButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBackendFixturePackText());
+      showToast("Backend fixture pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the backend fixture pack is visible.");
+    }
+  });
+
+  document.querySelector("#copyBackendImplementationContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBackendImplementationContractText());
+      showToast("Backend implementation contract copied.");
+    } catch {
+      showToast("Copy is blocked here, but the backend implementation contract is visible.");
     }
   });
 
@@ -13000,6 +13121,8 @@ function renderDemandRadar() {
     button.addEventListener("click", () => {
       state.activeDemandKey = button.dataset.demandKey;
       state.activeMarketKey = getMarketKeyFromSignal(getActiveDemandSignal());
+      state.activeHuntTarget = "";
+      state.huntOutcome = "agreed";
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
@@ -13030,8 +13153,31 @@ function renderSupplierHunt() {
 
   const active = getActiveDemandSignal();
   const plan = getHuntPlan(active);
+  const selectedTarget = plan.selectedTarget;
   setText("#huntPriority", plan.priority);
   setText("#huntPersona", plan.persona);
+
+  const commandRoot = document.querySelector("#huntCommand");
+  if (commandRoot) {
+    commandRoot.innerHTML = `
+      <div class="hunt-command-main ${escapeHtml(plan.priorityClass)}">
+        <span>Supplier hunt queue</span>
+        <strong>${escapeHtml(selectedTarget ? `${selectedTarget.supplier}: ${selectedTarget.action} for ${active.region} ${plan.category}` : `${active.region} ${plan.category} hunt`)}</strong>
+        <small>${Number(active.count || 1)} demand signals, ${plan.supplyGap} supply gap, USD ${plan.annualRevenue.toLocaleString()} modeled listing ARR.</small>
+      </div>
+      <div class="hunt-command-metrics">
+        <span><strong>${plan.score}/100</strong>hunt pressure</span>
+        <span><strong>${selectedTarget ? `${selectedTarget.fit}/100` : "0/100"}</strong>target fit</span>
+        <span><strong>${selectedTarget ? selectedTarget.packageListings : plan.starterListings}</strong>starter listings</span>
+        <span><strong>${selectedTarget ? `USD ${selectedTarget.annualRevenue.toLocaleString()}` : `USD ${plan.annualRevenue.toLocaleString()}`}</strong>first package ARR</span>
+      </div>
+      <div class="hunt-command-actions">
+        <button type="button" data-hunt-action="copy-queue">Copy call queue</button>
+        <button type="button" data-hunt-action="open-matrix">Open matrix</button>
+        <button type="button" class="solid-button" data-hunt-action="copy-pitch">Copy pitch</button>
+      </div>
+    `;
+  }
 
   document.querySelector("#huntSignalList").innerHTML = signals
     .slice(0, 6)
@@ -13051,6 +13197,23 @@ function renderSupplierHunt() {
     <span><strong>${escapeHtml(value)}</strong>${escapeHtml(label)}</span>
   `).join("");
 
+  const targetRoot = document.querySelector("#huntTargetQueue");
+  if (targetRoot) {
+    targetRoot.innerHTML = plan.targets.map((target, index) => `
+      <button type="button" class="hunt-target ${escapeHtml(target.statusClass)} ${selectedTarget && target.id === selectedTarget.id ? "is-active" : ""}" data-hunt-target="${escapeHtml(target.id)}">
+        <strong>${index + 1}</strong>
+        <span>
+          <b>${escapeHtml(target.supplier)}</b>
+          <small>${escapeHtml(target.branch)} - ${escapeHtml(target.reason)}</small>
+        </span>
+        <em>${target.fit}/100</em>
+        <i>${escapeHtml(target.status)}</i>
+      </button>
+    `).join("");
+  }
+
+  renderSupplierHuntCallSheet(plan);
+
   document.querySelector("#huntProof").innerHTML = `
     <strong>Trust proof to request</strong>
     <div>
@@ -13067,6 +13230,8 @@ function renderSupplierHunt() {
     button.addEventListener("click", () => {
       state.activeDemandKey = button.dataset.huntKey;
       state.activeMarketKey = getMarketKeyFromSignal(getActiveDemandSignal());
+      state.activeHuntTarget = "";
+      state.huntOutcome = "agreed";
       saveState();
       renderDemandRadar();
       renderSupplierHunt();
@@ -13086,6 +13251,22 @@ function renderSupplierHunt() {
       renderFounderMorningBrief();
       renderFounderDailyMoves();
       renderFounderCallSheet();
+    });
+  });
+
+  document.querySelectorAll("[data-hunt-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeHuntTarget = button.dataset.huntTarget;
+      state.huntOutcome = "agreed";
+      saveState();
+      renderSupplierHunt();
+      showToast("Supplier target selected.");
+    });
+  });
+
+  document.querySelectorAll("[data-hunt-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      handleSupplierHuntAction(button.dataset.huntAction, plan);
     });
   });
 }
@@ -13120,6 +13301,17 @@ function getHuntPlan(signal) {
   const score = Math.min(100, urgencyScore + gapScore + countScore);
   const starterListings = blueprint.starterListings + Math.min(6, Number(signal.count || 1));
   const priority = score >= 72 ? "Attack now" : score >= 45 ? "Warm lead" : "Watch";
+  const supplyGap = Math.max(0, starterListings - visibleSupply);
+  const targets = getSupplierHuntTargets({
+    signal,
+    blueprint,
+    score,
+    visibleSupply,
+    starterListings,
+    supplyGap,
+    annualRevenue: starterListings * 99
+  });
+  const selectedTarget = targets.find((target) => target.id === state.activeHuntTarget) || targets[0] || null;
 
   return {
     signal,
@@ -13130,10 +13322,434 @@ function getHuntPlan(signal) {
     visibleSupply,
     score,
     starterListings,
+    supplyGap,
     monthlyRevenue: starterListings * 9,
     annualRevenue: starterListings * 99,
-    priority
+    priority,
+    priorityClass: score >= 72 ? "ready" : score >= 45 ? "review" : "gap",
+    targets,
+    selectedTarget
   };
+}
+
+function getSupplierHuntTargets(context) {
+  const { signal, blueprint, score, starterListings, supplyGap } = context;
+  const targetRows = supplierProfiles.map((profile, index) => {
+    const fit = getSupplierTargetFitScore(profile, context, index);
+    const packageListings = Math.max(3, Math.min(12, Math.round(starterListings / 4) + (fit >= 82 ? 2 : fit >= 68 ? 1 : 0)));
+    const status = getSupplierTargetStatus(fit);
+    const branchRegion = profile.branch.split(",").pop().trim();
+    const ask = blueprint.proof[index % blueprint.proof.length];
+    const reason = [
+      `${blueprint.category} fit`,
+      `${branchRegion === signal.region ? signal.region : profile.serviceArea.split(",")[0].trim()} route`,
+      `${profile.proof.length} proof signals`
+    ].join(", ");
+
+    return {
+      id: profile.slug,
+      supplier: profile.supplier,
+      branch: profile.branch,
+      fit,
+      status: status.label,
+      statusClass: status.className,
+      action: status.action,
+      ask,
+      reason,
+      packageListings,
+      annualRevenue: packageListings * 99,
+      supplyGap
+    };
+  });
+
+  return targetRows
+    .sort((a, b) => b.fit - a.fit || b.packageListings - a.packageListings || a.supplier.localeCompare(b.supplier))
+    .slice(0, 4);
+}
+
+function getSupplierTargetFitScore(profile, context, index) {
+  const { signal, blueprint, score, supplyGap } = context;
+  const haystack = [
+    profile.supplier,
+    profile.headline,
+    profile.branch,
+    profile.serviceArea,
+    profile.services.join(" "),
+    profile.proof.join(" "),
+    profile.fleet.map((item) => `${item.label} ${item.status}`).join(" ")
+  ].join(" ").toLowerCase();
+  const regionFit = haystack.includes(signal.region.toLowerCase()) ? 24 : 8;
+  const categoryFit = haystack.includes(blueprint.category.toLowerCase()) || blueprint.keywords.some((keyword) => haystack.includes(keyword)) ? 28 : 10;
+  const proofFit = Math.min(22, profile.proof.length * 5 + (profile.proof.some((item) => item.toLowerCase().includes("pending")) ? -6 : 2));
+  const fleetCount = profile.fleet.reduce((total, item) => total + Number(item.count || 0), 0);
+  const scaleFit = Math.min(18, Math.round(fleetCount / 2));
+  const urgencyFit = score >= 72 ? 8 : score >= 45 ? 5 : 2;
+  const gapFit = Math.min(8, Math.ceil(supplyGap / 4));
+  return Math.max(35, Math.min(100, regionFit + categoryFit + proofFit + scaleFit + urgencyFit + gapFit - index));
+}
+
+function getSupplierTargetStatus(fit) {
+  if (fit >= 82) {
+    return { label: "Call today", className: "ready", action: "Call" };
+  }
+  if (fit >= 68) {
+    return { label: "Qualify", className: "review", action: "Qualify" };
+  }
+  return { label: "Find proof", className: "gap", action: "Research" };
+}
+
+async function handleSupplierHuntAction(action, plan = getHuntPlan(getActiveDemandSignal())) {
+  if (action === "open-matrix") {
+    document.querySelector("#market-signal-matrix")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Market Matrix opened.");
+    return;
+  }
+
+  const text = action === "copy-queue" ? buildSupplierHuntQueueText(plan) : buildSupplierHuntText(plan);
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast(action === "copy-queue" ? "Supplier call queue copied." : "Supplier hunt pitch copied.");
+  } catch {
+    showToast("Copy is blocked here, but the supplier hunt text is visible.");
+  }
+}
+
+function renderSupplierHuntCallSheet(plan = getHuntPlan(getActiveDemandSignal())) {
+  const root = document.querySelector("#huntCallSheet");
+  if (!root) return;
+
+  const model = getSupplierHuntCallSheetModel(plan);
+  if (!model.target) {
+    root.innerHTML = `
+      <div class="hunt-call-empty">
+        <strong>No supplier target selected yet.</strong>
+        <span>Choose a demand signal and Heavyster will build the call sheet.</span>
+      </div>
+    `;
+    renderSupplierHuntOutcomeGate(model);
+    return;
+  }
+
+  root.innerHTML = `
+    <div class="hunt-call-main ${escapeHtml(model.statusClass)}">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.headline)}</strong>
+      <small>${escapeHtml(model.detail)}</small>
+      <em>${model.score}/100</em>
+    </div>
+    <div class="hunt-call-steps">
+      ${model.steps.map((step) => `
+        <div class="hunt-call-step ${escapeHtml(step.statusClass)}">
+          <strong>${escapeHtml(step.label)}</strong>
+          <span>${escapeHtml(step.detail)}</span>
+          <em>${escapeHtml(step.status)}</em>
+        </div>
+      `).join("")}
+    </div>
+    <div class="hunt-call-note">
+      <strong>${escapeHtml(model.packageLabel)}</strong>
+      <span>${escapeHtml(model.directRule)}</span>
+    </div>
+    <div class="hunt-call-actions">
+      <button type="button" data-hunt-call-action="copy-call">Copy script</button>
+      <button type="button" data-hunt-call-action="open-call-sheet">Founder call sheet</button>
+      <button type="button" data-hunt-call-action="open-studio">Open supplier studio</button>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-hunt-call-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      handleSupplierHuntCallAction(button.dataset.huntCallAction, model);
+    });
+  });
+
+  renderSupplierHuntOutcomeGate(model);
+}
+
+function getSupplierHuntCallSheetModel(plan = getHuntPlan(getActiveDemandSignal())) {
+  const signal = plan.signal;
+  const target = plan.selectedTarget || plan.targets[0] || null;
+  const profile = target ? supplierProfiles.find((supplier) => supplier.slug === target.id || supplier.supplier === target.supplier) : null;
+  const listing = target ? (
+    listings.find((item) => item.supplier === target.supplier && item.region === signal.region) ||
+    listings.find((item) => item.supplier === target.supplier)
+  ) : null;
+  const demandCount = Number(signal.count || 1);
+  const packageListings = target ? target.packageListings : plan.starterListings;
+  const annualRevenue = target ? target.annualRevenue : plan.annualRevenue;
+  const score = target ? Math.min(100, Math.round((target.fit * 0.58) + (plan.score * 0.42))) : plan.score;
+  const statusClass = score >= 82 ? "ready" : score >= 68 ? "review" : "gap";
+  const badge = score >= 82 ? "Call today" : score >= 68 ? "Call after proof" : "Research first";
+  const proofAsk = target ? target.ask : plan.proof[0];
+  const proofStack = [proofAsk, ...plan.proof.filter((item) => item !== proofAsk)].slice(0, 3);
+  const supplierName = target ? target.supplier : `${signal.region} ${plan.category} supplier`;
+  const listingLabel = listing ? listing.name : `${plan.category} listing package`;
+  const responseRoute = profile ? profile.response : "direct response route";
+  const profilePath = target ? `/suppliers/${target.id}/` : "/suppliers/";
+  const visibleSupply = getVisibleSupplyLabel(plan.visibleSupply);
+  const demandLabel = `${demandCount} ${signal.equipment} demand signal${demandCount === 1 ? "" : "s"}`;
+
+  const steps = [
+    {
+      label: "Open",
+      detail: `${demandLabel} in ${signal.region}; current visible supply is ${visibleSupply}.`,
+      status: "Demand",
+      statusClass: "ready"
+    },
+    {
+      label: "Ask",
+      detail: `Request ${proofStack.join(", ").toLowerCase()} before showing a verified badge.`,
+      status: "Proof",
+      statusClass: "review"
+    },
+    {
+      label: "Offer",
+      detail: `${packageListings} paid listings at USD 99/year can create USD ${annualRevenue.toLocaleString()}/yr.`,
+      status: "SaaS",
+      statusClass: "ready"
+    },
+    {
+      label: "Route",
+      detail: `Publish ${profilePath} and send enquiries through ${responseRoute.toLowerCase()}.`,
+      status: "Direct",
+      statusClass: "ready"
+    }
+  ];
+
+  const scriptLines = [
+    `Hi ${supplierName}, Heavyster is opening verified ${plan.category.toLowerCase()} listings for ${signal.region}.`,
+    `We already see ${demandLabel} with ${signal.urgency.toLowerCase()} urgency and ${signal.duration} duration.`,
+    `You look like the first supplier to call because your target fit is ${target ? `${target.fit}/100` : `${score}/100`} and the visible supply gap is ${plan.supplyGap}.`,
+    `Can you confirm ${listingLabel} availability and share ${proofStack.join(", ").toLowerCase()}?`,
+    `If proof is clean, start with ${packageListings} paid listings at USD 99/year each. Heavyster sends direct enquiries; rental payment stays between buyer and supplier.`
+  ];
+
+  return {
+    signal,
+    plan,
+    target,
+    profile,
+    listing,
+    score,
+    statusClass,
+    badge,
+    headline: `Call ${supplierName} for ${packageListings} paid ${plan.category.toLowerCase()} listings.`,
+    detail: `Start from ${signal.region} ${signal.equipment} demand, confirm ${proofAsk.toLowerCase()}, and keep the rental payment direct.`,
+    packageLabel: `${packageListings} listings = USD ${annualRevenue.toLocaleString()}/yr`,
+    directRule: "Buyer pays supplier directly. Heavyster earns listing SaaS first.",
+    proofStack,
+    steps,
+    scriptLines
+  };
+}
+
+async function handleSupplierHuntCallAction(action, model = getSupplierHuntCallSheetModel()) {
+  if (action === "open-call-sheet") {
+    document.querySelector("#founder-call-sheet")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Founder call sheet opened.");
+    return;
+  }
+
+  if (action === "open-studio") {
+    if (model.listing?.id) state.selectedListingId = model.listing.id;
+    state.commandRole = "Supplier";
+    state.supplierView = true;
+    saveState();
+    render();
+    document.querySelector("#studio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Supplier Studio opened for the hunt target.");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildSupplierHuntCallSheetText(model));
+    showToast("Supplier hunt call script copied.");
+  } catch {
+    showToast("Copy is blocked here, but the hunt call sheet is visible.");
+  }
+}
+
+function renderSupplierHuntOutcomeGate(model = getSupplierHuntCallSheetModel()) {
+  const root = document.querySelector("#huntOutcomeGate");
+  if (!root) return;
+
+  const outcomeModel = getSupplierHuntOutcomeModel(model);
+  if (!outcomeModel.target) {
+    root.innerHTML = "";
+    return;
+  }
+
+  root.innerHTML = `
+    <div class="hunt-outcome-head ${escapeHtml(outcomeModel.option.statusClass)}">
+      <span>Outcome gate</span>
+      <strong>${escapeHtml(outcomeModel.headline)}</strong>
+      <small>${escapeHtml(outcomeModel.detail)}</small>
+      <em>${outcomeModel.score}/100</em>
+    </div>
+    <div class="hunt-outcome-options" aria-label="Supplier call outcomes">
+      ${huntOutcomeOptions.map((option) => `
+        <button type="button" class="${option.id === outcomeModel.option.id ? "is-active" : ""} ${escapeHtml(option.statusClass)}" data-hunt-outcome="${escapeHtml(option.id)}">
+          <strong>${escapeHtml(option.label)}</strong>
+          <span>${escapeHtml(option.cue)}</span>
+        </button>
+      `).join("")}
+    </div>
+    <div class="hunt-outcome-note">
+      <strong>${escapeHtml(outcomeModel.noteLabel)}</strong>
+      <span>${escapeHtml(outcomeModel.note)}</span>
+    </div>
+    <div class="hunt-outcome-actions">
+      ${outcomeModel.actions.map((action) => `
+        <button type="button" class="${action.primary ? "solid-button" : ""}" data-hunt-outcome-action="${escapeHtml(action.id)}">${escapeHtml(action.label)}</button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-hunt-outcome]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.huntOutcome = button.dataset.huntOutcome;
+      saveState();
+      renderSupplierHuntOutcomeGate(model);
+    });
+  });
+
+  root.querySelectorAll("[data-hunt-outcome-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      handleSupplierHuntOutcomeAction(button.dataset.huntOutcomeAction, outcomeModel);
+    });
+  });
+}
+
+function getSupplierHuntOutcomeModel(model = getSupplierHuntCallSheetModel()) {
+  const plan = model.plan || getHuntPlan(getActiveDemandSignal());
+  const target = model.target || plan.selectedTarget || plan.targets[0] || null;
+  const option = huntOutcomeOptions.find((item) => item.id === state.huntOutcome) || huntOutcomeOptions[0];
+  const nextTarget = target ? plan.targets.find((item) => item.id !== target.id) || null : null;
+  const scoreBase = model.score || plan.score;
+  const proofAsk = model.proofStack?.[0] || target?.ask || plan.proof[0];
+  const packageListings = target ? target.packageListings : plan.starterListings;
+  const annualRevenue = target ? target.annualRevenue : plan.annualRevenue;
+  const profilePath = target ? `/suppliers/${target.id}/` : "/suppliers/";
+
+  const outcome = {
+    agreed: {
+      score: Math.min(100, scoreBase + 8),
+      headline: `Activate ${packageListings} paid listings for ${target ? target.supplier : "the supplier"}.`,
+      detail: `Move to pricing, publish ${profilePath}, and route direct enquiries once availability is confirmed.`,
+      noteLabel: "Activation rule",
+      note: `Phase one stays clean: USD ${annualRevenue.toLocaleString()}/yr listing SaaS, supplier keeps rental payment direct.`,
+      actions: [
+        { id: "copy-outcome", label: "Copy outcome", primary: true },
+        { id: "open-pricing", label: "Open pricing" },
+        { id: "open-studio", label: "Open Studio" }
+      ]
+    },
+    proof: {
+      score: Math.max(1, scoreBase - 12),
+      headline: `Chase ${proofAsk.toLowerCase()} before activation.`,
+      detail: `${target ? target.supplier : "The supplier"} can stay in the hunt, but do not show a verified path until proof is clean.`,
+      noteLabel: "Proof rule",
+      note: `Ask for ${model.proofStack.join(", ").toLowerCase()} and keep the listing hidden or limited until documents are usable.`,
+      actions: [
+        { id: "copy-outcome", label: "Copy proof ask", primary: true },
+        { id: "open-studio", label: "Open Studio" },
+        { id: "next-target", label: "Next supplier" }
+      ]
+    },
+    later: {
+      score: Math.max(1, scoreBase - 6),
+      headline: `Keep ${target ? target.supplier : "the supplier"} warm and protect the queue.`,
+      detail: "Schedule a short follow-up, keep demand visible, and do not slow the next supplier call.",
+      noteLabel: "Follow-up rule",
+      note: `${plan.signal.region} ${plan.category} demand still needs supply. Keep the call sheet alive, then move to the next target if the reply slips.`,
+      actions: [
+        { id: "copy-outcome", label: "Copy follow-up", primary: true },
+        { id: "open-call-sheet", label: "Call sheet" },
+        { id: "next-target", label: "Next supplier" }
+      ]
+    },
+    pass: {
+      score: Math.max(1, scoreBase - 20),
+      headline: `Move to ${nextTarget ? nextTarget.supplier : "the next supplier"}.`,
+      detail: `${target ? target.supplier : "This supplier"} is not the shortest path for ${plan.signal.region} ${plan.category} supply right now.`,
+      noteLabel: "Queue rule",
+      note: nextTarget
+        ? `Next best target: ${nextTarget.supplier}, ${nextTarget.branch}, ${nextTarget.fit}/100 fit. Keep the market wedge moving.`
+        : "No backup target is ready. Return to the Market Matrix and open a new supplier hunt.",
+      actions: [
+        { id: "copy-outcome", label: "Copy pass note", primary: true },
+        { id: "next-target", label: "Next supplier" },
+        { id: "open-matrix", label: "Open Matrix" }
+      ]
+    }
+  }[option.id];
+
+  return {
+    ...outcome,
+    option,
+    model,
+    plan,
+    target,
+    listing: model.listing || null,
+    nextTarget,
+    packageListings,
+    annualRevenue,
+    proofAsk,
+    profilePath
+  };
+}
+
+async function handleSupplierHuntOutcomeAction(action, outcomeModel = getSupplierHuntOutcomeModel()) {
+  if (action === "open-pricing") {
+    document.querySelector("#pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Pricing opened for paid listing activation.");
+    return;
+  }
+
+  if (action === "open-studio") {
+    if (outcomeModel.target) state.activeHuntTarget = outcomeModel.target.id;
+    if (outcomeModel.listing?.id) state.selectedListingId = outcomeModel.listing.id;
+    state.commandRole = "Supplier";
+    state.supplierView = true;
+    saveState();
+    render();
+    document.querySelector("#studio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Supplier Studio opened for this outcome.");
+    return;
+  }
+
+  if (action === "open-call-sheet") {
+    document.querySelector("#founder-call-sheet")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Founder call sheet opened.");
+    return;
+  }
+
+  if (action === "open-matrix") {
+    document.querySelector("#market-signal-matrix")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast("Market Matrix opened.");
+    return;
+  }
+
+  if (action === "next-target") {
+    if (outcomeModel.nextTarget) {
+      state.activeHuntTarget = outcomeModel.nextTarget.id;
+      state.huntOutcome = "agreed";
+      saveState();
+      renderSupplierHunt();
+      showToast("Next supplier selected.");
+    } else {
+      document.querySelector("#market-signal-matrix")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      showToast("No backup supplier ready. Market Matrix opened.");
+    }
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildSupplierHuntOutcomeText(outcomeModel));
+    showToast("Supplier hunt outcome copied.");
+  } catch {
+    showToast("Copy is blocked here, but the outcome gate is visible.");
+  }
 }
 
 function renderMarketSignalMatrix() {
@@ -16516,14 +17132,406 @@ function buildJobsiteBriefText(model = getJobsiteModel()) {
 
 function buildSupplierHuntText(plan = getHuntPlan(getActiveDemandSignal())) {
   const signal = plan.signal;
+  const target = plan.selectedTarget;
   const supplyLabel = plan.visibleSupply === 1 ? "1 matching listing is" : `${plan.visibleSupply} matching listings are`;
   return [
-    `Hi, we are opening verified ${plan.category.toLowerCase()} listings for ${signal.region} on Heavyster.`,
+    `Hi${target ? ` ${target.supplier}` : ""}, we are opening verified ${plan.category.toLowerCase()} listings for ${signal.region} on Heavyster.`,
     `Buyers are already asking for ${signal.equipment} with ${signal.urgency.toLowerCase()} urgency and ${signal.duration} duration.`,
     `The gap is clear: ${supplyLabel} visible in this prototype, and ${plan.hook}.`,
-    `We want to onboard ${plan.starterListings} paid listings from a strong supplier at USD 9 monthly or USD 99 yearly per active listing.`,
-    `If your fleet can provide ${plan.proof.join(", ").toLowerCase()}, we can build your supplier page and route direct enquiries to you without touching the rental payment.`
+    target
+      ? `You are our first target because the fit is ${target.fit}/100. Suggested starter package: ${target.packageListings} listings, USD ${target.annualRevenue.toLocaleString()} per year if kept live.`
+      : `We want to onboard ${plan.starterListings} paid listings from a strong supplier at USD 9 monthly or USD 99 yearly per active listing.`,
+    `First proof ask: ${target ? target.ask : plan.proof[0]}. If your fleet can provide ${plan.proof.join(", ").toLowerCase()}, we can build your supplier page and route direct enquiries to you without touching the rental payment.`
   ].join("\n");
+}
+
+function buildSupplierHuntQueueText(plan = getHuntPlan(getActiveDemandSignal())) {
+  const signal = plan.signal;
+  return [
+    "Heavyster Supplier Hunt Queue",
+    `Signal: ${signal.equipment} in ${signal.region}, ${signal.urgency}, ${Number(signal.count || 1)} demand signals.`,
+    `Goal: recruit ${plan.supplyGap} missing ${plan.category.toLowerCase()} listings and protect USD ${plan.annualRevenue.toLocaleString()} modeled listing ARR.`,
+    "Call order:",
+    ...plan.targets.map((target, index) =>
+      `${index + 1}. ${target.supplier}, ${target.branch}: ${target.fit}/100 fit, ${target.status}. Ask for ${target.ask}. Starter package ${target.packageListings} listings = USD ${target.annualRevenue.toLocaleString()}/yr.`
+    ),
+    "Founder rule: recruit proof-first suppliers, keep rental payment direct, and activate listing SaaS before adding booking commission."
+  ].join("\n");
+}
+
+function buildSupplierHuntCallSheetText(model = getSupplierHuntCallSheetModel()) {
+  if (!model.target) {
+    return "Heavyster Hunt Call Sheet\nNo supplier target is selected yet.";
+  }
+
+  return [
+    "Heavyster Hunt Call Sheet",
+    `Supplier: ${model.target.supplier}`,
+    `Branch: ${model.target.branch}`,
+    `Signal: ${model.signal.equipment} in ${model.signal.region}, ${model.signal.urgency}, ${Number(model.signal.count || 1)} demand signal${Number(model.signal.count || 1) === 1 ? "" : "s"}.`,
+    `Call score: ${model.score}/100 - ${model.badge}`,
+    `Paid listing offer: ${model.packageLabel}`,
+    `Proof asks: ${model.proofStack.join(", ")}`,
+    `Direct-payment rule: ${model.directRule}`,
+    "Call steps:",
+    ...model.steps.map((step, index) => `${index + 1}. ${step.label}: ${step.detail}`),
+    "Call script:",
+    ...model.scriptLines.map((line) => `- ${line}`)
+  ].join("\n");
+}
+
+function buildSupplierHuntOutcomeText(outcomeModel = getSupplierHuntOutcomeModel()) {
+  if (!outcomeModel.target) {
+    return "Heavyster Hunt Outcome Gate\nNo supplier call outcome is selected yet.";
+  }
+
+  return [
+    "Heavyster Hunt Outcome Gate",
+    `Outcome: ${outcomeModel.option.label} - ${outcomeModel.option.cue}`,
+    `Supplier: ${outcomeModel.target.supplier}`,
+    `Branch: ${outcomeModel.target.branch}`,
+    `Market: ${outcomeModel.plan.signal.region} ${outcomeModel.plan.category}`,
+    `Score after call: ${outcomeModel.score}/100`,
+    `Next action: ${outcomeModel.headline}`,
+    `Reason: ${outcomeModel.detail}`,
+    `Proof ask: ${outcomeModel.proofAsk}`,
+    `Listing package: ${outcomeModel.packageListings} paid listings = USD ${outcomeModel.annualRevenue.toLocaleString()}/yr`,
+    `Supplier page: ${outcomeModel.profilePath}`,
+    `Operating note: ${outcomeModel.note}`,
+    "Phase-one rule: rental payment stays direct between buyer and supplier; Heavyster earns listing SaaS first."
+  ].join("\n");
+}
+
+function buildLaunchReadinessText() {
+  return [
+    "Heavyster Launch Readiness Gate",
+    "Version: v123 Launch Readiness Gate",
+    "Production readiness: 42/100",
+    "Ready now:",
+    "- Buyer demo: marketplace search, proof, direct enquiry, and simple buyer path.",
+    "- Supplier demo: listing workspace, proof checklist, paid-listing math, and direct lead story.",
+    "Production blockers:",
+    "- Accounts: supplier signup, login, company profile, team permissions, and account ownership.",
+    "- Data layer: listings, photos, documents, availability, enquiries, and billing records.",
+    "- Billing: USD 9 monthly and USD 99 yearly listing plans, invoices, renewal, and cancellation.",
+    "- Trust ops: admin approval, document expiry, fraud checks, and support notes.",
+    "Next backend sprint: Supplier account MVP.",
+    "Sprint scope: signup, supplier profile, listing CRUD, proof upload placeholders, paid-listing status, and direct enquiry logs.",
+    "Phase-one rule: keep rental payment direct; Heavyster earns listing SaaS before any booking commission."
+  ].join("\n");
+}
+
+function buildBackendSprintText() {
+  return [
+    "Heavyster Backend Sprint Board",
+    "Version: v124 Backend Sprint Board",
+    "Sprint objective: make Heavyster usable by a real rental company without changing the simple public marketplace.",
+    "Sprint 1: Supplier account MVP.",
+    "Build lanes:",
+    "- Accounts: signup, login, company profile, account owner, and team contact fields.",
+    "- Listings: create, edit, pause, publish, category, region, make, model, and availability status.",
+    "- Proof: photo/document placeholders, license/insurance/inspection labels, expiry date, and admin status.",
+    "- Direct enquiries: buyer message log, supplier contact route, response state, and copied enquiry packet.",
+    "- Paid listing status: monthly/yearly plan flag, billable listing count, renewal date, and invoice placeholder.",
+    "- Admin review: approve supplier, approve listing, flag document gap, hide unsafe listing, and support note.",
+    "Acceptance gates:",
+    "1. A supplier can create an account and save a company profile.",
+    "2. A supplier can publish one paid listing with proof placeholders and availability.",
+    "3. A buyer enquiry is stored and shown to the supplier without Heavyster touching rental payment.",
+    "4. Founder/admin can see approval state, trust gaps, listing revenue, and next action.",
+    "Phase-one rule: build accounts, data, proof, billing status, and direct enquiry logs before booking commission."
+  ].join("\n");
+}
+
+function buildSupplierAccountMvpText() {
+  return [
+    "Heavyster Supplier Account MVP Preview",
+    "Version: v125 Supplier Account MVP Preview",
+    "MVP promise: one rental company can create an account, publish one paid listing, and receive one direct enquiry.",
+    "Primary user: Gulf Lift Services, Abu Dhabi, UAE.",
+    "Minimum account record:",
+    "- Supplier: legal name, display name, country, city, service regions, owner contact, phone, email, WhatsApp, verification status.",
+    "- Company profile: branch, service area, response target, years in market, public slug, storefront status.",
+    "- First listing: category, make, model, region, availability, rate note, paid-listing status, publish status.",
+    "- Proof placeholders: machine photo, license, insurance, inspection, expiry date, review state.",
+    "- Direct enquiry log: buyer message, source listing, supplier route, copied packet, response state.",
+    "- Billing status: USD 9 monthly or USD 99 yearly plan, billable listing count, renewal date, invoice placeholder.",
+    "- Admin review: supplier approval, listing approval, proof gap, visibility, support note.",
+    "Acceptance test:",
+    "1. Supplier signs up and saves a profile.",
+    "2. Supplier publishes one paid listing with proof placeholders.",
+    "3. Buyer sends a direct enquiry and the supplier sees the lead log.",
+    "4. Admin can approve, flag, or hide the supplier/listing.",
+    "Phase-one rule: Heavyster stores listing SaaS and enquiry history, but rental payment remains direct between buyer and supplier."
+  ].join("\n");
+}
+
+function buildSupplierOnboardingRunwayText() {
+  return [
+    "Heavyster Supplier Onboarding Runway",
+    "Version: v126 Supplier Onboarding Runway",
+    "Goal: make the first supplier account release easy enough for a rental yard to complete without support.",
+    "Primary supplier: Gulf Lift Services, Abu Dhabi, UAE.",
+    "Runway steps:",
+    "1. Create account: legal name, display name, owner name, email, phone, WhatsApp, country, city, and service regions.",
+    "2. Complete profile: public slug, branch, service area, response target, fleet categories, storefront status, and support note.",
+    "3. Add first machine: category, make, model, region, availability, rate note, paid-listing flag, and publish state.",
+    "4. Attach proof: machine photo, license, insurance, inspection, expiry date, document status, and reviewer note.",
+    "5. Activate listing: choose USD 9 monthly or USD 99 yearly, billable count, renewal date, invoice placeholder, and cancellation state.",
+    "6. Receive direct enquiry: buyer message, source listing, supplier route, copied packet, response state, and direct-payment reminder.",
+    "Day-one acceptance:",
+    "- Supplier can see exactly what is complete, missing, and blocked.",
+    "- Admin can approve account, listing, proof, visibility, and support note.",
+    "- Buyer can send one direct enquiry after approval.",
+    "- Heavyster records listing SaaS and lead history while rental payment stays supplier-direct.",
+    "Simplicity rule: one page, one primary action, one next missing field, and no rental payment workflow in phase one."
+  ].join("\n");
+}
+
+function buildBackendDataContractText() {
+  return [
+    "Heavyster Backend Data Contract",
+    "Version: v127 Backend Data Contract",
+    "Purpose: define the smallest real backend needed to turn the static prototype into phase-one listing SaaS.",
+    "Primary flow: supplier account -> profile -> first listing -> proof -> paid listing status -> direct enquiry -> admin review.",
+    "Core records:",
+    "- SupplierAccount: owner, legal name, display name, contact routes, service regions, account status.",
+    "- SupplierProfile: public slug, branch, service area, response target, storefront status, support note.",
+    "- EquipmentListing: supplier, category, make, model, region, availability, rate note, publish status.",
+    "- ProofDocument: listing, proof type, file placeholder, expiry date, review status, reviewer note.",
+    "- ListingSubscription: supplier, plan, billable listing count, renewal date, invoice status, cancellation status.",
+    "- DirectEnquiry: buyer message, source listing, supplier route, copied packet, response state, direct-payment reminder.",
+    "- AdminReview: supplier approval, listing approval, proof gap, visibility state, support action, reviewed by.",
+    "Minimum screens:",
+    "1. Supplier saves account and profile.",
+    "2. Supplier adds one listing and proof placeholders.",
+    "3. Admin approves supplier, listing, and proof state.",
+    "4. Buyer sends one direct enquiry.",
+    "5. Supplier sees the lead log and billing status.",
+    "Phase-one rule: store listing SaaS and enquiry history only. Do not collect rental payment or rental commission yet."
+  ].join("\n");
+}
+
+function buildSchemaApiBlueprintText() {
+  return [
+    "Heavyster Schema + API Blueprint",
+    "Version: v128 Schema + API Blueprint",
+    "Purpose: convert the v127 data contract into the smallest backend route map for the supplier account MVP.",
+    "API routes:",
+    "- POST /api/supplier-accounts: create supplier account, owner contact, service regions, and account status.",
+    "- PATCH /api/supplier-accounts/:id/profile: update public slug, branch, response target, storefront state, and support note.",
+    "- POST /api/equipment-listings: create first listing with category, make, model, region, availability, rate note, and publish state.",
+    "- POST /api/proof-documents: attach machine photo, license, insurance, inspection, expiry date, and review state.",
+    "- POST /api/listing-subscriptions: create USD 9/month or USD 99/year listing plan and billable listing count.",
+    "- POST /api/direct-enquiries: store buyer message, source listing, supplier route, copied packet, and response state.",
+    "- PATCH /api/admin-reviews/:id: approve supplier, listing, proof, visibility, and support action.",
+    "Schema rule:",
+    "- Every buyer-visible listing must have supplier account, supplier profile, listing, proof, subscription, direct enquiry readiness, and admin approval state.",
+    "MVP response shape:",
+    "- account_status, profile_status, listing_status, proof_status, billing_status, enquiry_status, admin_status, next_action.",
+    "Acceptance:",
+    "1. Create Gulf Lift Services account.",
+    "2. Publish Liebherr 130T Mobile Crane as one paid listing.",
+    "3. Mark proof placeholders and admin approval.",
+    "4. Capture one direct enquiry without collecting rental payment.",
+    "Phase-one rule: Heavyster earns listing SaaS and records enquiry history; suppliers keep rental payment direct."
+  ].join("\n");
+}
+
+function buildApiSmokeConsoleText() {
+  return [
+    "Heavyster API Smoke Console",
+    "Version: v129 API Smoke Console",
+    "Purpose: prove the first supplier account backend can create one paid listing and one direct enquiry without touching rental payment.",
+    "Smoke sequence:",
+    "1. POST /api/supplier-accounts with Gulf Lift Services, Abu Dhabi, UAE, owner contact, email, phone, WhatsApp, and service regions.",
+    "2. PATCH /api/supplier-accounts/:id/profile with public slug, branch, response target, storefront state, and support note.",
+    "3. POST /api/equipment-listings with Liebherr 130T Mobile Crane, Lifting, UAE, availability soon, rate note, and draft publish state.",
+    "4. POST /api/proof-documents with machine photo placeholder, license, insurance, inspection, expiry date, and review state.",
+    "5. POST /api/listing-subscriptions with annual plan, USD 99 per active listing, billable count 1, and invoice placeholder.",
+    "6. POST /api/direct-enquiries with buyer message, source listing, copied packet, supplier route, and direct-payment reminder.",
+    "7. PATCH /api/admin-reviews/:id with supplier approval, listing approval, proof status, visibility, and next support note.",
+    "Expected status object:",
+    "- account_status: active",
+    "- profile_status: public_ready",
+    "- listing_status: buyer_visible",
+    "- proof_status: placeholder_clean",
+    "- billing_status: listing_saas_active",
+    "- enquiry_status: direct_route_ready",
+    "- admin_status: approved",
+    "- next_action: route buyer enquiry to supplier",
+    "Hard guardrail: there is no rental payment endpoint in phase one.",
+    "Pass condition: one supplier, one paid listing, one proof placeholder set, one direct enquiry, one admin approval, and zero rental payment collection."
+  ].join("\n");
+}
+
+function buildBackendFixturePackText() {
+  return JSON.stringify({
+    title: "Heavyster Backend Fixture Pack",
+    version: "v130 Backend Fixture Pack",
+    phase_one_guardrail: "Heavyster records listing SaaS and direct enquiry history only. Supplier keeps rental payment direct.",
+    supplier_account: {
+      id: "sup_gulf_lift_services",
+      legal_name: "Gulf Lift Services LLC",
+      display_name: "Gulf Lift Services",
+      country: "UAE",
+      city: "Abu Dhabi",
+      service_regions: ["UAE"],
+      owner_contact: "Operations Desk",
+      email: "ops@gulf-lift.example",
+      phone: "+971 50 000 0000",
+      whatsapp: "+971 50 000 0000",
+      account_status: "active"
+    },
+    supplier_profile: {
+      supplier_id: "sup_gulf_lift_services",
+      public_slug: "gulf-lift-services",
+      public_path: "/suppliers/gulf-lift-services/",
+      branch: "Abu Dhabi yard",
+      response_target: "same day",
+      storefront_status: "public_ready",
+      support_note: "Keep availability fresh before routing serious enquiries."
+    },
+    equipment_listing: {
+      id: "listing_liebherr_130t_mobile_crane",
+      supplier_id: "sup_gulf_lift_services",
+      name: "Liebherr 130T Mobile Crane",
+      category: "Lifting",
+      region: "UAE",
+      city: "Abu Dhabi",
+      availability: "available_soon",
+      rate_note: "Quote direct",
+      listing_status: "buyer_visible",
+      paid_listing: true
+    },
+    proof_document_set: {
+      listing_id: "listing_liebherr_130t_mobile_crane",
+      machine_photo_status: "placeholder_clean",
+      license_status: "received",
+      insurance_status: "received",
+      inspection_status: "received",
+      expiry_review: "review_monthly",
+      proof_status: "placeholder_clean"
+    },
+    listing_subscription: {
+      supplier_id: "sup_gulf_lift_services",
+      plan: "annual",
+      currency: "USD",
+      price_per_active_listing: 99,
+      billable_listing_count: 1,
+      invoice_status: "placeholder_ready",
+      billing_status: "listing_saas_active"
+    },
+    direct_enquiry: {
+      id: "lead_crane_abudhabi_001",
+      listing_id: "listing_liebherr_130t_mobile_crane",
+      buyer_message: "Need equipment for next week. Please confirm rental terms, operator option, delivery, and documents.",
+      supplier_route: "email_whatsapp_phone",
+      response_state: "route_ready",
+      payment_rule: "buyer pays supplier direct"
+    },
+    admin_review: {
+      supplier_status: "approved",
+      listing_status: "approved",
+      proof_status: "approved_for_prototype",
+      visibility: "buyer_visible",
+      admin_status: "approved",
+      next_action: "route buyer enquiry to supplier"
+    },
+    pass_condition: "Create these seven objects, return the combined status object, and expose no rental payment endpoint."
+  }, null, 2);
+}
+
+function buildBackendImplementationContractText() {
+  return JSON.stringify({
+    title: "Heavyster Backend Implementation Contract",
+    version: "v131 Backend Implementation Contract",
+    source_fixture_file: "docs/API_SMOKE_FIXTURES.json",
+    phase_one_guardrail: "Heavyster earns listing SaaS and stores direct enquiry history only. Supplier keeps rental payment direct.",
+    required_tables: [
+      "supplier_accounts",
+      "supplier_profiles",
+      "equipment_listings",
+      "proof_document_sets",
+      "listing_subscriptions",
+      "direct_enquiries",
+      "admin_reviews"
+    ],
+    route_contracts: [
+      {
+        step: 1,
+        method: "POST",
+        route: "/api/supplier-accounts",
+        fixture_key: "supplier_account",
+        expected_status: 201,
+        returns: "account_status=active"
+      },
+      {
+        step: 2,
+        method: "PATCH",
+        route: "/api/supplier-accounts/sup_gulf_lift_services/profile",
+        fixture_key: "supplier_profile",
+        expected_status: 200,
+        returns: "profile_status=public_ready"
+      },
+      {
+        step: 3,
+        method: "POST",
+        route: "/api/equipment-listings",
+        fixture_key: "equipment_listing",
+        expected_status: 201,
+        returns: "listing_status=buyer_visible"
+      },
+      {
+        step: 4,
+        method: "POST",
+        route: "/api/proof-document-sets",
+        fixture_key: "proof_document_set",
+        expected_status: 201,
+        returns: "proof_status=placeholder_clean"
+      },
+      {
+        step: 5,
+        method: "POST",
+        route: "/api/listing-subscriptions",
+        fixture_key: "listing_subscription",
+        expected_status: 201,
+        returns: "billing_status=listing_saas_active"
+      },
+      {
+        step: 6,
+        method: "POST",
+        route: "/api/direct-enquiries",
+        fixture_key: "direct_enquiry",
+        expected_status: 201,
+        returns: "enquiry_status=direct_route_ready"
+      },
+      {
+        step: 7,
+        method: "PATCH",
+        route: "/api/admin-reviews/review_gulf_lift_001",
+        fixture_key: "admin_review",
+        expected_status: 200,
+        returns: "admin_status=approved"
+      }
+    ],
+    combined_status_response: {
+      account_status: "active",
+      profile_status: "public_ready",
+      listing_status: "buyer_visible",
+      proof_status: "placeholder_clean",
+      billing_status: "listing_saas_active",
+      enquiry_status: "direct_route_ready",
+      admin_status: "approved",
+      next_action: "route buyer enquiry to supplier"
+    },
+    blocked_routes: [
+      "/api/rental-payments",
+      "/api/booking-payments",
+      "/api/rental-commission"
+    ],
+    pass_condition: "Seed fixtures, run seven route contracts, return the combined status object, and confirm no rental payment endpoint exists."
+  }, null, 2);
 }
 
 function buildMarketBriefText(opportunity = getActiveMarketOpportunity()) {

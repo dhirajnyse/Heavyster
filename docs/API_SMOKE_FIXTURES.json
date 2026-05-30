@@ -1,0 +1,84 @@
+{
+  "title": "Heavyster Backend Fixture Pack",
+  "version": "v130 Backend Fixture Pack",
+  "phase_one_guardrail": "Heavyster records listing SaaS and direct enquiry history only. Supplier keeps rental payment direct.",
+  "supplier_account": {
+    "id": "sup_gulf_lift_services",
+    "legal_name": "Gulf Lift Services LLC",
+    "display_name": "Gulf Lift Services",
+    "country": "UAE",
+    "city": "Abu Dhabi",
+    "service_regions": ["UAE"],
+    "owner_contact": "Operations Desk",
+    "email": "ops@gulf-lift.example",
+    "phone": "+971 50 000 0000",
+    "whatsapp": "+971 50 000 0000",
+    "account_status": "active"
+  },
+  "supplier_profile": {
+    "supplier_id": "sup_gulf_lift_services",
+    "public_slug": "gulf-lift-services",
+    "public_path": "/suppliers/gulf-lift-services/",
+    "branch": "Abu Dhabi yard",
+    "response_target": "same day",
+    "storefront_status": "public_ready",
+    "support_note": "Keep availability fresh before routing serious enquiries."
+  },
+  "equipment_listing": {
+    "id": "listing_liebherr_130t_mobile_crane",
+    "supplier_id": "sup_gulf_lift_services",
+    "name": "Liebherr 130T Mobile Crane",
+    "category": "Lifting",
+    "region": "UAE",
+    "city": "Abu Dhabi",
+    "availability": "available_soon",
+    "rate_note": "Quote direct",
+    "listing_status": "buyer_visible",
+    "paid_listing": true
+  },
+  "proof_document_set": {
+    "listing_id": "listing_liebherr_130t_mobile_crane",
+    "machine_photo_status": "placeholder_clean",
+    "license_status": "received",
+    "insurance_status": "received",
+    "inspection_status": "received",
+    "expiry_review": "review_monthly",
+    "proof_status": "placeholder_clean"
+  },
+  "listing_subscription": {
+    "supplier_id": "sup_gulf_lift_services",
+    "plan": "annual",
+    "currency": "USD",
+    "price_per_active_listing": 99,
+    "billable_listing_count": 1,
+    "invoice_status": "placeholder_ready",
+    "billing_status": "listing_saas_active"
+  },
+  "direct_enquiry": {
+    "id": "lead_crane_abudhabi_001",
+    "listing_id": "listing_liebherr_130t_mobile_crane",
+    "buyer_message": "Need equipment for next week. Please confirm rental terms, operator option, delivery, and documents.",
+    "supplier_route": "email_whatsapp_phone",
+    "response_state": "route_ready",
+    "payment_rule": "buyer pays supplier direct"
+  },
+  "admin_review": {
+    "supplier_status": "approved",
+    "listing_status": "approved",
+    "proof_status": "approved_for_prototype",
+    "visibility": "buyer_visible",
+    "admin_status": "approved",
+    "next_action": "route buyer enquiry to supplier"
+  },
+  "combined_status_object": {
+    "account_status": "active",
+    "profile_status": "public_ready",
+    "listing_status": "buyer_visible",
+    "proof_status": "placeholder_clean",
+    "billing_status": "listing_saas_active",
+    "enquiry_status": "direct_route_ready",
+    "admin_status": "approved",
+    "next_action": "route buyer enquiry to supplier"
+  },
+  "pass_condition": "Create these seven objects, return the combined status object, and expose no rental payment endpoint."
+}

@@ -42,7 +42,7 @@ This folder contains a static product prototype with:
 - Supplier Listing Starter that turns one selected machine into a proof, availability, and USD 99/year listing brief before deeper setup
 - Supplier Activation Receipt that confirms billable listings, listing SaaS value, proof score, freshness gaps, and direct rental payment rules inside Supplier Studio
 - Paid Listing Activation that turns supplier count, monthly SaaS, annual SaaS, and 0% rental take into a copy-ready approval note
-- Temporary Build Phase page, header build badge, Build Cockpit, SaaS Foundation Blueprint, and Release Ledger that show the current release version, latest upload focus, test pass, production gaps, and delete-after-launch rule
+- Temporary Build Phase page, header build badge, Build Cockpit, SaaS Foundation Blueprint, Launch Readiness Gate, Backend Sprint Board, Supplier Account MVP Preview, Supplier Onboarding Runway, Backend Data Contract, Schema + API Blueprint, API Smoke Console, Backend Fixture Pack, Backend Implementation Contract, and Release Ledger that show the current release version, latest upload focus, test pass, production gaps, next backend sprint, and delete-after-launch rule
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
 - Compact searchable workflow launcher with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX
@@ -77,6 +77,9 @@ This folder contains a static product prototype with:
 - Demand request capture for unmet searches
 - Founder demand radar for supplier acquisition signals
 - Supplier hunt growth engine with revenue math and copy-ready outreach
+- Supplier Hunt Queue that ranks recruit-first suppliers, shows target-fit logic, and creates a copy-ready call plan for the next demand gap
+- Hunt Call Sheet that converts the selected supplier target into proof asks, paid-listing package math, direct-payment rule, and copy-ready call script
+- Hunt Outcome Gate that records supplier-call outcomes and turns them into activation, proof chase, follow-up, or next-supplier moves
 - Market Maker Mode for region/category expansion scoring and launch briefs
 - Market Page Factory for turning demand gaps into launch-ready SEO pages, proof gates, supplier targets, and copy-ready page packs
 - Market Launch Room for seven-day founder launch sprints, supplier strike lists, proof gaps, and first-week listing ARR targets

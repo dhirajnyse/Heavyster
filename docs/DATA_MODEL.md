@@ -17,6 +17,156 @@
 - created_at
 - updated_at
 
+## SupplierAccountMvp
+
+Use this as the first backend sprint boundary: one rental company can create an account, publish one paid listing, receive one direct enquiry, and stay outside rental payment collection.
+
+- id
+- supplier_id
+- account_owner_name
+- account_owner_email
+- account_owner_phone
+- account_owner_whatsapp
+- company_profile_status
+- public_profile_slug
+- first_listing_id
+- proof_placeholder_count
+- direct_enquiry_count
+- paid_listing_status
+- billing_plan
+- renewal_date
+- admin_review_status
+- support_note
+- acceptance_status
+- created_at
+- updated_at
+
+## SupplierOnboardingRunway
+
+Use this as the day-one account checklist that shows a rental company what is complete, missing, blocked, and ready before the first paid listing goes live.
+
+- id
+- supplier_account_mvp_id
+- current_step
+- next_action
+- account_status
+- profile_status
+- listing_status
+- proof_status
+- billing_status
+- direct_enquiry_status
+- admin_approval_status
+- missing_field_count
+- blocker_count
+- completion_score
+- first_live_listing_id
+- first_enquiry_id
+- copied_brief_at
+- created_at
+- updated_at
+
+## BackendDataContract
+
+Use this as the v127 handoff for the first production backend. Every buyer-visible listing should connect to account, profile, proof, subscription, direct enquiry, and admin review state.
+
+- id
+- version
+- supplier_account_table
+- supplier_profile_table
+- equipment_listing_table
+- proof_document_table
+- listing_subscription_table
+- direct_enquiry_table
+- admin_review_table
+- primary_flow
+- phase_one_payment_rule
+- buyer_visible_listing_requires
+- minimum_supplier_screens
+- minimum_admin_screens
+- acceptance_status
+- copied_at
+- created_at
+- updated_at
+
+## SchemaApiBlueprint
+
+Use this as the v128 backend route map. It converts the v127 data contract into the smallest production API surface for supplier accounts, paid listings, proof, direct enquiries, and admin visibility while rental payment stays outside Heavyster.
+
+- id
+- version
+- supplier_account_endpoint
+- supplier_profile_endpoint
+- equipment_listing_endpoint
+- proof_document_endpoint
+- listing_subscription_endpoint
+- direct_enquiry_endpoint
+- admin_review_endpoint
+- buyer_visible_listing_rule
+- mvp_response_shape
+- phase_one_payment_rule
+- acceptance_status
+- copied_at
+- created_at
+- updated_at
+
+## ApiSmokeConsole
+
+Use this as the v129 backend smoke test console. It proves one supplier account can create one paid listing, attach one proof set, receive one direct enquiry, and pass admin approval while rental payment stays outside Heavyster.
+
+- id
+- version
+- supplier_account_request
+- supplier_profile_request
+- equipment_listing_request
+- proof_document_request
+- listing_subscription_request
+- direct_enquiry_request
+- admin_review_request
+- expected_status_object
+- phase_one_payment_guardrail
+- pass_condition
+- copied_at
+- created_at
+- updated_at
+
+## BackendFixturePack
+
+Use this as the v130 seed record pack for the first backend implementation. It gives engineers one exact supplier, profile, listing, proof, subscription, enquiry, and admin review story to load before testing the API smoke path.
+
+- id
+- version
+- phase_one_guardrail
+- supplier_account_fixture
+- supplier_profile_fixture
+- equipment_listing_fixture
+- proof_document_set_fixture
+- listing_subscription_fixture
+- direct_enquiry_fixture
+- admin_review_fixture
+- combined_status_object
+- pass_condition
+- copied_at
+- created_at
+- updated_at
+
+## BackendImplementationContract
+
+Use this as the v131 backend handoff contract. It maps the v130 fixture pack to tables, route contracts, expected response fields, blocked phase-one payment routes, and acceptance gates.
+
+- id
+- version
+- source_fixture_file
+- phase_one_guardrail
+- required_tables
+- route_contracts
+- combined_status_response
+- blocked_routes
+- acceptance_gates
+- pass_condition
+- copied_at
+- created_at
+- updated_at
+
 ## SupplierProfilePage
 
 Use this to turn a rental company into a public verified fleet storefront.

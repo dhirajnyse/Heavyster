@@ -1,0 +1,96 @@
+{
+  "title": "Heavyster Backend Implementation Contract",
+  "version": "v131 Backend Implementation Contract",
+  "source_fixture_file": "docs/API_SMOKE_FIXTURES.json",
+  "phase_one_guardrail": "Heavyster earns listing SaaS and stores direct enquiry history only. Supplier keeps rental payment direct.",
+  "required_tables": [
+    "supplier_accounts",
+    "supplier_profiles",
+    "equipment_listings",
+    "proof_document_sets",
+    "listing_subscriptions",
+    "direct_enquiries",
+    "admin_reviews"
+  ],
+  "route_contracts": [
+    {
+      "step": 1,
+      "method": "POST",
+      "route": "/api/supplier-accounts",
+      "fixture_key": "supplier_account",
+      "expected_status": 201,
+      "returns": "account_status=active"
+    },
+    {
+      "step": 2,
+      "method": "PATCH",
+      "route": "/api/supplier-accounts/sup_gulf_lift_services/profile",
+      "fixture_key": "supplier_profile",
+      "expected_status": 200,
+      "returns": "profile_status=public_ready"
+    },
+    {
+      "step": 3,
+      "method": "POST",
+      "route": "/api/equipment-listings",
+      "fixture_key": "equipment_listing",
+      "expected_status": 201,
+      "returns": "listing_status=buyer_visible"
+    },
+    {
+      "step": 4,
+      "method": "POST",
+      "route": "/api/proof-document-sets",
+      "fixture_key": "proof_document_set",
+      "expected_status": 201,
+      "returns": "proof_status=placeholder_clean"
+    },
+    {
+      "step": 5,
+      "method": "POST",
+      "route": "/api/listing-subscriptions",
+      "fixture_key": "listing_subscription",
+      "expected_status": 201,
+      "returns": "billing_status=listing_saas_active"
+    },
+    {
+      "step": 6,
+      "method": "POST",
+      "route": "/api/direct-enquiries",
+      "fixture_key": "direct_enquiry",
+      "expected_status": 201,
+      "returns": "enquiry_status=direct_route_ready"
+    },
+    {
+      "step": 7,
+      "method": "PATCH",
+      "route": "/api/admin-reviews/review_gulf_lift_001",
+      "fixture_key": "admin_review",
+      "expected_status": 200,
+      "returns": "admin_status=approved"
+    }
+  ],
+  "combined_status_response": {
+    "account_status": "active",
+    "profile_status": "public_ready",
+    "listing_status": "buyer_visible",
+    "proof_status": "placeholder_clean",
+    "billing_status": "listing_saas_active",
+    "enquiry_status": "direct_route_ready",
+    "admin_status": "approved",
+    "next_action": "route buyer enquiry to supplier"
+  },
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/booking-payments",
+    "/api/rental-commission"
+  ],
+  "acceptance_gates": [
+    "All seven tables can store the v130 fixture pack.",
+    "All seven route contracts return the expected HTTP status and readable status field.",
+    "The combined status response can drive the buyer-visible listing decision.",
+    "The backend exposes no rental payment, booking payment, or rental commission route in phase one.",
+    "The first backend scaffold can be tested without adding any new public UI complexity."
+  ],
+  "pass_condition": "Seed fixtures, run seven route contracts, return the combined status object, and confirm no rental payment endpoint exists."
+}

@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260529-supplier-account-starter-v119" />
+    <link rel="stylesheet" href="styles.css?v=20260530-backend-implementation-contract-v131" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v119</strong>
+            <strong>v131</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -1923,6 +1923,8 @@
             <span class="pill dark">Supplier hunt autopilot</span>
           </div>
 
+          <div class="hunt-command" id="huntCommand" aria-label="Supplier hunt command"></div>
+
           <div class="hunt-grid">
             <article class="hunt-card">
               <div class="section-header compact">
@@ -1944,6 +1946,28 @@
               </div>
               <div class="hunt-metrics" id="huntMetrics"></div>
               <div class="hunt-proof" id="huntProof"></div>
+            </article>
+
+            <article class="hunt-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Call queue</p>
+                  <h3>Who to recruit first</h3>
+                </div>
+              </div>
+              <div class="hunt-target-queue" id="huntTargetQueue"></div>
+            </article>
+
+            <article class="hunt-card hunt-call-card">
+              <div class="section-header compact">
+                <div>
+                  <p class="eyebrow">Hunt call sheet</p>
+                  <h3>Turn the target into paid listings</h3>
+                </div>
+                <button type="button" class="ghost-button" id="copyHuntCallSheetButton">Copy call sheet</button>
+              </div>
+              <div class="hunt-call-sheet" id="huntCallSheet"></div>
+              <div class="hunt-outcome-gate" id="huntOutcomeGate" aria-label="Supplier hunt outcome gate"></div>
             </article>
 
             <article class="hunt-card outreach-card">
@@ -2118,7 +2142,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v119</span>
+            <span class="build-version-pill">Current version: v131</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2129,8 +2153,8 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v119 Supplier Account Starter</strong>
-              <small>One simple setup path from supplier account to proof, first machine, paid listing, and direct lead route.</small>
+              <strong>v131 Backend Implementation Contract</strong>
+              <small>The first backend now has records, routes, smoke calls, fixtures, pass/fail gates, and route-table mapping.</small>
             </article>
             <article>
               <span>Test focus</span>
@@ -2155,8 +2179,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v119</strong>
-              <small>Supplier Account Starter</small>
+              <strong>v131</strong>
+              <small>Backend Implementation Contract</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2170,8 +2194,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>First real backend</strong>
-              <small>Supplier accounts, listing records, uploads, billing, admin review, and lead routing.</small>
+              <strong>Backend scaffold</strong>
+              <small>Implement the seven mapped routes, tables, status response, and no-rental-payment guardrail.</small>
             </article>
           </div>
 
@@ -2222,25 +2246,548 @@
             </article>
           </div>
 
+          <div class="launch-readiness-gate" id="launch-readiness-gate" aria-label="Heavyster launch readiness gate">
+            <article class="launch-readiness-lead">
+              <span>v123 Launch Readiness Gate</span>
+              <strong>Prototype is strong. Production is blocked by six backend gates.</strong>
+              <p>
+                Keep the public experience simple, then build the real SaaS underneath: accounts, listing data,
+                proof storage, billing, admin review, and lead history.
+              </p>
+              <b>42/100 production readiness</b>
+            </article>
+            <article class="launch-readiness-card ready">
+              <span>01</span>
+              <strong>Buyer demo</strong>
+              <p>Marketplace search, proof, direct enquiry, and simple buyer path are strong enough for demos.</p>
+              <b>Ready</b>
+            </article>
+            <article class="launch-readiness-card ready">
+              <span>02</span>
+              <strong>Supplier demo</strong>
+              <p>Listing workspace, proof checklist, paid-listing math, and direct lead story are clear.</p>
+              <b>Ready</b>
+            </article>
+            <article class="launch-readiness-card blocked">
+              <span>03</span>
+              <strong>Accounts</strong>
+              <p>Real supplier signup, login, company profile, team permissions, and account ownership are pending.</p>
+              <b>Blocker</b>
+            </article>
+            <article class="launch-readiness-card blocked">
+              <span>04</span>
+              <strong>Data layer</strong>
+              <p>Listings, photos, documents, availability, enquiries, and billing records need a database.</p>
+              <b>Blocker</b>
+            </article>
+            <article class="launch-readiness-card blocked">
+              <span>05</span>
+              <strong>Billing</strong>
+              <p>USD 9 monthly and USD 99 yearly listing plans need checkout, invoices, renewal, and cancellation.</p>
+              <b>Blocker</b>
+            </article>
+            <article class="launch-readiness-card review">
+              <span>06</span>
+              <strong>Trust ops</strong>
+              <p>Admin approval, document expiry, fraud checks, and support notes need a controlled review queue.</p>
+              <b>Build next</b>
+            </article>
+            <article class="launch-readiness-actions">
+              <span>Next backend sprint</span>
+              <strong>Supplier account MVP</strong>
+              <p>Start with signup, supplier profile, listing CRUD, proof upload placeholders, paid-listing status, and direct enquiry logs.</p>
+              <button type="button" class="solid-button" id="copyLaunchReadinessButton">Copy launch gate</button>
+            </article>
+          </div>
+
+          <div class="backend-sprint-board" id="backend-sprint-board" aria-label="Heavyster backend sprint board">
+            <article class="backend-sprint-lead">
+              <span>v124 Backend Sprint Board</span>
+              <strong>Build the first real SaaS layer without complicating the buyer experience.</strong>
+              <p>
+                The next product move is not more screens. It is the minimum backend that lets a rental company
+                sign in, publish paid listings, attach proof placeholders, receive direct enquiries, and stay off rental payments.
+              </p>
+              <b>Next sprint: Supplier account MVP</b>
+            </article>
+            <article>
+              <span>01</span>
+              <strong>Accounts</strong>
+              <p>Signup, login, company profile, account owner, team contact, service regions, and supplier status.</p>
+              <b>Must build</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Listing CRUD</strong>
+              <p>Create, edit, pause, publish, category, region, make, model, availability, and paid-listing status.</p>
+              <b>Must build</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Proof store</strong>
+              <p>Photo and document placeholders with license, insurance, inspection, expiry, and review state.</p>
+              <b>Must build</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Lead log</strong>
+              <p>Buyer message, supplier route, response state, copied enquiry packet, and direct-payment reminder.</p>
+              <b>Must build</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Billing status</strong>
+              <p>Monthly/yearly plan flag, billable listing count, renewal date, invoice placeholder, and cancellation state.</p>
+              <b>Must build</b>
+            </article>
+            <article>
+              <span>06</span>
+              <strong>Admin review</strong>
+              <p>Approve suppliers, approve listings, flag proof gaps, hide risky inventory, and add support notes.</p>
+              <b>Must build</b>
+            </article>
+            <article class="backend-sprint-acceptance">
+              <span>Acceptance gates</span>
+              <strong>One supplier can go live with one paid listing and one direct enquiry.</strong>
+              <p>Pass when account, profile, listing, proof placeholders, paid-listing status, enquiry log, and admin approval are all visible.</p>
+              <button type="button" class="solid-button" id="copyBackendSprintButton">Copy sprint board</button>
+            </article>
+          </div>
+
+          <div class="supplier-account-mvp" id="supplier-account-mvp" aria-label="Heavyster supplier account MVP preview">
+            <article class="supplier-account-mvp-lead">
+              <span>v125 Supplier Account MVP Preview</span>
+              <strong>One rental company can self-serve from account to paid listing.</strong>
+              <p>
+                This preview keeps the first backend release small: create the supplier account, save the profile,
+                publish one paid listing, attach proof placeholders, capture a direct enquiry, and let admin approve it.
+              </p>
+              <b>Acceptance: 1 supplier, 1 listing, 1 enquiry</b>
+            </article>
+            <article>
+              <span>01</span>
+              <strong>Account</strong>
+              <p>Legal name, display name, region, owner contact, phone, email, WhatsApp, and verification status.</p>
+              <b>Required</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Profile</strong>
+              <p>Public slug, branch, service area, response target, fleet categories, storefront status, and support note.</p>
+              <b>Required</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Listing</strong>
+              <p>Category, make, model, region, availability, rate note, publish state, and paid-listing flag.</p>
+              <b>Required</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Proof</strong>
+              <p>Machine photo, license, insurance, inspection, expiry date, document status, and reviewer note.</p>
+              <b>Required</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Lead log</strong>
+              <p>Buyer message, source listing, supplier route, copied packet, response state, and direct-payment rule.</p>
+              <b>Required</b>
+            </article>
+            <article>
+              <span>06</span>
+              <strong>Billing</strong>
+              <p>USD 9 monthly or USD 99 yearly plan, billable listing count, renewal date, and invoice placeholder.</p>
+              <b>Required</b>
+            </article>
+            <article class="supplier-account-mvp-acceptance">
+              <span>MVP gate</span>
+              <strong>Gulf Lift Services can publish Liebherr 130T Mobile Crane.</strong>
+              <p>The first backend sprint passes when the supplier can save profile, publish the listing, receive a direct enquiry, and stay outside rental payment collection.</p>
+              <button type="button" class="solid-button" id="copySupplierAccountMvpButton">Copy MVP brief</button>
+            </article>
+          </div>
+
+          <div class="supplier-onboarding-runway" id="supplier-onboarding-runway" aria-label="Heavyster supplier onboarding runway">
+            <article class="supplier-onboarding-lead">
+              <span>v126 Supplier Onboarding Runway</span>
+              <strong>Make the first supplier account feel like a short checklist, not software training.</strong>
+              <p>
+                This is the first production-shaped path: a rental company completes only the fields needed to publish
+                one paid listing, prove it, receive one direct enquiry, and keep rental payment outside Heavyster.
+              </p>
+              <b>One page, one next action</b>
+            </article>
+            <article>
+              <span>01</span>
+              <strong>Create account</strong>
+              <p>Legal name, owner contact, email, phone, WhatsApp, country, city, and service regions.</p>
+              <b>Start</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Complete profile</strong>
+              <p>Public slug, branch, service area, response target, fleet categories, and storefront status.</p>
+              <b>Profile</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Add first machine</strong>
+              <p>Category, make, model, region, availability, rate note, publish state, and paid-listing flag.</p>
+              <b>Listing</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Attach proof</strong>
+              <p>Machine photo, license, insurance, inspection, expiry date, review state, and support note.</p>
+              <b>Trust</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Activate plan</strong>
+              <p>USD 9 monthly or USD 99 yearly, billable listing count, renewal date, and invoice placeholder.</p>
+              <b>Billing</b>
+            </article>
+            <article>
+              <span>06</span>
+              <strong>Receive enquiry</strong>
+              <p>Buyer message, source listing, supplier route, copied packet, response state, and direct-payment rule.</p>
+              <b>Lead</b>
+            </article>
+            <article class="supplier-onboarding-acceptance">
+              <span>Day-one acceptance</span>
+              <strong>Gulf Lift Services can see what is done, what is missing, and what unlocks the first buyer enquiry.</strong>
+              <p>Admin can approve supplier, listing, proof, visibility, and support note before the listing becomes buyer-visible.</p>
+              <button type="button" class="solid-button" id="copySupplierOnboardingButton">Copy onboarding runway</button>
+            </article>
+          </div>
+
+          <div class="backend-data-contract" id="backend-data-contract" aria-label="Heavyster backend data contract">
+            <article class="backend-data-contract-lead">
+              <span>v127 Backend Data Contract</span>
+              <strong>Seven records turn the prototype into the first real paid-listing SaaS.</strong>
+              <p>
+                This keeps the backend sprint small and honest: supplier account, profile, listing, proof,
+                subscription, direct enquiry, and admin review. Nothing here collects rental payment.
+              </p>
+              <b>Phase one: listing SaaS only</b>
+            </article>
+            <article>
+              <span>01</span>
+              <strong>SupplierAccount</strong>
+              <p>Owner, legal name, display name, contact routes, service regions, and account status.</p>
+              <b>Auth + profile</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>SupplierProfile</strong>
+              <p>Public slug, branch, service area, response target, storefront status, and support note.</p>
+              <b>Storefront</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>EquipmentListing</strong>
+              <p>Supplier, category, make, model, region, availability, rate note, and publish status.</p>
+              <b>Inventory</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>ProofDocument</strong>
+              <p>Listing, proof type, file placeholder, expiry date, review status, and reviewer note.</p>
+              <b>Trust</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>ListingSubscription</strong>
+              <p>Plan, billable count, renewal date, invoice status, cancellation state, and billing note.</p>
+              <b>Revenue</b>
+            </article>
+            <article>
+              <span>06</span>
+              <strong>DirectEnquiry</strong>
+              <p>Buyer message, source listing, supplier route, copied packet, response state, and payment rule.</p>
+              <b>Lead log</b>
+            </article>
+            <article>
+              <span>07</span>
+              <strong>AdminReview</strong>
+              <p>Supplier approval, listing approval, proof gap, visibility state, support action, and reviewer.</p>
+              <b>Control</b>
+            </article>
+            <article class="backend-data-contract-acceptance">
+              <span>Build acceptance</span>
+              <strong>One supplier can be approved, billed for one listing, and receive one direct enquiry.</strong>
+              <p>The data contract passes when every buyer-visible listing has account, proof, subscription, lead, and admin state.</p>
+              <button type="button" class="solid-button" id="copyBackendDataContractButton">Copy data contract</button>
+            </article>
+          </div>
+
+          <div class="schema-api-blueprint" id="schema-api-blueprint" aria-label="Heavyster schema and API blueprint">
+            <article class="schema-api-blueprint-lead">
+              <span>v128 Schema + API Blueprint</span>
+              <strong>Turn the data contract into seven tiny backend routes.</strong>
+              <p>
+                The first backend should feel boring in the best way: create account, update profile, add listing,
+                attach proof, activate listing SaaS, capture enquiry, and approve visibility.
+              </p>
+              <b>No rental payment route</b>
+            </article>
+            <article>
+              <span>POST</span>
+              <strong>/api/supplier-accounts</strong>
+              <p>Create owner contact, legal name, service regions, account status, and first account shell.</p>
+              <b>Account</b>
+            </article>
+            <article>
+              <span>PATCH</span>
+              <strong>/api/supplier-accounts/:id/profile</strong>
+              <p>Save public slug, branch, service area, response target, storefront state, and support note.</p>
+              <b>Profile</b>
+            </article>
+            <article>
+              <span>POST</span>
+              <strong>/api/equipment-listings</strong>
+              <p>Create category, make, model, region, availability, rate note, paid flag, and publish state.</p>
+              <b>Listing</b>
+            </article>
+            <article>
+              <span>POST</span>
+              <strong>/api/proof-documents</strong>
+              <p>Attach photo, license, insurance, inspection, expiry date, review state, and reviewer note.</p>
+              <b>Proof</b>
+            </article>
+            <article>
+              <span>POST</span>
+              <strong>/api/listing-subscriptions</strong>
+              <p>Create USD 9 monthly or USD 99 yearly plan, billable count, renewal, and invoice status.</p>
+              <b>Billing</b>
+            </article>
+            <article>
+              <span>POST</span>
+              <strong>/api/direct-enquiries</strong>
+              <p>Store buyer message, source listing, supplier route, copied packet, response state, and payment reminder.</p>
+              <b>Lead</b>
+            </article>
+            <article>
+              <span>PATCH</span>
+              <strong>/api/admin-reviews/:id</strong>
+              <p>Approve supplier, listing, proof, visibility, support action, and next admin note.</p>
+              <b>Review</b>
+            </article>
+            <article class="schema-api-blueprint-acceptance">
+              <span>MVP route test</span>
+              <strong>Every buyer-visible listing returns one status object and one next action.</strong>
+              <p>Response shape: account, profile, listing, proof, billing, enquiry, admin, and next_action.</p>
+              <button type="button" class="solid-button" id="copySchemaApiBlueprintButton">Copy API blueprint</button>
+            </article>
+          </div>
+
+          <div class="api-smoke-console" id="api-smoke-console" aria-label="Heavyster API smoke console">
+            <article class="api-smoke-console-lead">
+              <span>v129 API Smoke Console</span>
+              <strong>Prove one supplier, one paid listing, one direct enquiry.</strong>
+              <p>
+                Before a real backend grows, this keeps the first test tiny: create Gulf Lift Services,
+                publish Liebherr 130T Mobile Crane, activate listing SaaS, route one enquiry, and approve visibility.
+              </p>
+              <b>Zero rental payment calls</b>
+            </article>
+            <article>
+              <span>01</span>
+              <strong>Create supplier</strong>
+              <p>POST account with Gulf Lift Services, owner contact, Abu Dhabi, UAE, WhatsApp, and service regions.</p>
+              <b>201 account</b>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Save profile</strong>
+              <p>PATCH profile with public slug, branch, response target, storefront state, and support note.</p>
+              <b>200 profile</b>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Add machine</strong>
+              <p>POST Liebherr 130T Mobile Crane with lifting category, UAE region, availability, and rate note.</p>
+              <b>201 listing</b>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Attach proof</strong>
+              <p>POST machine photo placeholder, license, insurance, inspection, expiry date, and review state.</p>
+              <b>201 proof</b>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Activate SaaS</strong>
+              <p>POST annual listing subscription at USD 99 with billable count one and invoice placeholder.</p>
+              <b>201 plan</b>
+            </article>
+            <article>
+              <span>06</span>
+              <strong>Capture enquiry</strong>
+              <p>POST buyer message, source listing, copied packet, supplier route, and direct-payment reminder.</p>
+              <b>201 lead</b>
+            </article>
+            <article>
+              <span>07</span>
+              <strong>Approve visibility</strong>
+              <p>PATCH admin review with supplier approval, listing approval, proof status, and next support note.</p>
+              <b>200 live</b>
+            </article>
+            <article class="api-smoke-console-acceptance">
+              <span>Pass condition</span>
+              <strong>Return one buyer-visible listing status object with one next action.</strong>
+              <p>account active, profile ready, listing visible, proof clean, billing active, enquiry ready, admin approved.</p>
+              <button type="button" class="solid-button" id="copyApiSmokeConsoleButton">Copy smoke console</button>
+            </article>
+          </div>
+
+          <div class="backend-fixture-pack" id="backend-fixture-pack" aria-label="Heavyster backend fixture pack">
+            <article class="backend-fixture-pack-lead">
+              <span>v130 Backend Fixture Pack</span>
+              <strong>Give the first backend one exact seed story to pass.</strong>
+              <p>
+                This converts the smoke test into copy-ready fixture records: Gulf Lift Services, one crane listing,
+                one proof set, one annual listing plan, one buyer enquiry, and one admin approval.
+              </p>
+              <b>Seven objects, no rental payment endpoint</b>
+            </article>
+            <article>
+              <span>SupplierAccount</span>
+              <strong>sup_gulf_lift_services</strong>
+              <p>Legal name, display name, Abu Dhabi, UAE, owner desk, email, phone, WhatsApp, and active status.</p>
+              <b>Account seed</b>
+            </article>
+            <article>
+              <span>SupplierProfile</span>
+              <strong>/suppliers/gulf-lift-services/</strong>
+              <p>Public slug, branch, response target, storefront status, and freshness support note.</p>
+              <b>Profile seed</b>
+            </article>
+            <article>
+              <span>EquipmentListing</span>
+              <strong>Liebherr 130T Mobile Crane</strong>
+              <p>Lifting category, Abu Dhabi, availability soon, quote direct, buyer-visible, paid listing.</p>
+              <b>Listing seed</b>
+            </article>
+            <article>
+              <span>ProofDocumentSet</span>
+              <strong>Photo, license, insurance, inspection</strong>
+              <p>Placeholder-clean machine photo, received documents, monthly expiry review, and prototype approval.</p>
+              <b>Proof seed</b>
+            </article>
+            <article>
+              <span>ListingSubscription</span>
+              <strong>USD 99 annual listing SaaS</strong>
+              <p>One billable listing, invoice placeholder, active listing SaaS, and supplier keeps rental payment direct.</p>
+              <b>Billing seed</b>
+            </article>
+            <article>
+              <span>DirectEnquiry</span>
+              <strong>lead_crane_abudhabi_001</strong>
+              <p>Buyer message, source listing, email/WhatsApp/phone route, response ready, direct-payment rule.</p>
+              <b>Lead seed</b>
+            </article>
+            <article>
+              <span>AdminReview</span>
+              <strong>approved and buyer-visible</strong>
+              <p>Supplier approved, listing approved, proof approved for prototype, visibility on, next action set.</p>
+              <b>Review seed</b>
+            </article>
+            <article class="backend-fixture-pack-acceptance">
+              <span>Acceptance</span>
+              <strong>Backend passes when the seven fixtures return one combined status object.</strong>
+              <p>Docs include the same JSON fixture pack in `docs/API_SMOKE_FIXTURES.json` for the first implementation sprint.</p>
+              <button type="button" class="solid-button" id="copyBackendFixturePackButton">Copy fixture pack</button>
+            </article>
+          </div>
+
+          <div class="backend-implementation-contract" id="backend-implementation-contract" aria-label="Heavyster backend implementation contract">
+            <article class="backend-implementation-contract-lead">
+              <span>v131 Backend Implementation Contract</span>
+              <strong>Map the seed story to routes, tables, status, and blocked payment paths.</strong>
+              <p>
+                This is the smallest backend handoff: seven tables, seven route contracts, one combined status object,
+                and a hard rule that phase one never exposes rental payment collection.
+              </p>
+              <b>Build this before adding more product surface</b>
+            </article>
+            <article>
+              <span>Tables</span>
+              <strong>7 records become 7 tables</strong>
+              <p>supplier_accounts, supplier_profiles, equipment_listings, proof_document_sets, listing_subscriptions, direct_enquiries, and admin_reviews.</p>
+              <b>Data layer</b>
+            </article>
+            <article>
+              <span>Routes</span>
+              <strong>POST, PATCH, POST, POST, POST, POST, PATCH</strong>
+              <p>Create supplier, save profile, add listing, attach proof, activate listing SaaS, capture enquiry, approve review.</p>
+              <b>API order</b>
+            </article>
+            <article>
+              <span>Status</span>
+              <strong>One combined response</strong>
+              <p>Return account, profile, listing, proof, billing, enquiry, admin, and next_action in one readable object.</p>
+              <b>Smoke result</b>
+            </article>
+            <article>
+              <span>Blocked</span>
+              <strong>No rental payment endpoints</strong>
+              <p>Do not ship rental payments, booking payments, rental commission, escrow, or deposit collection in phase one.</p>
+              <b>Guardrail</b>
+            </article>
+            <article>
+              <span>Scope</span>
+              <strong>Supplier account MVP only</strong>
+              <p>Auth can stay simple at first: one supplier owner, one admin reviewer, and one buyer enquiry path.</p>
+              <b>MVP</b>
+            </article>
+            <article class="backend-implementation-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Seed the fixtures, run seven route contracts, and return buyer-visible status.</strong>
+              <p>Docs include the structured contract in `docs/API_IMPLEMENTATION_CONTRACT.json` for the first backend scaffold.</p>
+              <button type="button" class="solid-button" id="copyBackendImplementationContractButton">Copy implementation contract</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v119 Supplier Account Starter</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, and supplier setup tracker.</p>
+              <strong>v131 Backend Implementation Contract</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Supplier setup path</strong>
-              <p>Added a compact supplier account starter for account, proof, first machine, paid listing, and direct lead routing.</p>
+              <strong>Backend implementation contract</strong>
+              <p>Mapped the fixture pack to the first seven database tables, seven route contracts, one combined status response, and blocked rental-payment endpoints.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v119.</li>
-                <li>Build Phase shows Current version: v119.</li>
+                <li>Header shows Build v131.</li>
+                <li>Build Phase shows Current version: v131.</li>
                 <li>SaaS Foundation Blueprint appears before the Release Ledger.</li>
+                <li>Launch Readiness Gate appears between the blueprint and release ledger.</li>
+                <li>Backend Sprint Board appears before the Release Ledger.</li>
+                <li>Copy sprint board produces the supplier account MVP scope.</li>
+                <li>Supplier Account MVP Preview appears before the Release Ledger.</li>
+                <li>Copy MVP brief produces the first supplier account acceptance test.</li>
+                <li>Supplier Onboarding Runway appears before the Release Ledger.</li>
+                <li>Copy onboarding runway produces the one-page supplier launch brief.</li>
+                <li>Backend Data Contract appears before the Release Ledger.</li>
+                <li>Copy data contract produces the first SaaS backend record map.</li>
+                <li>Schema + API Blueprint appears before the Release Ledger.</li>
+                <li>Copy API blueprint produces the first backend route map.</li>
+                <li>API Smoke Console appears before the Release Ledger.</li>
+                <li>Copy smoke console produces the first supplier account API test sequence.</li>
+                <li>Backend Fixture Pack appears before the Release Ledger.</li>
+                <li>Copy fixture pack produces the first JSON seed record set.</li>
+                <li>Backend Implementation Contract appears before the Release Ledger.</li>
+                <li>Copy implementation contract produces the first route-table handoff.</li>
                 <li>Supplier Studio shows the Supplier Account Starter above the listing starter.</li>
+                <li>Growth shows the Supplier Hunt Queue with ranked supplier targets.</li>
+                <li>Growth shows the Hunt Call Sheet and Outcome Gate for the selected supplier target.</li>
                 <li>Marketplace search still opens cleanly.</li>
                 <li>Supplier Studio, Pricing, and Roadmap remain simple.</li>
               </ul>
@@ -2264,12 +2811,12 @@
                 This page stays visible while we are building Heavyster. It records the current version, what is ready,
                 what is still prototype, and what must be finished before launch.
               </p>
-              <b>Updated May 29, 2026</b>
+              <b>Updated May 30, 2026</b>
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v119 Supplier Account Starter</strong>
-              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, and this supplier setup path.</p>
+              <strong>v131 Backend Implementation Contract</strong>
+              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, and this implementation contract.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -2378,6 +2925,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260529-supplier-account-starter-v119" defer></script>
+    <script src="app.js?v=20260530-backend-implementation-contract-v131" defer></script>
   </body>
 </html>
