@@ -16736,7 +16736,8 @@ button.admin-row {
   margin-top: auto;
 }
 
-.calm-backend-scaffold {
+.calm-backend-scaffold,
+.supplier-account-shell {
   display: grid;
   grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
   gap: 10px;
@@ -16748,7 +16749,15 @@ button.admin-row {
     linear-gradient(135deg, rgba(239, 249, 247, 0.96), rgba(255, 255, 255, 0.94) 48%, rgba(238, 246, 252, 0.86));
 }
 
-.calm-backend-scaffold article {
+.supplier-account-shell {
+  grid-template-columns: minmax(330px, 1.1fr) repeat(6, minmax(122px, 0.66fr));
+  border-color: rgba(25, 113, 109, 0.32);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 252, 246, 0.94) 48%, rgba(238, 246, 252, 0.9));
+}
+
+.calm-backend-scaffold article,
+.supplier-account-shell article {
   display: grid;
   align-content: start;
   gap: 8px;
@@ -16759,43 +16768,55 @@ button.admin-row {
   background: rgba(255, 255, 255, 0.95);
 }
 
-.calm-backend-scaffold-lead {
+.calm-backend-scaffold-lead,
+.supplier-account-shell-lead {
   grid-row: span 2;
   border-color: rgba(25, 113, 109, 0.42) !important;
   background: var(--teal-soft) !important;
 }
 
-.calm-backend-scaffold-acceptance {
+.calm-backend-scaffold-acceptance,
+.supplier-account-shell-acceptance {
   grid-column: span 2;
   border-color: rgba(40, 93, 134, 0.42) !important;
   background: var(--blue-soft) !important;
 }
 
-.calm-backend-scaffold span {
+.supplier-account-shell-acceptance {
+  border-color: rgba(181, 109, 22, 0.38) !important;
+  background: var(--amber-soft) !important;
+}
+
+.calm-backend-scaffold span,
+.supplier-account-shell span {
   color: var(--teal);
   font-size: 0.72rem;
   font-weight: 950;
   text-transform: uppercase;
 }
 
-.calm-backend-scaffold strong {
+.calm-backend-scaffold strong,
+.supplier-account-shell strong {
   color: var(--ink);
   font-size: 1.02rem;
   line-height: 1.18;
   overflow-wrap: anywhere;
 }
 
-.calm-backend-scaffold-lead strong {
+.calm-backend-scaffold-lead strong,
+.supplier-account-shell-lead strong {
   font-size: 1.22rem;
 }
 
-.calm-backend-scaffold p {
+.calm-backend-scaffold p,
+.supplier-account-shell p {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.42;
 }
 
-.calm-backend-scaffold b {
+.calm-backend-scaffold b,
+.supplier-account-shell b {
   width: fit-content;
   margin-top: auto;
   padding: 6px 10px;
@@ -16806,12 +16827,15 @@ button.admin-row {
 }
 
 .calm-backend-scaffold-lead b,
-.calm-backend-scaffold-acceptance b {
+.calm-backend-scaffold-acceptance b,
+.supplier-account-shell-lead b,
+.supplier-account-shell-acceptance b {
   background: var(--coal);
   color: #ffffff;
 }
 
-.calm-backend-scaffold-acceptance button {
+.calm-backend-scaffold-acceptance button,
+.supplier-account-shell-acceptance button {
   min-height: 42px;
   margin-top: auto;
 }
@@ -17689,6 +17713,7 @@ button.admin-row {
   .serenity-mode-contract,
   .heavenly-focus-contract,
   .calm-backend-scaffold,
+  .supplier-account-shell,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -18206,6 +18231,7 @@ button.admin-row {
   .serenity-mode-contract,
   .heavenly-focus-contract,
   .calm-backend-scaffold,
+  .supplier-account-shell,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -18374,7 +18400,9 @@ button.admin-row {
   .heavenly-focus-contract-lead,
   .heavenly-focus-contract-acceptance,
   .calm-backend-scaffold-lead,
-  .calm-backend-scaffold-acceptance {
+  .calm-backend-scaffold-acceptance,
+  .supplier-account-shell-lead,
+  .supplier-account-shell-acceptance {
     grid-row: auto;
     grid-column: auto;
   }

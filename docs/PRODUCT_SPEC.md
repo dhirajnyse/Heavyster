@@ -255,3 +255,17 @@ Founder Admin:
 - Active navigation state changes
 - Listing renewal rate
 - Enquiries per active listing
+
+## v140 Supplier Account Shell
+
+The first production supplier flow should stay intentionally small:
+
+- One supplier account shell with owner contact, legal name, country, and account status
+- One supplier profile with public name, slug, branch, regions, response target, and storefront visibility
+- One first listing with category, make, model, region, availability, paid status, and public state
+- One proof checklist for photo, license, insurance, inspection, operator certificate, and expiry date
+- One listing plan that keeps the phase-one rule: USD 9/month or USD 99/year per active listing, 0% rental take
+- One direct route by phone, email, WhatsApp, and copied enquiry packet
+- One admin review state for approve, hold, proof request, or risky inventory pause
+
+The user-facing rule is still calm: show one next supplier action at a time.

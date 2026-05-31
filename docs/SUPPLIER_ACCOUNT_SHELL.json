@@ -1,0 +1,69 @@
+{
+  "version": "v140 Supplier Account Shell",
+  "date": "2026-05-31",
+  "rule": "One supplier, one listing, one direct route.",
+  "purpose": "Define the first real supplier SaaS account path before backend auth, storage, billing, and admin queues are connected.",
+  "phase_one_guardrail": "No rental payment collection, no rental commission, supplier keeps rental payment direct, and Heavyster earns listing SaaS revenue only.",
+  "shell_records": [
+    {
+      "name": "SupplierAccount",
+      "fields": ["owner_email", "phone", "whatsapp", "legal_name", "country", "account_status"],
+      "status": "auth shell"
+    },
+    {
+      "name": "SupplierProfile",
+      "fields": ["public_name", "slug", "branch", "service_regions", "response_target", "storefront_visibility"],
+      "status": "profile shell"
+    },
+    {
+      "name": "FirstListing",
+      "fields": ["category", "make", "model", "region", "availability", "paid_status", "public_listing_state"],
+      "status": "listing shell"
+    },
+    {
+      "name": "ProofChecklist",
+      "fields": ["photo", "license", "insurance", "inspection", "operator_certificate", "expiry_date"],
+      "status": "trust shell"
+    },
+    {
+      "name": "ListingPlan",
+      "fields": ["free_profile", "monthly_active_listing_usd", "annual_active_listing_usd", "rental_take_percent"],
+      "status": "billing status shell"
+    },
+    {
+      "name": "DirectRoute",
+      "fields": ["phone", "email", "whatsapp", "enquiry_packet", "response_note", "direct_payment_reminder"],
+      "status": "lead route shell"
+    },
+    {
+      "name": "AdminReview",
+      "fields": ["supplier_approval", "listing_approval", "proof_request", "risk_hold", "support_note"],
+      "status": "control shell"
+    }
+  ],
+  "account_fields": ["owner_email", "phone", "whatsapp", "legal_name", "country", "account_status"],
+  "listing_fields": ["category", "make", "model", "region", "availability", "paid_status", "public_listing_state"],
+  "proof_fields": ["photo", "license", "insurance", "inspection", "operator_certificate", "expiry_date"],
+  "monetization": {
+    "free_profile": true,
+    "active_listing_monthly_usd": 9,
+    "active_listing_annual_usd": 99,
+    "rental_take_percent_phase_one": 0,
+    "phase_two_option": "1% confirmed-booking success fee only after Heavyster owns a proven booking workflow."
+  },
+  "acceptance": [
+    "A rental company can create a supplier account shell.",
+    "The supplier can add one company profile.",
+    "The supplier can create one paid-ready machine listing.",
+    "The supplier can attach one proof checklist.",
+    "The buyer can send one direct enquiry route.",
+    "The admin can approve or hold the supplier without rental payment records."
+  ],
+  "simplicity_rules": [
+    "Show one calm next action at a time.",
+    "Do not expose backend complexity to buyers.",
+    "Keep supplier setup inside listing, proof, revenue, and lead steps.",
+    "Keep USD listing SaaS as the phase-one money rule.",
+    "Keep rental payments outside Heavyster until a real booking workflow is proven."
+  ]
+}

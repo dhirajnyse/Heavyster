@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260531-calm-backend-scaffold-v139" />
+    <link rel="stylesheet" href="styles.css?v=20260531-supplier-account-shell-v140" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v139</strong>
+            <strong>v140</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -2156,7 +2156,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v139</span>
+            <span class="build-version-pill">Current version: v140</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2167,8 +2167,8 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v139 Calm Backend Scaffold</strong>
-              <small>Build Phase now makes the future SaaS backend visible without making the product feel technical.</small>
+              <strong>v140 Supplier Account Shell</strong>
+              <small>Build Phase now turns the calm backend scaffold into the first supplier account path.</small>
             </article>
             <article>
               <span>Test focus</span>
@@ -2193,8 +2193,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v139</strong>
-              <small>Calm Backend Scaffold</small>
+              <strong>v140</strong>
+              <small>Supplier Account Shell</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2208,8 +2208,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Supplier account shell</strong>
-              <small>Turn the calm backend scaffold into the first real auth, listing, proof, lead, billing-status, and admin review shell.</small>
+              <strong>Listing workflow shell</strong>
+              <small>Connect the supplier account shell to one publishable listing, proof review, direct lead, and paid status path.</small>
             </article>
           </div>
 
@@ -3142,26 +3142,81 @@
             </article>
           </div>
 
+          <div class="supplier-account-shell" id="supplier-account-shell" aria-label="Heavyster supplier account shell">
+            <article class="supplier-account-shell-lead">
+              <span>v140 Supplier Account Shell</span>
+              <strong>One supplier can move from signup to a calm paid listing workspace.</strong>
+              <p>
+                Heavyster now defines the first real SaaS account path: supplier account, company profile,
+                first machine, proof checklist, listing plan, direct enquiry route, and admin review.
+              </p>
+              <b>Rule: one supplier, one listing</b>
+            </article>
+            <article>
+              <span>Signup</span>
+              <strong>SupplierAccount</strong>
+              <p>Owner email, phone, WhatsApp, legal name, country, and account status.</p>
+              <b>Auth shell</b>
+            </article>
+            <article>
+              <span>Company</span>
+              <strong>SupplierProfile</strong>
+              <p>Public name, slug, branch, service regions, response target, and storefront visibility.</p>
+              <b>Profile</b>
+            </article>
+            <article>
+              <span>Machine</span>
+              <strong>FirstListing</strong>
+              <p>Category, make, model, region, availability, paid status, and public listing state.</p>
+              <b>Listing</b>
+            </article>
+            <article>
+              <span>Proof</span>
+              <strong>ProofChecklist</strong>
+              <p>Photos, license, insurance, inspection, operator certificate, and expiry date.</p>
+              <b>Trust</b>
+            </article>
+            <article>
+              <span>Revenue</span>
+              <strong>ListingPlan</strong>
+              <p>Free profile, USD 9/month or USD 99/year active listing, and 0% rental take.</p>
+              <b>SaaS</b>
+            </article>
+            <article>
+              <span>Lead</span>
+              <strong>DirectRoute</strong>
+              <p>Phone, email, WhatsApp, direct enquiry packet, and supplier keeps rental payment direct.</p>
+              <b>No custody</b>
+            </article>
+            <article class="supplier-account-shell-acceptance">
+              <span>Acceptance</span>
+              <strong>Gulf Lift Services can create the account shell before backend auth exists.</strong>
+              <p>Docs include the account shell in `docs/SUPPLIER_ACCOUNT_SHELL.json` so the backend build starts from a calm, testable supplier path.</p>
+              <button type="button" class="solid-button" id="copySupplierAccountShellButton">Copy account shell</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v139 Calm Backend Scaffold</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v140 Supplier Account Shell</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Calm Backend Scaffold</strong>
-              <p>Added the production SaaS spine: account, listing, proof, subscription, enquiry, and admin records, while keeping the visible product calm.</p>
+              <strong>Supplier Account Shell</strong>
+              <p>Added the first production account path: signup shell, company profile, first listing, proof checklist, listing plan, direct route, and admin review.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v139.</li>
-                <li>Build Phase shows Current version: v139.</li>
+                <li>Header shows Build v140.</li>
+                <li>Build Phase shows Current version: v140.</li>
                 <li>Pricing shows Serenity Mode and Heavenly Focus below the Calm Command Center.</li>
-                <li>Build Phase shows Serenity Mode, Heavenly Focus, and Calm Backend Scaffold before the Release Ledger.</li>
+                <li>Build Phase shows Serenity Mode, Heavenly Focus, Calm Backend Scaffold, and Supplier Account Shell before the Release Ledger.</li>
                 <li>Copy scaffold brief explains SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, DirectEnquiry, AdminReview, and the no-rental-payment guardrail.</li>
+                <li>Copy account shell explains SupplierAccount, SupplierProfile, FirstListing, ProofChecklist, ListingPlan, DirectRoute, AdminReview, and the no-rental-payment guardrail.</li>
                 <li>Copy focus brief explains buyer, supplier, founder, money, AI, and phase-one monetization rules.</li>
                 <li>Copy serenity brief explains buyer, supplier, founder, design, AI, and phase-one monetization rules.</li>
                 <li>SaaS Foundation Blueprint appears before the Release Ledger.</li>
@@ -3226,8 +3281,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v139 Calm Backend Scaffold</strong>
-              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, v138 heavenly focus, and this calm backend scaffold release.</p>
+              <strong>v140 Supplier Account Shell</strong>
+              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, v138 heavenly focus, v139 calm backend scaffold, and this supplier account shell release.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -3336,6 +3391,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260531-calm-backend-scaffold-v139" defer></script>
+    <script src="app.js?v=20260531-supplier-account-shell-v140" defer></script>
   </body>
 </html>

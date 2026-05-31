@@ -153,6 +153,7 @@
 - Direct enquiry form
 - Enquiry confirmation screen
 - Basic admin review queue
+- Supplier Account Shell: one supplier signup shell, one public profile, one first listing, one proof checklist, one listing plan, one direct route, and one admin review state
 
 ## Sprint 5: Billing MVP
 

@@ -1979,3 +1979,17 @@ The first production backend should expose only the records required for phase-o
 - AdminReview: review type, review status, risk flag, support note, and approval timestamp
 
 No rental payment, escrow, or commission collection table should exist in phase one.
+
+## v140 Supplier Account Shell
+
+Before full authentication and storage are connected, the first supplier account should be modeled as one calm shell:
+
+- SupplierAccount: owner email, phone, WhatsApp, legal name, country, and account status
+- SupplierProfile: public name, slug, branch, service regions, response target, and storefront visibility
+- FirstListing: category, make, model, region, availability, paid status, and public listing state
+- ProofChecklist: photo, license, insurance, inspection, operator certificate, and expiry date
+- ListingPlan: free profile, USD 9/month active listing, USD 99/year active listing, and 0% rental take
+- DirectRoute: phone, email, WhatsApp, enquiry packet, response note, and direct-payment reminder
+- AdminReview: supplier approval, listing approval, proof request, risk hold, and support note
+
+This shell keeps production work focused on account ownership and paid-listing activation while rental payments stay outside Heavyster.

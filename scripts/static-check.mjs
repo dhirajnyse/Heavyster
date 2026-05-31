@@ -33,6 +33,7 @@ function assert(condition, message) {
   "docs/SERENITY_MODE.json",
   "docs/HEAVENLY_FOCUS.json",
   "docs/CALM_BACKEND_SCAFFOLD.json",
+  "docs/SUPPLIER_ACCOUNT_SHELL.json",
   "docs/PRODUCT_SPEC.md",
   "docs/DATA_MODEL.md",
   "docs/API_SMOKE_FIXTURES.json",
@@ -57,6 +58,7 @@ const calmCommandCenter = JSON.parse(read("docs/CALM_COMMAND_CENTER.json"));
 const serenityMode = JSON.parse(read("docs/SERENITY_MODE.json"));
 const heavenlyFocus = JSON.parse(read("docs/HEAVENLY_FOCUS.json"));
 const calmBackendScaffold = JSON.parse(read("docs/CALM_BACKEND_SCAFFOLD.json"));
+const supplierAccountShell = JSON.parse(read("docs/SUPPLIER_ACCOUNT_SHELL.json"));
 
 assert(index.includes("Content-Security-Policy"), "index.html is missing the CSP meta tag.");
 assert(index.includes("Heavyster | Heavy Equipment Rental Listings"), "index.html has the wrong title.");
@@ -140,8 +142,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260531-calm-backend-scaffold-v139"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260531-calm-backend-scaffold-v139"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260531-supplier-account-shell-v140"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260531-supplier-account-shell-v140"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -155,14 +157,14 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260531-heavyster-calm-backend-scaffold-v139";'), "app.js DATA_VERSION is missing or changed.");
-assert(index.includes('id="build-phase"') && index.includes("Current version: v139") && index.includes("Temporary build page"), "index.html is missing the temporary Build Phase version page.");
-assert(index.includes('class="build-badge"') && index.includes("v139") && css.includes(".build-badge"), "Project is missing the visible Build v139 header badge.");
-assert(index.includes('class="build-cockpit-board"') && index.includes("v139 Calm Backend Scaffold") && css.includes(".build-cockpit-board"), "Project is missing the v139 Build Cockpit.");
+assert(app.includes('const DATA_VERSION = "20260531-heavyster-supplier-account-shell-v140";'), "app.js DATA_VERSION is missing or changed.");
+assert(index.includes('id="build-phase"') && index.includes("Current version: v140") && index.includes("Temporary build page"), "index.html is missing the temporary Build Phase version page.");
+assert(index.includes('class="build-badge"') && index.includes("v140") && css.includes(".build-badge"), "Project is missing the visible Build v140 header badge.");
+assert(index.includes('class="build-cockpit-board"') && index.includes("v140 Supplier Account Shell") && css.includes(".build-cockpit-board"), "Project is missing the v140 Build Cockpit.");
 assert(index.includes('class="saas-blueprint"') && index.includes("v118 SaaS Foundation Blueprint") && css.includes(".saas-blueprint"), "Project is missing the v118 SaaS Foundation Blueprint.");
-assert(index.includes('class="release-ledger"') && index.includes("v139 Calm Backend Scaffold") && css.includes(".release-ledger-card"), "Project is missing the v139 Release Ledger.");
+assert(index.includes('class="release-ledger"') && index.includes("v140 Supplier Account Shell") && css.includes(".release-ledger-card"), "Project is missing the v140 Release Ledger.");
 assert(app.includes('label: "Build Phase"') && app.includes('"#build-phase"'), "app.js is missing Build Phase navigation metadata.");
-assert(css.includes(".build-phase-section") && css.includes(".build-version-pill") && css.includes(".build-status-grid") && css.includes(".build-control-strip") && css.includes(".build-cockpit-board") && css.includes(".saas-blueprint") && css.includes(".launch-readiness-gate") && css.includes(".backend-sprint-board") && css.includes(".supplier-account-mvp") && css.includes(".supplier-onboarding-runway") && css.includes(".backend-data-contract") && css.includes(".schema-api-blueprint") && css.includes(".api-smoke-console") && css.includes(".backend-fixture-pack") && css.includes(".backend-implementation-contract") && css.includes(".monetization-command-contract") && css.includes(".pilot-launch-command-contract") && css.includes(".global-launch-passport-contract") && css.includes(".simple-global-ux-contract") && css.includes(".calm-command-contract") && css.includes(".serenity-mode-contract") && css.includes(".heavenly-focus-contract") && css.includes(".calm-backend-scaffold") && css.includes(".release-ledger"), "styles.css is missing Build Phase styling.");
+assert(css.includes(".build-phase-section") && css.includes(".build-version-pill") && css.includes(".build-status-grid") && css.includes(".build-control-strip") && css.includes(".build-cockpit-board") && css.includes(".saas-blueprint") && css.includes(".launch-readiness-gate") && css.includes(".backend-sprint-board") && css.includes(".supplier-account-mvp") && css.includes(".supplier-onboarding-runway") && css.includes(".backend-data-contract") && css.includes(".schema-api-blueprint") && css.includes(".api-smoke-console") && css.includes(".backend-fixture-pack") && css.includes(".backend-implementation-contract") && css.includes(".monetization-command-contract") && css.includes(".pilot-launch-command-contract") && css.includes(".global-launch-passport-contract") && css.includes(".simple-global-ux-contract") && css.includes(".calm-command-contract") && css.includes(".serenity-mode-contract") && css.includes(".heavenly-focus-contract") && css.includes(".calm-backend-scaffold") && css.includes(".supplier-account-shell") && css.includes(".release-ledger"), "styles.css is missing Build Phase styling.");
 assert(workflow.includes("actions/configure-pages@v5") && workflow.includes("actions/upload-pages-artifact@v3") && workflow.includes("actions/deploy-pages@v4"), "Pages workflow is missing the official Pages deploy actions.");
 assert(workflow.includes("npm run check") && workflow.includes('find _site -name "*.zip" -delete') && workflow.includes('find _site -name "*.log" -delete'), "Pages workflow is missing static verification or artifact cleanup.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
@@ -207,6 +209,8 @@ assert(index.includes('id="heavenlyFocusPanel"') && index.includes('id="heavenly
 assert(heavenlyFocus.version === "v138 Heavenly Focus" && heavenlyFocus.rule?.includes("Stillness wins") && heavenlyFocus.focus_steps?.length === 4 && heavenlyFocus.monetization_rule?.includes("0% rental take") && heavenlyFocus.ai_rule?.includes("next action easier"), "docs/HEAVENLY_FOCUS.json is missing the v138 heavenly focus model.");
 assert(index.includes('id="calm-backend-scaffold"') && index.includes('id="copyCalmBackendScaffoldButton"') && app.includes("buildCalmBackendScaffoldText") && css.includes(".calm-backend-scaffold"), "Project is missing the v139 Calm Backend Scaffold.");
 assert(calmBackendScaffold.version === "v139 Calm Backend Scaffold" && calmBackendScaffold.rule?.includes("Quiet backend") && calmBackendScaffold.records?.length === 6 && calmBackendScaffold.phase_one_guardrail?.includes("No rental payment") && calmBackendScaffold.acceptance?.length >= 5, "docs/CALM_BACKEND_SCAFFOLD.json is missing the v139 scaffold model.");
+assert(index.includes('id="supplier-account-shell"') && index.includes('id="copySupplierAccountShellButton"') && app.includes("buildSupplierAccountShellText") && css.includes(".supplier-account-shell"), "Project is missing the v140 Supplier Account Shell.");
+assert(supplierAccountShell.version === "v140 Supplier Account Shell" && supplierAccountShell.rule?.includes("One supplier") && supplierAccountShell.shell_records?.length === 7 && supplierAccountShell.phase_one_guardrail?.includes("No rental payment") && supplierAccountShell.acceptance?.length >= 5, "docs/SUPPLIER_ACCOUNT_SHELL.json is missing the v140 account shell model.");
 assert(app.includes("renderSupplierListingStarter") && app.includes("getSupplierListingStarterModel") && app.includes("handleSupplierListingStarterAction") && app.includes("buildSupplierListingStarterText") && css.includes(".supplier-listing-starter"), "app.js is missing simple Supplier Listing Starter logic or styling.");
 assert(app.includes("renderPaidListingActivation") && app.includes("getPaidListingActivationModel") && app.includes("handlePaidListingActivationAction") && app.includes("buildPaidListingActivationText") && css.includes(".paid-listing-activation"), "app.js is missing Paid Listing Activation logic or styling.");
 assert(app.includes("renderSupplierActivationReceipt") && app.includes("getSupplierActivationReceiptModel") && app.includes("handleSupplierActivationReceiptAction") && app.includes("buildSupplierActivationReceiptText") && css.includes(".supplier-activation-receipt"), "app.js is missing Supplier Activation Receipt logic or styling.");

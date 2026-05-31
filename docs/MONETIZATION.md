@@ -248,3 +248,15 @@ High-take marketplace fees can work in consumer marketplaces, but heavy equipmen
 6. Optional 1% confirmed booking success fee
 7. Optional payment/deposit rails
 8. Insurance, logistics, operator scheduling, and financing partnerships
+
+## v140 Supplier Account Shell
+
+The next monetization step is not a new fee. It is making the first paid-listing account path obvious:
+
+- Free supplier profile
+- First active listing at USD 9/month or USD 99/year
+- Proof checklist before stronger marketplace visibility
+- Direct enquiry route with the supplier keeping rental payment direct
+- Admin review before scaling traffic
+
+Do not add rental payment custody, escrow, or commission until the booking workflow is proven.

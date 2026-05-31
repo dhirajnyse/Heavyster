@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260531-heavyster-calm-backend-scaffold-v139";
+const DATA_VERSION = "20260531-heavyster-supplier-account-shell-v140";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260531-calm-backend-scaffold-v139";
+const SIMPLE_UX_RELEASE = "20260531-supplier-account-shell-v140";
 
 const listings = [
   {
@@ -1798,6 +1798,15 @@ function bindControls() {
       showToast("Calm backend scaffold copied.");
     } catch {
       showToast("Copy is blocked here, but the backend scaffold is visible.");
+    }
+  });
+
+  document.querySelector("#copySupplierAccountShellButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSupplierAccountShellText());
+      showToast("Supplier account shell copied.");
+    } catch {
+      showToast("Copy is blocked here, but the supplier account shell is visible.");
     }
   });
 
@@ -17501,6 +17510,40 @@ function buildCalmBackendScaffoldText() {
     "- Zero rental payment records exist in phase one.",
     "",
     "UI promise: users see calm decisions; the backend keeps the complexity behind the glass."
+  ].join("\n");
+}
+
+function buildSupplierAccountShellText() {
+  return [
+    "Heavyster Supplier Account Shell",
+    "Version: v140 Supplier Account Shell",
+    "Rule: One supplier, one listing, one direct route.",
+    "Purpose: make the first real supplier SaaS account understandable before backend auth is connected.",
+    "",
+    "Phase-one guardrail:",
+    "- No rental payment collection.",
+    "- No rental commission.",
+    "- Supplier keeps rental payment direct.",
+    "- Heavyster earns listing SaaS revenue only.",
+    "",
+    "First production records:",
+    "- SupplierAccount: owner email, phone, WhatsApp, legal name, country, account status.",
+    "- SupplierProfile: public name, slug, branch, service regions, response target, storefront visibility.",
+    "- FirstListing: category, make, model, region, availability, paid status, public listing state.",
+    "- ProofChecklist: photo, license, insurance, inspection, operator certificate, expiry date.",
+    "- ListingPlan: free profile, USD 9/month active listing, USD 99/year active listing.",
+    "- DirectRoute: phone, email, WhatsApp, enquiry packet, response note, direct-payment reminder.",
+    "- AdminReview: approve supplier, approve listing, request proof, pause risky inventory.",
+    "",
+    "Acceptance test:",
+    "- A rental company can create a supplier account shell.",
+    "- The supplier can add one company profile.",
+    "- The supplier can create one paid-ready machine listing.",
+    "- The supplier can attach one proof checklist.",
+    "- The buyer can send one direct enquiry route.",
+    "- The admin can approve or hold the supplier without rental payment records.",
+    "",
+    "UI promise: the supplier sees one calm next action at a time, even when the SaaS backend grows."
   ].join("\n");
 }
 
