@@ -34,6 +34,7 @@
 - Calm Command Center for making buyer, supplier, founder, AI, global launch, and monetization work feel like one peaceful next move instead of a crowded product
 - Serenity Mode for making every screen feel calmer than the last release: role first, next move second, proof third, secondary features last
 - Heavenly Focus for making every release protect one calm path, one proof reason, one money rule, and one next action before adding more product power
+- Calm Backend Scaffold for making the production SaaS spine visible: supplier accounts, equipment listings, proof documents, listing subscriptions, direct enquiries, and admin review
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages

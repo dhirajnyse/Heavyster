@@ -1966,3 +1966,16 @@ This belongs to phase two or later.
 - supplier_keep_amount
 - booking_status
 - created_at
+
+## v139 Calm Backend Scaffold
+
+The first production backend should expose only the records required for phase-one listing SaaS. Keep these objects simple and map every UI state back to one of them:
+
+- SupplierAccount: company identity, owner contact, regions, plan, and supplier status
+- EquipmentListing: category, make, model, region, availability, proof state, paid status, and visibility
+- ProofDocument: photo or document type, file status, expiry, review state, and admin note
+- ListingSubscription: billable listing count, billing cycle, renewal date, invoice status, and cancellation state
+- DirectEnquiry: buyer message, supplier route, response state, copied packet, and direct-payment note
+- AdminReview: review type, review status, risk flag, support note, and approval timestamp
+
+No rental payment, escrow, or commission collection table should exist in phase one.

@@ -1,0 +1,82 @@
+{
+  "version": "v139 Calm Backend Scaffold",
+  "date": "2026-05-31",
+  "rule": "Quiet backend, calm product.",
+  "purpose": "Make the production SaaS spine visible without turning Heavyster into a technical dashboard.",
+  "phase": "Active prototype moving toward production SaaS",
+  "phase_one_guardrail": "No rental payment collection, no rental commission, and supplier keeps rental payment direct while Heavyster earns listing SaaS revenue.",
+  "pricing": {
+    "free_profile": true,
+    "monthly_active_listing_usd": 9,
+    "annual_active_listing_usd": 99,
+    "phase_one_rental_take": "0%",
+    "phase_two_optional_success_fee": "1% only after confirmed quote, award, enquiry, or booking workflow proof"
+  },
+  "records": [
+    {
+      "name": "SupplierAccount",
+      "job": "Own the rental company profile, contacts, service regions, plan, and account status.",
+      "fields": ["legal_name", "owner_contact", "service_regions", "plan", "supplier_status", "team_route"],
+      "ui_rule": "Show company readiness, not database structure."
+    },
+    {
+      "name": "EquipmentListing",
+      "job": "Publish each machine with category, make, model, region, availability, proof, paid status, and visibility.",
+      "fields": ["category", "make", "model", "region", "availability", "paid_status", "visibility"],
+      "ui_rule": "A supplier should be able to list one machine without learning the whole product."
+    },
+    {
+      "name": "ProofDocument",
+      "job": "Track photos, licenses, insurance, inspections, operator certificates, expiry, and review state.",
+      "fields": ["proof_type", "file_status", "expiry_date", "review_state", "admin_note"],
+      "ui_rule": "Proof appears as confidence, not paperwork."
+    },
+    {
+      "name": "ListingSubscription",
+      "job": "Track billable listing count, monthly or annual plan, renewal state, invoice status, and cancellation.",
+      "fields": ["active_listing_count", "billing_cycle", "renewal_date", "invoice_status", "cancel_state"],
+      "ui_rule": "Pricing stays one clean rule: paid active listings."
+    },
+    {
+      "name": "DirectEnquiry",
+      "job": "Log buyer message, supplier route, response state, copied packet, and direct-payment reminder.",
+      "fields": ["buyer_message", "supplier_route", "response_state", "copied_packet", "direct_payment_note"],
+      "ui_rule": "Lead value is visible while rental payment stays outside Heavyster."
+    },
+    {
+      "name": "AdminReview",
+      "job": "Approve suppliers, approve listings, flag proof gaps, hide risky inventory, and add support notes.",
+      "fields": ["review_type", "review_status", "risk_flag", "support_note", "approved_at"],
+      "ui_rule": "Founder control stays simple: approve, fix, hide, or follow up."
+    }
+  ],
+  "routes": [
+    "POST /api/supplier-accounts",
+    "POST /api/equipment-listings",
+    "POST /api/proof-documents",
+    "POST /api/listing-subscriptions",
+    "POST /api/direct-enquiries",
+    "POST /api/admin-reviews",
+    "GET /api/public-marketplace"
+  ],
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/rental-escrow",
+    "/api/commission-collection"
+  ],
+  "acceptance": [
+    "One supplier account can be created.",
+    "One equipment listing can be created and marked paid or draft.",
+    "One proof document can be attached to a listing.",
+    "One direct enquiry can be logged and routed to the supplier.",
+    "One admin review can approve or hide a supplier/listing.",
+    "No rental payment record exists in phase one."
+  ],
+  "simplicity_rules": [
+    "Expose readiness, not schema.",
+    "Show one next action per role.",
+    "Keep backend states inside calm cards.",
+    "Protect USD listing SaaS before adding commission rails.",
+    "Do not add AI unless it shortens the next action."
+  ]
+}

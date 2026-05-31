@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260531-heavenly-focus-v138" />
+    <link rel="stylesheet" href="styles.css?v=20260531-calm-backend-scaffold-v139" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v138</strong>
+            <strong>v139</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -2156,7 +2156,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v138</span>
+            <span class="build-version-pill">Current version: v139</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2167,8 +2167,8 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v138 Heavenly Focus</strong>
-              <small>Build Phase now protects the focus rule: one calm path, one proof reason, one money rule, and one next action.</small>
+              <strong>v139 Calm Backend Scaffold</strong>
+              <small>Build Phase now makes the future SaaS backend visible without making the product feel technical.</small>
             </article>
             <article>
               <span>Test focus</span>
@@ -2193,8 +2193,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v138</strong>
-              <small>Heavenly Focus</small>
+              <strong>v139</strong>
+              <small>Calm Backend Scaffold</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2208,8 +2208,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Calm backend scaffold</strong>
-              <small>Implement supplier accounts, listing status, proof upload placeholders, direct enquiry logs, and the no-rental-payment guardrail without adding UI weight.</small>
+              <strong>Supplier account shell</strong>
+              <small>Turn the calm backend scaffold into the first real auth, listing, proof, lead, billing-status, and admin review shell.</small>
             </article>
           </div>
 
@@ -3094,25 +3094,74 @@
             </article>
           </div>
 
+          <div class="calm-backend-scaffold" id="calm-backend-scaffold" aria-label="Heavyster calm backend scaffold">
+            <article class="calm-backend-scaffold-lead">
+              <span>v139 Calm Backend Scaffold</span>
+              <strong>Make the real SaaS spine visible without making the product feel technical.</strong>
+              <p>
+                Heavyster should feel peaceful on the surface while the backend quietly tracks suppliers, machines,
+                proof, subscriptions, direct enquiries, and admin decisions.
+              </p>
+              <b>Rule: quiet backend</b>
+            </article>
+            <article>
+              <span>Account</span>
+              <strong>SupplierAccount</strong>
+              <p>Legal company, owner contact, service regions, plan, status, and team route.</p>
+              <b>Auth</b>
+            </article>
+            <article>
+              <span>Listing</span>
+              <strong>EquipmentListing</strong>
+              <p>Category, make, model, region, availability, paid status, and public visibility.</p>
+              <b>Database</b>
+            </article>
+            <article>
+              <span>Proof</span>
+              <strong>ProofDocument</strong>
+              <p>Photos, licenses, insurance, inspections, operator certificates, expiry, and review state.</p>
+              <b>Storage</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>ListingSubscription</strong>
+              <p>USD 9/month or USD 99/year per active listing with 0% rental take in phase one.</p>
+              <b>Billing status</b>
+            </article>
+            <article>
+              <span>Lead</span>
+              <strong>DirectEnquiry</strong>
+              <p>Buyer message, supplier route, response state, copied packet, and direct-payment note.</p>
+              <b>No rental custody</b>
+            </article>
+            <article class="calm-backend-scaffold-acceptance">
+              <span>Acceptance</span>
+              <strong>One supplier, one listing, one proof, one lead, one admin approval.</strong>
+              <p>Docs include the scaffold model in `docs/CALM_BACKEND_SCAFFOLD.json` so the backend build stays calm, testable, and phase-one clean.</p>
+              <button type="button" class="solid-button" id="copyCalmBackendScaffoldButton">Copy scaffold brief</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v138 Heavenly Focus</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v139 Calm Backend Scaffold</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Heavenly Focus</strong>
-              <p>Added a stricter simplification rule: one calm path, one proof reason, one money rule, and one next action before any secondary feature.</p>
+              <strong>Calm Backend Scaffold</strong>
+              <p>Added the production SaaS spine: account, listing, proof, subscription, enquiry, and admin records, while keeping the visible product calm.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v138.</li>
-                <li>Build Phase shows Current version: v138.</li>
+                <li>Header shows Build v139.</li>
+                <li>Build Phase shows Current version: v139.</li>
                 <li>Pricing shows Serenity Mode and Heavenly Focus below the Calm Command Center.</li>
-                <li>Build Phase shows Serenity Mode and Heavenly Focus before the Release Ledger.</li>
+                <li>Build Phase shows Serenity Mode, Heavenly Focus, and Calm Backend Scaffold before the Release Ledger.</li>
+                <li>Copy scaffold brief explains SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, DirectEnquiry, AdminReview, and the no-rental-payment guardrail.</li>
                 <li>Copy focus brief explains buyer, supplier, founder, money, AI, and phase-one monetization rules.</li>
                 <li>Copy serenity brief explains buyer, supplier, founder, design, AI, and phase-one monetization rules.</li>
                 <li>SaaS Foundation Blueprint appears before the Release Ledger.</li>
@@ -3177,8 +3226,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v138 Heavenly Focus</strong>
-              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, and this heavenly focus release.</p>
+              <strong>v139 Calm Backend Scaffold</strong>
+              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, v138 heavenly focus, and this calm backend scaffold release.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -3287,6 +3336,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260531-heavenly-focus-v138" defer></script>
+    <script src="app.js?v=20260531-calm-backend-scaffold-v139" defer></script>
   </body>
 </html>

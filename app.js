@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260531-heavyster-heavenly-focus-v138";
+const DATA_VERSION = "20260531-heavyster-calm-backend-scaffold-v139";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260531-heavenly-focus-v138";
+const SIMPLE_UX_RELEASE = "20260531-calm-backend-scaffold-v139";
 
 const listings = [
   {
@@ -1789,6 +1789,15 @@ function bindControls() {
       showToast("Heavenly focus brief copied.");
     } catch {
       showToast("Copy is blocked here, but the heavenly focus brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmBackendScaffoldButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmBackendScaffoldText());
+      showToast("Calm backend scaffold copied.");
+    } catch {
+      showToast("Copy is blocked here, but the backend scaffold is visible.");
     }
   });
 
@@ -17459,6 +17468,39 @@ function buildHeavenlyFocusText(model = getHeavenlyFocusModel()) {
     "Global promise: use the same calm buyer, supplier, and founder paths before adding country-specific complexity.",
     "AI promise: AI appears only when it makes the next action easier, not louder.",
     "Monetization rule: free profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% only after confirmed workflow proof."
+  ].join("\n");
+}
+
+function buildCalmBackendScaffoldText() {
+  return [
+    "Heavyster Calm Backend Scaffold",
+    "Version: v139 Calm Backend Scaffold",
+    "Rule: Quiet backend, calm product.",
+    "Purpose: make the production SaaS spine visible without making the interface feel technical.",
+    "",
+    "Phase-one guardrail:",
+    "- No rental payment collection.",
+    "- No rental commission.",
+    "- Supplier keeps rental payment direct.",
+    "- Heavyster earns listing SaaS revenue only.",
+    "",
+    "Core records:",
+    "- SupplierAccount: legal company, owner contact, regions, status, plan.",
+    "- EquipmentListing: category, make, model, region, availability, paid status.",
+    "- ProofDocument: photos, license, insurance, inspection, expiry, review state.",
+    "- ListingSubscription: USD 9/month or USD 99/year per active listing.",
+    "- DirectEnquiry: buyer message, supplier route, response state, copied packet.",
+    "- AdminReview: approve supplier, approve listing, flag proof, hide risky inventory.",
+    "",
+    "Acceptance test:",
+    "- One supplier can exist.",
+    "- One listing can be created.",
+    "- One proof record can be attached.",
+    "- One enquiry can be logged.",
+    "- One paid-listing status can be shown.",
+    "- Zero rental payment records exist in phase one.",
+    "",
+    "UI promise: users see calm decisions; the backend keeps the complexity behind the glass."
   ].join("\n");
 }
 

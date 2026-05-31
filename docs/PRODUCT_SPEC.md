@@ -56,6 +56,7 @@ Marketplace:
 - Compact searchable workflow launcher with role filters that keeps buyer, supplier, and founder modules organized without turning the header into a wall of links
 - Serenity Mode that keeps each screen calm by showing role, next move, proof, and one action before secondary features or AI assistance
 - Heavenly Focus that protects one calm path, one proof reason, one money rule, and one next action before any extra feature appears
+- Calm Backend Scaffold that names the real SaaS records behind the calm UI without exposing technical complexity to buyers or suppliers
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Buyer Fit Score that ranks each listing against current search, region, category, availability, verification, and proof

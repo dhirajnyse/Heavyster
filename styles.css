@@ -16736,6 +16736,86 @@ button.admin-row {
   margin-top: auto;
 }
 
+.calm-backend-scaffold {
+  display: grid;
+  grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(40, 93, 134, 0.3);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(239, 249, 247, 0.96), rgba(255, 255, 255, 0.94) 48%, rgba(238, 246, 252, 0.86));
+}
+
+.calm-backend-scaffold article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 146px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.calm-backend-scaffold-lead {
+  grid-row: span 2;
+  border-color: rgba(25, 113, 109, 0.42) !important;
+  background: var(--teal-soft) !important;
+}
+
+.calm-backend-scaffold-acceptance {
+  grid-column: span 2;
+  border-color: rgba(40, 93, 134, 0.42) !important;
+  background: var(--blue-soft) !important;
+}
+
+.calm-backend-scaffold span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-backend-scaffold strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.calm-backend-scaffold-lead strong {
+  font-size: 1.22rem;
+}
+
+.calm-backend-scaffold p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.calm-backend-scaffold b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.74rem;
+}
+
+.calm-backend-scaffold-lead b,
+.calm-backend-scaffold-acceptance b {
+  background: var(--coal);
+  color: #ffffff;
+}
+
+.calm-backend-scaffold-acceptance button {
+  min-height: 42px;
+  margin-top: auto;
+}
+
 .release-ledger {
   display: grid;
   grid-template-columns: minmax(270px, 1.1fr) repeat(3, minmax(190px, 0.9fr));
@@ -17608,6 +17688,7 @@ button.admin-row {
   .calm-command-contract,
   .serenity-mode-contract,
   .heavenly-focus-contract,
+  .calm-backend-scaffold,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -18124,6 +18205,7 @@ button.admin-row {
   .calm-command-contract,
   .serenity-mode-contract,
   .heavenly-focus-contract,
+  .calm-backend-scaffold,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -18290,7 +18372,9 @@ button.admin-row {
   .serenity-mode-contract-lead,
   .serenity-mode-contract-acceptance,
   .heavenly-focus-contract-lead,
-  .heavenly-focus-contract-acceptance {
+  .heavenly-focus-contract-acceptance,
+  .calm-backend-scaffold-lead,
+  .calm-backend-scaffold-acceptance {
     grid-row: auto;
     grid-column: auto;
   }

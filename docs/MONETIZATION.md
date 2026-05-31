@@ -96,6 +96,19 @@ Monetization should feel heavenly simple: a supplier lists equipment, keeps the 
 
 This keeps Heavyster premium without pressure: listing SaaS first, direct supplier payment always, and success fees only after the platform earns the workflow.
 
+## v139 Calm Backend Scaffold
+
+The commercial model stays simple while the production backend becomes real. The user should see calm decisions; the system should quietly track the records needed for paid listing SaaS.
+
+- SupplierAccount owns the rental company, service regions, contacts, plan, and status.
+- EquipmentListing owns the machine page, availability, category, proof, visibility, and paid-listing status.
+- ProofDocument owns photos, licenses, insurance, inspections, expiry, and review state.
+- ListingSubscription owns active listing count, monthly or annual billing status, renewal, invoice, and cancellation state.
+- DirectEnquiry owns buyer message, supplier route, response state, copied packet, and direct-payment note.
+- AdminReview owns approval, proof gaps, risk flags, hidden inventory, and support notes.
+
+The phase-one money rule remains unchanged: free profile, USD 9/month or USD 99/year per active listing, 0% rental take, supplier keeps rental payment direct. The future 1% success fee still waits for confirmed workflow proof.
+
 ## Phase 1: Listing SaaS
 
 Recommended launch pricing:
@@ -108,6 +121,7 @@ Recommended launch pricing:
 - Simple Global UX Guard keeps future countries, AI, and workflow expansion inside one clear next action so paid listing conversion does not get buried under product complexity
 - Calm Command Center keeps every pricing, supplier, buyer, founder, and AI release tied to one peaceful next action before adding more power
 - Heavenly Focus keeps every commercial page tied to one calm path, one proof reason, one money rule, and one next action before adding more product power
+- Calm Backend Scaffold keeps the future SaaS backend tied to supplier accounts, listings, proof, subscriptions, direct enquiries, admin review, and the no-rental-payment guardrail
 - Global Launch Passport keeps country expansion tied to the same listing SaaS model before local currency display, proof labels, or market pages add complexity
 - Founder Workbench protects monetization discipline by showing when a market is ready to scale paid listings and when trust, response, or activation must be repaired first
 - Founder Morning Brief makes phase-one discipline part of the founder's first daily read: protect paid listings, supplier saves, trust, and activation before opening new traffic
