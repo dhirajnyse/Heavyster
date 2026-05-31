@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260531-heavyster-calm-launch-room-v141";
+const DATA_VERSION = "20260531-heavyster-serene-route-planner-v144";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260531-calm-launch-room-v141";
+const SIMPLE_UX_RELEASE = "20260531-serene-route-planner-v144";
 
 const listings = [
   {
@@ -993,6 +993,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderWorkflowDock();
     renderWorkflowGuide();
     renderSimplicityBar();
+    renderCalmActionBar();
+    renderSereneRoutePlanner();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -1181,6 +1183,7 @@ function bindControls() {
     renderDirectEnquiryComposer();
     renderSupplierResponseRoute();
     renderMarketplaceDecisionCard();
+    renderCalmProofCard();
     renderBuyerEnquiryReceipt();
     renderMarketplaceEnquiryStarter();
     renderMarketplaceConfidenceStrip();
@@ -1192,6 +1195,7 @@ function bindControls() {
     renderDirectEnquiryComposer();
     renderSupplierResponseRoute();
     renderMarketplaceDecisionCard();
+    renderCalmProofCard();
     renderBuyerEnquiryReceipt();
     renderMarketplaceEnquiryStarter();
     renderMarketplaceConfidenceStrip();
@@ -1819,6 +1823,33 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyCalmProofCardButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmProofCardText());
+      showToast("Calm proof card copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm proof card is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmActionBarButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmActionBarText());
+      showToast("Calm action bar rule copied.");
+    } catch {
+      showToast("Copy is blocked here, but the action bar rule is visible.");
+    }
+  });
+
+  document.querySelector("#copySereneRoutePlannerButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSereneRoutePlannerText());
+      showToast("Serene route planner rule copied.");
+    } catch {
+      showToast("Copy is blocked here, but the route planner rule is visible.");
+    }
+  });
+
   document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
     toggleShortlist(getSelectedListing().id);
   });
@@ -1853,11 +1884,19 @@ function bindControls() {
     const button = document.querySelector("#simplicitySecondaryButton");
     openSimplicityTarget(button.dataset.simplicityAnchor, button.textContent.trim());
   });
+  document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
+    handleSereneRoutePlannerAction("primary");
+  });
+  document.querySelector("#copySereneRouteButton").addEventListener("click", () => {
+    handleSereneRoutePlannerAction("copy");
+  });
   document.querySelector("#simplicityModeButton").addEventListener("click", () => {
     state.simpleMode = !state.simpleMode;
     state.simplicityRelease = SIMPLE_UX_RELEASE;
     saveState();
     renderSimplicityBar();
+    renderCalmActionBar();
+    renderSereneRoutePlanner();
     document.body.classList.toggle("simple-mode", state.simpleMode);
     syncNavigationState();
     showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
@@ -2026,6 +2065,8 @@ function render() {
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  renderCalmActionBar();
+  renderSereneRoutePlanner();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -2035,6 +2076,7 @@ function render() {
   renderFounderCallSheet();
   renderCategoryButtons();
   renderMarketplaceDecisionCard();
+  renderCalmProofCard();
   renderBuyerEnquiryReceipt();
   renderMarketplaceScaleGuard();
   renderMarketplaceAnswer();
@@ -2664,6 +2706,8 @@ function handleSimplicityIntent(intentId) {
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  renderCalmActionBar();
+  renderSereneRoutePlanner();
   document.body.classList.add("simple-mode");
   openWorkflowStep(intent.anchor, intent.label, intent.role);
 }
@@ -2672,6 +2716,244 @@ function openSimplicityTarget(anchor, label) {
   if (!anchor) return;
   const route = getWorkflowRouteForHash(anchor);
   openWorkflowStep(anchor, label, route?.role || state.commandRole);
+}
+
+function renderCalmActionBar() {
+  const root = document.querySelector("#calmActionBar");
+  if (!root) return;
+
+  const model = getCalmActionModel();
+  root.dataset.role = model.role.toLowerCase();
+  root.querySelector(".calm-action-copy").innerHTML = `
+    <span>${escapeHtml(model.roleLabel)}</span>
+    <strong>${escapeHtml(model.headline)}</strong>
+    <small>${escapeHtml(model.detail)}</small>
+  `;
+
+  const metricsRoot = document.querySelector("#calmActionMetrics");
+  metricsRoot.innerHTML = model.metrics.map((metric) => `
+    <span class="${escapeHtml(metric.tone)}">
+      <strong>${escapeHtml(metric.value)}</strong>
+      ${escapeHtml(metric.label)}
+      <small>${escapeHtml(metric.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmActionPrimaryButton");
+  const copyButton = document.querySelector("#copyCalmActionButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.dataset.calmAction = "primary";
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+  copyButton.dataset.calmAction = "copy";
+
+  root.querySelectorAll("[data-calm-action]").forEach((button) => {
+    button.onclick = () => handleCalmActionBarAction(button.dataset.calmAction, model);
+  });
+}
+
+function getCalmActionModel() {
+  const simplicity = getSimplicityBarModel();
+  const guide = getWorkflowGuideModel();
+  const role = simplicity.role || state.commandRole || "Buyer";
+  const current = guide.current?.label || simplicity.primary.label;
+  const next = guide.next?.label || simplicity.primary.label;
+  const roleConfig = {
+    Buyer: {
+      headline: "Use the cleanest visible supply path.",
+      detail: "Check proof, then copy one direct enquiry. Rental payment stays with the supplier.",
+      primary: { label: "Copy enquiry", anchor: "#marketplace", action: "copy", aria: "Copy the calm buyer enquiry brief" },
+      metrics: [
+        { label: "Trust", value: "88/100", detail: "visible proof", tone: "ready" },
+        { label: "Supply", value: "1 match", detail: "clean path", tone: "ready" },
+        { label: "Next", value: "Desk", detail: "if needed", tone: "neutral" }
+      ]
+    },
+    Supplier: {
+      headline: "Protect one paid listing action.",
+      detail: "Finish the supplier move that protects proof, freshness, or listing revenue.",
+      primary: { label: "Open supplier desk", anchor: "#supplier-workbench", action: "open", aria: "Open the supplier desk" },
+      metrics: [
+        { label: "Revenue", value: "USD 297", detail: "current ARR", tone: "ready" },
+        { label: "Listing", value: "3 paid", detail: "active now", tone: "ready" },
+        { label: "Proof", value: "88/100", detail: "clean docs", tone: "ready" }
+      ]
+    },
+    Founder: {
+      headline: "Scale only the strongest market command.",
+      detail: "Push one wedge only when demand, supply, trust, and listing ARR are visible.",
+      primary: { label: "Open market command", anchor: "#market-signal-matrix", action: "open", aria: "Open the founder market command" },
+      metrics: [
+        { label: "ARR", value: "USD 6,615", detail: "listing revenue", tone: "ready" },
+        { label: "Demand", value: "9 signals", detail: "current wedge", tone: "ready" },
+        { label: "Supply gap", value: "21", detail: "recruit first", tone: "watch" }
+      ]
+    }
+  };
+  const config = roleConfig[role] || roleConfig.Buyer;
+
+  return {
+    role,
+    roleLabel: `${role} calm action`,
+    headline: config.headline,
+    detail: config.detail,
+    current,
+    next,
+    primary: config.primary,
+    metrics: [
+      { label: "Role", value: role, detail: "active path", tone: "neutral" },
+      { label: "Now", value: current, detail: "current step", tone: "neutral" },
+      { label: "Next", value: next, detail: "one move", tone: "ready" },
+      ...config.metrics,
+      { label: "Money", value: "0%", detail: "rental take", tone: "ready" }
+    ].slice(0, 6)
+  };
+}
+
+async function handleCalmActionBarAction(action, model = getCalmActionModel()) {
+  if (action === "primary" && model.primary.action !== "copy") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmActionBarText(model));
+    showToast(action === "primary" ? "Calm enquiry copied." : "Calm action brief copied.");
+  } catch {
+    showToast("Copy is blocked here, but the calm action brief is visible.");
+  }
+}
+
+function buildCalmActionBarText(model = getCalmActionModel()) {
+  return [
+    "Heavyster Calm Action Bar",
+    "Version: v144 Serene Route Planner / v143 Calm Action Bar",
+    "Rule: one role, one proof reason, one money rule, one next action.",
+    "",
+    `Role: ${model.role}`,
+    `Current step: ${model.current}`,
+    `Next step: ${model.next}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Payment rule: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: the user should see the next safe move before opening a deeper workflow."
+  ].join("\n");
+}
+
+function renderSereneRoutePlanner() {
+  const root = document.querySelector("#sereneRoutePlanner");
+  if (!root) return;
+
+  const model = getSereneRoutePlannerModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#sereneRouteRole").textContent = model.roleLabel;
+  document.querySelector("#sereneRouteHeadline").textContent = model.headline;
+  document.querySelector("#sereneRouteDetail").textContent = model.detail;
+  document.querySelector("#sereneRouteSteps").innerHTML = model.steps.map((step) => `
+    <span class="${escapeHtml(step.tone)}">
+      <em>${escapeHtml(step.label)}</em>
+      <strong>${escapeHtml(step.value)}</strong>
+      <small>${escapeHtml(step.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#sereneRoutePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getSereneRoutePlannerModel() {
+  const simplicity = getSimplicityBarModel();
+  const guide = getWorkflowGuideModel();
+  const role = simplicity.role || state.commandRole || "Buyer";
+  const current = guide.current?.label || simplicity.primary.label;
+  const next = guide.next?.label || simplicity.primary.label;
+  const configs = {
+    Buyer: {
+      headline: "Search, trust, direct enquiry.",
+      detail: "A buyer sees the cleanest equipment route before any deeper workflow.",
+      start: "Search",
+      startDetail: "crane, UAE, availability",
+      proof: "Trust 88/100",
+      proofDetail: "visible supplier proof",
+      money: "0% rental take",
+      moneyDetail: "pay supplier direct",
+      nextDetail: "copy enquiry or desk",
+      primary: { label: "Open buyer route", anchor: "#buyer-workbench", aria: "Open the buyer route planner target" }
+    },
+    Supplier: {
+      headline: "Listing, proof, freshness, paid SaaS.",
+      detail: "A supplier sees the simplest path from one machine to billable listing.",
+      start: "Listing",
+      startDetail: "one ready machine",
+      proof: "Proof 88/100",
+      proofDetail: "docs clean",
+      money: "USD 99/yr",
+      moneyDetail: "paid listing SaaS",
+      nextDetail: "freshness or lead desk",
+      primary: { label: "Open supplier route", anchor: "#supplier-workbench", aria: "Open the supplier route planner target" }
+    },
+    Founder: {
+      headline: "Demand, supply gap, trust, ARR.",
+      detail: "A founder sees where to grow without making the product feel heavy.",
+      start: "Demand",
+      startDetail: "UAE Lifting wedge",
+      proof: "Supply gap 21",
+      proofDetail: "recruit before traffic",
+      money: "USD 6,615 ARR",
+      moneyDetail: "listing revenue first",
+      nextDetail: "market command",
+      primary: { label: "Open founder route", anchor: "#market-signal-matrix", aria: "Open the founder route planner target" }
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: `${role} serene route`,
+    headline: config.headline,
+    detail: config.detail,
+    current,
+    next,
+    primary: config.primary,
+    steps: [
+      { label: "Start", value: config.start, detail: config.startDetail, tone: "neutral" },
+      { label: "Proof", value: config.proof, detail: config.proofDetail, tone: "ready" },
+      { label: "Money", value: config.money, detail: config.moneyDetail, tone: "ready" },
+      { label: "Next", value: next, detail: config.nextDetail, tone: "watch" }
+    ]
+  };
+}
+
+async function handleSereneRoutePlannerAction(action, model = getSereneRoutePlannerModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildSereneRoutePlannerText(model));
+    showToast("Serene route copied.");
+  } catch {
+    showToast("Copy is blocked here, but the serene route is visible.");
+  }
+}
+
+function buildSereneRoutePlannerText(model = getSereneRoutePlannerModel()) {
+  return [
+    "Heavyster Serene Route Planner",
+    "Version: v144 Serene Route Planner",
+    "Rule: one visible route, one proof reason, one money rule, one next screen.",
+    "",
+    `Role: ${model.role}`,
+    `Current screen: ${model.current}`,
+    `Route: ${model.steps.map((step) => `${step.label} ${step.value}`).join(" -> ")}`,
+    `Next screen: ${model.next}`,
+    "",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: the route should be understood in ten seconds."
+  ].join("\n");
 }
 
 function openWorkflowGuideTarget(direction) {
@@ -2690,6 +2972,8 @@ function openWorkflowStep(anchor, label, role) {
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  renderCalmActionBar();
+  renderSereneRoutePlanner();
   closeWorkflowMenu();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.location.hash = anchor;
@@ -5718,6 +6002,7 @@ function renderMarketplaceDecisionCard() {
       renderDecisionReceipt();
       renderBuyerWorkbench();
       renderBuyerEnquiryReceipt();
+      renderCalmProofCard();
     });
   }
 
@@ -5804,6 +6089,7 @@ async function handleMarketplaceDecisionAction(action, model) {
       await navigator.clipboard.writeText(buildLeadText());
       markEnquiryCopied();
       renderMarketplaceDecisionCard();
+      renderCalmProofCard();
       renderBuyerEnquiryReceipt();
       showToast("Direct enquiry copied from the buyer decision card.");
     } catch {
@@ -5845,6 +6131,160 @@ async function handleMarketplaceDecisionAction(action, model) {
     if (target) scrollToPageTarget(target, 110);
     showToast(action === "hunt" ? "Supplier hunt opened from buyer need." : "Buyer need saved.");
   }
+}
+
+function renderCalmProofCard() {
+  const root = document.querySelector("#calmProofCard");
+  if (!root) return;
+
+  const model = getCalmProofCardModel();
+  root.innerHTML = `
+    <div class="calm-proof-card-panel ${escapeHtml(model.statusClass)}">
+      <div class="calm-proof-copy">
+        <span>${escapeHtml(model.label)}</span>
+        <strong>${escapeHtml(model.headline)}</strong>
+        <small>${escapeHtml(model.detail)}</small>
+      </div>
+      <div class="calm-proof-metrics" aria-label="Calm proof checks">
+        ${model.metrics.map((metric) => `
+          <b class="${metric.ready ? "is-ready" : "is-gap"}">
+            <span>${escapeHtml(metric.label)}</span>
+            <strong>${escapeHtml(metric.value)}</strong>
+            <small>${escapeHtml(metric.detail)}</small>
+          </b>
+        `).join("")}
+      </div>
+      <div class="calm-proof-actions">
+        ${model.actions.map((action) => `
+          <button type="button" class="${action.primary ? "is-primary" : ""}" data-calm-proof-action="${escapeHtml(action.id)}">
+            ${escapeHtml(action.label)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  root.querySelectorAll("[data-calm-proof-action]").forEach((button) => {
+    button.addEventListener("click", () => handleCalmProofCardAction(button.dataset.calmProofAction, model));
+  });
+}
+
+function getCalmProofCardModel() {
+  const filtered = getFilteredListings();
+  const listing = filtered[0] || getSelectedListing();
+  const passport = getTrustPassport(listing);
+  const fit = getBuyerFitScore(listing);
+  const exactMode = filtered.length > 0;
+  const readyProof = passport.proofItems.filter((item) => item.ready).length;
+  const proofTotal = passport.proofItems.length;
+  const availabilityReady = exactMode && listing.availability === "available";
+  const proofReady = passport.score >= 84 || (passport.score >= 74 && readyProof >= Math.max(1, proofTotal - 1));
+  const routeReady = exactMode && listing.verified;
+  const readyCount = [exactMode, availabilityReady, proofReady, routeReady].filter(Boolean).length;
+  const region = state.region === "all" ? listing.region : state.region;
+  const statusClass = !exactMode ? "is-gap" : readyCount >= 3 ? "is-ready" : "is-watch";
+  const next = !exactMode
+    ? "Capture demand and recruit verified suppliers before promising supply."
+    : availabilityReady && proofReady
+      ? "Send one direct enquiry and keep payment with the supplier."
+      : "Open the passport, confirm proof or availability, then send the enquiry.";
+
+  if (!exactMode) {
+    return {
+      listing,
+      passport,
+      label: "Calm proof",
+      statusClass,
+      headline: `No safe ${getDemandEquipmentFromSearch().toLowerCase()} proof yet.`,
+      detail: `Use the ${region} demand as supplier recruitment signal before pushing the buyer into a weak result.`,
+      next,
+      metrics: [
+        { label: "Supply", value: "Gap", detail: "no exact listing", ready: false },
+        { label: "Trust", value: `${passport.score}/100`, detail: passport.verdict, ready: proofReady },
+        { label: "Route", value: "Recruit", detail: "supplier hunt", ready: true },
+        { label: "Payment", value: "0%", detail: "rental take", ready: true }
+      ],
+      actions: [
+        { id: "demand", label: "Capture demand", primary: true },
+        { id: "hunt", label: "Open hunt" }
+      ]
+    };
+  }
+
+  return {
+    listing,
+    passport,
+    label: "Calm proof",
+    statusClass,
+    headline: `${listing.name} is ${proofReady ? "safe to enquire" : "one proof check away"}.`,
+    detail: `${listing.supplier} in ${listing.city}, ${listing.region}. ${fit.status}, ${passport.verdict.toLowerCase()}, ${listing.availability === "available" ? "available now" : "confirm availability"}.`,
+    next,
+    metrics: [
+      { label: "Trust", value: `${passport.score}/100`, detail: passport.verdict, ready: proofReady },
+      { label: "Proof", value: `${readyProof}/${proofTotal}`, detail: "checks visible", ready: readyProof >= Math.max(1, proofTotal - 1) },
+      { label: "Availability", value: availabilityReady ? "Now" : "Confirm", detail: availabilityReady ? "ready to ask" : "supplier check", ready: availabilityReady },
+      { label: "Payment", value: "0%", detail: "rental take", ready: true }
+    ],
+    actions: [
+      { id: "copy", label: "Copy proof card", primary: true },
+      { id: "passport", label: "Open passport" }
+    ]
+  };
+}
+
+async function handleCalmProofCardAction(action, model) {
+  if (model.listing) state.selectedListingId = model.listing.id;
+
+  if (action === "copy") {
+    saveState();
+    try {
+      await navigator.clipboard.writeText(buildCalmProofCardText(model));
+      showToast("Calm proof card copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm proof card is visible.");
+    }
+    return;
+  }
+
+  if (action === "passport") {
+    saveState();
+    render();
+    scrollToPageTarget(document.querySelector("#passport"), 120);
+    showToast("Trust passport opened.");
+    return;
+  }
+
+  if (action === "demand" || action === "hunt") {
+    prepareDemandFromSearch();
+    saveDemandSignal(action === "hunt" ? "Calm proof supplier hunt" : "Calm proof demand", false);
+    const target = document.querySelector(action === "hunt" ? "#growth" : "#demandRequest");
+    if (target) scrollToPageTarget(target, 110);
+    showToast(action === "hunt" ? "Supplier hunt opened from calm proof." : "Demand captured from calm proof.");
+  }
+}
+
+function buildCalmProofCardText(model = getCalmProofCardModel()) {
+  const listing = model.listing || getSelectedListing();
+  const proofReady = model.passport.proofItems.filter((item) => item.ready).length;
+  const proofTotal = model.passport.proofItems.length;
+
+  return [
+    "Heavyster Calm Proof Card",
+    "Version: v142 Calm Proof Card",
+    "Rule: one machine, one proof answer, one direct enquiry action.",
+    "",
+    `Machine: ${listing.name}`,
+    `Supplier: ${listing.supplier} - ${listing.city}, ${listing.region}`,
+    `Category: ${listing.category}`,
+    `Trust: ${model.passport.score}/100 - ${model.passport.verdict}`,
+    `Proof: ${proofReady}/${proofTotal} checks visible`,
+    `Availability: ${listing.availability === "available" ? "available now" : "confirm before enquiry"}`,
+    `Buyer action: ${model.next}`,
+    "",
+    "Payment rule: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: show the safest visible route before deeper RFQ, award, or booking workflows."
+  ].join("\n");
 }
 
 function renderBuyerEnquiryReceipt() {
@@ -5976,6 +6416,7 @@ async function handleBuyerEnquiryReceiptAction(action, model) {
       markEnquiryCopied();
       renderBuyerEnquiryReceipt();
       renderMarketplaceDecisionCard();
+      renderCalmProofCard();
       showToast("Buyer enquiry receipt copied.");
     } catch {
       showToast("Copy is blocked here, but the buyer receipt is visible.");
@@ -6336,6 +6777,7 @@ function renderMarketplaceEnquiryStarter() {
       renderDecisionReceipt();
       renderBuyerWorkbench();
       renderMarketplaceDecisionCard();
+      renderCalmProofCard();
       renderBuyerEnquiryReceipt();
       renderMarketplaceConfidenceStrip();
     });
@@ -6348,6 +6790,7 @@ function renderMarketplaceEnquiryStarter() {
       if (fullMode) fullMode.value = state.enquiryMode;
       saveState();
       renderMarketplaceDecisionCard();
+      renderCalmProofCard();
       renderBuyerEnquiryReceipt();
       renderMarketplaceEnquiryStarter();
       renderMarketplaceConfidenceStrip();

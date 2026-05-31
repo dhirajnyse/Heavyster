@@ -122,6 +122,8 @@ Recommended launch pricing:
 - Calm Command Center keeps every pricing, supplier, buyer, founder, and AI release tied to one peaceful next action before adding more power
 - Heavenly Focus keeps every commercial page tied to one calm path, one proof reason, one money rule, and one next action before adding more product power
 - Calm Backend Scaffold keeps the future SaaS backend tied to supplier accounts, listings, proof, subscriptions, direct enquiries, admin review, and the no-rental-payment guardrail
+- Calm Proof Card makes paid listing value visible by showing one trusted machine, proof count, availability, direct enquiry action, and 0% rental take before buyers open deeper workflows
+- Calm Action Bar keeps the buyer, supplier, and founder focused on one money-safe next action before deeper workflow complexity appears
 - Global Launch Passport keeps country expansion tied to the same listing SaaS model before local currency display, proof labels, or market pages add complexity
 - Founder Workbench protects monetization discipline by showing when a market is ready to scale paid listings and when trust, response, or activation must be repaired first
 - Founder Morning Brief makes phase-one discipline part of the founder's first daily read: protect paid listings, supplier saves, trust, and activation before opening new traffic
@@ -273,3 +275,35 @@ The launch monetization model should stay narrow:
 - Keep 0% rental take until the booking workflow is proven
 
 The founder should scale only after paid listings, proof clarity, response quality, and renewal risk are visible.
+
+## v142 Calm Proof Card
+
+The next monetization improvement is not a new price. It is a calmer proof surface that makes one paid listing feel worth paying for:
+
+- Show the buyer one selected machine before a complex workspace.
+- Show the supplier name, trust score, proof count, and availability state.
+- Give one direct enquiry action while rental payment stays between buyer and supplier.
+- Keep the card copy-ready so founders can show suppliers exactly how paid visibility turns into buyer confidence.
+- Keep the phase-one rule unchanged: USD 9/month or USD 99/year per active listing, 0% rental take.
+
+This strengthens conversion without making Heavyster look like a transaction marketplace too early. The optional 1% confirmed-booking fee still waits for proven booking workflow value.
+
+## v143 Calm Action Bar
+
+The next monetization improvement is clarity, not a new fee:
+
+- Buyer action stays a direct enquiry, with 0% rental take visible.
+- Supplier action points to the paid-listing path: USD 9/month or USD 99/year per active listing.
+- Founder action points to the next market command only when demand, proof, supply, and ARR justify it.
+- The action bar should never introduce rental payment custody, escrow, or booking commission in phase one.
+- The optional 1% success fee still waits until Heavyster has a confirmed booking trail, quote acceptance, enquiry history, or payment/deposit workflow worth charging for.
+
+## v144 Serene Route Planner
+
+The best next monetization move is to make the paid-listing path feel peaceful and inevitable:
+
+- Buyer route ends in direct enquiry, not checkout.
+- Supplier route ends in USD 9/month or USD 99/year paid listing activation.
+- Founder route chooses the next wedge by demand, supply gap, trust, and listing ARR.
+- Every route keeps the payment rule visible: supplier keeps rental payment direct, Heavyster earns listing SaaS first.
+- The optional 1% success fee still waits until Heavyster earns a real booking workflow.

@@ -19,6 +19,9 @@ This folder contains a static product prototype with:
 - Marketplace Search Assist for one-click machine, category, supplier, and demand-gap routes while buyers type
 - Simple Marketplace Result Brief that turns each search into one best path, three proof facts, and the next buyer action
 - Buyer Enquiry Receipt that packages one selected machine, proof status, message readiness, availability, and the direct-payment rule into a copy-ready buyer note
+- Calm Proof Card that shows one selected machine, trust score, proof count, availability state, direct enquiry action, and 0% rental take before deeper workflows
+- Calm Action Bar that keeps buyer, supplier, and founder paths inside one visible next move, one proof reason, one money rule, and 0% rental take
+- Serene Route Planner that gives buyer, supplier, and founder one calm route: start point, proof reason, money rule, and next screen
 - Marketplace Scale Guard that keeps large-result searches simple by recommending best path, compact rows, widened search, or demand capture before the buyer gets buried in inventory
 - Catalog Focus Bar for one-click best-fit, verified, available, saved, and demand-gap views before buyers scan large equipment lists
 - Catalog Pager that keeps card view and compact rows page-based with simple row-count controls for future large inventories
@@ -41,8 +44,8 @@ This folder contains a static product prototype with:
 - Supplier Account Starter that turns company profile, proof, first machine, paid listing, and direct lead route into one simple setup path
 - Supplier Listing Starter that turns one selected machine into a proof, availability, and USD 99/year listing brief before deeper setup
 - Supplier Activation Receipt that confirms billable listings, listing SaaS value, proof score, freshness gaps, and direct rental payment rules inside Supplier Studio
-- Paid Listing Activation, Monetization Command, Pilot Launch Command, Global Launch Passport, Simple Global UX Guard, Calm Command Center, Serenity Mode, Heavenly Focus, and Calm Backend Scaffold that turn supplier count, free profile, USD 9/month, USD 99/year, first-market launch gates, country queue, local proof labels, optional future yard packs, one-screen UX rules, calm next actions, backend object clarity, and 0% rental take into copy-ready operating notes
-- Temporary Build Phase page, header build badge, Build Cockpit, SaaS Foundation Blueprint, Launch Readiness Gate, Backend Sprint Board, Supplier Account MVP Preview, Supplier Onboarding Runway, Backend Data Contract, Schema + API Blueprint, API Smoke Console, Backend Fixture Pack, Backend Implementation Contract, Monetization Command, Pilot Launch Command, Global Launch Passport, Simple Global UX Guard, Calm Command Center, Serenity Mode, Heavenly Focus, Calm Backend Scaffold, and Release Ledger that show the current release version, latest upload focus, test pass, production gaps, next backend sprint, monetization rule, first launch rule, global expansion rule, simplicity guard, calm command rule, heavenly focus rule, backend scaffold rule, and delete-after-launch rule
+- Paid Listing Activation, Monetization Command, Pilot Launch Command, Global Launch Passport, Simple Global UX Guard, Calm Command Center, Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Calm Proof Card, Calm Action Bar, and Serene Route Planner that turn supplier count, free profile, USD 9/month, USD 99/year, first-market launch gates, country queue, local proof labels, optional future yard packs, one-screen UX rules, calm next actions, proof-card clarity, one-action clarity, route clarity, backend object clarity, and 0% rental take into copy-ready operating notes
+- Temporary Build Phase page, header build badge, Build Cockpit, SaaS Foundation Blueprint, Launch Readiness Gate, Backend Sprint Board, Supplier Account MVP Preview, Supplier Onboarding Runway, Backend Data Contract, Schema + API Blueprint, API Smoke Console, Backend Fixture Pack, Backend Implementation Contract, Monetization Command, Pilot Launch Command, Global Launch Passport, Simple Global UX Guard, Calm Command Center, Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Calm Launch Room, Calm Proof Card, Calm Action Bar, Serene Route Planner, and Release Ledger that show the current release version, latest upload focus, test pass, production gaps, next backend sprint, monetization rule, first launch rule, global expansion rule, simplicity guard, calm command rule, heavenly focus rule, backend scaffold rule, proof-card rule, action-bar rule, route-planner rule, and delete-after-launch rule
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
 - Compact searchable workflow launcher with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX
@@ -99,6 +102,9 @@ This folder contains a static product prototype with:
 - Calm Backend Scaffold for making supplier accounts, listings, proof, subscriptions, direct enquiries, and admin review visible without adding UI weight
 - Supplier Account Shell for turning one rental company into one profile, one first listing, one proof checklist, one listing plan, and one direct enquiry route
 - Calm Launch Room for choosing one launch wedge, anchor suppliers, paid-ready listings, direct enquiries, response checks, and calm expansion before scaling
+- Calm Proof Card for showing one machine, one proof answer, one direct enquiry action, and 0% rental take before deeper workflows
+- Calm Action Bar for keeping one role, one proof reason, one money rule, and one next action visible before deeper workflows
+- Serene Route Planner for keeping one calm route visible across buyer, supplier, and founder paths before deeper workflows
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board
@@ -122,6 +128,8 @@ This folder contains a static product prototype with:
 - `docs/CALM_BACKEND_SCAFFOLD.json`
 - `docs/SUPPLIER_ACCOUNT_SHELL.json`
 - `docs/CALM_LAUNCH_ROOM.json`
+- `docs/CALM_PROOF_CARD.json`
+- `docs/CALM_ACTION_BAR.json`
 - `docs/DATA_MODEL.md`
 - `docs/BUILD_BACKLOG.md`
 - `docs/BRAND.md`

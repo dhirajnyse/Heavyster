@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260531-calm-launch-room-v141" />
+  <link rel="stylesheet" href="styles.css?v=20260531-serene-route-planner-v144" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v141</strong>
+            <strong>v144</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -182,6 +182,31 @@
         </div>
       </section>
 
+      <section class="calm-action-bar" id="calmActionBar" aria-label="Calm action bar">
+        <div class="calm-action-copy">
+          <span>Calm next action</span>
+          <strong>One next move will appear here.</strong>
+          <small>Heavyster keeps each role focused on one proof-led action.</small>
+        </div>
+        <div class="calm-action-metrics" id="calmActionMetrics" aria-label="Calm action checks"></div>
+        <div class="calm-action-actions">
+          <button type="button" class="solid-button" id="calmActionPrimaryButton">Open next move</button>
+          <button type="button" class="ghost-button" id="copyCalmActionButton">Copy calm brief</button>
+        </div>
+      </section>
+      <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
+        <div class="serene-route-copy">
+          <span id="sereneRouteRole">Serene route</span>
+          <strong id="sereneRouteHeadline">Choose one calm route.</strong>
+          <small id="sereneRouteDetail">One proof path, one money rule, and one next screen.</small>
+        </div>
+        <div class="serene-route-steps" id="sereneRouteSteps" aria-label="Serene route steps"></div>
+        <div class="serene-route-actions">
+          <button type="button" class="solid-button" id="sereneRoutePrimaryButton">Open route</button>
+          <button type="button" class="ghost-button" id="copySereneRouteButton">Copy route</button>
+        </div>
+      </section>
+
       <main>
         <section class="hero" id="marketplace">
           <div class="hero-copy">
@@ -233,6 +258,7 @@
               <div class="market-quick-presets" id="marketQuickPresets" aria-label="Fast marketplace searches"></div>
               <div class="market-result-brief" id="marketResultBrief" aria-label="Simple marketplace result brief"></div>
               <div class="market-decision" id="marketDecisionCard" aria-label="Simple buyer decision card"></div>
+              <div class="calm-proof-card" id="calmProofCard" aria-label="Calm proof card"></div>
               <div class="buyer-enquiry-receipt" id="buyerEnquiryReceipt" aria-label="Buyer enquiry receipt"></div>
               <div class="market-scale-guard" id="marketScaleGuard" aria-label="Marketplace scale guard"></div>
               <div class="market-answer" id="marketAnswer" aria-label="Marketplace answer"></div>
@@ -2156,7 +2182,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v141</span>
+            <span class="build-version-pill">Current version: v144</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2167,13 +2193,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v141 Calm Launch Room</strong>
-              <small>Build Phase now turns the supplier shell into one calm launch command.</small>
+              <strong>v144 Serene Route Planner</strong>
+              <small>One calm route now joins each role to a start point, proof reason, money rule, and next screen.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Simple path clarity</strong>
-              <small>Buyer search, supplier listing, pricing, and founder market command should stay easy.</small>
+              <strong>Route clarity</strong>
+              <small>Buyer, supplier, and founder should know the safe path without opening the workflow drawer.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2193,8 +2219,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v141</strong>
-              <small>Calm Launch Room</small>
+              <strong>v144</strong>
+              <small>Serene Route Planner</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2208,8 +2234,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Founder launch actions</strong>
-              <small>Turn the launch room into real supplier outreach, verified listings, direct enquiries, and renewal checks.</small>
+              <strong>Backend route handoff</strong>
+              <small>Turn route states into account, listing, proof, and direct lead records without adding UI weight.</small>
             </article>
           </div>
 
@@ -3250,25 +3276,159 @@
             </article>
           </div>
 
+          <div class="calm-proof-card-contract" id="calm-proof-card-contract" aria-label="Heavyster calm proof card contract">
+            <article class="calm-proof-card-contract-lead">
+              <span>v142 Calm Proof Card</span>
+              <strong>Show one safe machine path before sending a buyer deeper.</strong>
+              <p>
+                The marketplace now answers the buyer in one quiet proof card: machine, supplier, trust score,
+                visible proof count, availability, payment rule, and the safest next action.
+              </p>
+              <b>Rule: one proof answer</b>
+            </article>
+            <article>
+              <span>Machine</span>
+              <strong>One selected listing</strong>
+              <p>Do not flood the buyer with workflow noise. Start from the strongest visible listing path.</p>
+              <b>Focused</b>
+            </article>
+            <article>
+              <span>Proof</span>
+              <strong>Visible checks</strong>
+              <p>Surface trust score, proof count, and availability status before RFQ or award flows.</p>
+              <b>Calm trust</b>
+            </article>
+            <article>
+              <span>Action</span>
+              <strong>Copy proof card</strong>
+              <p>Give the buyer one clean enquiry brief, or capture demand when supply is missing.</p>
+              <b>Direct route</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>0% rental take</strong>
+              <p>Supplier keeps rental payment direct. Heavyster earns listing SaaS in phase one.</p>
+              <b>USD 9 listing</b>
+            </article>
+            <article class="calm-proof-card-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>A buyer can understand why one listing is safe to enquire without opening a complex workspace.</strong>
+              <p>Docs include the proof-card model in `docs/CALM_PROOF_CARD.json` so the simple marketplace answer stays testable across countries.</p>
+              <button type="button" class="solid-button" id="copyCalmProofCardButton">Copy proof card</button>
+            </article>
+          </div>
+
+          <div class="calm-action-bar-contract" id="calm-action-bar-contract" aria-label="Heavyster calm action bar contract">
+            <article class="calm-action-bar-contract-lead">
+              <span>v143 Calm Action Bar</span>
+              <strong>Keep every role inside one next move.</strong>
+              <p>
+                The product now shows a quiet action strip that changes by buyer, supplier, or founder context.
+                It prevents the product from feeling busy as more workflows, countries, and AI support arrive.
+              </p>
+              <b>Rule: one next action</b>
+            </article>
+            <article>
+              <span>Buyer</span>
+              <strong>Copy enquiry</strong>
+              <p>Show the cleanest machine route, proof score, and direct supplier enquiry action.</p>
+              <b>Trust first</b>
+            </article>
+            <article>
+              <span>Supplier</span>
+              <strong>Grow paid listing</strong>
+              <p>Point the supplier to listing, proof, freshness, or lead work without extra navigation.</p>
+              <b>USD 9 listing</b>
+            </article>
+            <article>
+              <span>Founder</span>
+              <strong>Open market command</strong>
+              <p>Show demand, supply gap, listing ARR, and the next wedge action in one strip.</p>
+              <b>Scale calmly</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>0% rental take</strong>
+              <p>Every action keeps rental payment between buyer and supplier in phase one.</p>
+              <b>SaaS first</b>
+            </article>
+            <article class="calm-action-bar-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>A user can see the next best action without opening the workflow drawer.</strong>
+              <p>Docs include the action-bar model in `docs/CALM_ACTION_BAR.json` so every future country release keeps one role, one proof reason, one money rule, and one next action.</p>
+              <button type="button" class="solid-button" id="copyCalmActionBarButton">Copy action bar rule</button>
+            </article>
+          </div>
+
+          <div class="serene-route-planner-contract" id="serene-route-planner-contract" aria-label="Heavyster serene route planner contract">
+            <article class="serene-route-planner-contract-lead">
+              <span>v144 Serene Route Planner</span>
+              <strong>Every role gets one calm route before deeper workflow.</strong>
+              <p>
+                The route planner turns Heavyster into a peaceful operating product: start point, proof reason,
+                money rule, and next screen stay visible above the marketplace.
+              </p>
+              <b>Rule: one visible route</b>
+            </article>
+            <article>
+              <span>Buyer</span>
+              <strong>Search to direct enquiry</strong>
+              <p>Show the cleanest equipment path, supplier proof, and copied enquiry route without extra screens.</p>
+              <b>Trust first</b>
+            </article>
+            <article>
+              <span>Supplier</span>
+              <strong>Listing to paid SaaS</strong>
+              <p>Show one machine, proof health, availability freshness, and paid listing activation.</p>
+              <b>USD 99/year</b>
+            </article>
+            <article>
+              <span>Founder</span>
+              <strong>Demand to listing ARR</strong>
+              <p>Show demand, supply gap, trust state, and listing ARR before pushing any growth.</p>
+              <b>Supply before traffic</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>0% rental take</strong>
+              <p>Buyer pays supplier directly. Heavyster earns paid listing SaaS until booking workflow proof exists.</p>
+              <b>No commission now</b>
+            </article>
+            <article class="serene-route-planner-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>A user can explain the active route in ten seconds.</strong>
+              <p>Docs include the route planner model in `docs/SERENE_ROUTE_PLANNER.json` so future country launches keep the interface simple.</p>
+              <button type="button" class="solid-button" id="copySereneRoutePlannerButton">Copy route planner rule</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v141 Calm Launch Room</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v144 Serene Route Planner</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Calm Launch Room</strong>
-              <p>Added a founder-safe launch layer: one wedge, anchor suppliers, paid-ready listings, direct enquiries, response checks, and calm expansion.</p>
+              <strong>Serene Route Planner</strong>
+              <p>Added a role-aware route strip with start point, proof reason, money rule, and next screen so every role keeps one visible path and 0% rental take.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v141.</li>
-                <li>Build Phase shows Current version: v141.</li>
+                <li>Header shows Build v144.</li>
+                <li>Build Phase shows Current version: v144.</li>
+                <li>Calm Action Bar appears directly under the Simplicity Bar.</li>
+                <li>Serene Route Planner appears directly under the Calm Action Bar.</li>
+                <li>Buyer, supplier, and founder route states show start, proof, money, and next screen.</li>
+                <li>Copy route planner rule explains one visible route and 0% rental take.</li>
+                <li>Buyer, supplier, and founder modes each show one best next move.</li>
+                <li>Copy action bar rule explains one role, one proof reason, one money rule, one next action, and 0% rental take.</li>
+                <li>Marketplace shows Calm Proof Card below buyer decision logic.</li>
+                <li>Copy proof card explains one machine, one trust score, one proof count, one direct enquiry action, and 0% rental take.</li>
                 <li>Pricing shows Serenity Mode and Heavenly Focus below the Calm Command Center.</li>
-                <li>Build Phase shows Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Supplier Account Shell, and Calm Launch Room before the Release Ledger.</li>
+                <li>Build Phase shows Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Supplier Account Shell, Calm Launch Room, Calm Proof Card, Calm Action Bar, and Serene Route Planner before the Release Ledger.</li>
                 <li>Copy scaffold brief explains SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, DirectEnquiry, AdminReview, and the no-rental-payment guardrail.</li>
                 <li>Copy account shell explains SupplierAccount, SupplierProfile, FirstListing, ProofChecklist, ListingPlan, DirectRoute, AdminReview, and the no-rental-payment guardrail.</li>
                 <li>Copy launch room explains UAE Lifting, anchor suppliers, paid-ready listings, direct enquiries, response checks, calm expansion, and the no-rental-payment guardrail.</li>
@@ -3336,8 +3496,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v141 Calm Launch Room</strong>
-              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, v138 heavenly focus, v139 calm backend scaffold, v140 supplier account shell, and this calm launch room release.</p>
+              <strong>v144 Serene Route Planner</strong>
+              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, v138 heavenly focus, v139 calm backend scaffold, v140 supplier account shell, v141 calm launch room, v142 calm proof card, v143 calm action bar, and this serene route planner release.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -3446,6 +3606,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260531-calm-launch-room-v141" defer></script>
+    <script src="app.js?v=20260531-serene-route-planner-v144" defer></script>
   </body>
 </html>

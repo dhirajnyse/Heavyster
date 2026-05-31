@@ -1,0 +1,40 @@
+{
+  "version": "v143 Calm Action Bar",
+  "rule": "One role, one proof reason, one money rule, and one next action stay visible before deeper workflow power.",
+  "phase_one_guardrail": "No rental payment, escrow, booking commission, supplier payout, or rental custody belongs in the action bar.",
+  "roles": [
+    {
+      "role": "Buyer",
+      "next_action": "Copy one direct enquiry",
+      "proof_reason": "Trust, availability, and proof count are visible before the buyer moves deeper.",
+      "money_rule": "0% rental take"
+    },
+    {
+      "role": "Supplier",
+      "next_action": "Protect one paid listing move",
+      "proof_reason": "Listing revenue, proof status, and freshness decide the supplier next action.",
+      "money_rule": "USD 9 monthly or USD 99 yearly per active listing"
+    },
+    {
+      "role": "Founder",
+      "next_action": "Open one market command",
+      "proof_reason": "Demand, supply gap, trust, and listing ARR decide the next wedge.",
+      "money_rule": "Scale listing SaaS before any future success fee"
+    }
+  ],
+  "metrics": [
+    "role",
+    "current step",
+    "next step",
+    "proof reason",
+    "money rule"
+  ],
+  "acceptance": [
+    "Header shows Build v143.",
+    "Simplicity Bar is followed by Calm Action Bar.",
+    "Buyer sees one direct enquiry action.",
+    "Supplier sees one listing, proof, freshness, or revenue action.",
+    "Founder sees one market command action.",
+    "Build Phase documents v143 before the Release Ledger."
+  ]
+}

@@ -2006,3 +2006,134 @@ The founder launch model should stay small and repeatable:
 - ExpansionDecision: hold, repair, launch, or repeat decision with reason and timestamp
 
 No phase-one record should collect rental payment, escrow, booking commission, or supplier payout data.
+
+## v142 Calm Proof Card
+
+Use this to show one buyer-safe machine path before opening deeper workflow rooms.
+
+CalmProofCard:
+
+- id
+- listing_id
+- supplier_id
+- category
+- trust_score
+- proof_ready_count
+- proof_total_count
+- availability_state
+- direct_enquiry_action
+- payment_rule
+- status_class
+- copy_ready_text
+- copied_at
+- created_at
+- updated_at
+
+CalmProofMetric:
+
+- id
+- calm_proof_card_id
+- label
+- value
+- note
+- confidence_status: ready, watch, gap
+- created_at
+- updated_at
+
+CalmProofAction:
+
+- id
+- calm_proof_card_id
+- action_label
+- action_type: copy_proof_card, open_passport, capture_demand, open_hunt
+- action_anchor
+- action_status
+- created_at
+- updated_at
+
+CalmProofGapSignal:
+
+- id
+- search_query
+- region_filter
+- availability_filter
+- missing_supply_reason
+- demand_signal_id
+- supplier_hunt_anchor
+- copy_ready_gap_note
+- created_at
+- updated_at
+
+No CalmProofCard table should collect rental payment, escrow, booking commission, supplier payout, or booking-fee data. The card only explains proof, availability, direct enquiry, and the 0% rental take rule.
+
+## v143 Calm Action Bar
+
+Use this to keep the current role path simple before a user opens deeper rooms.
+
+CalmActionBar:
+
+- id
+- role: buyer, supplier, founder
+- current_anchor
+- next_anchor
+- headline
+- proof_reason
+- money_rule
+- primary_action_label
+- primary_action_type: copy_enquiry, open_supplier_workbench, open_market_command
+- primary_action_anchor
+- copied_at
+- created_at
+- updated_at
+
+CalmActionMetric:
+
+- id
+- calm_action_bar_id
+- label
+- value
+- note
+- status_class: ready, watch, neutral
+- created_at
+- updated_at
+
+No CalmActionBar table should collect rental payment, escrow, booking commission, supplier payout, or booking-fee data. It only presents the next action, proof reason, and 0% rental take rule.
+
+## v144 Serene Route Planner
+
+Use this to keep every role inside one visible route before deeper workflow power appears.
+
+SereneRoutePlanner:
+
+- id
+- role: buyer, supplier, founder
+- current_anchor
+- next_anchor
+- headline
+- start_label
+- start_note
+- proof_label
+- proof_note
+- money_label
+- money_note
+- next_label
+- next_note
+- primary_action_label
+- primary_action_anchor
+- copied_at
+- created_at
+- updated_at
+
+SereneRouteStep:
+
+- id
+- serene_route_planner_id
+- label: start, proof, money, next
+- value
+- note
+- status_class: ready, watch, neutral
+- display_order
+- created_at
+- updated_at
+
+No SereneRoutePlanner table should collect rental payment, escrow, booking commission, supplier payout, or booking-fee data. It only presents the role route, proof reason, money rule, and next screen.

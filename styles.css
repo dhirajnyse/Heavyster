@@ -982,6 +982,288 @@ body.simple-mode .market-result-brief {
   display: block;
 }
 
+.calm-action-bar {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(430px, 1.35fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.24);
+  background:
+    linear-gradient(135deg, rgba(248, 252, 250, 0.96), rgba(238, 248, 246, 0.92));
+}
+
+.calm-action-copy,
+.calm-action-metrics span,
+.calm-action-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.calm-action-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.26);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.calm-action-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-action-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.calm-action-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.calm-action-metrics {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.calm-action-metrics span {
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.calm-action-metrics strong,
+.calm-action-metrics small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calm-action-metrics strong {
+  color: var(--ink);
+  font-size: 0.98rem;
+  line-height: 1.12;
+  text-transform: none;
+}
+
+.calm-action-metrics small {
+  color: var(--muted);
+  font-size: 0.68rem;
+  text-transform: none;
+}
+
+.calm-action-metrics .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.calm-action-metrics .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.calm-action-metrics .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.calm-action-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr);
+  gap: 7px;
+}
+
+.calm-action-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.calm-action-bar[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(248, 252, 250, 0.94));
+}
+
+.calm-action-bar[data-role="supplier"] .calm-action-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.calm-action-bar[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(248, 252, 250, 0.94));
+}
+
+.calm-action-bar[data-role="founder"] .calm-action-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.serene-route-planner {
+  display: grid;
+  grid-template-columns: minmax(290px, 0.9fr) minmax(420px, 1.4fr) minmax(180px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 12px;
+  border-bottom: 1px solid rgba(73, 118, 149, 0.18);
+  background:
+    linear-gradient(135deg, rgba(246, 250, 250, 0.96), rgba(252, 249, 240, 0.92));
+}
+
+.serene-route-copy,
+.serene-route-steps span,
+.serene-route-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.serene-route-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 68px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.24);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.serene-route-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.serene-route-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.serene-route-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.serene-route-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.serene-route-steps span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 68px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.serene-route-steps em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.serene-route-steps strong,
+.serene-route-steps small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.serene-route-steps strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.15;
+}
+
+.serene-route-steps small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.serene-route-steps .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.serene-route-steps .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.serene-route-steps .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.serene-route-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr);
+  gap: 7px;
+}
+
+.serene-route-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.serene-route-planner[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(240, 250, 248, 0.93));
+}
+
+.serene-route-planner[data-role="supplier"] .serene-route-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.serene-route-planner[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(248, 252, 250, 0.94));
+}
+
+.serene-route-planner[data-role="founder"] .serene-route-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
 .top-actions,
 .hero-actions {
   display: flex;
@@ -1858,6 +2140,164 @@ textarea {
 
 .market-decision-actions button:hover,
 .market-decision-actions button.is-primary {
+  border-color: var(--coal);
+  background: var(--coal);
+  color: #ffffff;
+}
+
+.calm-proof-card {
+  display: grid;
+  margin-top: 12px;
+}
+
+.calm-proof-card-panel {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.78fr) minmax(300px, 1.2fr) minmax(170px, 0.62fr);
+  gap: 10px;
+  align-items: stretch;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.26);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.92), rgba(255, 255, 255, 0.94) 52%, rgba(238, 246, 252, 0.82));
+}
+
+.calm-proof-card-panel.is-ready {
+  border-color: rgba(25, 113, 109, 0.42);
+  background:
+    linear-gradient(135deg, rgba(226, 245, 241, 0.96), rgba(255, 255, 255, 0.94) 58%, rgba(242, 250, 248, 0.88));
+}
+
+.calm-proof-card-panel.is-watch {
+  border-color: rgba(183, 111, 27, 0.34);
+  background:
+    linear-gradient(135deg, rgba(255, 244, 218, 0.9), rgba(255, 255, 255, 0.94) 58%, rgba(238, 246, 252, 0.82));
+}
+
+.calm-proof-card-panel.is-gap {
+  border-color: rgba(177, 79, 50, 0.32);
+  background:
+    linear-gradient(135deg, rgba(255, 238, 232, 0.88), rgba(255, 255, 255, 0.94) 58%, rgba(250, 249, 245, 0.88));
+}
+
+.calm-proof-copy,
+.calm-proof-metrics,
+.calm-proof-actions {
+  min-width: 0;
+}
+
+.calm-proof-copy {
+  display: grid;
+  align-content: center;
+  gap: 6px;
+}
+
+.calm-proof-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(25, 113, 109, 0.12);
+  color: var(--teal);
+  font-size: 0.66rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-proof-copy strong,
+.calm-proof-copy small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calm-proof-copy strong {
+  color: var(--ink);
+  font-size: 1.04rem;
+  line-height: 1.18;
+}
+
+.calm-proof-copy small {
+  color: var(--ink-2);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.calm-proof-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.calm-proof-metrics b {
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-height: 68px;
+  padding: 8px;
+  border: 1px solid rgba(217, 210, 195, 0.78);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.7);
+  font-style: normal;
+}
+
+.calm-proof-metrics b.is-ready {
+  border-color: rgba(25, 113, 109, 0.28);
+  background: rgba(228, 242, 239, 0.76);
+}
+
+.calm-proof-metrics b.is-gap {
+  border-color: rgba(183, 111, 27, 0.28);
+  background: rgba(255, 240, 204, 0.62);
+}
+
+.calm-proof-metrics span,
+.calm-proof-metrics strong,
+.calm-proof-metrics small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calm-proof-metrics span {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-proof-metrics strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+.calm-proof-metrics small {
+  color: var(--ink-2);
+  font-size: 0.68rem;
+  line-height: 1.24;
+}
+
+.calm-proof-actions {
+  display: grid;
+  gap: 7px;
+  align-content: center;
+}
+
+.calm-proof-actions button {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.calm-proof-actions button:hover,
+.calm-proof-actions button.is-primary {
   border-color: var(--coal);
   background: var(--coal);
   color: #ffffff;
@@ -16738,7 +17178,10 @@ button.admin-row {
 
 .calm-backend-scaffold,
 .supplier-account-shell,
-.calm-launch-room {
+.calm-launch-room,
+.calm-proof-card-contract,
+.calm-action-bar-contract,
+.serene-route-planner-contract {
   display: grid;
   grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
   gap: 10px;
@@ -16764,9 +17207,33 @@ button.admin-row {
     linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(255, 255, 255, 0.96) 48%, rgba(232, 248, 245, 0.92));
 }
 
+.calm-proof-card-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.34);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 255, 255, 0.96) 52%, rgba(238, 246, 252, 0.9));
+}
+
+.calm-action-bar-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(73, 118, 149, 0.32);
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(255, 255, 255, 0.96) 50%, rgba(232, 248, 245, 0.92));
+}
+
+.serene-route-planner-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.32);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 255, 255, 0.96) 50%, rgba(252, 249, 240, 0.92));
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
-.calm-launch-room article {
+.calm-launch-room article,
+.calm-proof-card-contract article,
+.calm-action-bar-contract article,
+.serene-route-planner-contract article {
   display: grid;
   align-content: start;
   gap: 8px;
@@ -16779,7 +17246,10 @@ button.admin-row {
 
 .calm-backend-scaffold-lead,
 .supplier-account-shell-lead,
-.calm-launch-room-lead {
+.calm-launch-room-lead,
+.calm-proof-card-contract-lead,
+.calm-action-bar-contract-lead,
+.serene-route-planner-contract-lead {
   grid-row: span 2;
   border-color: rgba(25, 113, 109, 0.42) !important;
   background: var(--teal-soft) !important;
@@ -16787,7 +17257,10 @@ button.admin-row {
 
 .calm-backend-scaffold-acceptance,
 .supplier-account-shell-acceptance,
-.calm-launch-room-acceptance {
+.calm-launch-room-acceptance,
+.calm-proof-card-contract-acceptance,
+.calm-action-bar-contract-acceptance,
+.serene-route-planner-contract-acceptance {
   grid-column: span 2;
   border-color: rgba(40, 93, 134, 0.42) !important;
   background: var(--blue-soft) !important;
@@ -16803,9 +17276,27 @@ button.admin-row {
   background: var(--teal-soft) !important;
 }
 
+.calm-proof-card-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(238, 246, 252, 0.9)) !important;
+}
+
+.calm-action-bar-contract-acceptance {
+  border-color: rgba(73, 118, 149, 0.4) !important;
+  background: linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(232, 248, 245, 0.9)) !important;
+}
+
+.serene-route-planner-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 247, 232, 0.9)) !important;
+}
+
 .calm-backend-scaffold span,
 .supplier-account-shell span,
-.calm-launch-room span {
+.calm-launch-room span,
+.calm-proof-card-contract span,
+.calm-action-bar-contract span,
+.serene-route-planner-contract span {
   color: var(--teal);
   font-size: 0.72rem;
   font-weight: 950;
@@ -16814,7 +17305,10 @@ button.admin-row {
 
 .calm-backend-scaffold strong,
 .supplier-account-shell strong,
-.calm-launch-room strong {
+.calm-launch-room strong,
+.calm-proof-card-contract strong,
+.calm-action-bar-contract strong,
+.serene-route-planner-contract strong {
   color: var(--ink);
   font-size: 1.02rem;
   line-height: 1.18;
@@ -16823,13 +17317,19 @@ button.admin-row {
 
 .calm-backend-scaffold-lead strong,
 .supplier-account-shell-lead strong,
-.calm-launch-room-lead strong {
+.calm-launch-room-lead strong,
+.calm-proof-card-contract-lead strong,
+.calm-action-bar-contract-lead strong,
+.serene-route-planner-contract-lead strong {
   font-size: 1.22rem;
 }
 
 .calm-backend-scaffold p,
 .supplier-account-shell p,
-.calm-launch-room p {
+.calm-launch-room p,
+.calm-proof-card-contract p,
+.calm-action-bar-contract p,
+.serene-route-planner-contract p {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.42;
@@ -16837,7 +17337,10 @@ button.admin-row {
 
 .calm-backend-scaffold b,
 .supplier-account-shell b,
-.calm-launch-room b {
+.calm-launch-room b,
+.calm-proof-card-contract b,
+.calm-action-bar-contract b,
+.serene-route-planner-contract b {
   width: fit-content;
   margin-top: auto;
   padding: 6px 10px;
@@ -16852,14 +17355,23 @@ button.admin-row {
 .supplier-account-shell-lead b,
 .supplier-account-shell-acceptance b,
 .calm-launch-room-lead b,
-.calm-launch-room-acceptance b {
+.calm-launch-room-acceptance b,
+.calm-proof-card-contract-lead b,
+.calm-proof-card-contract-acceptance b,
+.calm-action-bar-contract-lead b,
+.calm-action-bar-contract-acceptance b,
+.serene-route-planner-contract-lead b,
+.serene-route-planner-contract-acceptance b {
   background: var(--coal);
   color: #ffffff;
 }
 
 .calm-backend-scaffold-acceptance button,
 .supplier-account-shell-acceptance button,
-.calm-launch-room-acceptance button {
+.calm-launch-room-acceptance button,
+.calm-proof-card-contract-acceptance button,
+.calm-action-bar-contract-acceptance button,
+.serene-route-planner-contract-acceptance button {
   min-height: 42px;
   margin-top: auto;
 }
@@ -17396,6 +17908,30 @@ button.admin-row {
   .simplicity-actions button {
     width: 100%;
   }
+
+  .calm-action-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .serene-route-planner {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-action-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .serene-route-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .calm-action-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .serene-route-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 1360px) {
@@ -17506,6 +18042,32 @@ button.admin-row {
     width: 100%;
   }
 
+  .calm-action-bar {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
+  }
+
+  .serene-route-planner {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
+  }
+
+  .calm-action-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .serene-route-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-action-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .serene-route-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .market-answer-card {
     grid-template-columns: 1fr;
   }
@@ -17515,6 +18077,10 @@ button.admin-row {
   }
 
   .market-decision-card {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-proof-card-panel {
     grid-template-columns: 1fr;
   }
 
@@ -17540,6 +18106,10 @@ button.admin-row {
 
   .market-decision-actions {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .calm-proof-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .buyer-receipt-actions {
@@ -17697,6 +18267,7 @@ button.admin-row {
 
   .supplier-account-starter,
   .supplier-listing-starter,
+  .calm-proof-card-panel,
   .buyer-receipt-card,
   .market-scale-card,
   .supplier-activation-receipt {
@@ -17705,6 +18276,7 @@ button.admin-row {
 
   .account-starter-steps,
   .listing-starter-facts,
+  .calm-proof-metrics,
   .buyer-receipt-lines,
   .market-scale-metrics,
   .supplier-receipt-lines {
@@ -17739,6 +18311,9 @@ button.admin-row {
   .calm-backend-scaffold,
   .supplier-account-shell,
   .calm-launch-room,
+  .calm-proof-card-contract,
+  .calm-action-bar-contract,
+  .serene-route-planner-contract,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -17974,6 +18549,24 @@ button.admin-row {
     white-space: normal;
   }
 
+  .calm-action-bar,
+  .calm-action-metrics,
+  .calm-action-actions,
+  .serene-route-planner,
+  .serene-route-steps,
+  .serene-route-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-action-metrics strong,
+  .calm-action-metrics small,
+  .calm-action-actions button,
+  .serene-route-steps strong,
+  .serene-route-steps small,
+  .serene-route-actions button {
+    white-space: normal;
+  }
+
   .market-answer-facts,
   .market-answer-actions,
   .market-result-brief-facts,
@@ -18154,6 +18747,9 @@ button.admin-row {
   }
 
   .market-stats,
+  .calm-proof-card-panel,
+  .calm-proof-metrics,
+  .calm-proof-actions,
   .buyer-receipt-card,
   .buyer-receipt-main,
   .buyer-receipt-lines,
@@ -18258,6 +18854,9 @@ button.admin-row {
   .calm-backend-scaffold,
   .supplier-account-shell,
   .calm-launch-room,
+  .calm-proof-card-contract,
+  .calm-action-bar-contract,
+  .serene-route-planner-contract,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -18430,7 +19029,13 @@ button.admin-row {
   .supplier-account-shell-lead,
   .supplier-account-shell-acceptance,
   .calm-launch-room-lead,
-  .calm-launch-room-acceptance {
+  .calm-launch-room-acceptance,
+  .calm-proof-card-contract-lead,
+  .calm-proof-card-contract-acceptance,
+  .calm-action-bar-contract-lead,
+  .calm-action-bar-contract-acceptance,
+  .serene-route-planner-contract-lead,
+  .serene-route-planner-contract-acceptance {
     grid-row: auto;
     grid-column: auto;
   }

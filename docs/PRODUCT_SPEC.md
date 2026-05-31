@@ -57,6 +57,8 @@ Marketplace:
 - Serenity Mode that keeps each screen calm by showing role, next move, proof, and one action before secondary features or AI assistance
 - Heavenly Focus that protects one calm path, one proof reason, one money rule, and one next action before any extra feature appears
 - Calm Backend Scaffold that names the real SaaS records behind the calm UI without exposing technical complexity to buyers or suppliers
+- Calm Proof Card that turns one selected listing into a calm buyer answer with trust score, proof count, availability, direct enquiry action, and 0% rental take
+- Calm Action Bar that keeps buyer, supplier, and founder paths inside one role, one proof reason, one money rule, and one next action
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Buyer Fit Score that ranks each listing against current search, region, category, availability, verification, and proof
@@ -282,3 +284,35 @@ The next product step is a founder launch room that prevents premature expansion
 - Expand only when the wedge is simple enough to operate repeatedly
 
 The product rule is calm growth: one wedge, one command, one next decision.
+
+## v142 Calm Proof Card
+
+The marketplace should answer a buyer with one safe path before sending them deeper into RFQ, award, or booking workflows:
+
+- CalmProofCard: listing, supplier, category, trust score, proof count, availability state, direct enquiry action, payment rule, and status class
+- CalmProofMetric: label, value, note, and confidence status
+- CalmProofAction: copy proof card, open Trust Passport, capture demand, or open supplier hunt
+- CalmProofGapMode: search query, region, availability, demand signal, supplier hunt action, and missing-supply reason
+- CalmProofCopyReceipt: machine, supplier, proof, availability, buyer action, direct-payment rule, and 0% rental take
+
+No rental payment, escrow, booking commission, or supplier payout workflow belongs in this card. Its job is to make the first buyer decision feel calm, trustworthy, and copy-ready.
+
+## v143 Calm Action Bar
+
+The product should keep one calm action visible before deeper workflow power:
+
+- Buyer mode keeps the next move to one direct enquiry path.
+- Supplier mode keeps the next move to one paid-listing, proof, freshness, or lead action.
+- Founder mode keeps the next move to one market command.
+- The bar shows one proof reason and one money rule so the user knows why the action matters.
+- Phase-one guardrail remains unchanged: buyer pays the rental company directly and Heavyster takes 0% of rental payment.
+
+## v144 Serene Route Planner
+
+The product should show one understandable route before asking a user to open deeper tools:
+
+- Buyer route: search, trust proof, 0% rental take, and direct enquiry.
+- Supplier route: listing, proof, availability freshness, and paid listing SaaS.
+- Founder route: demand, supply gap, trust, and listing ARR.
+- The route planner should stay compact, calm, and role-aware across countries.
+- Phase-one guardrail remains unchanged: Heavyster earns listing SaaS and does not collect rental payment.

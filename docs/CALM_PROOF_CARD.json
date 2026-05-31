@@ -1,0 +1,37 @@
+{
+  "version": "v142 Calm Proof Card",
+  "date": "2026-05-31",
+  "rule": "Show one machine, one proof answer, one direct enquiry action.",
+  "purpose": "Make marketplace decisions feel calm by turning trust, proof, availability, and payment guardrails into one buyer-facing card.",
+  "phase_one_guardrail": "No rental payment collection. No rental commission. Supplier keeps rental payment direct. Heavyster earns listing SaaS revenue only.",
+  "buyer_card": {
+    "primary_machine": "Strongest visible listing after search and filters",
+    "trust_score": "Trust passport score",
+    "proof_count": "Visible ready proof checks over total proof checks",
+    "availability": "Available now or confirm before enquiry",
+    "payment_rule": "0% rental take in phase one",
+    "action": "Copy proof card or open trust passport"
+  },
+  "gap_mode": {
+    "when": "No exact listing matches the buyer search",
+    "message": "Capture demand and open supplier hunt before promising weak supply",
+    "actions": [
+      "Capture demand",
+      "Open hunt"
+    ]
+  },
+  "acceptance": [
+    "Marketplace renders Calm Proof Card below the buyer decision layer.",
+    "The card shows one selected listing instead of a long decision dashboard.",
+    "The copy action includes machine, supplier, category, trust, proof, availability, next action, and 0% rental take.",
+    "Gap mode converts missing supply into demand capture or supplier hunt.",
+    "Build Phase shows the v142 Calm Proof Card contract before the Release Ledger.",
+    "The UI remains calm, compact, and one-next-action oriented."
+  ],
+  "simplicity_rules": [
+    "Do not add a new top-level navigation item for this release.",
+    "Keep proof visible before RFQ, award, booking, or AI automation.",
+    "Use soft status color only when it helps the buyer choose the next action.",
+    "Keep rental payment direct to the supplier in phase one."
+  ]
+}

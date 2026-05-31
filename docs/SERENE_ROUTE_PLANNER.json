@@ -1,0 +1,41 @@
+{
+  "version": "v144 Serene Route Planner",
+  "release_date": "2026-05-31",
+  "rule": "Every role gets one visible route, one proof reason, one money rule, and one next screen.",
+  "phase_one_guardrail": "No rental payment collection and no rental commission. Buyers pay suppliers directly while Heavyster earns listing SaaS revenue.",
+  "design_intent": "Keep Heavyster calm and global-ready by showing the safest route before deeper workflows.",
+  "routes": [
+    {
+      "role": "Buyer",
+      "start": "Search",
+      "proof": "Trust 88/100",
+      "money": "0% rental take",
+      "next": "Buyer Desk",
+      "promise": "Search, compare proof, and send one direct enquiry."
+    },
+    {
+      "role": "Supplier",
+      "start": "Listing",
+      "proof": "Proof 88/100",
+      "money": "USD 99/year per active listing",
+      "next": "Supplier Workbench",
+      "promise": "List one machine, verify proof, refresh availability, and activate paid SaaS."
+    },
+    {
+      "role": "Founder",
+      "start": "Demand",
+      "proof": "Supply gap 21",
+      "money": "USD 6,615 listing ARR",
+      "next": "Market Command",
+      "promise": "Choose the next market wedge by demand, supply, trust, and listing ARR."
+    }
+  ],
+  "acceptance": [
+    "Header shows Build v144.",
+    "Build Phase shows v144 Serene Route Planner.",
+    "The route planner appears directly under the Calm Action Bar.",
+    "Buyer, supplier, and founder states each show start, proof, money, and next screen.",
+    "Copy route explains one visible route and the 0% rental take guardrail.",
+    "The route planner remains compact on desktop and mobile."
+  ]
+}

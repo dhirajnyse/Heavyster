@@ -35,6 +35,9 @@ function assert(condition, message) {
   "docs/CALM_BACKEND_SCAFFOLD.json",
   "docs/SUPPLIER_ACCOUNT_SHELL.json",
   "docs/CALM_LAUNCH_ROOM.json",
+  "docs/CALM_PROOF_CARD.json",
+  "docs/CALM_ACTION_BAR.json",
+  "docs/SERENE_ROUTE_PLANNER.json",
   "docs/PRODUCT_SPEC.md",
   "docs/DATA_MODEL.md",
   "docs/API_SMOKE_FIXTURES.json",
@@ -61,6 +64,9 @@ const heavenlyFocus = JSON.parse(read("docs/HEAVENLY_FOCUS.json"));
 const calmBackendScaffold = JSON.parse(read("docs/CALM_BACKEND_SCAFFOLD.json"));
 const supplierAccountShell = JSON.parse(read("docs/SUPPLIER_ACCOUNT_SHELL.json"));
 const calmLaunchRoom = JSON.parse(read("docs/CALM_LAUNCH_ROOM.json"));
+const calmProofCard = JSON.parse(read("docs/CALM_PROOF_CARD.json"));
+const calmActionBar = JSON.parse(read("docs/CALM_ACTION_BAR.json"));
+const sereneRoutePlanner = JSON.parse(read("docs/SERENE_ROUTE_PLANNER.json"));
 
 assert(index.includes("Content-Security-Policy"), "index.html is missing the CSP meta tag.");
 assert(index.includes("Heavyster | Heavy Equipment Rental Listings"), "index.html has the wrong title.");
@@ -71,6 +77,9 @@ assert(index.includes('id="marketSearchAssist"'), "index.html is missing Marketp
 assert(index.includes('id="marketQuickPresets"'), "index.html is missing Marketplace Quick Presets.");
 assert(index.includes('id="marketResultBrief"'), "index.html is missing the simple Marketplace Result Brief.");
 assert(index.includes('id="marketDecisionCard"'), "index.html is missing the simple Marketplace Decision Card.");
+assert(index.includes('id="calmProofCard"'), "index.html is missing the Calm Proof Card.");
+assert(index.includes('id="calmActionBar"'), "index.html is missing the Calm Action Bar.");
+assert(index.includes('id="sereneRoutePlanner"'), "index.html is missing the Serene Route Planner.");
 assert(index.includes('id="buyerEnquiryReceipt"'), "index.html is missing the Buyer Enquiry Receipt.");
 assert(index.includes('id="marketScaleGuard"'), "index.html is missing the Marketplace Scale Guard.");
 assert(index.includes('id="catalogFocusBar"'), "index.html is missing the Catalog Focus Bar.");
@@ -144,8 +153,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260531-calm-launch-room-v141"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260531-calm-launch-room-v141"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260531-serene-route-planner-v144"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260531-serene-route-planner-v144"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -159,14 +168,14 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260531-heavyster-calm-launch-room-v141";'), "app.js DATA_VERSION is missing or changed.");
-assert(index.includes('id="build-phase"') && index.includes("Current version: v141") && index.includes("Temporary build page"), "index.html is missing the temporary Build Phase version page.");
-assert(index.includes('class="build-badge"') && index.includes("v141") && css.includes(".build-badge"), "Project is missing the visible Build v141 header badge.");
-assert(index.includes('class="build-cockpit-board"') && index.includes("v141 Calm Launch Room") && css.includes(".build-cockpit-board"), "Project is missing the v141 Build Cockpit.");
+assert(app.includes('const DATA_VERSION = "20260531-heavyster-serene-route-planner-v144";'), "app.js DATA_VERSION is missing or changed.");
+assert(index.includes('id="build-phase"') && index.includes("Current version: v144") && index.includes("Temporary build page"), "index.html is missing the temporary Build Phase version page.");
+assert(index.includes('class="build-badge"') && index.includes("v144") && css.includes(".build-badge"), "Project is missing the visible Build v144 header badge.");
+assert(index.includes('class="build-cockpit-board"') && index.includes("v144 Serene Route Planner") && css.includes(".build-cockpit-board"), "Project is missing the v144 Build Cockpit.");
 assert(index.includes('class="saas-blueprint"') && index.includes("v118 SaaS Foundation Blueprint") && css.includes(".saas-blueprint"), "Project is missing the v118 SaaS Foundation Blueprint.");
-assert(index.includes('class="release-ledger"') && index.includes("v141 Calm Launch Room") && css.includes(".release-ledger-card"), "Project is missing the v141 Release Ledger.");
+assert(index.includes('class="release-ledger"') && index.includes("v144 Serene Route Planner") && css.includes(".release-ledger-card"), "Project is missing the v144 Release Ledger.");
 assert(app.includes('label: "Build Phase"') && app.includes('"#build-phase"'), "app.js is missing Build Phase navigation metadata.");
-assert(css.includes(".build-phase-section") && css.includes(".build-version-pill") && css.includes(".build-status-grid") && css.includes(".build-control-strip") && css.includes(".build-cockpit-board") && css.includes(".saas-blueprint") && css.includes(".launch-readiness-gate") && css.includes(".backend-sprint-board") && css.includes(".supplier-account-mvp") && css.includes(".supplier-onboarding-runway") && css.includes(".backend-data-contract") && css.includes(".schema-api-blueprint") && css.includes(".api-smoke-console") && css.includes(".backend-fixture-pack") && css.includes(".backend-implementation-contract") && css.includes(".monetization-command-contract") && css.includes(".pilot-launch-command-contract") && css.includes(".global-launch-passport-contract") && css.includes(".simple-global-ux-contract") && css.includes(".calm-command-contract") && css.includes(".serenity-mode-contract") && css.includes(".heavenly-focus-contract") && css.includes(".calm-backend-scaffold") && css.includes(".supplier-account-shell") && css.includes(".calm-launch-room") && css.includes(".release-ledger"), "styles.css is missing Build Phase styling.");
+assert(css.includes(".build-phase-section") && css.includes(".build-version-pill") && css.includes(".build-status-grid") && css.includes(".build-control-strip") && css.includes(".build-cockpit-board") && css.includes(".saas-blueprint") && css.includes(".launch-readiness-gate") && css.includes(".backend-sprint-board") && css.includes(".supplier-account-mvp") && css.includes(".supplier-onboarding-runway") && css.includes(".backend-data-contract") && css.includes(".schema-api-blueprint") && css.includes(".api-smoke-console") && css.includes(".backend-fixture-pack") && css.includes(".backend-implementation-contract") && css.includes(".monetization-command-contract") && css.includes(".pilot-launch-command-contract") && css.includes(".global-launch-passport-contract") && css.includes(".simple-global-ux-contract") && css.includes(".calm-command-contract") && css.includes(".serenity-mode-contract") && css.includes(".heavenly-focus-contract") && css.includes(".calm-backend-scaffold") && css.includes(".supplier-account-shell") && css.includes(".calm-launch-room") && css.includes(".calm-proof-card-contract") && css.includes(".calm-action-bar-contract") && css.includes(".serene-route-planner-contract") && css.includes(".release-ledger"), "styles.css is missing Build Phase styling.");
 assert(workflow.includes("actions/configure-pages@v5") && workflow.includes("actions/upload-pages-artifact@v3") && workflow.includes("actions/deploy-pages@v4"), "Pages workflow is missing the official Pages deploy actions.");
 assert(workflow.includes("npm run check") && workflow.includes('find _site -name "*.zip" -delete') && workflow.includes('find _site -name "*.log" -delete'), "Pages workflow is missing static verification or artifact cleanup.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
@@ -215,6 +224,15 @@ assert(index.includes('id="supplier-account-shell"') && index.includes('id="copy
 assert(supplierAccountShell.version === "v140 Supplier Account Shell" && supplierAccountShell.rule?.includes("One supplier") && supplierAccountShell.shell_records?.length === 7 && supplierAccountShell.phase_one_guardrail?.includes("No rental payment") && supplierAccountShell.acceptance?.length >= 5, "docs/SUPPLIER_ACCOUNT_SHELL.json is missing the v140 account shell model.");
 assert(index.includes('id="calm-launch-room"') && index.includes('id="copyCalmLaunchRoomButton"') && app.includes("buildCalmLaunchRoomText") && css.includes(".calm-launch-room"), "Project is missing the v141 Calm Launch Room.");
 assert(calmLaunchRoom.version === "v141 Calm Launch Room" && calmLaunchRoom.rule?.includes("calmest") && calmLaunchRoom.launch_wedge?.anchor_suppliers === 6 && calmLaunchRoom.launch_wedge?.paid_ready_listings === 24 && calmLaunchRoom.phase_one_guardrail?.includes("No rental payment") && calmLaunchRoom.acceptance?.length >= 5, "docs/CALM_LAUNCH_ROOM.json is missing the v141 launch room model.");
+assert(index.includes('id="calmProofCard"') && app.includes("renderCalmProofCard") && app.includes("getCalmProofCardModel") && app.includes("handleCalmProofCardAction") && app.includes("buildCalmProofCardText") && css.includes(".calm-proof-card"), "Project is missing the v142 Calm Proof Card.");
+assert(index.includes('id="calm-proof-card-contract"') && index.includes('id="copyCalmProofCardButton"') && css.includes(".calm-proof-card-contract"), "Project is missing the v142 Calm Proof Card build contract.");
+assert(calmProofCard.version === "v142 Calm Proof Card" && calmProofCard.rule?.includes("one machine") && calmProofCard.phase_one_guardrail?.includes("No rental payment") && calmProofCard.acceptance?.length >= 5, "docs/CALM_PROOF_CARD.json is missing the v142 proof card model.");
+assert(index.includes('id="calmActionBar"') && index.includes('id="calmActionPrimaryButton"') && index.includes('id="copyCalmActionButton"') && app.includes("renderCalmActionBar") && app.includes("getCalmActionModel") && app.includes("handleCalmActionBarAction") && app.includes("buildCalmActionBarText") && css.includes(".calm-action-bar"), "Project is missing the v143 Calm Action Bar.");
+assert(index.includes('id="calm-action-bar-contract"') && index.includes('id="copyCalmActionBarButton"') && css.includes(".calm-action-bar-contract"), "Project is missing the v143 Calm Action Bar build contract.");
+assert(calmActionBar.version === "v143 Calm Action Bar" && calmActionBar.rule?.includes("one next action") && calmActionBar.phase_one_guardrail?.includes("No rental payment") && calmActionBar.acceptance?.length >= 5, "docs/CALM_ACTION_BAR.json is missing the v143 action bar model.");
+assert(index.includes('id="sereneRoutePlanner"') && index.includes('id="sereneRouteSteps"') && index.includes('id="sereneRoutePrimaryButton"') && index.includes('id="copySereneRouteButton"') && app.includes("renderSereneRoutePlanner") && app.includes("getSereneRoutePlannerModel") && app.includes("handleSereneRoutePlannerAction") && app.includes("buildSereneRoutePlannerText") && css.includes(".serene-route-planner"), "Project is missing the v144 Serene Route Planner.");
+assert(index.includes('id="serene-route-planner-contract"') && index.includes('id="copySereneRoutePlannerButton"') && css.includes(".serene-route-planner-contract"), "Project is missing the v144 Serene Route Planner build contract.");
+assert(sereneRoutePlanner.version === "v144 Serene Route Planner" && sereneRoutePlanner.rule?.includes("one visible route") && sereneRoutePlanner.phase_one_guardrail?.includes("No rental payment") && sereneRoutePlanner.routes?.length === 3 && sereneRoutePlanner.acceptance?.length >= 5, "docs/SERENE_ROUTE_PLANNER.json is missing the v144 route planner model.");
 assert(app.includes("renderSupplierListingStarter") && app.includes("getSupplierListingStarterModel") && app.includes("handleSupplierListingStarterAction") && app.includes("buildSupplierListingStarterText") && css.includes(".supplier-listing-starter"), "app.js is missing simple Supplier Listing Starter logic or styling.");
 assert(app.includes("renderPaidListingActivation") && app.includes("getPaidListingActivationModel") && app.includes("handlePaidListingActivationAction") && app.includes("buildPaidListingActivationText") && css.includes(".paid-listing-activation"), "app.js is missing Paid Listing Activation logic or styling.");
 assert(app.includes("renderSupplierActivationReceipt") && app.includes("getSupplierActivationReceiptModel") && app.includes("handleSupplierActivationReceiptAction") && app.includes("buildSupplierActivationReceiptText") && css.includes(".supplier-activation-receipt"), "app.js is missing Supplier Activation Receipt logic or styling.");

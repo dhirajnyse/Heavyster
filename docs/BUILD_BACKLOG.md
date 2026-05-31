@@ -35,6 +35,8 @@
 - Serenity Mode for making every screen feel calmer than the last release: role first, next move second, proof third, secondary features last
 - Heavenly Focus for making every release protect one calm path, one proof reason, one money rule, and one next action before adding more product power
 - Calm Backend Scaffold for making the production SaaS spine visible: supplier accounts, equipment listings, proof documents, listing subscriptions, direct enquiries, and admin review
+- Calm Proof Card for showing one selected machine, trust score, proof count, availability state, direct enquiry action, and 0% rental take before deeper workflows
+- Calm Action Bar for keeping one role, one proof reason, one money rule, and one next action visible across buyer, supplier, and founder paths
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -155,6 +157,9 @@
 - Basic admin review queue
 - Supplier Account Shell: one supplier signup shell, one public profile, one first listing, one proof checklist, one listing plan, one direct route, and one admin review state
 - Calm Launch Room: one market wedge, six anchor suppliers, 24 paid-ready listings, direct enquiries, response checks, and one calm expansion rule
+- Calm Proof Card: one selected machine, one trust score, one proof count, one availability status, one direct enquiry action, and 0% rental take before buyer complexity
+- Calm Action Bar: one visible role action, one proof reason, one money rule, and one next move before deeper workflow power
+- Serene Route Planner: one visible route for buyer, supplier, and founder with start, proof, money, and next screen before deeper workflow power
 
 ## Sprint 5: Billing MVP
 
