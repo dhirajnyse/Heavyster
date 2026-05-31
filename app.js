@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260531-heavyster-supplier-account-shell-v140";
+const DATA_VERSION = "20260531-heavyster-calm-launch-room-v141";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260531-supplier-account-shell-v140";
+const SIMPLE_UX_RELEASE = "20260531-calm-launch-room-v141";
 
 const listings = [
   {
@@ -1807,6 +1807,15 @@ function bindControls() {
       showToast("Supplier account shell copied.");
     } catch {
       showToast("Copy is blocked here, but the supplier account shell is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmLaunchRoomButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmLaunchRoomText());
+      showToast("Calm launch room copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm launch room is visible.");
     }
   });
 
@@ -17544,6 +17553,39 @@ function buildSupplierAccountShellText() {
     "- The admin can approve or hold the supplier without rental payment records.",
     "",
     "UI promise: the supplier sees one calm next action at a time, even when the SaaS backend grows."
+  ].join("\n");
+}
+
+function buildCalmLaunchRoomText() {
+  return [
+    "Heavyster Calm Launch Room",
+    "Version: v141 Calm Launch Room",
+    "Rule: launch only the calmest useful wedge.",
+    "Purpose: keep the founder, supplier, buyer, and revenue decision on one page before expanding countries or modules.",
+    "",
+    "Phase-one launch command:",
+    "- Start with UAE Lifting.",
+    "- Recruit 6 verified supplier accounts.",
+    "- Publish 24 paid-ready listings.",
+    "- Keep USD 9/month or USD 99/year per active listing.",
+    "- Keep 0% rental take and no rental payment custody.",
+    "",
+    "Launch gates:",
+    "- Supply: enough verified machines exist for the buyer search.",
+    "- Trust: proof documents and availability are clear enough to enquire.",
+    "- Revenue: paid listing count is visible before traffic is scaled.",
+    "- Response: supplier can receive and answer direct enquiries.",
+    "- Simplicity: buyer, supplier, and founder each see one next action.",
+    "",
+    "Calm launch sequence:",
+    "1. Confirm one market wedge.",
+    "2. Activate anchor suppliers.",
+    "3. Publish paid-ready listings.",
+    "4. Send direct enquiries.",
+    "5. Measure response and renewal risk.",
+    "6. Expand only when the wedge is simple.",
+    "",
+    "UI promise: Heavyster grows like a calm operating system, not a crowded marketplace."
   ].join("\n");
 }
 

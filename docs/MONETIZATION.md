@@ -260,3 +260,16 @@ The next monetization step is not a new fee. It is making the first paid-listing
 - Admin review before scaling traffic
 
 Do not add rental payment custody, escrow, or commission until the booking workflow is proven.
+
+## v141 Calm Launch Room
+
+The launch monetization model should stay narrow:
+
+- Pick one wedge: UAE Lifting
+- Target six anchor suppliers
+- Target 24 paid-ready listings
+- Charge USD 9/month or USD 99/year per active listing
+- Keep buyer enquiries direct to suppliers
+- Keep 0% rental take until the booking workflow is proven
+
+The founder should scale only after paid listings, proof clarity, response quality, and renewal risk are visible.

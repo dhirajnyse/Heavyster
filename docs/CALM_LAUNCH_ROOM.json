@@ -1,0 +1,43 @@
+{
+  "version": "v141 Calm Launch Room",
+  "date": "2026-05-31",
+  "rule": "Launch only the calmest useful wedge.",
+  "purpose": "Keep founder launch work focused on one market, one supplier target, one proof rule, one revenue rule, and one expansion decision.",
+  "phase_one_guardrail": "No rental payment collection. No rental commission. Supplier keeps rental payment direct. Heavyster earns listing SaaS revenue only.",
+  "launch_wedge": {
+    "market": "UAE Lifting",
+    "anchor_suppliers": 6,
+    "paid_ready_listings": 24,
+    "monthly_listing_price_usd": 9,
+    "annual_listing_price_usd": 99,
+    "rental_take": "0%"
+  },
+  "launch_gates": [
+    "Supply: enough verified machines exist for the buyer search.",
+    "Trust: proof documents and availability are clear enough to enquire.",
+    "Revenue: paid listing count is visible before traffic is scaled.",
+    "Response: supplier can receive and answer direct enquiries.",
+    "Simplicity: buyer, supplier, and founder each see one next action."
+  ],
+  "calm_sequence": [
+    "Confirm one market wedge.",
+    "Activate anchor suppliers.",
+    "Publish paid-ready listings.",
+    "Send direct enquiries.",
+    "Measure response and renewal risk.",
+    "Expand only when the wedge is simple."
+  ],
+  "acceptance": [
+    "Build Phase shows v141.",
+    "Founder can see the current launch wedge without opening a complex dashboard.",
+    "Launch room shows market, supply, inventory, buyer route, founder measure, and expansion rule.",
+    "Copy brief includes the no-rental-payment and 0% rental take guardrail.",
+    "The UI remains calm, card-light, and one-next-action oriented."
+  ],
+  "simplicity_rules": [
+    "Do not add more navigation for this release.",
+    "Keep the launch room inside Build Phase until production launch.",
+    "Make the founder decision visible in one scan.",
+    "Do not introduce rental payment collection in phase one."
+  ]
+}

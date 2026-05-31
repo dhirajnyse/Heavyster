@@ -98,6 +98,7 @@ This folder contains a static product prototype with:
 - Heavenly Focus for making every release protect one calm path, one proof reason, one money rule, and one next action before extra product power appears
 - Calm Backend Scaffold for making supplier accounts, listings, proof, subscriptions, direct enquiries, and admin review visible without adding UI weight
 - Supplier Account Shell for turning one rental company into one profile, one first listing, one proof checklist, one listing plan, and one direct enquiry route
+- Calm Launch Room for choosing one launch wedge, anchor suppliers, paid-ready listings, direct enquiries, response checks, and calm expansion before scaling
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board
@@ -120,6 +121,7 @@ This folder contains a static product prototype with:
 - `docs/HEAVENLY_FOCUS.json`
 - `docs/CALM_BACKEND_SCAFFOLD.json`
 - `docs/SUPPLIER_ACCOUNT_SHELL.json`
+- `docs/CALM_LAUNCH_ROOM.json`
 - `docs/DATA_MODEL.md`
 - `docs/BUILD_BACKLOG.md`
 - `docs/BRAND.md`

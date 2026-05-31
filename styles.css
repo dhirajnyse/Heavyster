@@ -16737,7 +16737,8 @@ button.admin-row {
 }
 
 .calm-backend-scaffold,
-.supplier-account-shell {
+.supplier-account-shell,
+.calm-launch-room {
   display: grid;
   grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
   gap: 10px;
@@ -16756,8 +16757,16 @@ button.admin-row {
     linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 252, 246, 0.94) 48%, rgba(238, 246, 252, 0.9));
 }
 
+.calm-launch-room {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(6, minmax(122px, 0.66fr));
+  border-color: rgba(40, 93, 134, 0.32);
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(255, 255, 255, 0.96) 48%, rgba(232, 248, 245, 0.92));
+}
+
 .calm-backend-scaffold article,
-.supplier-account-shell article {
+.supplier-account-shell article,
+.calm-launch-room article {
   display: grid;
   align-content: start;
   gap: 8px;
@@ -16769,14 +16778,16 @@ button.admin-row {
 }
 
 .calm-backend-scaffold-lead,
-.supplier-account-shell-lead {
+.supplier-account-shell-lead,
+.calm-launch-room-lead {
   grid-row: span 2;
   border-color: rgba(25, 113, 109, 0.42) !important;
   background: var(--teal-soft) !important;
 }
 
 .calm-backend-scaffold-acceptance,
-.supplier-account-shell-acceptance {
+.supplier-account-shell-acceptance,
+.calm-launch-room-acceptance {
   grid-column: span 2;
   border-color: rgba(40, 93, 134, 0.42) !important;
   background: var(--blue-soft) !important;
@@ -16787,8 +16798,14 @@ button.admin-row {
   background: var(--amber-soft) !important;
 }
 
+.calm-launch-room-acceptance {
+  border-color: rgba(25, 113, 109, 0.38) !important;
+  background: var(--teal-soft) !important;
+}
+
 .calm-backend-scaffold span,
-.supplier-account-shell span {
+.supplier-account-shell span,
+.calm-launch-room span {
   color: var(--teal);
   font-size: 0.72rem;
   font-weight: 950;
@@ -16796,7 +16813,8 @@ button.admin-row {
 }
 
 .calm-backend-scaffold strong,
-.supplier-account-shell strong {
+.supplier-account-shell strong,
+.calm-launch-room strong {
   color: var(--ink);
   font-size: 1.02rem;
   line-height: 1.18;
@@ -16804,19 +16822,22 @@ button.admin-row {
 }
 
 .calm-backend-scaffold-lead strong,
-.supplier-account-shell-lead strong {
+.supplier-account-shell-lead strong,
+.calm-launch-room-lead strong {
   font-size: 1.22rem;
 }
 
 .calm-backend-scaffold p,
-.supplier-account-shell p {
+.supplier-account-shell p,
+.calm-launch-room p {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.42;
 }
 
 .calm-backend-scaffold b,
-.supplier-account-shell b {
+.supplier-account-shell b,
+.calm-launch-room b {
   width: fit-content;
   margin-top: auto;
   padding: 6px 10px;
@@ -16829,13 +16850,16 @@ button.admin-row {
 .calm-backend-scaffold-lead b,
 .calm-backend-scaffold-acceptance b,
 .supplier-account-shell-lead b,
-.supplier-account-shell-acceptance b {
+.supplier-account-shell-acceptance b,
+.calm-launch-room-lead b,
+.calm-launch-room-acceptance b {
   background: var(--coal);
   color: #ffffff;
 }
 
 .calm-backend-scaffold-acceptance button,
-.supplier-account-shell-acceptance button {
+.supplier-account-shell-acceptance button,
+.calm-launch-room-acceptance button {
   min-height: 42px;
   margin-top: auto;
 }
@@ -17714,6 +17738,7 @@ button.admin-row {
   .heavenly-focus-contract,
   .calm-backend-scaffold,
   .supplier-account-shell,
+  .calm-launch-room,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -18232,6 +18257,7 @@ button.admin-row {
   .heavenly-focus-contract,
   .calm-backend-scaffold,
   .supplier-account-shell,
+  .calm-launch-room,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -18402,7 +18428,9 @@ button.admin-row {
   .calm-backend-scaffold-lead,
   .calm-backend-scaffold-acceptance,
   .supplier-account-shell-lead,
-  .supplier-account-shell-acceptance {
+  .supplier-account-shell-acceptance,
+  .calm-launch-room-lead,
+  .calm-launch-room-acceptance {
     grid-row: auto;
     grid-column: auto;
   }

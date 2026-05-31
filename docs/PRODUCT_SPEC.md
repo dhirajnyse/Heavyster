@@ -269,3 +269,16 @@ The first production supplier flow should stay intentionally small:
 - One admin review state for approve, hold, proof request, or risky inventory pause
 
 The user-facing rule is still calm: show one next supplier action at a time.
+
+## v141 Calm Launch Room
+
+The next product step is a founder launch room that prevents premature expansion:
+
+- Start with one wedge: UAE Lifting
+- Recruit six verified anchor suppliers before scaling buyer traffic
+- Publish 24 paid-ready listings with proof, availability, and direct route clarity
+- Keep the phase-one money rule visible: USD 9/month or USD 99/year per active listing, 0% rental take
+- Measure supplier response, proof gaps, renewal risk, and demand signals before adding more countries or categories
+- Expand only when the wedge is simple enough to operate repeatedly
+
+The product rule is calm growth: one wedge, one command, one next decision.

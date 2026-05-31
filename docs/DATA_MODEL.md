@@ -1993,3 +1993,16 @@ Before full authentication and storage are connected, the first supplier account
 - AdminReview: supplier approval, listing approval, proof request, risk hold, and support note
 
 This shell keeps production work focused on account ownership and paid-listing activation while rental payments stay outside Heavyster.
+
+## v141 Calm Launch Room
+
+The founder launch model should stay small and repeatable:
+
+- LaunchWedge: market, category, launch status, founder command, and expansion rule
+- AnchorSupplierTarget: supplier count, target market, proof requirement, invite status, and activation state
+- PaidReadyListingTarget: target count, pricing rule, proof rule, visibility state, and revenue projection
+- DirectEnquiryMeasure: enquiry route, response state, response time, buyer clarity, and follow-up state
+- LaunchGate: supply, trust, revenue, response, and simplicity status
+- ExpansionDecision: hold, repair, launch, or repeat decision with reason and timestamp
+
+No phase-one record should collect rental payment, escrow, booking commission, or supplier payout data.

@@ -154,6 +154,7 @@
 - Enquiry confirmation screen
 - Basic admin review queue
 - Supplier Account Shell: one supplier signup shell, one public profile, one first listing, one proof checklist, one listing plan, one direct route, and one admin review state
+- Calm Launch Room: one market wedge, six anchor suppliers, 24 paid-ready listings, direct enquiries, response checks, and one calm expansion rule
 
 ## Sprint 5: Billing MVP
 
