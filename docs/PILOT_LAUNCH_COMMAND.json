@@ -1,0 +1,31 @@
+{
+  "version": "v133 Pilot Launch Command",
+  "pilot_market": "UAE Lifting",
+  "launch_rule": "Launch traffic only after supply, proof, freshness, and response gates pass.",
+  "targets": {
+    "anchor_suppliers": 6,
+    "paid_listings": 24,
+    "annual_listing_arr_usd": 2376,
+    "verified_proof_packs": 18,
+    "availability_freshness_checks": 12,
+    "direct_enquiry_drills": 3
+  },
+  "action_order": [
+    "Recruit six anchor lifting suppliers with proof-first outreach.",
+    "Publish twenty-four paid listings at USD 99 per year or USD 9 per month per active machine.",
+    "Run three controlled direct enquiry drills and measure supplier response.",
+    "Review success-fee readiness only after quote, award, or booking workflow proof exists."
+  ],
+  "guardrails": [
+    "Buyer pays supplier directly in phase one.",
+    "Heavyster earns listing SaaS first, not rental commission.",
+    "Do not scale paid traffic until supply, proof, and availability freshness are visible.",
+    "Keep the 1% confirmed-booking success fee as a phase-two option after workflow proof."
+  ],
+  "success_definition": {
+    "market": "UAE Lifting has enough verified supply to receive buyer traffic without looking empty.",
+    "supplier": "At least six rental yards have live proof-backed listings and direct enquiry routes.",
+    "revenue": "Twenty-four active listings create USD 2,376 modeled annual listing ARR.",
+    "trust": "Eighteen proof packs and twelve freshness checks make the route safe enough for serious enquiries."
+  }
+}

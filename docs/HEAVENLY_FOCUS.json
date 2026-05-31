@@ -1,0 +1,54 @@
+{
+  "version": "v138 Heavenly Focus",
+  "date": "2026-05-31",
+  "purpose": "Keep Heavyster calm, simple, global-ready, and monetization-disciplined while the product grows.",
+  "command": "Show one calm path, one proof reason, one money rule, and one next action.",
+  "rule": "Stillness wins: breathe, choose, act, then expand only if the action became easier.",
+  "focus_steps": [
+    {
+      "name": "One path",
+      "description": "Start each buyer, supplier, or founder screen from the cleanest route instead of showing every module at once."
+    },
+    {
+      "name": "One proof",
+      "description": "Show the trust reason before asking the user to make a decision."
+    },
+    {
+      "name": "One money rule",
+      "description": "Keep phase one as active listing SaaS revenue, direct supplier payment, and 0% rental take."
+    },
+    {
+      "name": "One action",
+      "description": "Make the next useful click obvious before any secondary option appears."
+    }
+  ],
+  "role_routes": [
+    {
+      "role": "Buyer",
+      "route": "Use the cleanest machine path",
+      "proof": "Verified machine, availability, supplier route, and copy-ready direct enquiry."
+    },
+    {
+      "role": "Supplier",
+      "route": "Publish one paid listing",
+      "proof": "Profile, proof, availability, revenue, and lead route in one calm desk."
+    },
+    {
+      "role": "Founder",
+      "route": "Fill supply before traffic",
+      "proof": "Demand, proof, supply gap, direct enquiry value, and listing ARR are visible."
+    }
+  ],
+  "ui_rule": "Every release should reduce visible effort before it increases visible power.",
+  "global_rule": "Every country should reuse the same calm buyer, supplier, and founder paths before local complexity is added.",
+  "monetization_rule": "Free supplier profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% confirmed-booking success fee only after workflow proof.",
+  "ai_rule": "AI appears only when it makes the next action easier by summarizing proof, drafting a message, routing a lead, or explaining the next step.",
+  "acceptance": [
+    "Header shows Build v138.",
+    "Build Phase shows Current version: v138.",
+    "Pricing shows the Heavenly Focus panel below Serenity Mode.",
+    "Build Phase shows the Heavenly Focus contract before the Release Ledger.",
+    "Copy focus brief explains buyer, supplier, founder, money, AI, global launch, and phase-one monetization rules.",
+    "Static checks enforce v138 version, cache tokens, UI hooks, docs, and styling."
+  ]
+}

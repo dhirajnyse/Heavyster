@@ -1,0 +1,80 @@
+{
+  "version": "v134 Global Launch Passport",
+  "purpose": "Keep Heavyster global-ready without creating country-specific product forks.",
+  "rule": "Global product, local trust, direct payment.",
+  "currency_rule": "Use USD 9/month or USD 99/year per active listing as the phase-one billing anchor. Add local currency display later without changing the core price model.",
+  "phase_one_model": {
+    "supplier_profile": "Free profile claim and verification readiness",
+    "active_listing_monthly_usd": 9,
+    "active_listing_annual_usd": 99,
+    "rental_take": "0%",
+    "payment_flow": "Buyer pays rental company directly"
+  },
+  "launch_queue": [
+    {
+      "market": "UAE Lifting",
+      "country": "United Arab Emirates",
+      "focus": "Close proof-first crane and lifting supply before wider traffic.",
+      "billing_anchor": "USD",
+      "local_display_later": "AED",
+      "status": "Pilot"
+    },
+    {
+      "market": "India Roadwork",
+      "country": "India",
+      "focus": "Recruit roadwork suppliers only after demand and proof are visible.",
+      "billing_anchor": "USD",
+      "local_display_later": "INR",
+      "status": "Next"
+    },
+    {
+      "market": "UK Lifting",
+      "country": "United Kingdom",
+      "focus": "Use local proof labels while keeping the same listing object.",
+      "billing_anchor": "USD",
+      "local_display_later": "GBP",
+      "status": "Queue"
+    },
+    {
+      "market": "USA Power",
+      "country": "United States",
+      "focus": "Treat regional demand as a separate wedge, not a new product.",
+      "billing_anchor": "USD",
+      "local_display_later": "USD",
+      "status": "Queue"
+    }
+  ],
+  "single_product_objects": [
+    "SupplierAccount",
+    "SupplierProfile",
+    "EquipmentListing",
+    "ProofDocumentSet",
+    "ListingSubscription",
+    "DirectEnquiry",
+    "AdminReview"
+  ],
+  "trust_checklist": [
+    "Company profile",
+    "Equipment proof",
+    "Documents",
+    "Availability",
+    "Lead routing",
+    "Billing"
+  ],
+  "environment_gates": [
+    "Prototype: static GitHub Pages demo with simple role paths.",
+    "Staging: supplier account, fixture API, uploads placeholder, billing status, admin review.",
+    "Production: real auth, database, storage, billing, permissions, lead logs, and support notes."
+  ],
+  "guardrails": [
+    "Localize wording, proof labels, and currency display; do not fork the product.",
+    "Keep USD listing SaaS as the phase-one billing anchor until local payment operations are proven.",
+    "Do not collect rental payments or expose rental commission in phase one.",
+    "Open a new country only when supply, proof, availability freshness, and direct response are measurable."
+  ],
+  "acceptance": [
+    "One country can launch without a custom product fork.",
+    "Every buyer-visible market uses the same listing, proof, pricing, and direct enquiry logic.",
+    "Build Phase and Pricing both explain the global passport before the product leaves prototype."
+  ]
+}

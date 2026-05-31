@@ -1,0 +1,67 @@
+{
+  "version": "v137 Serenity Mode",
+  "purpose": "Make Heavyster feel calm, premium, and simple as the marketplace scales across countries, roles, suppliers, and AI-assisted workflows.",
+  "rule": "Breathe first: show the role, the next move, and the proof before any secondary feature.",
+  "product_feel": [
+    "Calm operating room, not crowded marketplace.",
+    "One active role and one useful next action.",
+    "Visible proof before extra choice.",
+    "Soft contrast, stable spacing, and clear decision receipts.",
+    "No AI noise and no country fork until the core workflow is proven."
+  ],
+  "role_lanes": [
+    {
+      "role": "Buyer",
+      "path": "Find one clean path",
+      "next_action": "Copy enquiry",
+      "success": "Buyer sees the strongest machine, proof, availability, and direct supplier route first."
+    },
+    {
+      "role": "Supplier",
+      "path": "Publish with confidence",
+      "next_action": "Confirm availability",
+      "success": "Supplier can manage listing, proof, freshness, revenue, and lead response without an admin maze."
+    },
+    {
+      "role": "Founder",
+      "path": "Grow without noise",
+      "next_action": "Open Build Phase",
+      "success": "Founder expands only where demand, supply gap, trust, and paid listing ARR are visible."
+    }
+  ],
+  "design_tokens": [
+    {
+      "label": "Contrast",
+      "value": "Soft",
+      "detail": "Quiet surfaces with strong readable text."
+    },
+    {
+      "label": "Spacing",
+      "value": "Breathing",
+      "detail": "Enough distance between controls so the next action is easy to see."
+    },
+    {
+      "label": "Proof",
+      "value": "Teal",
+      "detail": "Trust, verification, and readiness use a calm proof color."
+    },
+    {
+      "label": "Revenue",
+      "value": "Warm",
+      "detail": "Listing money stays visible but never pushy."
+    },
+    {
+      "label": "AI",
+      "value": "Quiet until useful",
+      "detail": "AI appears only when it saves effort or clarifies the next action."
+    }
+  ],
+  "ai_rule": "AI may draft, summarize, route, or explain only when it removes manual work or shortens a decision.",
+  "monetization_rule": "Free supplier profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% confirmed-booking success fee only after workflow proof.",
+  "acceptance": [
+    "Pricing shows the Serenity Mode panel below the Calm Command Center.",
+    "Build Phase shows the Serenity Mode contract before the Release Ledger.",
+    "Copy serenity brief explains buyer, supplier, founder, design, AI, and phase-one monetization rules.",
+    "Static checks enforce v137 version, cache tokens, UI hooks, docs, and styling."
+  ]
+}

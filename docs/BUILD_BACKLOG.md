@@ -27,6 +27,13 @@
 - Supplier Lead Desk with direct enquiry scoring, response urgency, and copy-ready replies
 - 3D logo and brand system
 - Pricing calculator
+- Monetization Command for the recommended free profile, paid active listings, optional future yard packs, and 1% only-after-proof rule
+- Pilot Launch Command for the first real market: six suppliers, twenty-four paid listings, proof packs, freshness checks, direct enquiry drills, and a no-rental-payment guardrail
+- Global Launch Passport for country queue, USD billing anchor, local trust labels, environment gates, and direct-payment guardrails before multi-country scale
+- Simple Global UX Guard for keeping every country, AI feature, and workflow inside one screen, one role, one next action
+- Calm Command Center for making buyer, supplier, founder, AI, global launch, and monetization work feel like one peaceful next move instead of a crowded product
+- Serenity Mode for making every screen feel calmer than the last release: role first, next move second, proof third, secondary features last
+- Heavenly Focus for making every release protect one calm path, one proof reason, one money rule, and one next action before adding more product power
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -136,6 +143,9 @@
 - Command Center role launcher so large-feature UX stays simple as the marketplace grows
 - Universal Command Palette connected to listings, suppliers, market opportunities, and workflow modules so power does not make the interface feel heavy
 - Guided workflow movement connected to role paths so users always have a safe next step
+- Global Launch Passport connected to pricing, Build Phase, Market Signal Matrix, and launch gates so each country reuses one listing SaaS model before any local complexity
+- Simple Global UX Guard connected to pricing, Build Phase, navigation, and AI rules so power grows without making the interface feel heavy
+- Calm Command Center connected to pricing, Build Phase, and role workspaces so every new capability must remove noise before it adds power
 - Workflow navigation telemetry connected to role, menu search, module, and active-section state so the team can see which rooms users actually use
 - Saved demand request flow for zero-result searches
 - Supplier profile page
@@ -146,6 +156,11 @@
 ## Sprint 5: Billing MVP
 
 - Listing plan model
+- Monetization Command wired into billing so public pricing stays USD 9/month or USD 99/year per active listing
+- Pilot Launch Command connected to listing activation so pricing, supplier count, proof coverage, and first-market ARR stay aligned
+- Global Launch Passport connected to billing and launch gates so every country uses one listing SaaS model before any local pricing or payment complexity is added
+- Simple Global UX Guard connected to billing screens so suppliers always see one paid action, two visible price options, and the 0% rental take rule
+- Calm Command Center connected to billing screens so the supplier sees one calm activation path before any annual pack, success fee, or AI workflow is introduced
 - Monthly and annual plan selection
 - Billing status states
 - Active, paused, expired listing controls
@@ -161,6 +176,10 @@
 - SEO pages for key categories and regions
 - Market Page Factory publishing workflow for demand-led category and region pages
 - Market Launch Room sprint history, supplier invite status, proof completion, and first-week ARR review
+- Pilot Launch Command history that compares target suppliers, paid listings, proof packs, freshness checks, and enquiry drills against actual pilot results
+- Global Launch Passport history that compares country queues, currency display decisions, proof labels, environment readiness, and direct-payment discipline
+- Simple Global UX Guard history that compares each release against the one screen, one role, one next action budget before more workflow depth is allowed
+- Calm Command Center history that records whether each release removed noise, clarified the active role, and kept AI, pricing, and global launch inside one peaceful next action
 - Market Twin history that compares predicted listing ARR, launch verdict, trust risk, and supplier response against actual launch results
 - Liquidity Flywheel history that tracks bottleneck fixes and market compounding over time
 - Founder Autopilot history that tracks completed commands, owner velocity, and ARR unlocked from each bottleneck repair

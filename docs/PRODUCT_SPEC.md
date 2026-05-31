@@ -54,6 +54,8 @@ Marketplace:
 - Supplier Workbench that gives rental yards one revenue desk across Studio, Storefront, Fleet Import, Proof Vault, Revenue Desk, Lead Desk, Account Health, and Yard Freshness
 - Universal Command Palette that lets users jump to equipment, suppliers, markets, pricing, activation, and workflow modules from one search surface
 - Compact searchable workflow launcher with role filters that keeps buyer, supplier, and founder modules organized without turning the header into a wall of links
+- Serenity Mode that keeps each screen calm by showing role, next move, proof, and one action before secondary features or AI assistance
+- Heavenly Focus that protects one calm path, one proof reason, one money rule, and one next action before any extra feature appears
 - Sort by availability, verification, region, or equipment name
 - Compact row view for large catalogs
 - Buyer Fit Score that ranks each listing against current search, region, category, availability, verification, and proof
@@ -94,6 +96,9 @@ Marketplace:
 - Listing Activation Room that turns a supplier commitment into paid listing shells, activation queue, billing gates, publish readiness, and copy-ready go-live plan
 - Trust & Revenue Ledger that combines listing ARR, direct enquiry pipeline, trust debt, renewal exposure, and market scale gates
 - Market Signal Matrix that scans region-by-category demand, live supply, verified supply, proof strength, supply gaps, and modeled listing ARR before choosing the next wedge
+- Global Launch Passport that keeps country expansion simple with one listing SaaS model, one USD billing anchor, local proof labels, prototype/staging/production gates, and direct buyer-to-supplier rental payment
+- Simple Global UX Guard that keeps every release inside one screen, one role, one next action, with short navigation, no country forks, AI only when it removes work, and phase-one rental take fixed at 0%
+- Calm Command Center that makes the growing product feel peaceful by showing one active role, one next action, seven reusable global objects, simple listing monetization, and AI only when it removes work
 - Demand request capture when a buyer cannot find the right machine
 - Supplier card
 - Equipment detail page
@@ -144,6 +149,8 @@ Founder Admin:
 - Supplier Commitment Room for closing the right listing package without introducing rental commission
 - Listing Activation Room for moving accepted listing packages into paid listings, billing readiness, proof gates, and direct enquiry routes
 - Trust & Revenue Ledger for deciding whether a market can scale, needs trust repair, or should protect renewal revenue first
+- Global Launch Passport for deciding which countries can use the same product model next without adding local payment, currency, or proof complexity too early
+- Simple Global UX Guard for deciding whether a new country, AI feature, workflow, or backend surface actually simplifies the next user action before it is allowed into the product
 - Founder Morning Brief for the first operating read before the team opens growth, supplier calls, or category traffic
 - Founder Daily Moves for the daily operating queue across supplier saves, launch verdicts, activation gaps, trust controls, and market-matrix wedges
 - Founder Supplier Call Sheet for who to call, what proof to use, what listing package to offer, and how to keep payment direct

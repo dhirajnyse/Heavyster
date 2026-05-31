@@ -41,8 +41,8 @@ This folder contains a static product prototype with:
 - Supplier Account Starter that turns company profile, proof, first machine, paid listing, and direct lead route into one simple setup path
 - Supplier Listing Starter that turns one selected machine into a proof, availability, and USD 99/year listing brief before deeper setup
 - Supplier Activation Receipt that confirms billable listings, listing SaaS value, proof score, freshness gaps, and direct rental payment rules inside Supplier Studio
-- Paid Listing Activation that turns supplier count, monthly SaaS, annual SaaS, and 0% rental take into a copy-ready approval note
-- Temporary Build Phase page, header build badge, Build Cockpit, SaaS Foundation Blueprint, Launch Readiness Gate, Backend Sprint Board, Supplier Account MVP Preview, Supplier Onboarding Runway, Backend Data Contract, Schema + API Blueprint, API Smoke Console, Backend Fixture Pack, Backend Implementation Contract, and Release Ledger that show the current release version, latest upload focus, test pass, production gaps, next backend sprint, and delete-after-launch rule
+- Paid Listing Activation, Monetization Command, Pilot Launch Command, Global Launch Passport, Simple Global UX Guard, Calm Command Center, Serenity Mode, and Heavenly Focus that turn supplier count, free profile, USD 9/month, USD 99/year, first-market launch gates, country queue, local proof labels, optional future yard packs, one-screen UX rules, calm next actions, and 0% rental take into copy-ready operating notes
+- Temporary Build Phase page, header build badge, Build Cockpit, SaaS Foundation Blueprint, Launch Readiness Gate, Backend Sprint Board, Supplier Account MVP Preview, Supplier Onboarding Runway, Backend Data Contract, Schema + API Blueprint, API Smoke Console, Backend Fixture Pack, Backend Implementation Contract, Monetization Command, Pilot Launch Command, Global Launch Passport, Simple Global UX Guard, Calm Command Center, Serenity Mode, Heavenly Focus, and Release Ledger that show the current release version, latest upload focus, test pass, production gaps, next backend sprint, monetization rule, first launch rule, global expansion rule, simplicity guard, calm command rule, heavenly focus rule, and delete-after-launch rule
 - Universal Command Palette for finding equipment, suppliers, markets, and workflow modules from one search layer
 - Compact searchable workflow launcher with role filters so buyer, supplier, and founder modules stay easy to reach without crowding the header
 - Compact catalog row view for large inventory UX
@@ -92,6 +92,10 @@ This folder contains a static product prototype with:
 - Listing Activation Room for turning paid listing commitments into activation queues, billing gates, publish readiness, and copy-ready go-live plans
 - Trust & Revenue Ledger for showing listing ARR, direct enquiry pipeline, trust debt, renewal exposure, and scale gates in one founder view
 - Market Signal Matrix for scanning region-by-category demand, visible supply, proof strength, supply gap, and modeled listing ARR before opening the next wedge
+- Global Launch Passport for scaling into UAE, India, UK, USA, and later countries through one listing SaaS product, one USD pricing anchor, local trust labels, environment gates, and direct buyer-to-supplier rental payment
+- Simple Global UX Guard for enforcing one screen, one role, one next action, a short navigation budget, no product forks, AI only when it removes manual work, and 0% rental take in phase one
+- Serenity Mode for keeping Heavyster calm, spacious, proof-first, and easy to use as countries, suppliers, equipment, and AI workflows expand
+- Heavenly Focus for making every release protect one calm path, one proof reason, one money rule, and one next action before extra product power appears
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board
@@ -105,6 +109,13 @@ This folder contains a static product prototype with:
 
 - `docs/PRODUCT_SPEC.md`
 - `docs/MONETIZATION.md`
+- `docs/MONETIZATION_COMMAND.json`
+- `docs/PILOT_LAUNCH_COMMAND.json`
+- `docs/GLOBAL_LAUNCH_PASSPORT.json`
+- `docs/SIMPLE_GLOBAL_UX_GUARD.json`
+- `docs/CALM_COMMAND_CENTER.json`
+- `docs/SERENITY_MODE.json`
+- `docs/HEAVENLY_FOCUS.json`
 - `docs/DATA_MODEL.md`
 - `docs/BUILD_BACKLOG.md`
 - `docs/BRAND.md`

@@ -1,0 +1,50 @@
+{
+  "version": "v132 Monetization Command",
+  "recommended_model": "Free supplier profile plus paid active equipment listings before any rental success fee.",
+  "phase_one": {
+    "supplier_profile": {
+      "price": "Free",
+      "purpose": "Let rental companies claim identity, branch, regions, contact routes, and proof readiness before paid listing activation."
+    },
+    "active_listing": {
+      "monthly_usd": 9,
+      "annual_usd": 99,
+      "unit": "per active equipment listing",
+      "includes": [
+        "equipment page",
+        "supplier profile visibility",
+        "photos and document proof fields",
+        "availability status",
+        "direct enquiry route"
+      ]
+    },
+    "payment_rule": "Buyer pays rental company directly. Heavyster collects listing SaaS only."
+  },
+  "phase_one_expansion": {
+    "yard_pack_timing": "Offer private annual yard packs only after supplier onboarding, fleet import, and billing status are working.",
+    "public_price_rule": "Keep USD 9 monthly and USD 99 yearly per active listing as the public price anchor.",
+    "starter_pack_example": {
+      "minimum_active_listings": 10,
+      "annual_usd_per_listing": 79,
+      "use_case": "Founder-discretion annual close for verified rental yards with many machines."
+    }
+  },
+  "phase_two": {
+    "success_fee": "1% confirmed-booking success fee",
+    "only_after": [
+      "quote acceptance proof",
+      "direct enquiry trail",
+      "award workflow proof",
+      "booking confirmation",
+      "deposit or payment workflow value"
+    ],
+    "supplier_protection": "Keep listing subscription separate and do not charge a booking fee without clear workflow value."
+  },
+  "guardrails": [
+    "No rental payment collection in phase one.",
+    "No escrow, deposit, or rental commission route in phase one.",
+    "Do not hide the simple per-listing price behind confusing packages.",
+    "Do not scale buyer traffic into markets where supply, proof, or response readiness is weak."
+  ],
+  "why_it_wins": "Heavy equipment rental is operational and trust-heavy. Heavyster should first sell verified visibility, proof, freshness, and direct enquiries before becoming a transaction operator."
+}

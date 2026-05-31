@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260530-heavyster-backend-implementation-contract-v131";
+const DATA_VERSION = "20260531-heavyster-heavenly-focus-v138";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260530-backend-implementation-contract-v131";
+const SIMPLE_UX_RELEASE = "20260531-heavenly-focus-v138";
 
 const listings = [
   {
@@ -1201,6 +1201,7 @@ function bindControls() {
     state.listingCount = Number(event.target.value);
     saveState();
     renderPricingCalculator();
+    renderMonetizationCommand();
     renderPaidListingActivation();
     renderSupplierActivationReceipt();
   });
@@ -1728,6 +1729,69 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyMonetizationCommandButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildMonetizationCommandText());
+      showToast("Monetization command copied.");
+    } catch {
+      showToast("Copy is blocked here, but the monetization command is visible.");
+    }
+  });
+
+  document.querySelector("#copyPilotLaunchCommandButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildPilotLaunchCommandText());
+      showToast("Pilot launch command copied.");
+    } catch {
+      showToast("Copy is blocked here, but the pilot launch command is visible.");
+    }
+  });
+
+  document.querySelector("#copyGlobalLaunchPassportButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildGlobalLaunchPassportText());
+      showToast("Global launch passport copied.");
+    } catch {
+      showToast("Copy is blocked here, but the global passport is visible.");
+    }
+  });
+
+  document.querySelector("#copySimpleGlobalUxGuardButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSimpleGlobalUxGuardText());
+      showToast("Simple global UX guard copied.");
+    } catch {
+      showToast("Copy is blocked here, but the UX guard is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmCommandCenterButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmCommandCenterText());
+      showToast("Calm command center copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm command center is visible.");
+    }
+  });
+
+  document.querySelector("#copySerenityModeButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSerenityModeText());
+      showToast("Serenity mode brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the serenity brief is visible.");
+    }
+  });
+
+  document.querySelector("#copyHeavenlyFocusButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildHeavenlyFocusText());
+      showToast("Heavenly focus brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the heavenly focus brief is visible.");
+    }
+  });
+
   document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
     toggleShortlist(getSelectedListing().id);
   });
@@ -2014,6 +2078,13 @@ function render() {
   renderMarketSignalMatrix();
   renderMarketMaker();
   renderPaidListingActivation();
+  renderMonetizationCommand();
+  renderPilotLaunchCommand();
+  renderGlobalLaunchPassport();
+  renderSimpleGlobalUxGuard();
+  renderCalmCommandCenter();
+  renderSerenityModePanel();
+  renderHeavenlyFocusPanel();
   renderPricingCalculator();
   renderCommissionCalculator();
   renderWorkflowMenu();
@@ -16427,6 +16498,7 @@ async function handlePaidListingActivationAction(action, model) {
     state.listingCount = Math.min(80, Math.max(1, model.supplierListingCount));
     saveState();
     renderPricingCalculator();
+    renderMonetizationCommand();
     renderPaidListingActivation();
     scrollToPageTarget(document.querySelector("#pricing"), 110);
     showToast("Pricing now matches the supplier's active listing count.");
@@ -16467,6 +16539,926 @@ function buildPaidListingActivationText(model = getPaidListingActivationModel())
     "Payment rule: supplier keeps rental payment direct; Heavyster earns listing SaaS revenue only in phase one.",
     "Phase two rule: consider 1% confirmed-booking success fee only after quote, enquiry, or payment workflow proof exists.",
     `Next move: ${model.activationReady ? "activate paid listings" : "close proof, availability, or count alignment first"}`
+  ].join("\n");
+}
+
+function renderMonetizationCommand() {
+  const root = document.querySelector("#monetizationCommand");
+  if (!root) return;
+  const model = getMonetizationCommandModel();
+
+  root.innerHTML = `
+    <article class="monetization-command-main">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.headline)}</strong>
+      <p>${escapeHtml(model.detail)}</p>
+      <b>${escapeHtml(model.recommendation)}</b>
+    </article>
+    <div class="monetization-command-steps">
+      ${model.steps.map((step) => `
+        <article class="${step.primary ? "is-primary" : ""}">
+          <span>${escapeHtml(step.label)}</span>
+          <strong>${escapeHtml(step.value)}</strong>
+          <small>${escapeHtml(step.detail)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="monetization-command-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-monetization-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-monetization-action]").forEach((button) => {
+    button.addEventListener("click", () => handleMonetizationCommandAction(button.dataset.monetizationAction, model));
+  });
+}
+
+function getMonetizationCommandModel() {
+  const selected = getSelectedListing();
+  const studio = getSupplierStudioModel(selected);
+  const activeListings = Math.max(1, Number(state.listingCount) || 1);
+  const supplierListingCount = Math.max(1, studio.listings.length);
+  const monthlyRevenue = activeListings * 9;
+  const annualRevenue = activeListings * 99;
+  const privatePackThreshold = Math.max(10, supplierListingCount);
+  const privatePackAnnual = privatePackThreshold * 79;
+
+  return {
+    selected,
+    studio,
+    activeListings,
+    supplierListingCount,
+    monthlyRevenue,
+    annualRevenue,
+    privatePackThreshold,
+    privatePackAnnual,
+    badge: "Monetization command",
+    headline: "Free profile, paid active listings, success fee only after proof.",
+    detail: "This keeps Heavyster simple for rental yards: claim a supplier profile, activate paid machines, route direct enquiries, and let the supplier keep the rental payment.",
+    recommendation: "Best model: listing SaaS first",
+    steps: [
+      {
+        label: "01 Free profile",
+        value: "Claim supplier",
+        detail: "Let rental companies create a basic profile so onboarding starts before payment friction.",
+        primary: false
+      },
+      {
+        label: "02 Paid listing",
+        value: "USD 9/mo",
+        detail: "Charge per active equipment listing, or USD 99/year for committed suppliers.",
+        primary: true
+      },
+      {
+        label: "03 Yard pack later",
+        value: `10+ machines`,
+        detail: `Private annual packs can start around USD ${privatePackAnnual.toLocaleString()}/yr after bulk import works.`,
+        primary: false
+      },
+      {
+        label: "04 Phase two",
+        value: "1% proven",
+        detail: "Only add success fee after quote, award, enquiry trail, or deposit workflow proof exists.",
+        primary: false
+      },
+      {
+        label: "Current count",
+        value: `${activeListings}`,
+        detail: `Modeled now: USD ${monthlyRevenue.toLocaleString()}/mo or USD ${annualRevenue.toLocaleString()}/yr.`,
+        primary: false
+      },
+      {
+        label: "Guardrail",
+        value: "0% rental take",
+        detail: "No escrow, deposit, or rental payment collection in phase one.",
+        primary: true
+      }
+    ],
+    actions: [
+      { id: "copy", label: "Copy model", primary: true },
+      { id: "supplier-count", label: "Use supplier count" },
+      { id: "studio", label: "Open Studio" }
+    ]
+  };
+}
+
+async function handleMonetizationCommandAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildMonetizationCommandText(model));
+      showToast("Monetization model copied.");
+    } catch {
+      showToast("Copy is blocked here, but the model is visible.");
+    }
+    return;
+  }
+
+  if (action === "supplier-count") {
+    state.listingCount = Math.min(80, Math.max(1, model.supplierListingCount));
+    saveState();
+    renderPricingCalculator();
+    renderMonetizationCommand();
+    renderPaidListingActivation();
+    renderSupplierActivationReceipt();
+    showToast("Pricing now uses the visible supplier count.");
+    return;
+  }
+
+  scrollToPageTarget(document.querySelector("#studio"), 108);
+  showToast("Supplier Studio opened.");
+}
+
+function buildMonetizationCommandText(model = getMonetizationCommandModel()) {
+  return [
+    "Heavyster Monetization Command",
+    "Recommendation: free supplier profile + paid active equipment listings first.",
+    `Core price: USD 9/month or USD 99/year per active listing.`,
+    `Current modeled count: ${model.activeListings} active listings = USD ${model.monthlyRevenue.toLocaleString()}/month or USD ${model.annualRevenue.toLocaleString()}/year.`,
+    `Supplier example: ${model.studio.profile.supplier} has ${model.supplierListingCount} visible listing${model.supplierListingCount === 1 ? "" : "s"} in Supplier Studio.`,
+    `Later yard pack: offer private annual packs after bulk import works, starting around ${model.privatePackThreshold}+ machines; do not hide the simple per-listing price.`,
+    "Phase-two rule: add 1% confirmed-booking success fee only after Heavyster proves quote acceptance, direct enquiry trail, award workflow, or payment/deposit workflow value.",
+    "Guardrail: buyer and supplier keep rental payment direct; Heavyster takes 0% rental commission in phase one.",
+    "Why this wins: heavy rental is trust-heavy and operational, so Heavyster should first sell verified visibility, proof, freshness, and direct enquiries before becoming a transaction operator."
+  ].join("\n");
+}
+
+function renderPilotLaunchCommand() {
+  const root = document.querySelector("#pilotLaunchCommand");
+  if (!root) return;
+  const model = getPilotLaunchCommandModel();
+
+  root.innerHTML = `
+    <article class="pilot-launch-main">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.command)}</strong>
+      <p>${escapeHtml(model.reason)}</p>
+      <b>${escapeHtml(model.verdict)}</b>
+    </article>
+    <div class="pilot-launch-metrics">
+      ${model.metrics.map((metric) => `
+        <article>
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(metric.value)}</strong>
+          <small>${escapeHtml(metric.detail)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="pilot-launch-steps">
+      ${model.steps.map((step, index) => `
+        <article class="${index === 0 ? "is-primary" : ""}">
+          <span>${escapeHtml(String(index + 1).padStart(2, "0"))}</span>
+          <div>
+            <strong>${escapeHtml(step.name)}</strong>
+            <p>${escapeHtml(step.detail)}</p>
+          </div>
+          <b>${escapeHtml(step.status)}</b>
+        </article>
+      `).join("")}
+    </div>
+    <div class="pilot-launch-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-pilot-launch-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-pilot-launch-action]").forEach((button) => {
+    button.addEventListener("click", () => handlePilotLaunchCommandAction(button.dataset.pilotLaunchAction, model));
+  });
+}
+
+function getPilotLaunchCommandModel() {
+  const targetSuppliers = 6;
+  const launchListings = 24;
+  const annualRevenue = launchListings * 99;
+  const proofPacks = 18;
+  const freshnessChecks = 12;
+  const enquiryDrills = 3;
+
+  return {
+    badge: "Pilot launch command",
+    market: "UAE Lifting",
+    targetSuppliers,
+    launchListings,
+    annualRevenue,
+    proofPacks,
+    freshnessChecks,
+    enquiryDrills,
+    command: "Launch UAE Lifting only after 6 suppliers and 24 paid listings are ready.",
+    reason: "This gives Heavyster visible supply, trust proof, direct enquiry response, and listing SaaS validation before any rental commission.",
+    verdict: "Founder rule: supply, proof, and direct enquiries before traffic.",
+    metrics: [
+      { label: "Suppliers", value: String(targetSuppliers), detail: "anchor rental yards" },
+      { label: "Listings", value: String(launchListings), detail: `USD ${annualRevenue.toLocaleString()}/yr listing ARR` },
+      { label: "Proof", value: `${proofPacks}/${launchListings}`, detail: "verified proof packs" },
+      { label: "Freshness", value: `${freshnessChecks}/${launchListings}`, detail: "availability checks" }
+    ],
+    steps: [
+      {
+        name: "Recruit anchors",
+        detail: "Use supplier hunt to close 6 UAE lifting suppliers with proof-first outreach.",
+        status: "Start"
+      },
+      {
+        name: "Activate listings",
+        detail: "Publish 24 paid listings at USD 99/year or USD 9/month per active machine.",
+        status: "Revenue"
+      },
+      {
+        name: "Run enquiry drills",
+        detail: "Send 3 controlled buyer enquiries and measure response time without touching rental payment.",
+        status: "Proof"
+      },
+      {
+        name: "Hold commission",
+        detail: "Keep 1% success fee locked until quote acceptance and booking workflow proof exist.",
+        status: "Guardrail"
+      }
+    ],
+    actions: [
+      { id: "copy", label: "Copy pilot command", primary: true },
+      { id: "hunt", label: "Open supplier hunt" },
+      { id: "matrix", label: "Open market matrix" }
+    ]
+  };
+}
+
+async function handlePilotLaunchCommandAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildPilotLaunchCommandText(model));
+      showToast("Pilot launch command copied.");
+    } catch {
+      showToast("Copy is blocked here, but the pilot command is visible.");
+    }
+    return;
+  }
+
+  const targetSelector = action === "hunt" ? "#growth" : "#market-signal-matrix";
+  const target = document.querySelector(targetSelector);
+  if (target) {
+    if (window.location.hash !== targetSelector) window.location.hash = targetSelector;
+    scrollToPageTarget(target, 108);
+    showToast(action === "hunt" ? "Supplier hunt opened." : "Market matrix opened.");
+  }
+}
+
+function buildPilotLaunchCommandText(model = getPilotLaunchCommandModel()) {
+  return [
+    "Heavyster Pilot Launch Command",
+    `Market: ${model.market}`,
+    `Command: ${model.command}`,
+    `Reason: ${model.reason}`,
+    "Pilot targets:",
+    ...model.metrics.map((metric) => `- ${metric.label}: ${metric.value} (${metric.detail})`),
+    "Action order:",
+    ...model.steps.map((step, index) => `${index + 1}. ${step.name}: ${step.detail}`),
+    "Guardrail: buyer pays supplier directly in phase one; Heavyster earns listing SaaS first.",
+    "Phase two: consider 1% confirmed-booking success fee only after quote, award, or booking workflow proof exists."
+  ].join("\n");
+}
+
+function renderGlobalLaunchPassport() {
+  const root = document.querySelector("#globalLaunchPassport");
+  if (!root) return;
+  const model = getGlobalLaunchPassportModel();
+
+  root.innerHTML = `
+    <article class="global-passport-main">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.command)}</strong>
+      <p>${escapeHtml(model.reason)}</p>
+      <b>${escapeHtml(model.rule)}</b>
+    </article>
+    <div class="global-passport-metrics">
+      ${model.metrics.map((metric) => `
+        <article>
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(metric.value)}</strong>
+          <small>${escapeHtml(metric.detail)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="global-passport-queue">
+      ${model.launchQueue.map((market, index) => `
+        <article class="${index === 0 ? "is-primary" : ""}">
+          <span>${escapeHtml(String(index + 1).padStart(2, "0"))}</span>
+          <div>
+            <strong>${escapeHtml(market.market)}</strong>
+            <p>${escapeHtml(market.focus)}</p>
+          </div>
+          <b>${escapeHtml(market.status)}</b>
+        </article>
+      `).join("")}
+    </div>
+    <div class="global-passport-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-global-passport-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-global-passport-action]").forEach((button) => {
+    button.addEventListener("click", () => handleGlobalLaunchPassportAction(button.dataset.globalPassportAction, model));
+  });
+}
+
+function getGlobalLaunchPassportModel() {
+  const launchQueue = [
+    { market: "UAE Lifting", focus: "Close proof-first crane and lifting supply before wider traffic.", status: "Pilot" },
+    { market: "India Roadwork", focus: "Recruit roadwork suppliers only after demand and proof are visible.", status: "Next" },
+    { market: "UK Lifting", focus: "Use local proof labels while keeping the same listing object.", status: "Queue" },
+    { market: "USA Power", focus: "Treat regional demand as a separate wedge, not a new product.", status: "Queue" }
+  ];
+
+  return {
+    badge: "Global launch passport",
+    version: "v134 Global Launch Passport",
+    command: "Scale countries through one product model, one price anchor, and local trust labels.",
+    reason: "Heavyster can look global without becoming complicated: every country starts with supplier profiles, paid listings, proof, direct enquiries, and no rental payment collection.",
+    rule: "Global product, local trust, direct payment.",
+    launchQueue,
+    metrics: [
+      { label: "Country queue", value: String(launchQueue.length), detail: "markets staged, not scattered" },
+      { label: "Billing anchor", value: "USD 99/yr", detail: "or USD 9/mo per active listing" },
+      { label: "Trust model", value: "1 checklist", detail: "localized labels, same proof stack" },
+      { label: "Rental take", value: "0%", detail: "payment stays buyer to supplier" }
+    ],
+    environments: [
+      "Prototype: static GitHub Pages demo with simple role paths.",
+      "Staging: supplier account, fixture API, uploads placeholder, billing status, admin review.",
+      "Production: real auth, database, storage, billing, permissions, lead logs, and support notes."
+    ],
+    guardrails: [
+      "Localize wording, proof labels, and currency display; do not fork the product.",
+      "Keep USD listing SaaS as the phase-one billing anchor until local payment operations are proven.",
+      "Do not collect rental payments or expose rental commission in phase one.",
+      "Open a new country only when supply, proof, availability freshness, and direct response are measurable."
+    ],
+    actions: [
+      { id: "copy", label: "Copy passport", primary: true },
+      { id: "build", label: "Open Build Phase" },
+      { id: "roadmap", label: "Open Roadmap" }
+    ]
+  };
+}
+
+async function handleGlobalLaunchPassportAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildGlobalLaunchPassportText(model));
+      showToast("Global launch passport copied.");
+    } catch {
+      showToast("Copy is blocked here, but the global passport is visible.");
+    }
+    return;
+  }
+
+  const targetSelector = action === "roadmap" ? "#roadmap" : "#build-phase";
+  const target = document.querySelector(targetSelector);
+  if (target) {
+    if (window.location.hash !== targetSelector) window.location.hash = targetSelector;
+    scrollToPageTarget(target, 108);
+    showToast(action === "roadmap" ? "Roadmap opened." : "Build Phase opened.");
+  }
+}
+
+function buildGlobalLaunchPassportText(model = getGlobalLaunchPassportModel()) {
+  return [
+    "Heavyster Global Launch Passport",
+    `Version: ${model.version}`,
+    `Command: ${model.command}`,
+    `Rule: ${model.rule}`,
+    `Reason: ${model.reason}`,
+    "Launch queue:",
+    ...model.launchQueue.map((market, index) => `${index + 1}. ${market.market}: ${market.focus} (${market.status})`),
+    "Metrics:",
+    ...model.metrics.map((metric) => `- ${metric.label}: ${metric.value} (${metric.detail})`),
+    "Environment gates:",
+    ...model.environments.map((item) => `- ${item}`),
+    "Guardrails:",
+    ...model.guardrails.map((item) => `- ${item}`),
+    "Monetization: keep the phase-one model global and simple: free profile, paid active listings, USD 9/month or USD 99/year, 0% rental take.",
+    "Phase two: add 1% confirmed-booking success fee only after quote, award, direct enquiry trail, or booking workflow proof exists."
+  ].join("\n");
+}
+
+function renderSimpleGlobalUxGuard() {
+  const root = document.querySelector("#simpleGlobalUxGuard");
+  if (!root) return;
+  const model = getSimpleGlobalUxGuardModel();
+
+  root.innerHTML = `
+    <article class="simple-ux-main">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.command)}</strong>
+      <p>${escapeHtml(model.reason)}</p>
+      <b>${escapeHtml(model.rule)}</b>
+    </article>
+    <div class="simple-ux-metrics">
+      ${model.metrics.map((metric) => `
+        <article>
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(metric.value)}</strong>
+          <small>${escapeHtml(metric.detail)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="simple-ux-checks">
+      ${model.checks.map((check, index) => `
+        <article class="${check.ready ? "is-ready" : ""}">
+          <span>${escapeHtml(String(index + 1).padStart(2, "0"))}</span>
+          <div>
+            <strong>${escapeHtml(check.label)}</strong>
+            <p>${escapeHtml(check.detail)}</p>
+          </div>
+          <b>${escapeHtml(check.status)}</b>
+        </article>
+      `).join("")}
+    </div>
+    <div class="simple-ux-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-simple-ux-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-simple-ux-action]").forEach((button) => {
+    button.addEventListener("click", () => handleSimpleGlobalUxGuardAction(button.dataset.simpleUxAction, model));
+  });
+}
+
+function getSimpleGlobalUxGuardModel() {
+  return {
+    badge: "Simple global UX guard",
+    version: "v135 Simple Global UX Guard",
+    command: "Keep every country, role, and AI feature inside one simple next action.",
+    reason: "Heavyster can become global without feeling heavy if every release removes friction before it adds power.",
+    rule: "One screen, one role, one next action.",
+    metrics: [
+      { label: "Primary action", value: "1", detail: "one clear next move per screen" },
+      { label: "Role paths", value: "3", detail: "buyer, supplier, founder" },
+      { label: "Product forks", value: "0", detail: "countries reuse the same objects" },
+      { label: "Rental take", value: "0%", detail: "phase-one payment stays direct" }
+    ],
+    checks: [
+      { label: "Navigation budget", detail: "Public nav stays short; depth lives in role tools, not in the header.", status: "Guard", ready: true },
+      { label: "Country reuse", detail: "UAE, India, UK, USA, and later markets share account, listing, proof, enquiry, and billing objects.", status: "Reuse", ready: true },
+      { label: "AI discipline", detail: "AI may summarize, route, classify, and draft only when it removes a manual step.", status: "Simplify", ready: true },
+      { label: "Pricing clarity", detail: "Show two listing prices, keep rental commission at 0%, and delay success fees until workflow proof.", status: "Locked", ready: true },
+      { label: "Build proof", detail: "Every release must show version, purpose, test focus, and the next simplest action.", status: "v135", ready: true }
+    ],
+    actions: [
+      { id: "copy", label: "Copy UX guard", primary: true },
+      { id: "build", label: "Open Build Phase" },
+      { id: "roadmap", label: "Open Roadmap" }
+    ]
+  };
+}
+
+async function handleSimpleGlobalUxGuardAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildSimpleGlobalUxGuardText(model));
+      showToast("Simple global UX guard copied.");
+    } catch {
+      showToast("Copy is blocked here, but the UX guard is visible.");
+    }
+    return;
+  }
+
+  const targetSelector = action === "roadmap" ? "#roadmap" : "#build-phase";
+  const target = document.querySelector(targetSelector);
+  if (target) {
+    if (window.location.hash !== targetSelector) window.location.hash = targetSelector;
+    scrollToPageTarget(target, 108);
+    showToast(action === "roadmap" ? "Roadmap opened." : "Build Phase opened.");
+  }
+}
+
+function buildSimpleGlobalUxGuardText(model = getSimpleGlobalUxGuardModel()) {
+  return [
+    "Heavyster Simple Global UX Guard",
+    `Version: ${model.version}`,
+    `Command: ${model.command}`,
+    `Rule: ${model.rule}`,
+    `Reason: ${model.reason}`,
+    "Complexity budget:",
+    ...model.metrics.map((metric) => `- ${metric.label}: ${metric.value} (${metric.detail})`),
+    "Release checks:",
+    ...model.checks.map((check, index) => `${index + 1}. ${check.label}: ${check.detail} (${check.status})`),
+    "Global rule: every country reuses the same supplier account, equipment listing, proof, availability, direct enquiry, billing, and admin review objects.",
+    "AI rule: add AI only when it summarizes, routes, classifies, drafts, or removes manual work; never add hidden decisions or extra screens for the user.",
+    "Monetization rule: free profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% only after confirmed workflow proof.",
+    "Founder promise: if a feature cannot make the next action clearer, it waits."
+  ].join("\n");
+}
+
+function renderCalmCommandCenter() {
+  const root = document.querySelector("#calmCommandCenter");
+  if (!root) return;
+  const model = getCalmCommandCenterModel();
+
+  root.innerHTML = `
+    <article class="calm-command-main">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.command)}</strong>
+      <p>${escapeHtml(model.reason)}</p>
+      <b>${escapeHtml(model.verdict)}</b>
+    </article>
+    <div class="calm-command-lanes">
+      ${model.lanes.map((lane) => `
+        <article>
+          <span>${escapeHtml(lane.role)}</span>
+          <strong>${escapeHtml(lane.title)}</strong>
+          <p>${escapeHtml(lane.detail)}</p>
+          <small>${escapeHtml(lane.next)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="calm-command-metrics">
+      ${model.metrics.map((metric) => `
+        <article>
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(metric.value)}</strong>
+          <small>${escapeHtml(metric.detail)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="calm-command-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-calm-command-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-calm-command-action]").forEach((button) => {
+    button.addEventListener("click", () => handleCalmCommandAction(button.dataset.calmCommandAction, model));
+  });
+}
+
+function getCalmCommandCenterModel() {
+  return {
+    badge: "Calm command center",
+    version: "v136 Calm Command Center",
+    command: "Make Heavyster feel peaceful while the marketplace gets bigger.",
+    reason: "The product should feel like one quiet desk, even when it supports many countries, thousands of listings, and AI-assisted routing.",
+    verdict: "Calm rule: remove noise before adding power.",
+    lanes: [
+      {
+        role: "Buyer",
+        title: "Search, proof, one direct enquiry.",
+        detail: "The buyer sees the cleanest machine path first, then checks proof before sending one direct supplier message.",
+        next: "Next: copy enquiry"
+      },
+      {
+        role: "Supplier",
+        title: "List, verify, stay fresh.",
+        detail: "The supplier sees paid listings, proof gaps, availability freshness, and lead response without opening a heavy admin maze.",
+        next: "Next: confirm availability"
+      },
+      {
+        role: "Founder",
+        title: "Demand, trust, listing ARR.",
+        detail: "The founder chooses the next market by signal strength, supply gap, proof, and paid-listing revenue, not by noise.",
+        next: "Next: open market command"
+      }
+    ],
+    metrics: [
+      { label: "Primary next move", value: "1", detail: "one visible action per role" },
+      { label: "Global core objects", value: "7", detail: "account, listing, proof, availability, enquiry, billing, admin" },
+      { label: "AI rule", value: "Only simplify", detail: "summarize, route, draft, and remove work" },
+      { label: "Rental take", value: "0%", detail: "phase-one rental payment stays direct" }
+    ],
+    actions: [
+      { id: "copy", label: "Copy calm brief", primary: true },
+      { id: "marketplace", label: "Open Marketplace" },
+      { id: "build", label: "Open Build Phase" }
+    ]
+  };
+}
+
+async function handleCalmCommandAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildCalmCommandCenterText(model));
+      showToast("Calm command center copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm command center is visible.");
+    }
+    return;
+  }
+
+  const targetSelector = action === "marketplace" ? "#marketplace" : "#build-phase";
+  const target = document.querySelector(targetSelector);
+  if (target) {
+    if (window.location.hash !== targetSelector) window.location.hash = targetSelector;
+    scrollToPageTarget(target, 108);
+    showToast(action === "marketplace" ? "Marketplace opened." : "Build Phase opened.");
+  }
+}
+
+function buildCalmCommandCenterText(model = getCalmCommandCenterModel()) {
+  return [
+    "Heavyster Calm Command Center",
+    `Version: ${model.version}`,
+    `Command: ${model.command}`,
+    `Rule: ${model.verdict}`,
+    `Reason: ${model.reason}`,
+    "Role lanes:",
+    ...model.lanes.map((lane) => `- ${lane.role}: ${lane.title} ${lane.detail} ${lane.next}`),
+    "Calm metrics:",
+    ...model.metrics.map((metric) => `- ${metric.label}: ${metric.value} (${metric.detail})`),
+    "UI promise: the product should feel like one quiet desk, not a maze of pages.",
+    "Global promise: every country reuses the same seven core objects before any local workflow fork is considered.",
+    "AI promise: add AI only when it removes clicks, summarizes proof, drafts a useful message, or explains the next action.",
+    "Monetization promise: keep phase one calm with free profile, USD 9/month or USD 99/year per active listing, 0% rental take, and optional 1% success fee only after workflow proof."
+  ].join("\n");
+}
+
+function renderSerenityModePanel() {
+  const root = document.querySelector("#serenityModePanel");
+  if (!root) return;
+  const model = getSerenityModeModel();
+
+  root.innerHTML = `
+    <article class="serenity-mode-lead">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.command)}</strong>
+      <p>${escapeHtml(model.reason)}</p>
+      <b>${escapeHtml(model.rule)}</b>
+    </article>
+    <div class="serenity-mode-lanes">
+      ${model.lanes.map((lane) => `
+        <article>
+          <span>${escapeHtml(lane.role)}</span>
+          <strong>${escapeHtml(lane.title)}</strong>
+          <p>${escapeHtml(lane.detail)}</p>
+          <small>${escapeHtml(lane.next)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="serenity-mode-tokens">
+      ${model.designTokens.map((token) => `
+        <article>
+          <span>${escapeHtml(token.label)}</span>
+          <strong>${escapeHtml(token.value)}</strong>
+          <small>${escapeHtml(token.detail)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="serenity-mode-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-serenity-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-serenity-action]").forEach((button) => {
+    button.addEventListener("click", () => handleSerenityModeAction(button.dataset.serenityAction, model));
+  });
+}
+
+function getSerenityModeModel() {
+  return {
+    badge: "Serenity mode",
+    version: "v137 Serenity Mode",
+    command: "Make every screen feel like a calm operating room, not a crowded marketplace.",
+    reason: "Heavyster should scale to thousands of machines by making the next useful step feel obvious, light, and trustworthy.",
+    rule: "Breathe first: show the role, the next move, and the proof before any secondary feature.",
+    lanes: [
+      {
+        role: "Buyer",
+        title: "Find one clean path.",
+        detail: "Search resolves into the strongest machine, proof, availability, and direct supplier route.",
+        next: "Next: copy enquiry"
+      },
+      {
+        role: "Supplier",
+        title: "Publish with confidence.",
+        detail: "Supplier work stays inside listing, proof, freshness, revenue, and lead response.",
+        next: "Next: confirm availability"
+      },
+      {
+        role: "Founder",
+        title: "Grow without noise.",
+        detail: "Expansion decisions stay tied to demand, supply gap, trust, and paid listing ARR.",
+        next: "Next: open Build Phase"
+      }
+    ],
+    designTokens: [
+      { label: "Contrast", value: "Soft", detail: "quiet surface, strong text, fewer loud panels" },
+      { label: "Spacing", value: "Breathing", detail: "room between choices so the eye can rest" },
+      { label: "Proof", value: "Teal", detail: "trust and readiness use calm proof color" },
+      { label: "Revenue", value: "Warm", detail: "listing money stays visible without pressure" },
+      { label: "AI", value: "Invisible until useful", detail: "assist only when it removes work" }
+    ],
+    actions: [
+      { id: "copy", label: "Copy serenity brief", primary: true },
+      { id: "marketplace", label: "Open Marketplace" },
+      { id: "build", label: "Open Build Phase" }
+    ]
+  };
+}
+
+async function handleSerenityModeAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildSerenityModeText(model));
+      showToast("Serenity mode brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the serenity brief is visible.");
+    }
+    return;
+  }
+
+  const targetSelector = action === "marketplace" ? "#marketplace" : "#build-phase";
+  const target = document.querySelector(targetSelector);
+  if (target) {
+    if (window.location.hash !== targetSelector) window.location.hash = targetSelector;
+    scrollToPageTarget(target, 108);
+    showToast(action === "marketplace" ? "Marketplace opened." : "Build Phase opened.");
+  }
+}
+
+function buildSerenityModeText(model = getSerenityModeModel()) {
+  return [
+    "Heavyster Serenity Mode",
+    `Version: ${model.version}`,
+    `Command: ${model.command}`,
+    `Rule: ${model.rule}`,
+    `Reason: ${model.reason}`,
+    "Role lanes:",
+    ...model.lanes.map((lane) => `- ${lane.role}: ${lane.title} ${lane.detail} ${lane.next}`),
+    "Design tokens:",
+    ...model.designTokens.map((token) => `- ${token.label}: ${token.value} (${token.detail})`),
+    "Product promise: every new feature must make Heavyster feel calmer, faster, and easier to understand.",
+    "AI promise: AI stays quiet until it can summarize proof, draft a better message, route a lead, or remove a manual step.",
+    "Monetization rule: free profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% only after confirmed workflow proof."
+  ].join("\n");
+}
+
+function renderHeavenlyFocusPanel() {
+  const root = document.querySelector("#heavenlyFocusPanel");
+  if (!root) return;
+  const model = getHeavenlyFocusModel();
+
+  root.innerHTML = `
+    <article class="heavenly-focus-lead">
+      <span>${escapeHtml(model.badge)}</span>
+      <strong>${escapeHtml(model.command)}</strong>
+      <p>${escapeHtml(model.reason)}</p>
+      <b>${escapeHtml(model.rule)}</b>
+    </article>
+    <div class="heavenly-focus-steps">
+      ${model.steps.map((step) => `
+        <article>
+          <span>${escapeHtml(step.label)}</span>
+          <strong>${escapeHtml(step.value)}</strong>
+          <p>${escapeHtml(step.detail)}</p>
+        </article>
+      `).join("")}
+    </div>
+    <div class="heavenly-focus-routes">
+      ${model.routes.map((route) => `
+        <article>
+          <span>${escapeHtml(route.role)}</span>
+          <strong>${escapeHtml(route.action)}</strong>
+          <p>${escapeHtml(route.why)}</p>
+          <small>${escapeHtml(route.metric)}</small>
+        </article>
+      `).join("")}
+    </div>
+    <div class="heavenly-focus-actions">
+      ${model.actions.map((action) => `
+        <button type="button" class="${action.primary ? "is-primary" : ""}" data-heavenly-focus-action="${escapeHtml(action.id)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  root.querySelectorAll("[data-heavenly-focus-action]").forEach((button) => {
+    button.addEventListener("click", () => handleHeavenlyFocusAction(button.dataset.heavenlyFocusAction, model));
+  });
+}
+
+function getHeavenlyFocusModel() {
+  return {
+    badge: "Heavenly focus",
+    version: "v138 Heavenly Focus",
+    command: "Show one calm path, one proof reason, one money rule, and one next action.",
+    reason: "Heavyster can become global only if every user feels less pressure after every release. v138 makes simplicity a visible operating rule, not just a design preference.",
+    rule: "Stillness wins: breathe, choose, act, then expand only if the action became easier.",
+    steps: [
+      {
+        label: "01",
+        value: "One path",
+        detail: "Start each role from the cleanest route instead of showing every module at once."
+      },
+      {
+        label: "02",
+        value: "One proof",
+        detail: "Explain the trust reason before asking a buyer, supplier, or founder to decide."
+      },
+      {
+        label: "03",
+        value: "One money rule",
+        detail: "Keep phase one calm: active listing SaaS revenue, 0% rental take, direct supplier payment."
+      },
+      {
+        label: "04",
+        value: "One action",
+        detail: "Each screen should make the next useful click obvious before any secondary option appears."
+      }
+    ],
+    routes: [
+      {
+        role: "Buyer",
+        action: "Use the cleanest machine path.",
+        why: "Search should lead to a verified machine, proof, availability, and one direct enquiry.",
+        metric: "Trust 88/100"
+      },
+      {
+        role: "Supplier",
+        action: "Publish one paid listing.",
+        why: "A rental yard should see profile, proof, availability, revenue, and lead route in one calm desk.",
+        metric: "USD 99/year"
+      },
+      {
+        role: "Founder",
+        action: "Fill supply before traffic.",
+        why: "Scale only where demand, proof, supply gap, and listing ARR are visible.",
+        metric: "USD 6,615 ARR"
+      }
+    ],
+    actions: [
+      { id: "copy", label: "Copy focus brief", primary: true },
+      { id: "quiet", label: "Enable quiet view" },
+      { id: "build", label: "Open Build Phase" }
+    ]
+  };
+}
+
+async function handleHeavenlyFocusAction(action, model) {
+  if (action === "copy") {
+    try {
+      await navigator.clipboard.writeText(buildHeavenlyFocusText(model));
+      showToast("Heavenly focus brief copied.");
+    } catch {
+      showToast("Copy is blocked here, but the heavenly focus brief is visible.");
+    }
+    return;
+  }
+
+  if (action === "quiet") {
+    state.simpleMode = true;
+    state.simplicityRelease = SIMPLE_UX_RELEASE;
+    saveState();
+    renderSimplicityBar();
+    document.body.classList.add("simple-mode");
+    syncNavigationState();
+    showToast("Heavenly focus enabled.");
+    return;
+  }
+
+  const target = document.querySelector("#build-phase");
+  if (target) {
+    if (window.location.hash !== "#build-phase") window.location.hash = "#build-phase";
+    scrollToPageTarget(target, 108);
+    showToast("Build Phase opened.");
+  }
+}
+
+function buildHeavenlyFocusText(model = getHeavenlyFocusModel()) {
+  return [
+    "Heavyster Heavenly Focus",
+    `Version: ${model.version}`,
+    `Command: ${model.command}`,
+    `Rule: ${model.rule}`,
+    `Reason: ${model.reason}`,
+    "Focus steps:",
+    ...model.steps.map((step) => `- ${step.value}: ${step.detail}`),
+    "Role routes:",
+    ...model.routes.map((route) => `- ${route.role}: ${route.action} ${route.why} ${route.metric}`),
+    "UI promise: every release should reduce visible effort before it increases visible power.",
+    "Global promise: use the same calm buyer, supplier, and founder paths before adding country-specific complexity.",
+    "AI promise: AI appears only when it makes the next action easier, not louder.",
+    "Monetization rule: free profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% only after confirmed workflow proof."
   ].join("\n");
 }
 

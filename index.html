@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260530-backend-implementation-contract-v131" />
+    <link rel="stylesheet" href="styles.css?v=20260531-heavenly-focus-v138" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v131</strong>
+            <strong>v138</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -2079,6 +2079,20 @@
 
           <div class="paid-listing-activation" id="paidListingActivation" aria-label="Paid listing activation preview"></div>
 
+          <div class="monetization-command" id="monetizationCommand" aria-label="Heavyster monetization command"></div>
+
+          <div class="pilot-launch-command" id="pilotLaunchCommand" aria-label="Heavyster pilot launch command"></div>
+
+          <div class="global-launch-passport" id="globalLaunchPassport" aria-label="Heavyster global launch passport"></div>
+
+          <div class="simple-global-ux-guard" id="simpleGlobalUxGuard" aria-label="Heavyster simple global UX guard"></div>
+
+          <div class="calm-command-center" id="calmCommandCenter" aria-label="Heavyster calm command center"></div>
+
+          <div class="serenity-mode-panel" id="serenityModePanel" aria-label="Heavyster serenity mode"></div>
+
+          <div class="heavenly-focus-panel" id="heavenlyFocusPanel" aria-label="Heavyster heavenly focus mode"></div>
+
           <div class="pricing-grid">
             <article class="price-card">
               <span>Monthly</span>
@@ -2142,7 +2156,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v131</span>
+            <span class="build-version-pill">Current version: v138</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2153,8 +2167,8 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v131 Backend Implementation Contract</strong>
-              <small>The first backend now has records, routes, smoke calls, fixtures, pass/fail gates, and route-table mapping.</small>
+              <strong>v138 Heavenly Focus</strong>
+              <small>Build Phase now protects the focus rule: one calm path, one proof reason, one money rule, and one next action.</small>
             </article>
             <article>
               <span>Test focus</span>
@@ -2179,8 +2193,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v131</strong>
-              <small>Backend Implementation Contract</small>
+              <strong>v138</strong>
+              <small>Heavenly Focus</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2194,8 +2208,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend scaffold</strong>
-              <small>Implement the seven mapped routes, tables, status response, and no-rental-payment guardrail.</small>
+              <strong>Calm backend scaffold</strong>
+              <small>Implement supplier accounts, listing status, proof upload placeholders, direct enquiry logs, and the no-rental-payment guardrail without adding UI weight.</small>
             </article>
           </div>
 
@@ -2750,23 +2764,357 @@
             </article>
           </div>
 
+          <div class="monetization-command-contract" id="monetization-command-contract" aria-label="Heavyster monetization command contract">
+            <article class="monetization-command-contract-lead">
+              <span>v132 Monetization Command</span>
+              <strong>Keep the money model simple enough for rental yards to trust.</strong>
+              <p>
+                The best launch model is not a marketplace take rate. It is a free supplier profile, paid active
+                equipment listings, direct enquiry routing, and a strict rule that rental payment stays outside Heavyster.
+              </p>
+              <b>Recommended model: listing SaaS first</b>
+            </article>
+            <article>
+              <span>Acquire</span>
+              <strong>Free supplier profile</strong>
+              <p>Let rental companies claim a basic profile and understand the product before choosing paid listings.</p>
+              <b>Low friction</b>
+            </article>
+            <article>
+              <span>Charge</span>
+              <strong>USD 9/mo or USD 99/yr</strong>
+              <p>Bill only active equipment listings so pricing stays easy to explain, compare, and renew.</p>
+              <b>Phase one</b>
+            </article>
+            <article>
+              <span>Expand</span>
+              <strong>Private yard packs later</strong>
+              <p>Offer simple annual packs after fleet import and supplier onboarding are working, not before.</p>
+              <b>After proof</b>
+            </article>
+            <article>
+              <span>Earn</span>
+              <strong>1% success fee only with proof</strong>
+              <p>Add it only after quote acceptance, award, direct deal trail, or payment/deposit workflow value exists.</p>
+              <b>Phase two</b>
+            </article>
+            <article class="monetization-command-contract-acceptance">
+              <span>Guardrail</span>
+              <strong>0% rental take until workflow proof exists.</strong>
+              <p>Docs include the structured model in `docs/MONETIZATION_COMMAND.json` so pricing and backend stay aligned.</p>
+              <button type="button" class="solid-button" id="copyMonetizationCommandButton">Copy monetization command</button>
+            </article>
+          </div>
+
+          <div class="pilot-launch-command-contract" id="pilot-launch-command-contract" aria-label="Heavyster pilot launch command contract">
+            <article class="pilot-launch-command-contract-lead">
+              <span>v133 Pilot Launch Command</span>
+              <strong>Turn the first real market launch into one simple operating order.</strong>
+              <p>
+                Heavyster should not scale traffic just because a page exists. The first launch should prove local
+                supply, proof coverage, availability freshness, direct enquiry response, and listing SaaS revenue.
+              </p>
+              <b>Recommended pilot: UAE Lifting</b>
+            </article>
+            <article>
+              <span>Supply</span>
+              <strong>6 anchor suppliers</strong>
+              <p>Recruit rental yards that can prove crane and lifting availability before opening serious buyer traffic.</p>
+              <b>Close first</b>
+            </article>
+            <article>
+              <span>Revenue</span>
+              <strong>24 paid listings</strong>
+              <p>Target USD 2,376 annual listing ARR at USD 99/year while keeping every rental payment direct.</p>
+              <b>Listing SaaS</b>
+            </article>
+            <article>
+              <span>Trust</span>
+              <strong>18 proof packs</strong>
+              <p>Collect visible photos, license, insurance, inspection, load chart, and operator proof where relevant.</p>
+              <b>75% proof</b>
+            </article>
+            <article>
+              <span>Freshness</span>
+              <strong>12 availability checks</strong>
+              <p>Confirm available now, available soon, or call-to-confirm before routing serious buyer enquiries.</p>
+              <b>50% fresh</b>
+            </article>
+            <article>
+              <span>Enquiries</span>
+              <strong>3 response drills</strong>
+              <p>Send controlled buyer enquiries, measure response time, and improve the direct route before growth.</p>
+              <b>Proof before scale</b>
+            </article>
+            <article class="pilot-launch-command-contract-acceptance">
+              <span>Guardrail</span>
+              <strong>Launch supply before traffic, and keep rental payment direct.</strong>
+              <p>Docs include the structured pilot plan in `docs/PILOT_LAUNCH_COMMAND.json` so launch, pricing, and backend stay aligned.</p>
+              <button type="button" class="solid-button" id="copyPilotLaunchCommandButton">Copy pilot launch command</button>
+            </article>
+          </div>
+
+          <div class="global-launch-passport-contract" id="global-launch-passport-contract" aria-label="Heavyster global launch passport contract">
+            <article class="global-launch-passport-contract-lead">
+              <span>v134 Global Launch Passport</span>
+              <strong>Make Heavyster global without making the product complicated.</strong>
+              <p>
+                Expansion should reuse the same supplier account, listing, proof, pricing, and direct enquiry model.
+                Countries can localize currency display, proof labels, and outreach wording without changing the core product.
+              </p>
+              <b>Rule: global product, local trust</b>
+            </article>
+            <article>
+              <span>Markets</span>
+              <strong>Queue countries, not chaos</strong>
+              <p>Start with UAE Lifting, then open India Roadwork, UK Lifting, and USA Power only when each wedge has supply proof.</p>
+              <b>Four-market queue</b>
+            </article>
+            <article>
+              <span>Currency</span>
+              <strong>USD billing anchor</strong>
+              <p>Keep USD 9/month and USD 99/year as the launch billing rule while showing local currency later where useful.</p>
+              <b>Simple price</b>
+            </article>
+            <article>
+              <span>Trust</span>
+              <strong>One proof checklist</strong>
+              <p>Use the same proof stack everywhere: company profile, machine proof, documents, availability, lead route, and billing.</p>
+              <b>Local labels</b>
+            </article>
+            <article>
+              <span>Environment</span>
+              <strong>Prototype to production gates</strong>
+              <p>Move from static demo to staging to production only when accounts, listings, uploads, billing, admin, and leads are ready.</p>
+              <b>Controlled rollout</b>
+            </article>
+            <article>
+              <span>Payment</span>
+              <strong>Keep rental payment direct</strong>
+              <p>Every country starts with listing SaaS revenue first. Success fees stay locked until workflow proof exists.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="global-launch-passport-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>One country can launch without a custom product fork.</strong>
+              <p>Docs include the structured passport in `docs/GLOBAL_LAUNCH_PASSPORT.json` so product, pricing, and rollout stay aligned.</p>
+              <button type="button" class="solid-button" id="copyGlobalLaunchPassportButton">Copy global launch passport</button>
+            </article>
+          </div>
+
+          <div class="simple-global-ux-contract" id="simple-global-ux-contract" aria-label="Heavyster simple global UX guard contract">
+            <article class="simple-global-ux-contract-lead">
+              <span>v135 Simple Global UX Guard</span>
+              <strong>Every new country, AI feature, and workflow must make the next action clearer.</strong>
+              <p>
+                Heavyster can grow into a global platform only if the interface stays easy for rental yards and buyers.
+                This guard gives every future release a visible complexity budget before we add more power.
+              </p>
+              <b>Rule: one screen, one role, one next action</b>
+            </article>
+            <article>
+              <span>Navigation</span>
+              <strong>Short public header</strong>
+              <p>Keep the public nav focused. Put deeper buyer, supplier, and founder tools behind role drawers and command search.</p>
+              <b>Less header weight</b>
+            </article>
+            <article>
+              <span>Countries</span>
+              <strong>No product forks</strong>
+              <p>UAE, India, UK, USA, and later countries reuse the same account, listing, proof, enquiry, billing, and admin objects.</p>
+              <b>Global reuse</b>
+            </article>
+            <article>
+              <span>AI</span>
+              <strong>Only if it removes work</strong>
+              <p>AI can summarize, route, classify, and draft. It should not add hidden decisions, mystery scores, or extra screens.</p>
+              <b>Simplify first</b>
+            </article>
+            <article>
+              <span>Pricing</span>
+              <strong>Two visible choices</strong>
+              <p>Keep USD 9/month and USD 99/year per active listing as the simple launch offer. Keep rental take at 0% in phase one.</p>
+              <b>Clear money</b>
+            </article>
+            <article>
+              <span>Build</span>
+              <strong>Version and test focus</strong>
+              <p>Every upload should show the current version, what changed, what to test, and the next simplest action.</p>
+              <b>Upload control</b>
+            </article>
+            <article class="simple-global-ux-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Future features pass only when they reduce confusion.</strong>
+              <p>Docs include the structured guard in `docs/SIMPLE_GLOBAL_UX_GUARD.json` so UI, launch, AI, pricing, and backend stay simple together.</p>
+              <button type="button" class="solid-button" id="copySimpleGlobalUxGuardButton">Copy UX guard</button>
+            </article>
+          </div>
+
+          <div class="calm-command-contract" id="calm-command-contract" aria-label="Heavyster calm command center contract">
+            <article class="calm-command-contract-lead">
+              <span>v136 Calm Command Center</span>
+              <strong>Heavyster should feel like one quiet desk, even when the marketplace becomes global.</strong>
+              <p>
+                The interface must make rental work feel calm: one role is active, one next action is obvious, and every
+                AI-assisted suggestion explains why it helps before asking the user to move.
+              </p>
+              <b>Rule: remove noise before adding power</b>
+            </article>
+            <article>
+              <span>Buyer</span>
+              <strong>Search, proof, one enquiry</strong>
+              <p>Show the cleanest equipment path first, keep proof visible, and make direct supplier contact the calm finish.</p>
+              <b>One message</b>
+            </article>
+            <article>
+              <span>Supplier</span>
+              <strong>List, verify, stay fresh</strong>
+              <p>Keep supplier work inside paid listings, proof gaps, availability freshness, and lead response.</p>
+              <b>No maze</b>
+            </article>
+            <article>
+              <span>Founder</span>
+              <strong>Demand, trust, ARR</strong>
+              <p>Choose the next wedge by demand, supply gap, proof, and listing revenue before scaling traffic.</p>
+              <b>Signal first</b>
+            </article>
+            <article>
+              <span>Global</span>
+              <strong>Seven reusable objects</strong>
+              <p>Every country starts from account, listing, proof, availability, enquiry, billing, and admin review.</p>
+              <b>No forks</b>
+            </article>
+            <article>
+              <span>AI</span>
+              <strong>Concierge, not clutter</strong>
+              <p>AI can summarize, route, draft, and explain the next action only when it reduces manual work.</p>
+              <b>Quiet assist</b>
+            </article>
+            <article class="calm-command-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Every release must feel lighter after it becomes smarter.</strong>
+              <p>Docs include the calm command model in `docs/CALM_COMMAND_CENTER.json` so UX, AI, global launch, and monetization stay aligned.</p>
+              <button type="button" class="solid-button" id="copyCalmCommandCenterButton">Copy calm command</button>
+            </article>
+          </div>
+
+          <div class="serenity-mode-contract" id="serenity-mode-contract" aria-label="Heavyster serenity mode contract">
+            <article class="serenity-mode-contract-lead">
+              <span>v137 Serenity Mode</span>
+              <strong>Make Heavyster feel calm enough for daily work and clear enough for global scale.</strong>
+              <p>
+                Every new release should feel like a peaceful operating desk: one active role, one helpful next move,
+                visible proof, and no extra feature unless it removes confusion.
+              </p>
+              <b>Rule: breathe first, then act</b>
+            </article>
+            <article>
+              <span>Buyer</span>
+              <strong>Cleanest visible path</strong>
+              <p>Search should resolve into one trusted machine route before asking the buyer to compare everything.</p>
+              <b>Proof first</b>
+            </article>
+            <article>
+              <span>Supplier</span>
+              <strong>Publish without anxiety</strong>
+              <p>Keep listing, proof, freshness, revenue, and lead response in one focused supplier rhythm.</p>
+              <b>One desk</b>
+            </article>
+            <article>
+              <span>Founder</span>
+              <strong>Scale with stillness</strong>
+              <p>Choose markets by demand, supply gap, trust, and listing ARR before opening more traffic.</p>
+              <b>No rush</b>
+            </article>
+            <article>
+              <span>Design</span>
+              <strong>Quiet visual system</strong>
+              <p>Use soft surfaces, clear text, teal proof, warm revenue, stable spacing, and fewer competing panels.</p>
+              <b>Calm by default</b>
+            </article>
+            <article>
+              <span>AI</span>
+              <strong>Only when useful</strong>
+              <p>AI may draft, summarize, route, or explain only when it removes manual work or shortens a decision.</p>
+              <b>Low noise</b>
+            </article>
+            <article class="serenity-mode-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Every version should feel simpler than the one before.</strong>
+              <p>Docs include the serenity model in `docs/SERENITY_MODE.json` so UI, AI, monetization, and global expansion stay peaceful together.</p>
+              <button type="button" class="solid-button" id="copySerenityModeButton">Copy serenity brief</button>
+            </article>
+          </div>
+
+          <div class="heavenly-focus-contract" id="heavenly-focus-contract" aria-label="Heavyster heavenly focus contract">
+            <article class="heavenly-focus-contract-lead">
+              <span>v138 Heavenly Focus</span>
+              <strong>Make Heavyster feel like one peaceful decision at a time.</strong>
+              <p>
+                The product can grow across countries, suppliers, and AI workflows only if every screen keeps the user
+                inside one clear path, one proof reason, one money rule, and one useful next action.
+              </p>
+              <b>Rule: stillness wins</b>
+            </article>
+            <article>
+              <span>Buyer</span>
+              <strong>Clean path</strong>
+              <p>Search should answer with the strongest equipment route before opening comparison complexity.</p>
+              <b>One enquiry</b>
+            </article>
+            <article>
+              <span>Supplier</span>
+              <strong>Clean listing</strong>
+              <p>A rental yard should be able to publish one verified paid listing without learning the whole system.</p>
+              <b>One machine</b>
+            </article>
+            <article>
+              <span>Founder</span>
+              <strong>Clean scale</strong>
+              <p>Move demand into supply only where proof, supply gap, direct enquiry value, and listing ARR are visible.</p>
+              <b>One wedge</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>Clean pricing</strong>
+              <p>Free profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one.</p>
+              <b>Listing SaaS</b>
+            </article>
+            <article>
+              <span>AI</span>
+              <strong>Quiet assist</strong>
+              <p>AI should summarize proof, draft messages, and explain next action only when it removes work.</p>
+              <b>Low noise</b>
+            </article>
+            <article class="heavenly-focus-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Every release must reduce visible effort before it adds visible power.</strong>
+              <p>Docs include the heavenly focus model in `docs/HEAVENLY_FOCUS.json` so UI, AI, monetization, and global launch stay simple together.</p>
+              <button type="button" class="solid-button" id="copyHeavenlyFocusButton">Copy focus brief</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v131 Backend Implementation Contract</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v138 Heavenly Focus</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Backend implementation contract</strong>
-              <p>Mapped the fixture pack to the first seven database tables, seven route contracts, one combined status response, and blocked rental-payment endpoints.</p>
+              <strong>Heavenly Focus</strong>
+              <p>Added a stricter simplification rule: one calm path, one proof reason, one money rule, and one next action before any secondary feature.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v131.</li>
-                <li>Build Phase shows Current version: v131.</li>
+                <li>Header shows Build v138.</li>
+                <li>Build Phase shows Current version: v138.</li>
+                <li>Pricing shows Serenity Mode and Heavenly Focus below the Calm Command Center.</li>
+                <li>Build Phase shows Serenity Mode and Heavenly Focus before the Release Ledger.</li>
+                <li>Copy focus brief explains buyer, supplier, founder, money, AI, and phase-one monetization rules.</li>
+                <li>Copy serenity brief explains buyer, supplier, founder, design, AI, and phase-one monetization rules.</li>
                 <li>SaaS Foundation Blueprint appears before the Release Ledger.</li>
                 <li>Launch Readiness Gate appears between the blueprint and release ledger.</li>
                 <li>Backend Sprint Board appears before the Release Ledger.</li>
@@ -2785,6 +3133,20 @@
                 <li>Copy fixture pack produces the first JSON seed record set.</li>
                 <li>Backend Implementation Contract appears before the Release Ledger.</li>
                 <li>Copy implementation contract produces the first route-table handoff.</li>
+                <li>Pricing shows the Monetization Command above the pricing cards.</li>
+                <li>Copy monetization command explains free profile, paid listings, private packs, phase-two success fee, and the 0% rental take guardrail.</li>
+                <li>Pricing shows the Pilot Launch Command below the monetization model.</li>
+                <li>Build Phase shows the Pilot Launch Command before the Release Ledger.</li>
+                <li>Copy pilot launch command explains supplier, listing, proof, freshness, enquiry, and no-rental-payment gates.</li>
+                <li>Pricing shows the Global Launch Passport below the pilot command.</li>
+                <li>Build Phase shows the Global Launch Passport before the Release Ledger.</li>
+                <li>Copy global launch passport explains country queue, USD anchor, local proof labels, environment gates, and direct-payment guardrail.</li>
+                <li>Pricing shows the Simple Global UX Guard below the Global Launch Passport.</li>
+                <li>Build Phase shows the Simple Global UX Guard before the Release Ledger.</li>
+                <li>Copy UX guard explains one screen, one role, one next action, nav budget, AI simplification, country reuse, and 0% rental take.</li>
+                <li>Pricing shows the Calm Command Center below the Simple Global UX Guard.</li>
+                <li>Build Phase shows the Calm Command Center before the Release Ledger.</li>
+                <li>Copy calm command explains buyer, supplier, founder, global, AI, and phase-one monetization calm rules.</li>
                 <li>Supplier Studio shows the Supplier Account Starter above the listing starter.</li>
                 <li>Growth shows the Supplier Hunt Queue with ranked supplier targets.</li>
                 <li>Growth shows the Hunt Call Sheet and Outcome Gate for the selected supplier target.</li>
@@ -2811,12 +3173,12 @@
                 This page stays visible while we are building Heavyster. It records the current version, what is ready,
                 what is still prototype, and what must be finished before launch.
               </p>
-              <b>Updated May 30, 2026</b>
+              <b>Updated May 31, 2026</b>
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v131 Backend Implementation Contract</strong>
-              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, and this implementation contract.</p>
+              <strong>v138 Heavenly Focus</strong>
+              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, and this heavenly focus release.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -2925,6 +3287,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260530-backend-implementation-contract-v131" defer></script>
+    <script src="app.js?v=20260531-heavenly-focus-v138" defer></script>
   </body>
 </html>

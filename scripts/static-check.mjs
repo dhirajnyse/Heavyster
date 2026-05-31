@@ -25,6 +25,13 @@ function assert(condition, message) {
   "assets/heavyster-social-card.svg",
   "assets/heavyster-yard.svg",
   "docs/MONETIZATION.md",
+  "docs/MONETIZATION_COMMAND.json",
+  "docs/PILOT_LAUNCH_COMMAND.json",
+  "docs/GLOBAL_LAUNCH_PASSPORT.json",
+  "docs/SIMPLE_GLOBAL_UX_GUARD.json",
+  "docs/CALM_COMMAND_CENTER.json",
+  "docs/SERENITY_MODE.json",
+  "docs/HEAVENLY_FOCUS.json",
   "docs/PRODUCT_SPEC.md",
   "docs/DATA_MODEL.md",
   "docs/API_SMOKE_FIXTURES.json",
@@ -41,6 +48,13 @@ const manifest = read("site.webmanifest");
 const workflow = read(".github/workflows/pages.yml");
 const fixturePack = JSON.parse(read("docs/API_SMOKE_FIXTURES.json"));
 const implementationContract = JSON.parse(read("docs/API_IMPLEMENTATION_CONTRACT.json"));
+const monetizationCommand = JSON.parse(read("docs/MONETIZATION_COMMAND.json"));
+const pilotLaunchCommand = JSON.parse(read("docs/PILOT_LAUNCH_COMMAND.json"));
+const globalLaunchPassport = JSON.parse(read("docs/GLOBAL_LAUNCH_PASSPORT.json"));
+const simpleGlobalUxGuard = JSON.parse(read("docs/SIMPLE_GLOBAL_UX_GUARD.json"));
+const calmCommandCenter = JSON.parse(read("docs/CALM_COMMAND_CENTER.json"));
+const serenityMode = JSON.parse(read("docs/SERENITY_MODE.json"));
+const heavenlyFocus = JSON.parse(read("docs/HEAVENLY_FOCUS.json"));
 
 assert(index.includes("Content-Security-Policy"), "index.html is missing the CSP meta tag.");
 assert(index.includes("Heavyster | Heavy Equipment Rental Listings"), "index.html has the wrong title.");
@@ -124,8 +138,8 @@ assert(index.includes('id="marketOpportunityList"') && index.includes('id="marke
 assert(index.includes("assets/heavyster-logo-3d.svg"), "index.html is missing the 3D logo asset.");
 assert(!/\son[a-z]+\s*=/i.test(index), "index.html contains an inline event handler.");
 assert(!/https?:\/\//i.test(index + css + app), "Project files should not require remote assets.");
-assert(index.includes("styles.css?v=20260530-backend-implementation-contract-v131"), "index.html is missing the CSS cache-bust token.");
-assert(index.includes("app.js?v=20260530-backend-implementation-contract-v131"), "index.html is missing the JS cache-bust token.");
+assert(index.includes("styles.css?v=20260531-heavenly-focus-v138"), "index.html is missing the CSS cache-bust token.");
+assert(index.includes("app.js?v=20260531-heavenly-focus-v138"), "index.html is missing the JS cache-bust token.");
 assert(index.includes('id="fleetIndexPanel"'), "index.html is missing the Fleet Index marketplace layer.");
 assert(index.includes('id="pilotCommandStrip"'), "index.html is missing the Pilot Command Strip.");
 assert(!/font-size:\s*[^;]*vw/i.test(css), "styles.css should not scale font sizes with viewport width.");
@@ -139,14 +153,14 @@ assert(index.includes('id="decisionReceipt"'), "index.html is missing Buyer Deci
 assert(index.includes('id="decisionRouter"'), "index.html is missing Buyer Decision Action Router controls.");
 assert(index.includes('id="listingRoiProof"'), "index.html is missing Supplier Listing ROI Proof controls.");
 assert(index.includes('id="supplierRenewalClosePack"'), "index.html is missing Supplier Renewal Close Pack controls.");
-assert(app.includes('const DATA_VERSION = "20260530-heavyster-backend-implementation-contract-v131";'), "app.js DATA_VERSION is missing or changed.");
-assert(index.includes('id="build-phase"') && index.includes("Current version: v131") && index.includes("Temporary build page"), "index.html is missing the temporary Build Phase version page.");
-assert(index.includes('class="build-badge"') && index.includes("v131") && css.includes(".build-badge"), "Project is missing the visible Build v131 header badge.");
-assert(index.includes('class="build-cockpit-board"') && index.includes("v131 Backend Implementation Contract") && css.includes(".build-cockpit-board"), "Project is missing the v131 Build Cockpit.");
+assert(app.includes('const DATA_VERSION = "20260531-heavyster-heavenly-focus-v138";'), "app.js DATA_VERSION is missing or changed.");
+assert(index.includes('id="build-phase"') && index.includes("Current version: v138") && index.includes("Temporary build page"), "index.html is missing the temporary Build Phase version page.");
+assert(index.includes('class="build-badge"') && index.includes("v138") && css.includes(".build-badge"), "Project is missing the visible Build v138 header badge.");
+assert(index.includes('class="build-cockpit-board"') && index.includes("v138 Heavenly Focus") && css.includes(".build-cockpit-board"), "Project is missing the v138 Build Cockpit.");
 assert(index.includes('class="saas-blueprint"') && index.includes("v118 SaaS Foundation Blueprint") && css.includes(".saas-blueprint"), "Project is missing the v118 SaaS Foundation Blueprint.");
-assert(index.includes('class="release-ledger"') && index.includes("v131 Backend Implementation Contract") && css.includes(".release-ledger-card"), "Project is missing the v131 Release Ledger.");
+assert(index.includes('class="release-ledger"') && index.includes("v138 Heavenly Focus") && css.includes(".release-ledger-card"), "Project is missing the v138 Release Ledger.");
 assert(app.includes('label: "Build Phase"') && app.includes('"#build-phase"'), "app.js is missing Build Phase navigation metadata.");
-assert(css.includes(".build-phase-section") && css.includes(".build-version-pill") && css.includes(".build-status-grid") && css.includes(".build-control-strip") && css.includes(".build-cockpit-board") && css.includes(".saas-blueprint") && css.includes(".launch-readiness-gate") && css.includes(".backend-sprint-board") && css.includes(".supplier-account-mvp") && css.includes(".supplier-onboarding-runway") && css.includes(".backend-data-contract") && css.includes(".schema-api-blueprint") && css.includes(".api-smoke-console") && css.includes(".backend-fixture-pack") && css.includes(".backend-implementation-contract") && css.includes(".release-ledger"), "styles.css is missing Build Phase styling.");
+assert(css.includes(".build-phase-section") && css.includes(".build-version-pill") && css.includes(".build-status-grid") && css.includes(".build-control-strip") && css.includes(".build-cockpit-board") && css.includes(".saas-blueprint") && css.includes(".launch-readiness-gate") && css.includes(".backend-sprint-board") && css.includes(".supplier-account-mvp") && css.includes(".supplier-onboarding-runway") && css.includes(".backend-data-contract") && css.includes(".schema-api-blueprint") && css.includes(".api-smoke-console") && css.includes(".backend-fixture-pack") && css.includes(".backend-implementation-contract") && css.includes(".monetization-command-contract") && css.includes(".pilot-launch-command-contract") && css.includes(".global-launch-passport-contract") && css.includes(".simple-global-ux-contract") && css.includes(".calm-command-contract") && css.includes(".serenity-mode-contract") && css.includes(".heavenly-focus-contract") && css.includes(".release-ledger"), "styles.css is missing Build Phase styling.");
 assert(workflow.includes("actions/configure-pages@v5") && workflow.includes("actions/upload-pages-artifact@v3") && workflow.includes("actions/deploy-pages@v4"), "Pages workflow is missing the official Pages deploy actions.");
 assert(workflow.includes("npm run check") && workflow.includes('find _site -name "*.zip" -delete') && workflow.includes('find _site -name "*.log" -delete'), "Pages workflow is missing static verification or artifact cleanup.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
@@ -175,6 +189,20 @@ assert(index.includes('id="backend-fixture-pack"') && index.includes('id="copyBa
 assert(fixturePack.version === "v130 Backend Fixture Pack" && fixturePack.supplier_account?.id === "sup_gulf_lift_services" && fixturePack.equipment_listing?.id === "listing_liebherr_130t_mobile_crane" && fixturePack.phase_one_guardrail.includes("Supplier keeps rental payment direct"), "docs/API_SMOKE_FIXTURES.json is missing the v130 supplier fixture pack.");
 assert(index.includes('id="backend-implementation-contract"') && index.includes('id="copyBackendImplementationContractButton"') && app.includes("buildBackendImplementationContractText") && css.includes(".backend-implementation-contract"), "Project is missing the v131 Backend Implementation Contract.");
 assert(implementationContract.version === "v131 Backend Implementation Contract" && implementationContract.required_tables?.length === 7 && implementationContract.route_contracts?.length === 7 && implementationContract.blocked_routes?.includes("/api/rental-payments") && implementationContract.phase_one_guardrail.includes("Supplier keeps rental payment direct"), "docs/API_IMPLEMENTATION_CONTRACT.json is missing the v131 route-table contract.");
+assert(index.includes('id="monetizationCommand"') && index.includes('id="monetization-command-contract"') && index.includes('id="copyMonetizationCommandButton"') && app.includes("renderMonetizationCommand") && app.includes("buildMonetizationCommandText") && css.includes(".monetization-command") && css.includes(".monetization-command-contract"), "Project is missing the v132 Monetization Command.");
+assert(monetizationCommand.version === "v132 Monetization Command" && monetizationCommand.phase_one?.active_listing?.monthly_usd === 9 && monetizationCommand.phase_one?.active_listing?.annual_usd === 99 && monetizationCommand.phase_two?.success_fee?.includes("1%") && monetizationCommand.guardrails?.some((item) => item.includes("No rental payment")), "docs/MONETIZATION_COMMAND.json is missing the v132 monetization model.");
+assert(index.includes('id="pilotLaunchCommand"') && index.includes('id="pilot-launch-command-contract"') && index.includes('id="copyPilotLaunchCommandButton"') && app.includes("renderPilotLaunchCommand") && app.includes("buildPilotLaunchCommandText") && css.includes(".pilot-launch-command") && css.includes(".pilot-launch-command-contract"), "Project is missing the v133 Pilot Launch Command.");
+assert(pilotLaunchCommand.version === "v133 Pilot Launch Command" && pilotLaunchCommand.targets?.anchor_suppliers === 6 && pilotLaunchCommand.targets?.paid_listings === 24 && pilotLaunchCommand.targets?.annual_listing_arr_usd === 2376 && pilotLaunchCommand.guardrails?.some((item) => item.includes("direct")), "docs/PILOT_LAUNCH_COMMAND.json is missing the v133 launch model.");
+assert(index.includes('id="globalLaunchPassport"') && index.includes('id="global-launch-passport-contract"') && index.includes('id="copyGlobalLaunchPassportButton"') && app.includes("renderGlobalLaunchPassport") && app.includes("buildGlobalLaunchPassportText") && css.includes(".global-launch-passport") && css.includes(".global-launch-passport-contract"), "Project is missing the v134 Global Launch Passport.");
+assert(globalLaunchPassport.version === "v134 Global Launch Passport" && globalLaunchPassport.currency_rule?.includes("USD") && globalLaunchPassport.guardrails?.some((item) => item.includes("direct")) && globalLaunchPassport.launch_queue?.length >= 4, "docs/GLOBAL_LAUNCH_PASSPORT.json is missing the v134 global launch model.");
+assert(index.includes('id="simpleGlobalUxGuard"') && index.includes('id="simple-global-ux-contract"') && index.includes('id="copySimpleGlobalUxGuardButton"') && app.includes("renderSimpleGlobalUxGuard") && app.includes("buildSimpleGlobalUxGuardText") && css.includes(".simple-global-ux-guard") && css.includes(".simple-global-ux-contract"), "Project is missing the v135 Simple Global UX Guard.");
+assert(simpleGlobalUxGuard.version === "v135 Simple Global UX Guard" && simpleGlobalUxGuard.rule?.includes("one next action") && simpleGlobalUxGuard.complexity_budget?.next_actions_per_screen === 1 && simpleGlobalUxGuard.ai_rules?.some((item) => item.includes("removes")), "docs/SIMPLE_GLOBAL_UX_GUARD.json is missing the v135 simplicity model.");
+assert(index.includes('id="calmCommandCenter"') && index.includes('id="calm-command-contract"') && index.includes('id="copyCalmCommandCenterButton"') && app.includes("renderCalmCommandCenter") && app.includes("buildCalmCommandCenterText") && app.includes("handleCalmCommandAction") && css.includes(".calm-command-center") && css.includes(".calm-command-contract"), "Project is missing the v136 Calm Command Center.");
+assert(calmCommandCenter.version === "v136 Calm Command Center" && calmCommandCenter.rule?.includes("Remove noise") && calmCommandCenter.global_core_objects?.length === 7 && calmCommandCenter.ai_rule?.includes("removes manual work") && calmCommandCenter.monetization_rule?.includes("0% rental take"), "docs/CALM_COMMAND_CENTER.json is missing the v136 calm command model.");
+assert(index.includes('id="serenityModePanel"') && index.includes('id="serenity-mode-contract"') && index.includes('id="copySerenityModeButton"') && app.includes("renderSerenityModePanel") && app.includes("buildSerenityModeText") && app.includes("handleSerenityModeAction") && css.includes(".serenity-mode-panel") && css.includes(".serenity-mode-contract"), "Project is missing the v137 Serenity Mode.");
+assert(serenityMode.version === "v137 Serenity Mode" && serenityMode.rule?.includes("Breathe first") && serenityMode.design_tokens?.length >= 5 && serenityMode.monetization_rule?.includes("USD 9/month") && serenityMode.ai_rule?.includes("removes manual work"), "docs/SERENITY_MODE.json is missing the v137 serenity model.");
+assert(index.includes('id="heavenlyFocusPanel"') && index.includes('id="heavenly-focus-contract"') && index.includes('id="copyHeavenlyFocusButton"') && app.includes("renderHeavenlyFocusPanel") && app.includes("buildHeavenlyFocusText") && app.includes("handleHeavenlyFocusAction") && css.includes(".heavenly-focus-panel") && css.includes(".heavenly-focus-contract"), "Project is missing the v138 Heavenly Focus.");
+assert(heavenlyFocus.version === "v138 Heavenly Focus" && heavenlyFocus.rule?.includes("Stillness wins") && heavenlyFocus.focus_steps?.length === 4 && heavenlyFocus.monetization_rule?.includes("0% rental take") && heavenlyFocus.ai_rule?.includes("next action easier"), "docs/HEAVENLY_FOCUS.json is missing the v138 heavenly focus model.");
 assert(app.includes("renderSupplierListingStarter") && app.includes("getSupplierListingStarterModel") && app.includes("handleSupplierListingStarterAction") && app.includes("buildSupplierListingStarterText") && css.includes(".supplier-listing-starter"), "app.js is missing simple Supplier Listing Starter logic or styling.");
 assert(app.includes("renderPaidListingActivation") && app.includes("getPaidListingActivationModel") && app.includes("handlePaidListingActivationAction") && app.includes("buildPaidListingActivationText") && css.includes(".paid-listing-activation"), "app.js is missing Paid Listing Activation logic or styling.");
 assert(app.includes("renderSupplierActivationReceipt") && app.includes("getSupplierActivationReceiptModel") && app.includes("handleSupplierActivationReceiptAction") && app.includes("buildSupplierActivationReceiptText") && css.includes(".supplier-activation-receipt"), "app.js is missing Supplier Activation Receipt logic or styling.");

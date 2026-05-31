@@ -1,0 +1,48 @@
+{
+  "version": "v136 Calm Command Center",
+  "purpose": "Make Heavyster feel calm, clear, and premium as buyer, supplier, founder, AI, and global launch workflows expand.",
+  "rule": "Remove noise before adding power.",
+  "product_feel": [
+    "One quiet desk for each role.",
+    "One visible next action before secondary actions.",
+    "Calm proof, calm pricing, calm direct enquiry flow.",
+    "No hidden AI decisions and no confusing country forks."
+  ],
+  "role_lanes": [
+    {
+      "role": "Buyer",
+      "path": "Search, proof, one direct enquiry",
+      "next_action": "Copy enquiry",
+      "success": "Buyer sees the cleanest machine path and direct supplier route."
+    },
+    {
+      "role": "Supplier",
+      "path": "List, verify, stay fresh",
+      "next_action": "Confirm availability",
+      "success": "Supplier can publish paid listings without an admin maze."
+    },
+    {
+      "role": "Founder",
+      "path": "Demand, trust, listing ARR",
+      "next_action": "Open market command",
+      "success": "Founder chooses the next wedge by signal strength and phase-one listing revenue."
+    }
+  ],
+  "global_core_objects": [
+    "Supplier account",
+    "Equipment listing",
+    "Proof document",
+    "Availability status",
+    "Direct enquiry",
+    "Listing billing",
+    "Admin review"
+  ],
+  "ai_rule": "AI may summarize, route, draft, and explain only when it removes manual work or makes the next action clearer.",
+  "monetization_rule": "Free supplier profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% confirmed-booking success fee only after workflow proof.",
+  "acceptance": [
+    "Pricing shows the Calm Command Center below the Simple Global UX Guard.",
+    "Build Phase shows the Calm Command Center before the Release Ledger.",
+    "Copy calm command explains buyer, supplier, founder, global, AI, and monetization calm rules.",
+    "Static checks enforce v136 version, cache tokens, UI hooks, docs, and styling."
+  ]
+}

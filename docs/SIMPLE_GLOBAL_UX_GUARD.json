@@ -1,0 +1,40 @@
+{
+  "version": "v135 Simple Global UX Guard",
+  "purpose": "Keep Heavyster simple as countries, supplier workflows, founder controls, and AI-assisted actions expand.",
+  "rule": "One screen, one role, one next action.",
+  "release_contract": [
+    "Every primary screen must show one recommended next action before secondary actions.",
+    "Every feature must belong clearly to buyer, supplier, or founder work.",
+    "Public navigation should stay short; workflow depth belongs in role tools, command search, or contextual next steps.",
+    "Every country must reuse the same supplier account, listing, proof, availability, direct enquiry, billing, and admin review objects.",
+    "Every AI feature must remove a manual step or clarify a decision before it is allowed into the product."
+  ],
+  "complexity_budget": {
+    "public_nav_max": 7,
+    "hero_primary_actions_max": 2,
+    "role_choices_max": 3,
+    "next_actions_per_screen": 1,
+    "visible_price_options": 2,
+    "rental_take_phase_one": "0%"
+  },
+  "global_rules": [
+    "Localize wording, proof labels, and currency display without forking the core product.",
+    "Keep the USD listing SaaS anchor until local payment operations are proven.",
+    "Do not collect rental payments in phase one.",
+    "Launch new countries by supply, proof, availability, response, and listing revenue readiness."
+  ],
+  "ai_rules": [
+    "AI may summarize supplier proof, buyer intent, demand signals, and founder action queues.",
+    "AI may route users to the next best module only when the reason is visible.",
+    "AI may draft enquiries, follow-ups, listing briefs, and founder notes.",
+    "AI should not create hidden decisions, unexplained scores, or extra workflows.",
+    "AI is accepted only when it removes manual work or makes the next action clearer."
+  ],
+  "acceptance": [
+    "Pricing shows the Simple Global UX Guard below the Global Launch Passport.",
+    "Build Phase shows the Simple Global UX Guard before the Release Ledger.",
+    "Copy UX guard explains the one screen, one role, one next action rule.",
+    "Static checks enforce the v135 version, cache tokens, UI hooks, docs, and styling."
+  ],
+  "monetization_rule": "Free profile, USD 9/month or USD 99/year per active listing, 0% rental take in phase one, optional 1% confirmed-booking success fee only after workflow proof."
+}

@@ -6,6 +6,96 @@ Heavyster should earn money in the order trust is created.
 
 Phase one charges suppliers for verified listing visibility. Phase two may charge a small success fee only when Heavyster creates a confirmed booking workflow. This keeps the product supplier-friendly and avoids becoming a heavy transaction operator too early.
 
+## v132 Monetization Command
+
+Recommended model:
+
+- Free supplier profile for claim, identity, regions, contact routes, and proof readiness.
+- Paid active equipment listings at USD 9/month or USD 99/year per active machine.
+- Public pricing stays simple; private annual yard packs can come later after fleet import and billing status work.
+- Phase two can add a 1% confirmed-booking success fee only after quote acceptance, direct enquiry trail, award workflow, booking confirmation, or deposit/payment workflow proof exists.
+- Buyer pays rental company directly in phase one. Heavyster collects listing SaaS only.
+
+This is the cleanest B2B SaaS wedge: it lets small rental yards start without fear, makes paid value obvious, and gives Heavyster recurring revenue before it takes on transaction risk.
+
+## v133 Pilot Launch Command
+
+The monetization model should be proven in one market before Heavyster tries to look global.
+
+- Pilot market: UAE Lifting.
+- Target before traffic: 6 anchor suppliers and 24 active paid listings.
+- Listing SaaS target: USD 2,376 annual ARR from the pilot at USD 99/year per active listing.
+- Trust target: 18 proof packs and 12 freshness checks before serious buyer traffic.
+- Buyer proof target: 3 direct enquiry drills with response tracking.
+- Guardrail: buyer pays supplier directly; Heavyster earns listing SaaS first.
+
+This keeps the first launch simple: recruit supply, activate paid listings, prove proof and response, then decide whether the market deserves more traffic. The 1% success fee remains phase two only after the quote, award, or booking trail is real.
+
+## v134 Global Launch Passport
+
+Global should not mean complicated. Heavyster should scale countries through one product model, one USD price anchor, and local trust labels.
+
+- Global product rule: the same supplier account, equipment listing, proof checklist, availability status, and direct enquiry route should work in every country.
+- Currency rule: keep USD 9/month or USD 99/year per active listing as the phase-one billing anchor. Add local currency display later without changing the core SaaS model.
+- Trust rule: local labels can change by country, but the proof objects stay simple: company profile, equipment proof, documents, availability, lead route, and billing status.
+- Launch rule: open a country only when demand, verified supply, proof, availability freshness, and direct response are visible.
+- Environment rule: use prototype, staging, and production gates so multi-country launches do not fork the product.
+- Payment rule: buyer pays rental company directly. Heavyster earns listing SaaS first; the optional 1% success fee waits until quote, award, or booking workflow proof exists.
+
+This is the cleanest global monetization stance: one simple SaaS business, local market proof, and no rental-payment complexity until the product has earned the right to add transaction rails.
+
+## v135 Simple Global UX Guard
+
+The monetization model should stay easy even when Heavyster adds more countries, supplier tools, founder tools, and AI-assisted workflows.
+
+- Simple UX rule: one screen, one role, one next action.
+- Pricing rule: keep two visible listing prices, USD 9/month and USD 99/year per active listing.
+- Country rule: localize proof labels and currency display later, but do not fork the product or pricing logic.
+- AI rule: AI can summarize, route, classify, and draft only when it removes manual work or clarifies the next action.
+- Payment rule: buyer pays the rental company directly in phase one; Heavyster earns listing SaaS first.
+- Success-fee rule: the optional 1% fee waits until quote, award, direct enquiry trail, or booking workflow proof exists.
+
+This is the best monetization discipline for the current stage: charge for visible supplier value, make the first paid action tiny and obvious, and avoid adding pricing choices that create buyer or supplier doubt.
+
+## v136 Calm Command Center
+
+The money model should feel as calm as the interface. A supplier should always understand one thing: publish verified active listings, keep rental payment direct, and pay Heavyster for visibility and operating proof.
+
+- Calm offer: free supplier profile first, then USD 9/month or USD 99/year per active listing.
+- Calm buyer rule: search, compare proof, and send one direct enquiry without Heavyster touching rental payment.
+- Calm supplier rule: list one machine, verify proof, confirm availability, then activate paid listing revenue.
+- Calm founder rule: grow only the market wedges where demand, proof, live supply, and listing ARR are visible.
+- Calm AI rule: AI can draft, summarize, and route only when it removes work or makes the next action clearer.
+- Calm phase-two rule: optional 1% confirmed-booking success fee waits until quote, award, enquiry, or booking workflow proof exists.
+
+This keeps Heavyster premium but peaceful: the product can become powerful globally without asking suppliers to understand a complicated marketplace fee stack too early.
+
+## v137 Serenity Mode
+
+Monetization should feel peaceful, not pushy. The first paid step stays small, visible, and useful: activate verified equipment listings while rental money remains direct between buyer and supplier.
+
+- Serenity offer: free supplier profile, then USD 9/month or USD 99/year per active equipment listing.
+- Serenity buyer rule: show the cleanest machine, proof, availability, and direct supplier route before extra choices.
+- Serenity supplier rule: make one listing feel safe to publish before asking the rental yard to manage a large workspace.
+- Serenity founder rule: grow only where demand, proof, supply gap, and listing ARR are visible.
+- Serenity AI rule: AI can summarize, draft, and route only when it removes manual work or shortens a decision.
+- Serenity phase-two rule: optional 1% confirmed-booking success fee waits until Heavyster proves quote, award, enquiry, or booking workflow value.
+
+This is the calmest commercial path: supplier value first, listing revenue first, no rental payment custody, and no complicated marketplace fee until the workflow earns it.
+
+## v138 Heavenly Focus
+
+Monetization should feel heavenly simple: a supplier lists equipment, keeps the rental payment direct, and pays Heavyster only for verified visibility and operating proof.
+
+- Heavenly offer: free supplier profile, then USD 9/month or USD 99/year per active equipment listing.
+- Heavenly buyer rule: show one clean route to proof, availability, and direct enquiry before extra comparisons.
+- Heavenly supplier rule: make one paid listing feel easy before asking the yard to manage bulk inventory.
+- Heavenly founder rule: scale only where demand, proof, supply gap, direct enquiry value, and listing ARR are visible.
+- Heavenly AI rule: AI appears only when it makes the next action easier, quieter, or faster.
+- Heavenly phase-two rule: optional 1% confirmed-booking success fee waits until quote, award, enquiry, or booking workflow proof exists.
+
+This keeps Heavyster premium without pressure: listing SaaS first, direct supplier payment always, and success fees only after the platform earns the workflow.
+
 ## Phase 1: Listing SaaS
 
 Recommended launch pricing:
@@ -15,6 +105,10 @@ Recommended launch pricing:
 - No rental commission
 - Customer pays rental company directly
 - Heavyster provides equipment pages, supplier profiles, documents, availability, search visibility, and direct enquiries
+- Simple Global UX Guard keeps future countries, AI, and workflow expansion inside one clear next action so paid listing conversion does not get buried under product complexity
+- Calm Command Center keeps every pricing, supplier, buyer, founder, and AI release tied to one peaceful next action before adding more power
+- Heavenly Focus keeps every commercial page tied to one calm path, one proof reason, one money rule, and one next action before adding more product power
+- Global Launch Passport keeps country expansion tied to the same listing SaaS model before local currency display, proof labels, or market pages add complexity
 - Founder Workbench protects monetization discipline by showing when a market is ready to scale paid listings and when trust, response, or activation must be repaired first
 - Founder Morning Brief makes phase-one discipline part of the founder's first daily read: protect paid listings, supplier saves, trust, and activation before opening new traffic
 - Founder Daily Moves keeps daily founder work tied to paid listings, supplier saves, activation, and trust repair before any rental payment workflow is introduced
