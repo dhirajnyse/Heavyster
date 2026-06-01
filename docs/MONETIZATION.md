@@ -307,3 +307,82 @@ The best next monetization move is to make the paid-listing path feel peaceful a
 - Founder route chooses the next wedge by demand, supply gap, trust, and listing ARR.
 - Every route keeps the payment rule visible: supplier keeps rental payment direct, Heavyster earns listing SaaS first.
 - The optional 1% success fee still waits until Heavyster earns a real booking workflow.
+
+## v145 Visible Serene Route
+
+The next monetization improvement is visibility of the simple path:
+
+- Marketplace should open with the route planner visible before search complexity.
+- Buyers should immediately see that enquiry is direct and Heavyster takes 0% of rental payment.
+- Suppliers should immediately see the paid-listing path: USD 9/month or USD 99/year per active listing.
+- Founders should immediately see that growth decisions are driven by demand, supply, trust, and listing ARR.
+- The optional 1% success fee remains future-only until the booking workflow is proven.
+
+## v146 Calm Global Compass
+
+The global expansion monetization rule stays simple: open one country/category wedge at a time, sell paid listings first, and keep rental payment direct.
+
+Default phase-one offer:
+
+- USD 9 per month per active equipment listing.
+- USD 99 per year per active equipment listing.
+- 0% rental take.
+
+Phase two success fee remains optional and only after confirmed booking workflow proof exists.
+
+## v147 Calm Decision Concierge
+
+The monetization improvement is decision confidence, not a new fee:
+
+- Buyer mode keeps the next action as a direct enquiry and shows 0% rental take.
+- Supplier mode points to one paid listing activation at USD 9/month or USD 99/year.
+- Founder mode recommends filling one supply gap before spending energy on wider traffic.
+- Every role sees the same phase-one payment rule: buyer pays the rental company directly, Heavyster earns listing SaaS.
+- The optional 1% confirmed-booking success fee remains future-only until Heavyster provides a proven booking trail, quote acceptance, enquiry history, or payment/deposit workflow worth charging for.
+
+This keeps Heavyster commercially sharp while preserving the calm, simple UX that makes suppliers trust the platform.
+
+## v148 Calm Backend Handoff
+
+Monetization remains simple while the backend becomes clearer.
+
+- Store ListingSubscription state for active paid listings.
+- Keep DirectEnquiry state separate from payment state.
+- Do not create rental checkout, escrow, payout, deposit, or rental commission state in phase one.
+- Use the handoff to show founders which supplier, listing, and market records can create listing ARR before any success-fee workflow.
+
+## v149 Calm Launch Pulse
+
+The monetization move is launch clarity, not a new price.
+
+- Buyer pulse shows 0% rental take and direct enquiry.
+- Supplier pulse shows USD 9/month or USD 99/year per active listing.
+- Founder pulse shows listing ARR first and success fee later.
+- Blocked state names backend gates so the team does not fake payment or booking workflows too early.
+- Next action stays one calm move, protecting conversion by reducing confusion.
+
+This keeps Heavyster commercially sharp while preserving the peaceful UX: listing SaaS first, rental payment direct, optional 1% success fee only after booking workflow proof.
+
+## v150 Production Account Scaffold
+
+The monetization move is account clarity before backend weight.
+
+- Buyer account path turns search and proof into a saved direct enquiry record.
+- Supplier account path turns one machine into SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, and LeadRoute state.
+- Founder account path shows which account, trust, billing, or lead record must be created next before scaling demand.
+- Listing SaaS remains the first revenue engine: USD 9/month or USD 99/year per active equipment listing.
+- Rental payment stays direct between buyer and supplier, with 0% rental take in phase one.
+
+This lets Heavyster prepare real accounts and billable listings while keeping the public product calm, understandable, and trust-first.
+
+## v151 SaaS Launch Gate
+
+The monetization move is launch discipline before scale.
+
+- Buyer traffic passes only when proof, availability, and direct enquiry are clear.
+- Supplier onboarding passes only when the first listing can become a paid listing without payment confusion.
+- Paid listing remains the first revenue engine: USD 9/month or USD 99/year per active equipment listing.
+- Founder scale can hold when supply density or backend readiness is weak.
+- Backend route stays review-only until real supplier accounts, listing records, proof uploads, and direct lead logs exist.
+
+This keeps Heavyster commercially calm: build listing SaaS revenue first, protect trust, and add any 1% confirmed-booking success fee only after the booking workflow is proven.

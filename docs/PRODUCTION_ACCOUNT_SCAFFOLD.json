@@ -1,0 +1,58 @@
+{
+  "version": "v150 Production Account Scaffold",
+  "release_date": "2026-06-01",
+  "rule": "One calm account path becomes one production record path before any backend complexity is shown.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or commission handling in phase one; suppliers keep rental payment direct and Heavyster earns listing SaaS revenue.",
+  "account_paths": [
+    {
+      "role": "Buyer",
+      "visible_path": "Search equipment, compare proof, and copy one direct enquiry.",
+      "production_records": [
+        "BuyerProfile",
+        "TrustSnapshot",
+        "DirectEnquiry",
+        "SavedSearch"
+      ]
+    },
+    {
+      "role": "Supplier",
+      "visible_path": "List one machine, confirm proof, choose listing SaaS, and route leads direct.",
+      "production_records": [
+        "SupplierAccount",
+        "EquipmentListing",
+        "ProofDocument",
+        "ListingSubscription",
+        "LeadRoute"
+      ]
+    },
+    {
+      "role": "Founder",
+      "visible_path": "Review account readiness, ledger revenue, trust gaps, and next backend record.",
+      "production_records": [
+        "AdminReview",
+        "MarketLedger",
+        "AccountHealth",
+        "LeadAudit"
+      ]
+    }
+  ],
+  "records": [
+    "BuyerProfile",
+    "SupplierAccount",
+    "EquipmentListing",
+    "ProofDocument",
+    "ListingSubscription",
+    "DirectEnquiry",
+    "AdminReview",
+    "MarketLedger"
+  ],
+  "acceptance": [
+    "Header shows Build v150.",
+    "Build Phase shows Current version: v150.",
+    "Marketplace shows Production Account Scaffold above the hero.",
+    "Buyer, supplier, and founder roles each show four account records.",
+    "Copy scaffold explains account path, backend record, listing SaaS, direct rental payment, and 0% rental take.",
+    "Build Phase includes the Production Account Scaffold contract.",
+    "Static check requires this JSON model."
+  ]
+}

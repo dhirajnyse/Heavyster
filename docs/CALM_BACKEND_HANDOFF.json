@@ -1,0 +1,83 @@
+{
+  "version": "v148 Calm Backend Handoff",
+  "rule": "One visible decision becomes one backend record path without adding UI weight.",
+  "phase_one_guardrail": "No rental payment, escrow, payout, deposit, booking fee, supplier settlement, or rental commission is collected by Heavyster in phase one.",
+  "backend_objects": [
+    {
+      "name": "SupplierAccount",
+      "purpose": "Store rental company profile, regions, team contacts, proof status, and listing plan."
+    },
+    {
+      "name": "EquipmentListing",
+      "purpose": "Store machine category, make, model, location, availability, rate notes, and listing status."
+    },
+    {
+      "name": "ProofUpload",
+      "purpose": "Store photos, licenses, insurance, inspection documents, operator certificates, and expiry dates."
+    },
+    {
+      "name": "DirectEnquiry",
+      "purpose": "Store buyer request, selected machine, jobsite note, channel, copied packet, and response status."
+    },
+    {
+      "name": "ListingSubscription",
+      "purpose": "Store USD 9 monthly or USD 99 yearly paid listing state without touching rental payment."
+    },
+    {
+      "name": "AdminReview",
+      "purpose": "Store approval state, proof gaps, suspicious listing flags, and support notes."
+    },
+    {
+      "name": "MarketWedge",
+      "purpose": "Store region, category, demand signals, supply gap, proof strength, and listing ARR opportunity."
+    },
+    {
+      "name": "PaymentGuardrail",
+      "purpose": "Store the phase-one rule that buyer pays supplier directly and Heavyster takes 0% rental."
+    }
+  ],
+  "role_paths": [
+    {
+      "role": "Buyer",
+      "owner": "buyer_flow",
+      "record_path": [
+        "DirectEnquiry",
+        "ProofSnapshot",
+        "LeadPacket",
+        "PaymentGuardrail"
+      ],
+      "next_action": "Open buyer desk"
+    },
+    {
+      "role": "Supplier",
+      "owner": "supplier_flow",
+      "record_path": [
+        "SupplierAccount",
+        "EquipmentListing",
+        "ProofUpload",
+        "ListingSubscription"
+      ],
+      "next_action": "Open supplier studio"
+    },
+    {
+      "role": "Founder",
+      "owner": "founder_flow",
+      "record_path": [
+        "MarketWedge",
+        "SupplierTarget",
+        "AdminReview",
+        "LaunchGate"
+      ],
+      "next_action": "Open build phase"
+    }
+  ],
+  "acceptance": [
+    "Marketplace includes Calm Backend Handoff below Calm Decision Concierge.",
+    "Handoff changes copy and records for buyer, supplier, and founder modes.",
+    "Primary handoff action opens the correct role workspace or Build Phase.",
+    "Copy text states listing SaaS first, direct rental payment, and 0% rental take.",
+    "Build Phase includes the v148 Calm Backend Handoff contract.",
+    "Static check verifies the public handoff, contract, and JSON model.",
+    "The handoff explains backend state without adding another heavy workflow surface."
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "version": "v146 Calm Global Compass",
+  "rule": "One country, one category, one proof reason, one money rule, and one next action.",
+  "default_launch": {
+    "country": "UAE",
+    "category": "Lifting",
+    "reason": "Demand is visible, supply gap can be filled, and listing ARR is modeled before traffic scales."
+  },
+  "phase_one_guardrail": "No rental payment collection by Heavyster. Buyer pays supplier directly; Heavyster earns paid listing SaaS first.",
+  "money_model": {
+    "monthly": "USD 9 per active equipment listing",
+    "annual": "USD 99 per active equipment listing",
+    "rental_take": "0% in phase one",
+    "phase_two": "Optional 1% confirmed-booking success fee only after quote, payment, or booking workflow proof exists."
+  },
+  "markets": [
+    {
+      "country": "UAE",
+      "category": "Lifting",
+      "next_action": "Fill supplier gap",
+      "proof_reason": "Demand signals and listing ARR are visible.",
+      "money_rule": "USD 9/month or USD 99/year per active listing"
+    },
+    {
+      "country": "India",
+      "category": "Roadwork",
+      "next_action": "Capture demand",
+      "proof_reason": "Demand should be proven before supplier push.",
+      "money_rule": "Keep USD anchor until local billing is ready"
+    },
+    {
+      "country": "USA",
+      "category": "Power",
+      "next_action": "Recruit supply",
+      "proof_reason": "Supplier density should come before traffic.",
+      "money_rule": "Listing SaaS first, no rental payment handling"
+    },
+    {
+      "country": "UK",
+      "category": "Lifting",
+      "next_action": "Protect proof",
+      "proof_reason": "Verified supply can convert only when proof is visible.",
+      "money_rule": "Annual listing plan preferred"
+    }
+  ],
+  "role_routes": [
+    {
+      "role": "Buyer",
+      "route": "Country -> Category -> Proof -> Direct enquiry",
+      "next_action": "Send one proof-first enquiry."
+    },
+    {
+      "role": "Supplier",
+      "route": "Country -> Listing -> Proof -> Paid listing",
+      "next_action": "Publish one clean machine."
+    },
+    {
+      "role": "Founder",
+      "route": "Market -> Demand -> Supply gap -> Listing ARR",
+      "next_action": "Recruit the next verified supplier."
+    }
+  ],
+  "acceptance": [
+    "Marketplace shows Calm Global Compass below Serene Route Planner and before hero.",
+    "Buyer, supplier, and founder each see one global path.",
+    "The compass shows country, category or market, proof, money, and next action.",
+    "Copy global brief explains the no-rental-payment phase-one guardrail.",
+    "Build Phase includes the v146 contract before the Release Ledger.",
+    "Static check verifies the compass model and cache-bust token."
+  ]
+}

@@ -1,9 +1,9 @@
 {
-  "version": "v144 Serene Route Planner",
+  "version": "v145 Visible Serene Route",
   "release_date": "2026-05-31",
-  "rule": "Every role gets one visible route, one proof reason, one money rule, and one next screen.",
+  "rule": "Marketplace opens with one visible route, one proof reason, one money rule, and one next screen before the hero.",
   "phase_one_guardrail": "No rental payment collection and no rental commission. Buyers pay suppliers directly while Heavyster earns listing SaaS revenue.",
-  "design_intent": "Keep Heavyster calm and global-ready by showing the safest route before deeper workflows.",
+  "design_intent": "Keep Heavyster calm and global-ready by placing the Marketplace anchor above the route planner, so users see the safest path before deeper workflows.",
   "routes": [
     {
       "role": "Buyer",
@@ -31,9 +31,10 @@
     }
   ],
   "acceptance": [
-    "Header shows Build v144.",
-    "Build Phase shows v144 Serene Route Planner.",
-    "The route planner appears directly under the Calm Action Bar.",
+    "Header shows Build v145.",
+    "Build Phase shows v145 Visible Serene Route.",
+    "Opening #marketplace shows the route planner before the hero.",
+    "The hero does not own the Marketplace anchor.",
     "Buyer, supplier, and founder states each show start, proof, money, and next screen.",
     "Copy route explains one visible route and the 0% rental take guardrail.",
     "The route planner remains compact on desktop and mobile."

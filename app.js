@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260531-heavyster-serene-route-planner-v144";
+const DATA_VERSION = "20260601-heavyster-saas-launch-gate-v151";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260531-serene-route-planner-v144";
+const SIMPLE_UX_RELEASE = "20260601-saas-launch-gate-v151";
 
 const listings = [
   {
@@ -995,6 +995,12 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSimplicityBar();
     renderCalmActionBar();
     renderSereneRoutePlanner();
+    renderGlobalCalmCompass();
+    renderCalmDecisionConcierge();
+    renderCalmBackendHandoff();
+    renderCalmLaunchPulse();
+    renderProductionAccountScaffold();
+    renderSaasLaunchGate();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -1850,6 +1856,60 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyGlobalCalmCompassButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildGlobalCalmCompassText());
+      showToast("Global compass rule copied.");
+    } catch {
+      showToast("Copy is blocked here, but the global compass rule is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmDecisionConciergeButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmDecisionConciergeText());
+      showToast("Decision concierge rule copied.");
+    } catch {
+      showToast("Copy is blocked here, but the decision concierge rule is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmBackendHandoffContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmBackendHandoffText());
+      showToast("Calm backend handoff rule copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm backend handoff rule is visible.");
+    }
+  });
+
+  document.querySelector("#copyCalmLaunchPulseContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmLaunchPulseText());
+      showToast("Calm launch pulse rule copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm launch pulse rule is visible.");
+    }
+  });
+
+  document.querySelector("#copyProductionAccountScaffoldContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildProductionAccountScaffoldText());
+      showToast("Production account scaffold copied.");
+    } catch {
+      showToast("Copy is blocked here, but the account scaffold is visible.");
+    }
+  });
+
+  document.querySelector("#copySaasLaunchGateContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSaasLaunchGateText());
+      showToast("SaaS launch gate copied.");
+    } catch {
+      showToast("Copy is blocked here, but the launch gate is visible.");
+    }
+  });
+
   document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
     toggleShortlist(getSelectedListing().id);
   });
@@ -1890,6 +1950,42 @@ function bindControls() {
   document.querySelector("#copySereneRouteButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("copy");
   });
+  document.querySelector("#globalCalmPrimaryButton").addEventListener("click", () => {
+    handleGlobalCalmCompassAction("primary");
+  });
+  document.querySelector("#copyGlobalCalmButton").addEventListener("click", () => {
+    handleGlobalCalmCompassAction("copy");
+  });
+  document.querySelector("#calmDecisionPrimaryButton").addEventListener("click", () => {
+    handleCalmDecisionConciergeAction("primary");
+  });
+  document.querySelector("#copyCalmDecisionButton").addEventListener("click", () => {
+    handleCalmDecisionConciergeAction("copy");
+  });
+  document.querySelector("#calmBackendHandoffPrimaryButton").addEventListener("click", () => {
+    handleCalmBackendHandoffAction("primary");
+  });
+  document.querySelector("#copyCalmBackendHandoffButton").addEventListener("click", () => {
+    handleCalmBackendHandoffAction("copy");
+  });
+  document.querySelector("#calmLaunchPulsePrimaryButton").addEventListener("click", () => {
+    handleCalmLaunchPulseAction("primary");
+  });
+  document.querySelector("#copyCalmLaunchPulseButton").addEventListener("click", () => {
+    handleCalmLaunchPulseAction("copy");
+  });
+  document.querySelector("#productionAccountPrimaryButton").addEventListener("click", () => {
+    handleProductionAccountScaffoldAction("primary");
+  });
+  document.querySelector("#copyProductionAccountButton").addEventListener("click", () => {
+    handleProductionAccountScaffoldAction("copy");
+  });
+  document.querySelector("#saasLaunchGatePrimaryButton").addEventListener("click", () => {
+    handleSaasLaunchGateAction("primary");
+  });
+  document.querySelector("#copySaasLaunchGateButton").addEventListener("click", () => {
+    handleSaasLaunchGateAction("copy");
+  });
   document.querySelector("#simplicityModeButton").addEventListener("click", () => {
     state.simpleMode = !state.simpleMode;
     state.simplicityRelease = SIMPLE_UX_RELEASE;
@@ -1897,6 +1993,12 @@ function bindControls() {
     renderSimplicityBar();
     renderCalmActionBar();
     renderSereneRoutePlanner();
+    renderGlobalCalmCompass();
+    renderCalmDecisionConcierge();
+    renderCalmBackendHandoff();
+    renderCalmLaunchPulse();
+    renderProductionAccountScaffold();
+    renderSaasLaunchGate();
     document.body.classList.toggle("simple-mode", state.simpleMode);
     syncNavigationState();
     showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
@@ -2067,6 +2169,12 @@ function render() {
   renderSimplicityBar();
   renderCalmActionBar();
   renderSereneRoutePlanner();
+  renderGlobalCalmCompass();
+  renderCalmDecisionConcierge();
+  renderCalmBackendHandoff();
+  renderCalmLaunchPulse();
+  renderProductionAccountScaffold();
+  renderSaasLaunchGate();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -2708,6 +2816,12 @@ function handleSimplicityIntent(intentId) {
   renderSimplicityBar();
   renderCalmActionBar();
   renderSereneRoutePlanner();
+  renderGlobalCalmCompass();
+  renderCalmDecisionConcierge();
+  renderCalmBackendHandoff();
+  renderCalmLaunchPulse();
+  renderProductionAccountScaffold();
+  renderSaasLaunchGate();
   document.body.classList.add("simple-mode");
   openWorkflowStep(intent.anchor, intent.label, intent.role);
 }
@@ -2826,7 +2940,7 @@ async function handleCalmActionBarAction(action, model = getCalmActionModel()) {
 function buildCalmActionBarText(model = getCalmActionModel()) {
   return [
     "Heavyster Calm Action Bar",
-    "Version: v144 Serene Route Planner / v143 Calm Action Bar",
+    "Version: v151 SaaS Launch Gate / v143 Calm Action Bar",
     "Rule: one role, one proof reason, one money rule, one next action.",
     "",
     `Role: ${model.role}`,
@@ -2910,7 +3024,7 @@ function getSereneRoutePlannerModel() {
 
   return {
     role,
-    roleLabel: `${role} serene route`,
+    roleLabel: `${role} route planner`,
     headline: config.headline,
     detail: config.detail,
     current,
@@ -2942,7 +3056,7 @@ async function handleSereneRoutePlannerAction(action, model = getSereneRoutePlan
 function buildSereneRoutePlannerText(model = getSereneRoutePlannerModel()) {
   return [
     "Heavyster Serene Route Planner",
-    "Version: v144 Serene Route Planner",
+    "Version: v151 SaaS Launch Gate / v145 Visible Serene Route",
     "Rule: one visible route, one proof reason, one money rule, one next screen.",
     "",
     `Role: ${model.role}`,
@@ -2953,6 +3067,687 @@ function buildSereneRoutePlannerText(model = getSereneRoutePlannerModel()) {
     "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
     "Rental take: 0%.",
     "Simplicity promise: the route should be understood in ten seconds."
+  ].join("\n");
+}
+
+function renderGlobalCalmCompass() {
+  const root = document.querySelector("#globalCalmCompass");
+  if (!root) return;
+
+  const model = getGlobalCalmCompassModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#globalCalmRole").textContent = model.roleLabel;
+  document.querySelector("#globalCalmHeadline").textContent = model.headline;
+  document.querySelector("#globalCalmDetail").textContent = model.detail;
+  document.querySelector("#globalCalmMap").innerHTML = model.steps.map((step) => `
+    <span class="${escapeHtml(step.tone)}">
+      <em>${escapeHtml(step.label)}</em>
+      <strong>${escapeHtml(step.value)}</strong>
+      <small>${escapeHtml(step.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#globalCalmPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getGlobalCalmCompassModel() {
+  const route = getSereneRoutePlannerModel();
+  const selected = getSelectedListing();
+  const role = route.role || state.commandRole || "Buyer";
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const region = state.region === "all" ? "UAE first" : state.region;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer global compass",
+      headline: "Choose the safest visible supply path.",
+      detail: "Start in one region, confirm proof, then send one direct enquiry.",
+      primary: { label: "Open buyer desk", anchor: "#buyer-workbench", aria: "Open the buyer global path" },
+      steps: [
+        { label: "Country", value: region, detail: "launch market", tone: "ready" },
+        { label: "Category", value: category, detail: "active search", tone: "neutral" },
+        { label: "Proof", value: "Trust 88/100", detail: "visible reason", tone: "ready" },
+        { label: "Money", value: "0% rental take", detail: "pay supplier direct", tone: "ready" },
+        { label: "Next", value: "Direct enquiry", detail: "copy one message", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier global compass",
+      headline: "Publish one clean machine before expanding the yard.",
+      detail: "Keep listing, proof, freshness, and SaaS revenue on one calm path.",
+      primary: { label: "Open supplier desk", anchor: "#supplier-workbench", aria: "Open the supplier global path" },
+      steps: [
+        { label: "Country", value: region, detail: "first paid yard", tone: "ready" },
+        { label: "Listing", value: selected?.name || "Cat 320 Excavator", detail: "one clean machine", tone: "neutral" },
+        { label: "Proof", value: "88/100", detail: "docs first", tone: "ready" },
+        { label: "Money", value: "USD 99/yr", detail: "listing SaaS", tone: "ready" },
+        { label: "Next", value: "Add listing", detail: "activate paid supply", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder global compass",
+      headline: "Scale one wedge only after proof is calm.",
+      detail: "Use demand, supply gap, trust, and listing ARR to choose the next country move.",
+      primary: { label: "Open market command", anchor: "#market-signal-matrix", aria: "Open the founder global path" },
+      steps: [
+        { label: "Market", value: "UAE Lifting", detail: "one wedge", tone: "ready" },
+        { label: "Demand", value: "9 signals", detail: "visible pull", tone: "neutral" },
+        { label: "Proof", value: "21 gap", detail: "fill before traffic", tone: "watch" },
+        { label: "Money", value: "USD 6,615 ARR", detail: "listing revenue", tone: "ready" },
+        { label: "Next", value: "Supplier hunt", detail: "recruit supply", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    steps: config.steps
+  };
+}
+
+async function handleGlobalCalmCompassAction(action, model = getGlobalCalmCompassModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildGlobalCalmCompassText(model));
+    showToast("Global compass brief copied.");
+  } catch {
+    showToast("Copy is blocked here, but the global compass brief is visible.");
+  }
+}
+
+function buildGlobalCalmCompassText(model = getGlobalCalmCompassModel()) {
+  return [
+    "Heavyster Calm Global Compass",
+    "Version: v151 SaaS Launch Gate / v146 Calm Global Compass",
+    "Rule: one country, one category, one proof reason, one money rule, one next action.",
+    "",
+    `Role: ${model.role}`,
+    `Path: ${model.steps.map((step) => `${step.label} ${step.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Expansion promise: launch one market calmly before opening the next country."
+  ].join("\n");
+}
+
+function renderCalmDecisionConcierge() {
+  const root = document.querySelector("#calmDecisionConcierge");
+  if (!root) return;
+
+  const model = getCalmDecisionConciergeModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#calmDecisionRole").textContent = model.roleLabel;
+  document.querySelector("#calmDecisionHeadline").textContent = model.headline;
+  document.querySelector("#calmDecisionDetail").textContent = model.detail;
+  document.querySelector("#calmDecisionFlow").innerHTML = model.tiles.map((tile) => `
+    <span class="${escapeHtml(tile.tone)}">
+      <em>${escapeHtml(tile.label)}</em>
+      <strong>${escapeHtml(tile.value)}</strong>
+      <small>${escapeHtml(tile.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmDecisionPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getCalmDecisionConciergeModel() {
+  const route = getSereneRoutePlannerModel();
+  const compass = getGlobalCalmCompassModel();
+  const selected = getSelectedListing();
+  const role = route.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const proofScore = selected?.verified ? "100/100" : "88/100";
+  const region = state.region === "all" ? "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer decision concierge",
+      headline: `Use ${listingName} and send one direct enquiry.`,
+      detail: `${supplierName} gives the cleanest visible path: proof, availability, and payment stay simple.`,
+      primary: { label: "Copy enquiry", aria: "Copy the calm buyer enquiry", mode: "copy", anchor: "#marketplace" },
+      tiles: [
+        { label: "Decision", value: listingName, detail: "one machine", tone: "ready" },
+        { label: "Proof", value: `Trust ${proofScore}`, detail: "visible before enquiry", tone: "ready" },
+        { label: "Money", value: "0% rental take", detail: "pay supplier direct", tone: "ready" },
+        { label: "Next", value: "Direct enquiry", detail: "copy one message", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier decision concierge",
+      headline: `Activate one paid ${category} listing.`,
+      detail: `Publish one clean machine in ${region}, confirm proof, and keep the listing revenue path calm.`,
+      primary: { label: "Open supplier desk", aria: "Open the calm supplier decision", mode: "open", anchor: "#supplier-workbench" },
+      tiles: [
+        { label: "Decision", value: "List one machine", detail: listingName, tone: "ready" },
+        { label: "Proof", value: "Proof 88/100", detail: "documents clean", tone: "ready" },
+        { label: "Money", value: "USD 99/yr", detail: "active listing", tone: "ready" },
+        { label: "Next", value: "Supplier desk", detail: "finish listing", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder decision concierge",
+      headline: "Fill UAE Lifting supply before traffic.",
+      detail: `${compass.steps[0]?.value || "UAE"} and ${compass.steps[1]?.value || "Lifting"} stay the calmest growth wedge until proof is stronger.`,
+      primary: { label: "Open market command", aria: "Open the calm founder decision", mode: "open", anchor: "#market-signal-matrix" },
+      tiles: [
+        { label: "Decision", value: "Fill UAE Lifting", detail: "one wedge", tone: "ready" },
+        { label: "Proof", value: "21 supply gap", detail: "recruit before traffic", tone: "watch" },
+        { label: "Money", value: "USD 6,615 ARR", detail: "listing revenue", tone: "ready" },
+        { label: "Next", value: "Market command", detail: "one founder move", tone: "neutral" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    tiles: config.tiles
+  };
+}
+
+async function handleCalmDecisionConciergeAction(action, model = getCalmDecisionConciergeModel()) {
+  if (action === "primary" && model.primary.mode === "open") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmDecisionConciergeText(model));
+    showToast("Calm decision copied.");
+  } catch {
+    showToast("Copy is blocked here, but the calm decision is visible.");
+  }
+}
+
+function buildCalmDecisionConciergeText(model = getCalmDecisionConciergeModel()) {
+  const tileValue = (label) => model.tiles.find((tile) => tile.label === label)?.value || "";
+  const tileDetail = (label) => model.tiles.find((tile) => tile.label === label)?.detail || "";
+  return [
+    "Heavyster Calm Decision Concierge",
+    "Version: v151 SaaS Launch Gate / v147 Calm Decision Concierge",
+    "Rule: one user, one decision, one proof reason, one money rule, one action.",
+    "",
+    `Role: ${model.role}`,
+    `Decision: ${tileValue("Decision")} (${tileDetail("Decision")})`,
+    `Proof reason: ${tileValue("Proof")} (${tileDetail("Proof")})`,
+    `Money rule: ${tileValue("Money")} (${tileDetail("Money")})`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: remove every choice that does not help the current decision."
+  ].join("\n");
+}
+
+function renderCalmBackendHandoff() {
+  const root = document.querySelector("#calmBackendHandoff");
+  if (!root) return;
+
+  const model = getCalmBackendHandoffModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#calmBackendHandoffRole").textContent = model.roleLabel;
+  document.querySelector("#calmBackendHandoffHeadline").textContent = model.headline;
+  document.querySelector("#calmBackendHandoffDetail").textContent = model.detail;
+  document.querySelector("#calmBackendHandoffFlow").innerHTML = model.records.map((record) => `
+    <span class="${escapeHtml(record.tone)}">
+      <em>${escapeHtml(record.label)}</em>
+      <strong>${escapeHtml(record.value)}</strong>
+      <small>${escapeHtml(record.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmBackendHandoffPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getCalmBackendHandoffModel() {
+  const route = getSereneRoutePlannerModel();
+  const selected = getSelectedListing();
+  const role = route.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const proofScore = selected?.verified ? "100/100" : "88/100";
+  const region = state.region === "all" ? "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer backend handoff",
+      headline: "Save one direct enquiry as production state.",
+      detail: `${listingName} becomes enquiry record, proof snapshot, supplier route, and no-payment guardrail.`,
+      owner: "buyer_flow",
+      primary: { label: "Open buyer desk", anchor: "#buyer-workbench", aria: "Open the buyer backend handoff", mode: "open" },
+      records: [
+        { label: "Record", value: "DirectEnquiry", detail: listingName, tone: "ready" },
+        { label: "Proof", value: "ProofSnapshot", detail: `Trust ${proofScore}`, tone: "ready" },
+        { label: "Route", value: "LeadPacket", detail: supplierName, tone: "neutral" },
+        { label: "Money", value: "PaymentGuardrail", detail: "0% rental take", tone: "ready" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier backend handoff",
+      headline: "Turn one listing into supplier account state.",
+      detail: `${supplierName} needs account, listing, proof, subscription, and freshness state before scale.`,
+      owner: "supplier_flow",
+      primary: { label: "Open supplier studio", anchor: "#supplier-workbench", aria: "Open the supplier backend handoff", mode: "open" },
+      records: [
+        { label: "Account", value: "SupplierAccount", detail: supplierName, tone: "ready" },
+        { label: "Listing", value: "EquipmentListing", detail: listingName, tone: "ready" },
+        { label: "Proof", value: "ProofUpload", detail: "documents clean", tone: "ready" },
+        { label: "Money", value: "ListingSubscription", detail: "USD 99/yr", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder backend handoff",
+      headline: "Turn one market command into backend gates.",
+      detail: `${region} ${category} gets demand, supplier targets, admin review, and launch gate state before traffic.`,
+      owner: "founder_flow",
+      primary: { label: "Open build phase", anchor: "#build-phase", aria: "Open the founder backend handoff", mode: "open" },
+      records: [
+        { label: "Market", value: "MarketWedge", detail: `${region} ${category}`, tone: "ready" },
+        { label: "Supply", value: "SupplierTarget", detail: "21 gap", tone: "watch" },
+        { label: "Control", value: "AdminReview", detail: "proof before traffic", tone: "neutral" },
+        { label: "Gate", value: "LaunchGate", detail: "listing ARR first", tone: "ready" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    owner: config.owner,
+    primary: config.primary,
+    records: config.records
+  };
+}
+
+async function handleCalmBackendHandoffAction(action, model = getCalmBackendHandoffModel()) {
+  if (action === "primary" && model.primary.mode === "open") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmBackendHandoffText(model));
+    showToast("Calm backend handoff copied.");
+  } catch {
+    showToast("Copy is blocked here, but the backend handoff is visible.");
+  }
+}
+
+function buildCalmBackendHandoffText(model = getCalmBackendHandoffModel()) {
+  return [
+    "Heavyster Calm Backend Handoff",
+    "Version: v151 SaaS Launch Gate / v148 Calm Backend Handoff",
+    "Rule: one visible decision becomes one backend record path without adding UI weight.",
+    "",
+    `Role: ${model.role}`,
+    `Owner: ${model.owner}`,
+    `Record path: ${model.records.map((record) => `${record.label} ${record.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Backend promise: store account, listing, proof, lead, billing, and admin state quietly behind the calm UI."
+  ].join("\n");
+}
+
+function renderCalmLaunchPulse() {
+  const root = document.querySelector("#calmLaunchPulse");
+  if (!root) return;
+
+  const model = getCalmLaunchPulseModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#calmLaunchPulseRole").textContent = model.roleLabel;
+  document.querySelector("#calmLaunchPulseHeadline").textContent = model.headline;
+  document.querySelector("#calmLaunchPulseDetail").textContent = model.detail;
+  document.querySelector("#calmLaunchPulseGrid").innerHTML = model.pulses.map((pulse) => `
+    <span class="${escapeHtml(pulse.tone)}">
+      <em>${escapeHtml(pulse.label)}</em>
+      <strong>${escapeHtml(pulse.value)}</strong>
+      <small>${escapeHtml(pulse.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmLaunchPulsePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getCalmLaunchPulseModel() {
+  const route = getSereneRoutePlannerModel();
+  const backend = getCalmBackendHandoffModel();
+  const selected = getSelectedListing();
+  const role = route.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const region = state.region === "all" ? "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer launch pulse",
+      headline: "Live search is ready. Send one direct enquiry.",
+      detail: `${listingName} has the clearest visible path: proof first, supplier direct, payment outside Heavyster.`,
+      primary: { label: "Copy enquiry", aria: "Copy the buyer launch pulse enquiry", mode: "copy", anchor: "#marketplace" },
+      pulses: [
+        { label: "Live", value: "Search + proof", detail: "Verified listings and proof card are usable now.", tone: "ready" },
+        { label: "Blocked", value: "Saved history", detail: "Buyer login and RFQ history need backend.", tone: "watch" },
+        { label: "Money", value: "0% rental take", detail: "Buyer pays supplier directly.", tone: "ready" },
+        { label: "Next", value: "Direct enquiry", detail: `Ask ${supplierName} to confirm availability.`, tone: "neutral" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier launch pulse",
+      headline: "Listing SaaS is ready. Confirm one machine.",
+      detail: `${supplierName} can protect paid listing revenue by keeping proof, availability, and direct leads clean.`,
+      primary: { label: "Open supplier studio", aria: "Open the supplier launch pulse", mode: "open", anchor: "#supplier-workbench" },
+      pulses: [
+        { label: "Live", value: "Listing desk", detail: "Supplier can model listing, proof, and lead flow.", tone: "ready" },
+        { label: "Blocked", value: "Real uploads", detail: "Auth, storage, and billing are production gates.", tone: "watch" },
+        { label: "Money", value: "USD 99/year", detail: "Paid listing SaaS, rental payment direct.", tone: "ready" },
+        { label: "Next", value: "Confirm availability", detail: "Refresh the first billable machine.", tone: "neutral" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder launch pulse",
+      headline: "Scale only where demand, trust, and listing ARR agree.",
+      detail: `${region} ${category} stays the calm wedge until supply gaps, proof gaps, and backend gates are clear.`,
+      primary: { label: "Open market command", aria: "Open the founder launch pulse", mode: "open", anchor: "#market-signal-matrix" },
+      pulses: [
+        { label: "Live", value: "Market command", detail: "Demand, supply, proof, and ARR are visible.", tone: "ready" },
+        { label: "Blocked", value: backend.records.find((item) => item.tone === "watch")?.value || "Backend gates", detail: "Do not push traffic before proof and data are ready.", tone: "watch" },
+        { label: "Money", value: "Listing ARR first", detail: "Protect SaaS revenue before commission.", tone: "ready" },
+        { label: "Next", value: "Fill supply gap", detail: "Recruit verified machines before scaling.", tone: "neutral" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    pulses: config.pulses
+  };
+}
+
+async function handleCalmLaunchPulseAction(action, model = getCalmLaunchPulseModel()) {
+  if (action === "primary" && model.primary.mode === "open") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmLaunchPulseText(model));
+    showToast("Calm launch pulse copied.");
+  } catch {
+    showToast("Copy is blocked here, but the launch pulse is visible.");
+  }
+}
+
+function buildCalmLaunchPulseText(model = getCalmLaunchPulseModel()) {
+  const pulseValue = (label) => model.pulses.find((pulse) => pulse.label === label)?.value || "";
+  const pulseDetail = (label) => model.pulses.find((pulse) => pulse.label === label)?.detail || "";
+  return [
+    "Heavyster Calm Launch Pulse",
+    "Version: v151 SaaS Launch Gate / v149 Calm Launch Pulse",
+    "Rule: live, blocked, and next are visible before any workflow opens.",
+    "",
+    `Role: ${model.role}`,
+    `Live: ${pulseValue("Live")} (${pulseDetail("Live")})`,
+    `Blocked: ${pulseValue("Blocked")} (${pulseDetail("Blocked")})`,
+    `Money: ${pulseValue("Money")} (${pulseDetail("Money")})`,
+    `Next: ${pulseValue("Next")} (${pulseDetail("Next")})`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: one pulse, one proof reason, one money rule, one next action."
+  ].join("\n");
+}
+
+function renderProductionAccountScaffold() {
+  const root = document.querySelector("#productionAccountScaffold");
+  if (!root) return;
+
+  const model = getProductionAccountScaffoldModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#productionAccountRole").textContent = model.roleLabel;
+  document.querySelector("#productionAccountHeadline").textContent = model.headline;
+  document.querySelector("#productionAccountDetail").textContent = model.detail;
+  document.querySelector("#productionAccountGrid").innerHTML = model.records.map((record) => `
+    <span class="${escapeHtml(record.tone)}">
+      <em>${escapeHtml(record.label)}</em>
+      <strong>${escapeHtml(record.value)}</strong>
+      <small>${escapeHtml(record.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#productionAccountPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getProductionAccountScaffoldModel() {
+  const pulse = getCalmLaunchPulseModel();
+  const selected = getSelectedListing();
+  const role = pulse.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const region = state.region === "all" ? selected?.region || "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer account path",
+      headline: "Search stays simple. Saved enquiry becomes the first account record.",
+      detail: `${listingName} can become a saved search, proof snapshot, and direct supplier route when login exists.`,
+      primary: { label: "Open buyer desk", aria: "Open the buyer account scaffold", anchor: "#buyer-workbench" },
+      records: [
+        { label: "Account", value: "Buyer profile", detail: "Company, jobsite, contact", tone: "ready" },
+        { label: "Proof", value: "Trust snapshot", detail: "Saved score and docs", tone: "ready" },
+        { label: "Money", value: "0% rental take", detail: "Pay supplier direct", tone: "ready" },
+        { label: "Next record", value: "Saved enquiry", detail: "Backend handoff", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier account path",
+      headline: "One listing becomes a real paid SaaS account.",
+      detail: `${supplierName} needs company account, equipment listing, proof uploads, billing plan, and direct lead route.`,
+      primary: { label: "Open supplier studio", aria: "Open the supplier account scaffold", anchor: "#studio" },
+      records: [
+        { label: "Account", value: "Supplier account", detail: "Company, regions, team", tone: "ready" },
+        { label: "Listing", value: "Equipment record", detail: "Machine, location, status", tone: "ready" },
+        { label: "Money", value: "Listing plan", detail: "USD 9/mo or 99/yr", tone: "ready" },
+        { label: "Next record", value: "Lead route", detail: "Phone, email, WhatsApp", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder account path",
+      headline: "Scale only after the record path is visible.",
+      detail: `${region} ${category} should create admin review, market ledger, billing status, proof debt, and lead audit records before traffic scales.`,
+      primary: { label: "Open build phase", aria: "Open the founder account scaffold", anchor: "#build-phase" },
+      records: [
+        { label: "Control", value: "Admin review", detail: "Approve supply and proof", tone: "ready" },
+        { label: "Market", value: "Ledger entry", detail: "Demand, supply, ARR", tone: "ready" },
+        { label: "Money", value: "Billing status", detail: "Listing SaaS only", tone: "ready" },
+        { label: "Next record", value: "Lead audit", detail: "Response and proof trail", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    records: config.records
+  };
+}
+
+async function handleProductionAccountScaffoldAction(action, model = getProductionAccountScaffoldModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildProductionAccountScaffoldText(model));
+    showToast("Production account scaffold copied.");
+  } catch {
+    showToast("Copy is blocked here, but the account scaffold is visible.");
+  }
+}
+
+function buildProductionAccountScaffoldText(model = getProductionAccountScaffoldModel()) {
+  return [
+    "Heavyster Production Account Scaffold",
+    "Version: v151 SaaS Launch Gate / v150 Production Account Scaffold",
+    "Rule: one calm account path becomes one production record path.",
+    "",
+    `Role: ${model.role}`,
+    `Account path: ${model.records.map((record) => `${record.label} ${record.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Production records: buyer profile, supplier account, equipment listing, proof document, listing subscription, direct enquiry, admin review, and market ledger.",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: show the record path without exposing backend complexity."
+  ].join("\n");
+}
+
+function renderSaasLaunchGate() {
+  const root = document.querySelector("#saasLaunchGate");
+  if (!root) return;
+
+  const model = getSaasLaunchGateModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#saasLaunchGateRole").textContent = model.roleLabel;
+  document.querySelector("#saasLaunchGateHeadline").textContent = model.headline;
+  document.querySelector("#saasLaunchGateDetail").textContent = model.detail;
+  document.querySelector("#saasLaunchGateGrid").innerHTML = model.gates.map((gate) => `
+    <span class="${escapeHtml(gate.tone)}">
+      <em>${escapeHtml(gate.label)}</em>
+      <strong>${escapeHtml(gate.value)}</strong>
+      <small>${escapeHtml(gate.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#saasLaunchGatePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getSaasLaunchGateModel() {
+  const account = getProductionAccountScaffoldModel();
+  const selected = getSelectedListing();
+  const role = account.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const region = state.region === "all" ? selected?.region || "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer launch gate",
+      headline: "Let buyers move only when one clean route is visible.",
+      detail: `${listingName} should pass proof, availability, direct enquiry, and 0% rental take before traffic scales.`,
+      primary: { label: "Open buyer desk", aria: "Open the buyer launch gate", anchor: "#buyer-workbench" },
+      gates: [
+        { label: "Buyer traffic", value: "Pass", detail: "Search has one clean result path.", tone: "ready" },
+        { label: "Proof view", value: "Pass", detail: "Trust is visible before enquiry.", tone: "ready" },
+        { label: "Direct enquiry", value: "Pass", detail: "Copy enquiry keeps payment direct.", tone: "ready" },
+        { label: "Backend route", value: "Review", detail: "Save enquiry record next.", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier launch gate",
+      headline: "Let suppliers publish only when proof and money are clean.",
+      detail: `${supplierName} should see profile, first listing, proof, availability, paid listing, and lead route in one path.`,
+      primary: { label: "Open supplier studio", aria: "Open the supplier launch gate", anchor: "#studio" },
+      gates: [
+        { label: "Onboarding", value: "Pass", detail: "Profile and first listing are visible.", tone: "ready" },
+        { label: "Proof route", value: "Pass", detail: "Documents are clear enough to show.", tone: "ready" },
+        { label: "Paid listing", value: "Pass", detail: "USD 99/year stays the clean offer.", tone: "ready" },
+        { label: "Freshness", value: "Review", detail: "Confirm availability before serious leads.", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder launch gate",
+      headline: "Scale only where demand, supply, trust, and revenue agree.",
+      detail: `${region} ${category} should pass demand proof, supplier density, listing ARR, and backend ownership before a launch push.`,
+      primary: { label: "Open market command", aria: "Open the founder launch gate", anchor: "#market-signal-matrix" },
+      gates: [
+        { label: "Demand proof", value: "Pass", detail: "Buyer signals support this wedge.", tone: "ready" },
+        { label: "Supply density", value: "Hold", detail: "Recruit enough verified machines first.", tone: "hold" },
+        { label: "Listing ARR", value: "Pass", detail: "Revenue remains listing SaaS only.", tone: "ready" },
+        { label: "Backend route", value: "Review", detail: "Create records before production launch.", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    gates: config.gates
+  };
+}
+
+async function handleSaasLaunchGateAction(action, model = getSaasLaunchGateModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildSaasLaunchGateText(model));
+    showToast("SaaS launch gate copied.");
+  } catch {
+    showToast("Copy is blocked here, but the launch gate is visible.");
+  }
+}
+
+function buildSaasLaunchGateText(model = getSaasLaunchGateModel()) {
+  return [
+    "Heavyster SaaS Launch Gate",
+    "Version: v151 SaaS Launch Gate",
+    "Rule: pass, hold, or review before the product scales.",
+    "",
+    `Role: ${model.role}`,
+    `Launch gate: ${model.gates.map((gate) => `${gate.label} ${gate.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Phase-one rule: launch paid listings and direct enquiries first.",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: one launch gate, one proof reason, one money rule, one next backend route."
   ].join("\n");
 }
 
@@ -2974,6 +3769,12 @@ function openWorkflowStep(anchor, label, role) {
   renderSimplicityBar();
   renderCalmActionBar();
   renderSereneRoutePlanner();
+  renderGlobalCalmCompass();
+  renderCalmDecisionConcierge();
+  renderCalmBackendHandoff();
+  renderCalmLaunchPulse();
+  renderProductionAccountScaffold();
+  renderSaasLaunchGate();
   closeWorkflowMenu();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.location.hash = anchor;

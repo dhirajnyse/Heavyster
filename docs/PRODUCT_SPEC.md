@@ -316,3 +316,71 @@ The product should show one understandable route before asking a user to open de
 - Founder route: demand, supply gap, trust, and listing ARR.
 - The route planner should stay compact, calm, and role-aware across countries.
 - Phase-one guardrail remains unchanged: Heavyster earns listing SaaS and does not collect rental payment.
+
+## v145 Visible Serene Route
+
+The Marketplace entry point should reveal the route planner before the hero, search panel, or workflow drawer:
+
+- `#marketplace` lands above the Serene Route Planner, not on the hero.
+- Buyer route keeps the first screen calm: search, proof, direct enquiry, and 0% rental take.
+- Supplier route keeps the first screen clear: list equipment, verify proof, activate paid SaaS.
+- Founder route keeps growth disciplined: choose the next wedge by demand, supply, trust, and listing ARR.
+- The route planner remains compact so future countries can add depth without making the opening view feel heavy.
+
+## v146 Calm Global Compass
+
+Heavyster now keeps one global launch path visible under the route planner and before the hero. Buyer, supplier, and founder modes each see one country or market, one category or listing, one proof reason, one money rule, and one next action.
+
+This is intentionally not a new heavy dashboard. It is a calm expansion rule for multi-country launch: prove one wedge, protect direct buyer-to-supplier payment, and move only when the path is understandable in seconds.
+
+## v147 Calm Decision Concierge
+
+Heavyster now adds one role-aware decision layer under the global compass. It is the calm handoff between broad route clarity and deeper workflow power.
+
+- Buyer decision: choose the cleanest visible machine and send one direct enquiry.
+- Supplier decision: activate one paid listing only when proof, availability, and listing SaaS value are clear.
+- Founder decision: fill one supply gap before scaling buyer traffic.
+- Each decision shows one proof reason, one money rule, one next screen, and one primary action.
+- The concierge must stay small enough to understand without opening the workflow drawer.
+
+The phase-one product rule remains unchanged: Heavyster earns listing SaaS first and does not collect rental payment, escrow, payout, deposit, or booking commission.
+
+## v148 Calm Backend Handoff
+
+Calm Backend Handoff sits under the Calm Decision Concierge and explains what production state will be created next without exposing backend complexity to the user.
+
+- Buyer path creates DirectEnquiry, ProofSnapshot, LeadPacket, and PaymentGuardrail state.
+- Supplier path creates SupplierAccount, EquipmentListing, ProofUpload, and ListingSubscription state.
+- Founder path creates MarketWedge, SupplierTarget, AdminReview, and LaunchGate state.
+- Phase one stays listing SaaS only: buyer pays supplier directly and Heavyster keeps 0% rental take.
+
+## v149 Calm Launch Pulse
+
+Calm Launch Pulse sits above the hero and tells the active role what is live, blocked, money-safe, and next before any workflow opens.
+
+- Buyer pulse keeps search, proof, and direct enquiry visible.
+- Supplier pulse keeps listing SaaS, proof, availability, and direct lead flow visible.
+- Founder pulse keeps demand, supply, trust, listing ARR, and backend gates visible.
+- The primary action opens one safe next screen for the role.
+- The copy action produces a short launch pulse brief.
+- Phase one remains unchanged: no rental checkout, escrow, payout, deposit, or commission workflow.
+
+## v150 Production Account Scaffold
+
+Production Account Scaffold sits under the launch pulse and turns the calm public experience into one future production account path.
+
+- Buyer path shows the saved enquiry, trust snapshot, direct contact, and 0% rental take rule.
+- Supplier path shows the supplier account, first equipment record, proof status, listing SaaS plan, and direct lead route.
+- Founder path shows admin review, market ledger, billing status, lead audit, and the next backend record to create.
+- The scaffold is deliberately small: four visible records, one primary action, and one copy-ready note.
+- Phase one stays listing SaaS only: Heavyster can bill active listings, but does not touch rental payment, deposit, escrow, payout, or commission workflow.
+
+## v151 SaaS Launch Gate
+
+SaaS Launch Gate sits above the hero and turns the public product into one calm pass, hold, or review decision before scale.
+
+- Buyer gate shows whether traffic can move to proof and direct enquiry.
+- Supplier gate shows whether onboarding, proof, paid listing, and freshness are ready.
+- Founder gate shows whether demand, supply density, listing ARR, and backend route can scale.
+- The gate keeps one visible next action and one copy-ready note for the active role.
+- Phase one remains listing SaaS only: USD 9/month or USD 99/year per active listing, 0% rental take, and supplier rental payment stays direct.

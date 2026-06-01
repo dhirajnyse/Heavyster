@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260531-serene-route-planner-v144" />
+  <link rel="stylesheet" href="styles.css?v=20260601-saas-launch-gate-v151" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v144</strong>
+            <strong>v151</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -194,9 +194,10 @@
           <button type="button" class="ghost-button" id="copyCalmActionButton">Copy calm brief</button>
         </div>
       </section>
+      <span class="page-anchor" id="marketplace" aria-hidden="true"></span>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
         <div class="serene-route-copy">
-          <span id="sereneRouteRole">Serene route</span>
+          <span id="sereneRouteRole">Route planner</span>
           <strong id="sereneRouteHeadline">Choose one calm route.</strong>
           <small id="sereneRouteDetail">One proof path, one money rule, and one next screen.</small>
         </div>
@@ -207,8 +208,86 @@
         </div>
       </section>
 
+      <section class="global-calm-compass" id="globalCalmCompass" aria-label="Calm global launch compass">
+        <div class="global-calm-copy">
+          <span id="globalCalmRole">Global compass</span>
+          <strong id="globalCalmHeadline">Launch one market calmly.</strong>
+          <small id="globalCalmDetail">Choose one country, one category, one proof rule, and one money rule before scaling.</small>
+        </div>
+        <div class="global-calm-map" id="globalCalmMap" aria-label="Global launch path"></div>
+        <div class="global-calm-actions">
+          <button type="button" class="solid-button" id="globalCalmPrimaryButton">Open launch path</button>
+          <button type="button" class="ghost-button" id="copyGlobalCalmButton">Copy global brief</button>
+        </div>
+      </section>
+
+      <section class="calm-decision-concierge" id="calmDecisionConcierge" aria-label="Calm decision concierge">
+        <div class="calm-decision-copy">
+          <span id="calmDecisionRole">Decision concierge</span>
+          <strong id="calmDecisionHeadline">Choose one decision calmly.</strong>
+          <small id="calmDecisionDetail">One role, one proof reason, one money rule, and one next action stay visible.</small>
+        </div>
+        <div class="calm-decision-flow" id="calmDecisionFlow" aria-label="Calm decision flow"></div>
+        <div class="calm-decision-actions">
+          <button type="button" class="solid-button" id="calmDecisionPrimaryButton">Copy decision</button>
+          <button type="button" class="ghost-button" id="copyCalmDecisionButton">Copy rule</button>
+        </div>
+      </section>
+
+      <section class="calm-backend-handoff" id="calmBackendHandoff" aria-label="Calm backend handoff">
+        <div class="calm-backend-handoff-copy">
+          <span id="calmBackendHandoffRole">Backend handoff</span>
+          <strong id="calmBackendHandoffHeadline">Turn one decision into real backend state.</strong>
+          <small id="calmBackendHandoffDetail">One record path, one proof gate, one money guardrail, and one owner.</small>
+        </div>
+        <div class="calm-backend-handoff-flow" id="calmBackendHandoffFlow" aria-label="Calm backend handoff records"></div>
+        <div class="calm-backend-handoff-actions">
+          <button type="button" class="solid-button" id="calmBackendHandoffPrimaryButton">Open handoff</button>
+          <button type="button" class="ghost-button" id="copyCalmBackendHandoffButton">Copy backend handoff</button>
+        </div>
+      </section>
+
+      <section class="calm-launch-pulse" id="calmLaunchPulse" aria-label="Calm launch pulse">
+        <div class="calm-launch-pulse-copy">
+          <span id="calmLaunchPulseRole">Launch pulse</span>
+          <strong id="calmLaunchPulseHeadline">Know what is live, blocked, and next.</strong>
+          <small id="calmLaunchPulseDetail">One quiet pulse keeps the launch calm across buyer, supplier, and founder work.</small>
+        </div>
+        <div class="calm-launch-pulse-grid" id="calmLaunchPulseGrid" aria-label="Launch pulse states"></div>
+        <div class="calm-launch-pulse-actions">
+          <button type="button" class="solid-button" id="calmLaunchPulsePrimaryButton">Open next</button>
+          <button type="button" class="ghost-button" id="copyCalmLaunchPulseButton">Copy pulse</button>
+        </div>
+      </section>
+
+      <section class="production-account-scaffold" id="productionAccountScaffold" aria-label="Production account scaffold">
+        <div class="production-account-copy">
+          <span id="productionAccountRole">Account scaffold</span>
+          <strong id="productionAccountHeadline">Prepare one real account path.</strong>
+          <small id="productionAccountDetail">Keep buyer, supplier, and founder work ready for production without adding screen weight.</small>
+        </div>
+        <div class="production-account-grid" id="productionAccountGrid" aria-label="Production account records"></div>
+        <div class="production-account-actions">
+          <button type="button" class="solid-button" id="productionAccountPrimaryButton">Open scaffold</button>
+          <button type="button" class="ghost-button" id="copyProductionAccountButton">Copy scaffold</button>
+        </div>
+      </section>
+
+      <section class="saas-launch-gate" id="saasLaunchGate" aria-label="SaaS launch gate">
+        <div class="saas-launch-copy">
+          <span id="saasLaunchGateRole">Launch gate</span>
+          <strong id="saasLaunchGateHeadline">Check the calm path before scaling.</strong>
+          <small id="saasLaunchGateDetail">One gate keeps buyer traffic, supplier onboarding, paid listings, and backend routing aligned.</small>
+        </div>
+        <div class="saas-launch-grid" id="saasLaunchGateGrid" aria-label="SaaS launch gate states"></div>
+        <div class="saas-launch-actions">
+          <button type="button" class="solid-button" id="saasLaunchGatePrimaryButton">Open gate</button>
+          <button type="button" class="ghost-button" id="copySaasLaunchGateButton">Copy gate</button>
+        </div>
+      </section>
+
       <main>
-        <section class="hero" id="marketplace">
+        <section class="hero" aria-label="Heavyster marketplace">
           <div class="hero-copy">
             <p class="eyebrow">Phase one thesis</p>
             <h1>Let rental companies list heavy equipment online without Heavyster touching the rental payment.</h1>
@@ -2182,7 +2261,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v144</span>
+            <span class="build-version-pill">Current version: v151</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2193,13 +2272,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v144 Serene Route Planner</strong>
-              <small>One calm route now joins each role to a start point, proof reason, money rule, and next screen.</small>
+              <strong>v151 SaaS Launch Gate</strong>
+              <small>One calm gate decides whether buyer traffic, supplier onboarding, paid listing revenue, and backend routing can safely move.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Route clarity</strong>
-              <small>Buyer, supplier, and founder should know the safe path without opening the workflow drawer.</small>
+              <strong>Launch gate clarity</strong>
+              <small>Buyer, supplier, and founder should know what can pass, what should hold, and what needs backend work.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2219,8 +2298,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v144</strong>
-              <small>Serene Route Planner</small>
+              <strong>v151</strong>
+              <small>SaaS Launch Gate</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2234,8 +2313,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend route handoff</strong>
-              <small>Turn route states into account, listing, proof, and direct lead records without adding UI weight.</small>
+              <strong>Production backend starter</strong>
+              <small>Turn launch gate states into supplier accounts, listing records, proof uploads, paid listing status, and direct lead logs.</small>
             </article>
           </div>
 
@@ -3362,13 +3441,13 @@
 
           <div class="serene-route-planner-contract" id="serene-route-planner-contract" aria-label="Heavyster serene route planner contract">
             <article class="serene-route-planner-contract-lead">
-              <span>v144 Serene Route Planner</span>
-              <strong>Every role gets one calm route before deeper workflow.</strong>
+              <span>v145 Visible Serene Route</span>
+              <strong>Marketplace reveals one calm route before deeper workflow.</strong>
               <p>
-                The route planner turns Heavyster into a peaceful operating product: start point, proof reason,
-                money rule, and next screen stay visible above the marketplace.
+                The Marketplace anchor now lands above the route planner, so the start point, proof reason,
+                money rule, and next screen are visible before the hero and search flow.
               </p>
-              <b>Rule: one visible route</b>
+              <b>Rule: route before hero</b>
             </article>
             <article>
               <span>Buyer</span>
@@ -3402,25 +3481,282 @@
             </article>
           </div>
 
+          <div class="global-calm-compass-contract" id="global-calm-compass-contract" aria-label="Heavyster calm global compass contract">
+            <article class="global-calm-compass-contract-lead">
+              <span>v146 Calm Global Compass</span>
+              <strong>One global path stays visible before scaling.</strong>
+              <p>The Marketplace now shows one country, one category, one proof reason, one money rule, and one next action under the route planner so expansion feels calm instead of crowded.</p>
+              <b>Rule: one market at a time</b>
+            </article>
+            <article>
+              <span>Country</span>
+              <strong>UAE first</strong>
+              <p>Keep the first launch anchored to one market before opening wider country expansion.</p>
+              <b>Local proof</b>
+            </article>
+            <article>
+              <span>Category</span>
+              <strong>Lifting or selected search</strong>
+              <p>Use the active search/category signal, then keep the path narrow enough to trust.</p>
+              <b>Demand-led</b>
+            </article>
+            <article>
+              <span>Proof</span>
+              <strong>Visible trust reason</strong>
+              <p>Show why the route is safe: documents, availability, supplier response, or supply gap.</p>
+              <b>Proof first</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>Listing SaaS only</strong>
+              <p>Keep rental payment direct between buyer and supplier. Heavyster earns paid listings first.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="global-calm-compass-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>A user can explain the global move without opening another drawer.</strong>
+              <p>Docs include the compass model in `docs/CALM_GLOBAL_COMPASS.json` so future country releases stay simple.</p>
+              <button type="button" class="solid-button" id="copyGlobalCalmCompassButton">Copy global compass rule</button>
+            </article>
+          </div>
+
+          <div class="calm-decision-concierge-contract" id="calm-decision-concierge-contract" aria-label="Heavyster calm decision concierge contract">
+            <article class="calm-decision-concierge-contract-lead">
+              <span>v147 Calm Decision Concierge</span>
+              <strong>One calm decision is always visible.</strong>
+              <p>The Marketplace now shows one role-aware decision, proof reason, money rule, and action under the global compass so users do not need to open another drawer to know what to do next.</p>
+              <b>Rule: one decision at a time</b>
+            </article>
+            <article>
+              <span>User</span>
+              <strong>Buyer, supplier, or founder</strong>
+              <p>The concierge changes by active role while keeping the same simple shape.</p>
+              <b>Role-aware</b>
+            </article>
+            <article>
+              <span>Decision</span>
+              <strong>One next move</strong>
+              <p>Show the specific machine, listing, or market wedge that deserves attention now.</p>
+              <b>No choice overload</b>
+            </article>
+            <article>
+              <span>Proof</span>
+              <strong>Visible reason</strong>
+              <p>Trust, documents, availability, or supply gap explains why this action is safe.</p>
+              <b>Proof first</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>0% rental take</strong>
+              <p>Keep rental payment direct between buyer and supplier. Heavyster earns paid listing SaaS first.</p>
+              <b>Listing SaaS only</b>
+            </article>
+          <article class="calm-decision-concierge-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>A user knows the next action without reading the whole page.</strong>
+              <p>Docs include the concierge model in `docs/CALM_DECISION_CONCIERGE.json` so future releases preserve simplicity.</p>
+              <button type="button" class="solid-button" id="copyCalmDecisionConciergeButton">Copy decision concierge rule</button>
+            </article>
+          </div>
+
+          <div class="calm-backend-handoff-contract" id="calm-backend-handoff-contract" aria-label="Heavyster calm backend handoff contract">
+            <article class="calm-backend-handoff-contract-lead">
+              <span>v148 Calm Backend Handoff</span>
+              <strong>Turn every calm decision into one backend record path.</strong>
+              <p>Buyer, supplier, and founder paths should show account, listing, proof, lead, billing, or admin state without adding checkout or workflow clutter.</p>
+              <b>Rule: one record path</b>
+            </article>
+            <article>
+              <span>Records</span>
+              <strong>Accounts / Listings / Proof / Leads</strong>
+              <p>The handoff explains what the real SaaS backend must store while the public UI stays simple.</p>
+              <b>Backend-ready</b>
+            </article>
+            <article>
+              <span>Owner</span>
+              <strong>Buyer, supplier, or founder</strong>
+              <p>Each role gets one backend owner and one next backend action.</p>
+              <b>No ambiguity</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>Billing without rental payment</strong>
+              <p>Paid listing state is allowed. Rental payment, escrow, payout, deposit, and commission are still out of phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article>
+              <span>Future</span>
+              <strong>Ready for real data</strong>
+              <p>The next production sprint can map this handoff to auth, database, storage, billing, admin, and routing.</p>
+              <b>Quiet backend</b>
+            </article>
+            <article class="calm-backend-handoff-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>A user sees what backend record will exist without seeing backend complexity.</strong>
+              <p>Docs include the handoff model in `docs/CALM_BACKEND_HANDOFF.json` so future releases preserve the no-noise rule.</p>
+              <button type="button" class="solid-button" id="copyCalmBackendHandoffContractButton">Copy backend handoff rule</button>
+            </article>
+          </div>
+
+          <div class="calm-launch-pulse-contract" id="calm-launch-pulse-contract" aria-label="Heavyster calm launch pulse contract">
+            <article class="calm-launch-pulse-contract-lead">
+              <span>v149 Calm Launch Pulse</span>
+              <strong>Show live, blocked, money, and next before any workflow opens.</strong>
+              <p>Heavyster should feel peaceful because every role sees one launch pulse: what is usable today, what is blocked by backend, what protects the no-rental-payment rule, and what to do next.</p>
+              <b>Rule: live, blocked, and next</b>
+            </article>
+            <article>
+              <span>Live</span>
+              <strong>Usable demo path</strong>
+              <p>Buyer search, supplier listing, founder market command, and direct enquiry remain visible without training.</p>
+              <b>Calm now</b>
+            </article>
+            <article>
+              <span>Blocked</span>
+              <strong>Backend gates</strong>
+              <p>Auth, database, uploads, billing, permissions, admin review, and saved histories stay clearly marked as production work.</p>
+              <b>No confusion</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>Listing SaaS first</strong>
+              <p>Paid listing revenue is allowed. Rental collection, escrow, deposits, payouts, and commission are still out of phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article>
+              <span>Next</span>
+              <strong>One action only</strong>
+              <p>Each role gets a single safest action so the product grows in power without growing noisy.</p>
+              <b>Simplify every release</b>
+            </article>
+            <article class="calm-launch-pulse-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same phase-one pulse.</strong>
+              <p>Docs include the pulse model in `docs/CALM_LAUNCH_PULSE.json`, and no pulse action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyCalmLaunchPulseContractButton">Copy launch pulse</button>
+            </article>
+          </div>
+
+          <div class="production-account-scaffold-contract" id="production-account-scaffold-contract" aria-label="Heavyster production account scaffold contract">
+            <article class="production-account-scaffold-contract-lead">
+              <span>v150 Production Account Scaffold</span>
+              <strong>Show the real account records without making the product feel technical.</strong>
+              <p>Heavyster should feel peaceful because every role sees one production path: who owns the account, what proof exists, what money rule applies, and what backend record should be created next.</p>
+              <b>Rule: one account path</b>
+            </article>
+            <article>
+              <span>Buyer</span>
+              <strong>Saved enquiry path</strong>
+              <p>Buyer profile, saved search, proof view, direct enquiry, and deal trail history become real records later.</p>
+              <b>Search stays simple</b>
+            </article>
+            <article>
+              <span>Supplier</span>
+              <strong>Paid listing path</strong>
+              <p>Company account, equipment listing, proof uploads, availability, listing plan, and lead route become the first SaaS backbone.</p>
+              <b>Listing revenue first</b>
+            </article>
+            <article>
+              <span>Founder</span>
+              <strong>Control path</strong>
+              <p>Admin review, market ledger, billing status, proof debt, and lead audit stay visible to protect scale decisions.</p>
+              <b>Scale calmly</b>
+            </article>
+            <article>
+              <span>Money</span>
+              <strong>No rental payment record</strong>
+              <p>Phase one stores listing SaaS and direct enquiry state only. Rental collection, deposits, escrow, payouts, and commission stay outside the product.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="production-account-scaffold-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same account path.</strong>
+              <p>Docs include the account scaffold model in `docs/PRODUCTION_ACCOUNT_SCAFFOLD.json`, and no scaffold action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyProductionAccountScaffoldContractButton">Copy v150 scaffold</button>
+            </article>
+          </div>
+
+          <div class="saas-launch-gate-contract" id="saas-launch-gate-contract" aria-label="Heavyster SaaS launch gate contract">
+            <article class="saas-launch-gate-contract-lead">
+              <span>v151 SaaS Launch Gate</span>
+              <strong>Launch only when the calm SaaS path can pass.</strong>
+              <p>Heavyster should scale buyer traffic, supplier onboarding, and listing revenue only when proof, direct enquiry, and backend ownership are clear.</p>
+              <b>Rule: one launch gate</b>
+            </article>
+            <article>
+              <span>Buyer traffic</span>
+              <strong>Pass through proof</strong>
+              <p>Search can move only when a buyer sees one clean machine path, trust reason, availability state, and direct enquiry action.</p>
+              <b>Traffic stays calm</b>
+            </article>
+            <article>
+              <span>Supplier onboarding</span>
+              <strong>Pass through first listing</strong>
+              <p>A rental company should know the next action: profile, machine, proof, availability, paid listing, or lead route.</p>
+              <b>One supplier path</b>
+            </article>
+            <article>
+              <span>Paid listing</span>
+              <strong>Pass through SaaS revenue</strong>
+              <p>USD 9/month or USD 99/year per active listing remains the phase-one monetization model.</p>
+              <b>Listing revenue first</b>
+            </article>
+            <article>
+              <span>Backend route</span>
+              <strong>Review before production</strong>
+              <p>Next backend work should create supplier accounts, listing records, proof uploads, billing state, and direct enquiry logs.</p>
+              <b>Build only needed rails</b>
+            </article>
+            <article class="saas-launch-gate-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same launch gate.</strong>
+              <p>Docs include the launch gate model in `docs/SAAS_LAUNCH_GATE.json`, and no gate action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copySaasLaunchGateContractButton">Copy v151 gate</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v144 Serene Route Planner</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v151 SaaS Launch Gate</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Serene Route Planner</strong>
-              <p>Added a role-aware route strip with start point, proof reason, money rule, and next screen so every role keeps one visible path and 0% rental take.</p>
+              <strong>SaaS Launch Gate</strong>
+              <p>Added one role-aware launch gate under the account scaffold so buyer, supplier, and founder each see what can pass, what should hold, and what backend route comes next.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v144.</li>
-                <li>Build Phase shows Current version: v144.</li>
+                <li>Header shows Build v151.</li>
+                <li>Build Phase shows Current version: v151.</li>
+                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, and SaaS Launch Gate before the hero.</li>
+                <li>SaaS Launch Gate shows buyer traffic, supplier onboarding, paid listing, and backend route gates for the active role.</li>
+                <li>Copy launch gate explains pass, hold, review, listing SaaS, direct rental payment, and 0% rental take.</li>
+                <li>Build Phase shows the SaaS Launch Gate contract before the Release Ledger.</li>
+                <li>Docs include `docs/SAAS_LAUNCH_GATE.json`.</li>
+                <li>Production Account Scaffold shows account, proof, money, and next record states for the active role.</li>
+                <li>Copy production scaffold explains account path, backend record, listing SaaS, direct rental payment, and 0% rental take.</li>
+                <li>Build Phase shows the Production Account Scaffold contract before the Release Ledger.</li>
+                <li>Docs include `docs/PRODUCTION_ACCOUNT_SCAFFOLD.json`.</li>
+                <li>Calm Launch Pulse shows live, blocked, money, and next states for the active role.</li>
+                <li>Copy launch pulse explains live, blocked, money guardrail, next action, direct rental payment, and 0% rental take.</li>
+                <li>Build Phase shows the Calm Launch Pulse contract before the Release Ledger.</li>
+                <li>Docs include `docs/CALM_LAUNCH_PULSE.json`.</li>
+                <li>Calm Backend Handoff shows role, backend records, owner path, and next handoff action.</li>
+                <li>Copy backend handoff explains one backend record path, paid listing SaaS, direct rental payment, and 0% rental take.</li>
+                <li>Build Phase shows the Calm Backend Handoff contract before the Release Ledger.</li>
+                <li>Docs include `docs/CALM_BACKEND_HANDOFF.json`.</li>
+                <li>Calm Decision Concierge shows role, decision, proof, money, and next action.</li>
+                <li>Copy decision concierge rule explains one user, one decision, one proof reason, one money rule, one action, and 0% rental take.</li>
+                <li>Build Phase shows the Calm Decision Concierge contract before the Release Ledger.</li>
+                <li>Calm Global Compass shows country, category, proof, money, and next action.</li>
+                <li>Copy global compass rule explains one market at a time and 0% rental take.</li>
                 <li>Calm Action Bar appears directly under the Simplicity Bar.</li>
-                <li>Serene Route Planner appears directly under the Calm Action Bar.</li>
+                <li>Opening `#marketplace` shows the Serene Route Planner before the hero.</li>
+                <li>The hero no longer owns the Marketplace anchor.</li>
                 <li>Buyer, supplier, and founder route states show start, proof, money, and next screen.</li>
                 <li>Copy route planner rule explains one visible route and 0% rental take.</li>
                 <li>Buyer, supplier, and founder modes each show one best next move.</li>
@@ -3428,7 +3764,7 @@
                 <li>Marketplace shows Calm Proof Card below buyer decision logic.</li>
                 <li>Copy proof card explains one machine, one trust score, one proof count, one direct enquiry action, and 0% rental take.</li>
                 <li>Pricing shows Serenity Mode and Heavenly Focus below the Calm Command Center.</li>
-                <li>Build Phase shows Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Supplier Account Shell, Calm Launch Room, Calm Proof Card, Calm Action Bar, and Serene Route Planner before the Release Ledger.</li>
+                <li>Build Phase shows Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Supplier Account Shell, Calm Launch Room, Calm Proof Card, Calm Action Bar, Serene Route Planner, and Calm Global Compass before the Release Ledger.</li>
                 <li>Copy scaffold brief explains SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, DirectEnquiry, AdminReview, and the no-rental-payment guardrail.</li>
                 <li>Copy account shell explains SupplierAccount, SupplierProfile, FirstListing, ProofChecklist, ListingPlan, DirectRoute, AdminReview, and the no-rental-payment guardrail.</li>
                 <li>Copy launch room explains UAE Lifting, anchor suppliers, paid-ready listings, direct enquiries, response checks, calm expansion, and the no-rental-payment guardrail.</li>
@@ -3496,8 +3832,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v144 Serene Route Planner</strong>
-              <p>Includes the v113 deploy guard, v114 Build Phase tracker, v115 badge, v116 ledger, v117 cockpit, v118 SaaS blueprint, v119 supplier starter, v120 hunt queue, v121 call sheet, v122 outcome gate, v123 launch readiness gate, v124 backend sprint board, v125 supplier account MVP preview, v126 onboarding runway, v127 backend data contract, v128 schema/API blueprint, v129 API smoke console, v130 backend fixture pack, v131 implementation contract, v132 monetization command, v133 pilot launch command, v134 global launch passport, v135 simplicity guard, v136 calm command center, v137 serenity mode, v138 heavenly focus, v139 calm backend scaffold, v140 supplier account shell, v141 calm launch room, v142 calm proof card, v143 calm action bar, and this serene route planner release.</p>
+              <strong>v151 SaaS Launch Gate</strong>
+              <p>Includes the v113 deploy guard through v150 production account scaffold, plus this launch gate release that shows what can pass, hold, or review before scale.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -3606,6 +3942,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260531-serene-route-planner-v144" defer></script>
+    <script src="app.js?v=20260601-saas-launch-gate-v151" defer></script>
   </body>
 </html>

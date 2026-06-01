@@ -1,0 +1,40 @@
+{
+  "version": "v149 Calm Launch Pulse",
+  "release_date": "2026-06-01",
+  "rule": "Show live, blocked, and next before any workflow opens.",
+  "purpose": "Keep Heavyster calm as the product grows by showing one role-aware launch pulse before deeper workflows.",
+  "phase_one_guardrail": "No rental payment collection, escrow, payout, deposit, or commission workflow in phase one. Heavyster earns listing SaaS while the buyer pays the supplier directly.",
+  "role_pulses": [
+    {
+      "role": "Buyer",
+      "live": "Marketplace search, proof card, route clarity, and direct enquiry are usable now.",
+      "blocked": "Saved buyer account, RFQ history, quote history, and booking audit trail need backend records.",
+      "money": "0% rental take. The buyer pays the rental company directly.",
+      "next": "Use the cleanest visible machine path and copy one enquiry."
+    },
+    {
+      "role": "Supplier",
+      "live": "Listing workspace, proof checklist, revenue preview, and direct lead path are visible now.",
+      "blocked": "Supplier login, uploads, billing checkout, real listing CRUD, and permissions need backend records.",
+      "money": "USD 9 monthly or USD 99 yearly per active listing. Rental payment remains direct.",
+      "next": "Confirm availability and publish one paid-ready listing."
+    },
+    {
+      "role": "Founder",
+      "live": "Market command shows demand, supply, proof, direct enquiry, and listing ARR signals.",
+      "blocked": "Auth, database, storage, billing, admin review, and lead history are production gates.",
+      "money": "Listing ARR first. Success fees wait until Heavyster proves the booking workflow.",
+      "next": "Fill the highest-priority supply gap before pushing traffic."
+    }
+  ],
+  "acceptance": [
+    "Header and Build Phase both show v149.",
+    "Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap can show a role-aware launch pulse.",
+    "Pulse always includes Live, Blocked, Money, and Next states.",
+    "Primary action opens one safe next screen for the active role.",
+    "Copy action creates a plain text operating pulse for buyer, supplier, or founder.",
+    "No pulse action introduces rental checkout, escrow, payout, deposit, or commission handling.",
+    "Build Phase includes a v149 Calm Launch Pulse contract.",
+    "Static check verifies the JSON contract, public UI hooks, app renderer, and CSS hooks."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "version": "v147 Calm Decision Concierge",
+  "rule": "One user, one decision, one proof reason, one money rule, and one action.",
+  "phase_one_guardrail": "No rental payment, escrow, payout, deposit, booking fee, or supplier settlement is collected by Heavyster in phase one.",
+  "roles": [
+    {
+      "role": "Buyer",
+      "decision": "Choose the cleanest visible machine",
+      "proof_reason": "Trust and availability are visible before enquiry",
+      "money_rule": "Buyer pays supplier direct; Heavyster takes 0% rental",
+      "action": "Copy one enquiry"
+    },
+    {
+      "role": "Supplier",
+      "decision": "Activate one paid listing",
+      "proof_reason": "Profile, proof, and availability are visible before publishing",
+      "money_rule": "USD 9/month or USD 99/year per active listing",
+      "action": "Open supplier desk"
+    },
+    {
+      "role": "Founder",
+      "decision": "Fill the strongest market supply gap",
+      "proof_reason": "Demand, trust, and listing ARR identify one wedge",
+      "money_rule": "Scale listing SaaS before any rental commission",
+      "action": "Open market command"
+    }
+  ],
+  "global_simplicity": [
+    "Keep the concierge visible before the hero on marketplace entry.",
+    "Show the active role without opening the workflow drawer.",
+    "Use the same four tiles for every role: decision, proof, money, next.",
+    "Never ask the user to compare more than one primary action.",
+    "Keep rental payment direct between buyer and supplier."
+  ],
+  "acceptance": [
+    "Marketplace includes Calm Decision Concierge after Calm Global Compass.",
+    "Buyer mode can copy one enquiry from the concierge.",
+    "Supplier mode opens the supplier workbench from the concierge.",
+    "Founder mode opens the market command from the concierge.",
+    "Build Phase shows the v147 contract and copy button.",
+    "Copy text states 0% rental take and listing SaaS revenue first."
+  ]
+}

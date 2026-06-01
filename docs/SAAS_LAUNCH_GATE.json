@@ -1,0 +1,57 @@
+{
+  "version": "v151 SaaS Launch Gate",
+  "release_date": "2026-06-01",
+  "rule": "One calm launch gate decides whether buyer traffic, supplier onboarding, paid listing revenue, and backend routing can move forward.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or commission handling in phase one; suppliers keep rental payment direct and Heavyster earns listing SaaS revenue.",
+  "gates": [
+    {
+      "name": "Buyer traffic",
+      "decision": "Pass",
+      "reason": "Search has proof, availability, and direct enquiry path."
+    },
+    {
+      "name": "Supplier onboarding",
+      "decision": "Pass",
+      "reason": "Supplier account, first listing, proof, and lead route are visible."
+    },
+    {
+      "name": "Paid listing",
+      "decision": "Pass",
+      "reason": "USD 9/month or USD 99/year per active listing stays the first revenue model."
+    },
+    {
+      "name": "Backend route",
+      "decision": "Review",
+      "reason": "Next build should turn the scaffold into accounts, listings, proof, and direct lead records."
+    }
+  ],
+  "role_paths": [
+    {
+      "role": "Buyer",
+      "primary_gate": "Buyer traffic",
+      "next_action": "Open buyer desk",
+      "anchor": "#buyer-workbench"
+    },
+    {
+      "role": "Supplier",
+      "primary_gate": "Supplier onboarding",
+      "next_action": "Open supplier studio",
+      "anchor": "#studio"
+    },
+    {
+      "role": "Founder",
+      "primary_gate": "Backend route",
+      "next_action": "Open market command",
+      "anchor": "#market-signal-matrix"
+    }
+  ],
+  "acceptance": [
+    "Header shows Build v151.",
+    "Build Phase shows Current version: v151.",
+    "Marketplace shows SaaS Launch Gate above the hero.",
+    "SaaS Launch Gate shows four pass, hold, or review states for the active role.",
+    "Copy gate explains listing SaaS, direct rental payment, and 0% rental take.",
+    "Build Phase includes the SaaS Launch Gate contract.",
+    "No gate action introduces rental payment, deposit, escrow, payout, or commission handling."
+  ]
+}

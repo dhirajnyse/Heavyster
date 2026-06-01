@@ -2137,3 +2137,221 @@ SereneRouteStep:
 - updated_at
 
 No SereneRoutePlanner table should collect rental payment, escrow, booking commission, supplier payout, or booking-fee data. It only presents the role route, proof reason, money rule, and next screen.
+
+## v145 Visible Serene Route
+
+Use this to keep the marketplace anchor and route planner aligned as the public experience expands.
+
+MarketplaceAnchor:
+
+- id
+- anchor: marketplace
+- target_section: serene_route_planner
+- previous_target: hero
+- scroll_margin_top
+- active_release: v145
+- created_at
+- updated_at
+
+VisibilityRule:
+
+- id
+- anchor_id
+- opens_before: hero
+- route_visible: true
+- proof_reason_visible: true
+- money_rule_visible: true
+- next_action_visible: true
+- phase_one_guardrail: no_rental_payment_collection
+- created_at
+- updated_at
+
+No MarketplaceAnchor or VisibilityRule table should collect rental payment, escrow, booking commission, supplier payout, or booking-fee data. These records only protect first-screen route clarity.
+
+## v146 Calm Global Compass
+
+Use this as a lightweight view model, not a payment or booking record.
+
+GlobalCalmCompass:
+
+- id
+- role: buyer, supplier, founder
+- country
+- category
+- proof_reason
+- money_rule
+- next_action
+- primary_anchor
+- copied_at
+- created_at
+- updated_at
+
+GlobalCalmStep:
+
+- id
+- global_calm_compass_id
+- label: country, category, proof, money, next
+- value
+- detail
+- tone: ready, watch, neutral
+- display_order
+- created_at
+- updated_at
+
+No GlobalCalmCompass table should collect rental payment, escrow, booking commission, supplier payout, or booking-fee data. It can reference listing SaaS revenue and direct enquiries, but phase one keeps rental payments outside Heavyster.
+
+## v147 Calm Decision Concierge
+
+Use this as a presentational decision model that can later be backed by buyer, supplier, and founder workflow state.
+
+CalmDecisionConcierge:
+
+- id
+- role: buyer, supplier, founder
+- headline
+- detail
+- proof_reason
+- money_rule
+- next_action
+- primary_action_label
+- primary_action_anchor
+- secondary_action_label
+- copied_at
+- created_at
+- updated_at
+
+CalmDecisionTile:
+
+- id
+- calm_decision_concierge_id
+- label
+- value
+- note
+- tone: ready, watch, neutral
+- display_order
+- created_at
+- updated_at
+
+No CalmDecisionConcierge table should collect rental payment, escrow, deposit, booking commission, supplier payout, or booking-fee data. It can reference listing SaaS revenue, direct enquiries, and proof readiness only.
+
+## v148 Calm Backend Handoff
+
+The handoff is the quiet UI contract for future backend state. It does not add production persistence yet; it maps visible user decisions to the records the real SaaS must create later.
+
+| Role | Owner | Record path |
+| --- | --- | --- |
+| Buyer | buyer_flow | DirectEnquiry -> ProofSnapshot -> LeadPacket -> PaymentGuardrail |
+| Supplier | supplier_flow | SupplierAccount -> EquipmentListing -> ProofUpload -> ListingSubscription |
+| Founder | founder_flow | MarketWedge -> SupplierTarget -> AdminReview -> LaunchGate |
+
+Guardrail: paid listing billing can be modeled, but rental payment, escrow, deposit, payout, supplier settlement, and rental commission stay outside phase one.
+
+## v149 Calm Launch Pulse
+
+Use this as a role-aware view model that can be generated from buyer, supplier, founder, and backend readiness state.
+
+CalmLaunchPulse:
+
+- id
+- role: buyer, supplier, founder
+- headline
+- detail
+- primary_action_label
+- primary_action_anchor
+- copied_at
+- created_at
+- updated_at
+
+CalmLaunchPulseState:
+
+- id
+- calm_launch_pulse_id
+- label: live, blocked, money, next
+- value
+- detail
+- tone: ready, watch, neutral
+- display_order
+- created_at
+- updated_at
+
+No CalmLaunchPulse table should collect rental payment, escrow, deposit, payout, booking commission, or supplier settlement data. It can reference direct enquiries, listing subscriptions, proof readiness, and backend gate status.
+
+## v150 Production Account Scaffold
+
+Use this as the first quiet bridge between the static product shell and the production SaaS database. The UI should show the record path without exposing backend tables to the user.
+
+ProductionAccountScaffold:
+
+- id
+- role: buyer, supplier, founder
+- account_path_label
+- headline
+- detail
+- primary_action_label
+- primary_action_anchor
+- copied_at
+- created_at
+- updated_at
+
+ProductionAccountRecord:
+
+- id
+- production_account_scaffold_id
+- label
+- value
+- detail
+- backend_record_name
+- tone: ready, watch, neutral
+- display_order
+- created_at
+- updated_at
+
+Initial backend records:
+
+| Role | Records |
+| --- | --- |
+| Buyer | BuyerProfile, TrustSnapshot, DirectEnquiry, SavedSearch |
+| Supplier | SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, LeadRoute |
+| Founder | AdminReview, MarketLedger, AccountHealth, LeadAudit |
+
+No ProductionAccountScaffold or ProductionAccountRecord table should collect rental payment, deposit, escrow, payout, booking commission, or supplier settlement data. It can reference listing SaaS billing, direct enquiries, proof readiness, and account readiness only.
+
+## v151 SaaS Launch Gate
+
+Use this as the shared release gate before buyer traffic, supplier onboarding, paid listing revenue, or backend routing scales. The public UI should show the decision without exposing operational complexity.
+
+SaasLaunchGate:
+
+- id
+- role: buyer, supplier, founder
+- headline
+- detail
+- primary_action_label
+- primary_action_anchor
+- copied_at
+- created_at
+- updated_at
+
+SaasLaunchGateState:
+
+- id
+- saas_launch_gate_id
+- label
+- value
+- detail
+- decision: pass, hold, review
+- tone: ready, watch, hold, neutral
+- display_order
+- created_at
+- updated_at
+
+Initial launch gates:
+
+| Gate | Decision | Purpose |
+| --- | --- | --- |
+| Buyer traffic | Pass | Let buyers search, review proof, and send direct enquiries when one clear route exists. |
+| Supplier onboarding | Pass | Let suppliers list when company, machine, proof, and direct lead path are visible. |
+| Paid listing | Pass | Keep USD 9/month or USD 99/year per active listing as the first revenue model. |
+| Backend route | Review | Move next into accounts, listings, proof uploads, direct lead records, and admin review. |
+
+No SaasLaunchGate or SaasLaunchGateState table should collect rental payment, deposit, escrow, payout, booking commission, or supplier settlement data. It can reference listing SaaS billing, direct enquiries, proof readiness, and backend readiness only.

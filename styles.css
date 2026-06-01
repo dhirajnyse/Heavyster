@@ -982,6 +982,12 @@ body.simple-mode .market-result-brief {
   display: block;
 }
 
+.page-anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: 92px;
+}
+
 .calm-action-bar {
   display: grid;
   grid-template-columns: minmax(300px, 0.95fr) minmax(430px, 1.35fr) minmax(190px, max-content);
@@ -1260,6 +1266,863 @@ body.simple-mode .market-result-brief {
 }
 
 .serene-route-planner[data-role="founder"] .serene-route-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.global-calm-compass {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.86fr) minmax(460px, 1.42fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 12px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.18);
+  background:
+    linear-gradient(135deg, rgba(244, 252, 250, 0.97), rgba(252, 250, 243, 0.94));
+}
+
+.global-calm-copy,
+.global-calm-map span,
+.global-calm-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.global-calm-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 68px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.26);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.global-calm-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.global-calm-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.global-calm-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.global-calm-map {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.global-calm-map span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 68px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.global-calm-map em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.global-calm-map strong,
+.global-calm-map small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.global-calm-map strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.global-calm-map small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.global-calm-map .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.global-calm-map .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.global-calm-map .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.global-calm-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.global-calm-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.global-calm-compass[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(240, 250, 248, 0.93));
+}
+
+.global-calm-compass[data-role="supplier"] .global-calm-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.global-calm-compass[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(248, 252, 250, 0.94));
+}
+
+.global-calm-compass[data-role="founder"] .global-calm-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.calm-decision-concierge {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(420px, 1.2fr) minmax(180px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.98), rgba(244, 250, 248, 0.95) 58%, rgba(255, 250, 240, 0.9));
+}
+
+.calm-decision-copy,
+.calm-decision-flow span,
+.calm-decision-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.calm-decision-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.calm-decision-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-decision-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.calm-decision-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.calm-decision-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.calm-decision-flow span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.calm-decision-flow em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-decision-flow strong,
+.calm-decision-flow small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calm-decision-flow strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.calm-decision-flow small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.calm-decision-flow .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.calm-decision-flow .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.calm-decision-flow .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.calm-decision-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr);
+  gap: 7px;
+}
+
+.calm-decision-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.calm-decision-concierge[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(238, 246, 252, 0.88));
+}
+
+.calm-decision-concierge[data-role="supplier"] .calm-decision-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.calm-decision-concierge[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.calm-decision-concierge[data-role="founder"] .calm-decision-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.calm-backend-handoff {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(420px, 1.2fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(73, 118, 149, 0.16);
+  background:
+    linear-gradient(135deg, rgba(248, 252, 250, 0.98), rgba(238, 246, 252, 0.95) 58%, rgba(232, 248, 245, 0.9));
+}
+
+.calm-backend-handoff-copy,
+.calm-backend-handoff-flow span,
+.calm-backend-handoff-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.calm-backend-handoff-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(73, 118, 149, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.calm-backend-handoff-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-backend-handoff-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.calm-backend-handoff-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.calm-backend-handoff-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.calm-backend-handoff-flow span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.calm-backend-handoff-flow em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-backend-handoff-flow strong,
+.calm-backend-handoff-flow small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calm-backend-handoff-flow strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.calm-backend-handoff-flow small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.calm-backend-handoff-flow .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.calm-backend-handoff-flow .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.calm-backend-handoff-flow .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.calm-backend-handoff-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.calm-backend-handoff-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.calm-backend-handoff[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(248, 252, 250, 0.95) 58%, rgba(238, 246, 252, 0.88));
+}
+
+.calm-backend-handoff[data-role="supplier"] .calm-backend-handoff-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.calm-backend-handoff[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.calm-backend-handoff[data-role="founder"] .calm-backend-handoff-copy span {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.calm-launch-pulse {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(420px, 1.2fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.98), rgba(232, 248, 245, 0.94) 56%, rgba(238, 246, 252, 0.88));
+}
+
+.calm-launch-pulse-copy,
+.calm-launch-pulse-grid span,
+.calm-launch-pulse-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.calm-launch-pulse-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.calm-launch-pulse-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-launch-pulse-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.calm-launch-pulse-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.calm-launch-pulse-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.calm-launch-pulse-grid span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.calm-launch-pulse-grid em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-launch-pulse-grid strong,
+.calm-launch-pulse-grid small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calm-launch-pulse-grid strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.calm-launch-pulse-grid small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.calm-launch-pulse-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.calm-launch-pulse-grid .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.calm-launch-pulse-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.calm-launch-pulse-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.calm-launch-pulse-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.calm-launch-pulse[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.calm-launch-pulse[data-role="supplier"] .calm-launch-pulse-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.calm-launch-pulse[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.calm-launch-pulse[data-role="founder"] .calm-launch-pulse-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.production-account-scaffold {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(420px, 1.2fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(248, 253, 252, 0.98), rgba(232, 248, 245, 0.92) 54%, rgba(238, 246, 252, 0.9));
+}
+
+.production-account-copy,
+.production-account-grid span,
+.production-account-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.production-account-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.production-account-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.production-account-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.production-account-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.production-account-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.production-account-grid span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.production-account-grid em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.production-account-grid strong,
+.production-account-grid small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.production-account-grid strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.production-account-grid small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.production-account-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.production-account-grid .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.production-account-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.production-account-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.production-account-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.production-account-scaffold[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.production-account-scaffold[data-role="supplier"] .production-account-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.production-account-scaffold[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.production-account-scaffold[data-role="founder"] .production-account-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.saas-launch-gate {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.25fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(248, 253, 252, 0.98), rgba(232, 248, 245, 0.9) 52%, rgba(255, 249, 236, 0.84));
+}
+
+.saas-launch-copy,
+.saas-launch-grid span,
+.saas-launch-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.saas-launch-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.saas-launch-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.saas-launch-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.saas-launch-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.saas-launch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.saas-launch-grid span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.saas-launch-grid em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.saas-launch-grid strong,
+.saas-launch-grid small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saas-launch-grid strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.saas-launch-grid small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.saas-launch-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.saas-launch-grid .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.saas-launch-grid .hold {
+  border-color: rgba(166, 63, 43, 0.28);
+  background: #fae9e1;
+}
+
+.saas-launch-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.saas-launch-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.saas-launch-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.saas-launch-gate[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.saas-launch-gate[data-role="supplier"] .saas-launch-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.saas-launch-gate[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.saas-launch-gate[data-role="founder"] .saas-launch-copy span {
   background: var(--blue-soft);
   color: var(--blue);
 }
@@ -17181,7 +18044,13 @@ button.admin-row {
 .calm-launch-room,
 .calm-proof-card-contract,
 .calm-action-bar-contract,
-.serene-route-planner-contract {
+.serene-route-planner-contract,
+.global-calm-compass-contract,
+.calm-decision-concierge-contract,
+.calm-backend-handoff-contract,
+.calm-launch-pulse-contract,
+.production-account-scaffold-contract,
+.saas-launch-gate-contract {
   display: grid;
   grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
   gap: 10px;
@@ -17228,12 +18097,60 @@ button.admin-row {
     linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 255, 255, 0.96) 50%, rgba(252, 249, 240, 0.92));
 }
 
+.global-calm-compass-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.34);
+  background:
+    linear-gradient(135deg, rgba(240, 250, 248, 0.96), rgba(255, 255, 255, 0.96) 50%, rgba(238, 246, 252, 0.9));
+}
+
+.calm-decision-concierge-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.34);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.96), rgba(232, 248, 245, 0.94) 50%, rgba(255, 249, 236, 0.9));
+}
+
+.calm-backend-handoff-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(73, 118, 149, 0.34);
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 50%, rgba(232, 248, 245, 0.9));
+}
+
+.calm-launch-pulse-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.34);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(249, 253, 252, 0.95) 50%, rgba(238, 246, 252, 0.9));
+}
+
+.production-account-scaffold-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.34);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.96), rgba(232, 248, 245, 0.94) 50%, rgba(238, 246, 252, 0.9));
+}
+
+.saas-launch-gate-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(4, minmax(138px, 0.72fr));
+  border-color: rgba(25, 113, 109, 0.36);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 255, 255, 0.95) 48%, rgba(255, 249, 236, 0.9));
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
 .calm-launch-room article,
 .calm-proof-card-contract article,
 .calm-action-bar-contract article,
-.serene-route-planner-contract article {
+.serene-route-planner-contract article,
+.global-calm-compass-contract article,
+.calm-decision-concierge-contract article,
+.calm-backend-handoff-contract article,
+.calm-launch-pulse-contract article,
+.production-account-scaffold-contract article,
+.saas-launch-gate-contract article {
   display: grid;
   align-content: start;
   gap: 8px;
@@ -17249,7 +18166,13 @@ button.admin-row {
 .calm-launch-room-lead,
 .calm-proof-card-contract-lead,
 .calm-action-bar-contract-lead,
-.serene-route-planner-contract-lead {
+.serene-route-planner-contract-lead,
+.global-calm-compass-contract-lead,
+.calm-decision-concierge-contract-lead,
+.calm-backend-handoff-contract-lead,
+.calm-launch-pulse-contract-lead,
+.production-account-scaffold-contract-lead,
+.saas-launch-gate-contract-lead {
   grid-row: span 2;
   border-color: rgba(25, 113, 109, 0.42) !important;
   background: var(--teal-soft) !important;
@@ -17260,7 +18183,13 @@ button.admin-row {
 .calm-launch-room-acceptance,
 .calm-proof-card-contract-acceptance,
 .calm-action-bar-contract-acceptance,
-.serene-route-planner-contract-acceptance {
+.serene-route-planner-contract-acceptance,
+.global-calm-compass-contract-acceptance,
+.calm-decision-concierge-contract-acceptance,
+.calm-backend-handoff-contract-acceptance,
+.calm-launch-pulse-contract-acceptance,
+.production-account-scaffold-contract-acceptance,
+.saas-launch-gate-contract-acceptance {
   grid-column: span 2;
   border-color: rgba(40, 93, 134, 0.42) !important;
   background: var(--blue-soft) !important;
@@ -17291,12 +18220,48 @@ button.admin-row {
   background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 247, 232, 0.9)) !important;
 }
 
+.global-calm-compass-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(238, 246, 252, 0.9)) !important;
+}
+
+.calm-decision-concierge-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 247, 232, 0.9)) !important;
+}
+
+.calm-backend-handoff-contract-acceptance {
+  border-color: rgba(73, 118, 149, 0.4) !important;
+  background: linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(232, 248, 245, 0.9)) !important;
+}
+
+.calm-launch-pulse-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(238, 246, 252, 0.9)) !important;
+}
+
+.production-account-scaffold-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 255, 255, 0.94) 48%, rgba(238, 246, 252, 0.9)) !important;
+}
+
+.saas-launch-gate-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 249, 236, 0.92)) !important;
+}
+
 .calm-backend-scaffold span,
 .supplier-account-shell span,
 .calm-launch-room span,
 .calm-proof-card-contract span,
 .calm-action-bar-contract span,
-.serene-route-planner-contract span {
+.serene-route-planner-contract span,
+.global-calm-compass-contract span,
+.calm-decision-concierge-contract span,
+.calm-backend-handoff-contract span,
+.calm-launch-pulse-contract span,
+.production-account-scaffold-contract span,
+.saas-launch-gate-contract span {
   color: var(--teal);
   font-size: 0.72rem;
   font-weight: 950;
@@ -17308,7 +18273,13 @@ button.admin-row {
 .calm-launch-room strong,
 .calm-proof-card-contract strong,
 .calm-action-bar-contract strong,
-.serene-route-planner-contract strong {
+.serene-route-planner-contract strong,
+.global-calm-compass-contract strong,
+.calm-decision-concierge-contract strong,
+.calm-backend-handoff-contract strong,
+.calm-launch-pulse-contract strong,
+.production-account-scaffold-contract strong,
+.saas-launch-gate-contract strong {
   color: var(--ink);
   font-size: 1.02rem;
   line-height: 1.18;
@@ -17320,7 +18291,13 @@ button.admin-row {
 .calm-launch-room-lead strong,
 .calm-proof-card-contract-lead strong,
 .calm-action-bar-contract-lead strong,
-.serene-route-planner-contract-lead strong {
+.serene-route-planner-contract-lead strong,
+.global-calm-compass-contract-lead strong,
+.calm-decision-concierge-contract-lead strong,
+.calm-backend-handoff-contract-lead strong,
+.calm-launch-pulse-contract-lead strong,
+.production-account-scaffold-contract-lead strong,
+.saas-launch-gate-contract-lead strong {
   font-size: 1.22rem;
 }
 
@@ -17329,7 +18306,13 @@ button.admin-row {
 .calm-launch-room p,
 .calm-proof-card-contract p,
 .calm-action-bar-contract p,
-.serene-route-planner-contract p {
+.serene-route-planner-contract p,
+.global-calm-compass-contract p,
+.calm-decision-concierge-contract p,
+.calm-backend-handoff-contract p,
+.calm-launch-pulse-contract p,
+.production-account-scaffold-contract p,
+.saas-launch-gate-contract p {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.42;
@@ -17340,7 +18323,13 @@ button.admin-row {
 .calm-launch-room b,
 .calm-proof-card-contract b,
 .calm-action-bar-contract b,
-.serene-route-planner-contract b {
+.serene-route-planner-contract b,
+.global-calm-compass-contract b,
+.calm-decision-concierge-contract b,
+.calm-backend-handoff-contract b,
+.calm-launch-pulse-contract b,
+.production-account-scaffold-contract b,
+.saas-launch-gate-contract b {
   width: fit-content;
   margin-top: auto;
   padding: 6px 10px;
@@ -17361,7 +18350,19 @@ button.admin-row {
 .calm-action-bar-contract-lead b,
 .calm-action-bar-contract-acceptance b,
 .serene-route-planner-contract-lead b,
-.serene-route-planner-contract-acceptance b {
+.serene-route-planner-contract-acceptance b,
+.global-calm-compass-contract-lead b,
+.global-calm-compass-contract-acceptance b,
+.calm-decision-concierge-contract-lead b,
+.calm-decision-concierge-contract-acceptance b,
+.calm-backend-handoff-contract-lead b,
+.calm-backend-handoff-contract-acceptance b,
+.calm-launch-pulse-contract-lead b,
+.calm-launch-pulse-contract-acceptance b,
+.production-account-scaffold-contract-lead b,
+.production-account-scaffold-contract-acceptance b,
+.saas-launch-gate-contract-lead b,
+.saas-launch-gate-contract-acceptance b {
   background: var(--coal);
   color: #ffffff;
 }
@@ -17371,7 +18372,13 @@ button.admin-row {
 .calm-launch-room-acceptance button,
 .calm-proof-card-contract-acceptance button,
 .calm-action-bar-contract-acceptance button,
-.serene-route-planner-contract-acceptance button {
+.serene-route-planner-contract-acceptance button,
+.global-calm-compass-contract-acceptance button,
+.calm-decision-concierge-contract-acceptance button,
+.calm-backend-handoff-contract-acceptance button,
+.calm-launch-pulse-contract-acceptance button,
+.production-account-scaffold-contract-acceptance button,
+.saas-launch-gate-contract-acceptance button {
   min-height: 42px;
   margin-top: auto;
 }
@@ -17917,6 +18924,30 @@ button.admin-row {
     grid-template-columns: 1fr;
   }
 
+  .global-calm-compass {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-decision-concierge {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-backend-handoff {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-launch-pulse {
+    grid-template-columns: 1fr;
+  }
+
+  .production-account-scaffold {
+    grid-template-columns: 1fr;
+  }
+
+  .saas-launch-gate {
+    grid-template-columns: 1fr;
+  }
+
   .calm-action-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -17925,11 +18956,59 @@ button.admin-row {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .global-calm-map {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .calm-decision-flow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .calm-backend-handoff-flow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .calm-launch-pulse-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .production-account-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .saas-launch-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .calm-action-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .serene-route-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .global-calm-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-decision-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-backend-handoff-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-launch-pulse-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .production-account-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .saas-launch-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -18052,6 +19131,22 @@ button.admin-row {
     padding: 10px 12px;
   }
 
+  .global-calm-compass {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
+  }
+
+  .calm-decision-concierge {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
+  }
+
+  .calm-backend-handoff,
+  .calm-launch-pulse {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
+  }
+
   .calm-action-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -18060,11 +19155,37 @@ button.admin-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .global-calm-map {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-decision-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-backend-handoff-flow,
+  .calm-launch-pulse-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .calm-action-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .serene-route-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .global-calm-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-decision-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-backend-handoff-actions,
+  .calm-launch-pulse-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -18314,6 +19435,12 @@ button.admin-row {
   .calm-proof-card-contract,
   .calm-action-bar-contract,
   .serene-route-planner-contract,
+  .global-calm-compass-contract,
+  .calm-decision-concierge-contract,
+  .calm-backend-handoff-contract,
+  .calm-launch-pulse-contract,
+  .production-account-scaffold-contract,
+  .saas-launch-gate-contract,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -18554,7 +19681,25 @@ button.admin-row {
   .calm-action-actions,
   .serene-route-planner,
   .serene-route-steps,
-  .serene-route-actions {
+  .serene-route-actions,
+  .global-calm-compass,
+  .global-calm-map,
+  .global-calm-actions,
+  .calm-decision-concierge,
+  .calm-decision-flow,
+  .calm-decision-actions,
+  .calm-backend-handoff,
+  .calm-backend-handoff-flow,
+  .calm-backend-handoff-actions,
+  .calm-launch-pulse,
+  .calm-launch-pulse-grid,
+  .calm-launch-pulse-actions,
+  .production-account-scaffold,
+  .production-account-grid,
+  .production-account-actions,
+  .saas-launch-gate,
+  .saas-launch-grid,
+  .saas-launch-actions {
     grid-template-columns: 1fr;
   }
 
@@ -18563,7 +19708,25 @@ button.admin-row {
   .calm-action-actions button,
   .serene-route-steps strong,
   .serene-route-steps small,
-  .serene-route-actions button {
+  .serene-route-actions button,
+  .global-calm-map strong,
+  .global-calm-map small,
+  .global-calm-actions button,
+  .calm-decision-flow strong,
+  .calm-decision-flow small,
+  .calm-decision-actions button,
+  .calm-backend-handoff-flow strong,
+  .calm-backend-handoff-flow small,
+  .calm-backend-handoff-actions button,
+  .calm-launch-pulse-grid strong,
+  .calm-launch-pulse-grid small,
+  .calm-launch-pulse-actions button,
+  .production-account-grid strong,
+  .production-account-grid small,
+  .production-account-actions button,
+  .saas-launch-grid strong,
+  .saas-launch-grid small,
+  .saas-launch-actions button {
     white-space: normal;
   }
 
@@ -18857,6 +20020,12 @@ button.admin-row {
   .calm-proof-card-contract,
   .calm-action-bar-contract,
   .serene-route-planner-contract,
+  .global-calm-compass-contract,
+  .calm-decision-concierge-contract,
+  .calm-backend-handoff-contract,
+  .calm-launch-pulse-contract,
+  .production-account-scaffold-contract,
+  .saas-launch-gate-contract,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -19035,7 +20204,19 @@ button.admin-row {
   .calm-action-bar-contract-lead,
   .calm-action-bar-contract-acceptance,
   .serene-route-planner-contract-lead,
-  .serene-route-planner-contract-acceptance {
+  .serene-route-planner-contract-acceptance,
+  .global-calm-compass-contract-lead,
+  .global-calm-compass-contract-acceptance,
+  .calm-decision-concierge-contract-lead,
+  .calm-decision-concierge-contract-acceptance,
+  .calm-backend-handoff-contract-lead,
+  .calm-backend-handoff-contract-acceptance,
+  .calm-launch-pulse-contract-lead,
+  .calm-launch-pulse-contract-acceptance,
+  .production-account-scaffold-contract-lead,
+  .production-account-scaffold-contract-acceptance,
+  .saas-launch-gate-contract-lead,
+  .saas-launch-gate-contract-acceptance {
     grid-row: auto;
     grid-column: auto;
   }

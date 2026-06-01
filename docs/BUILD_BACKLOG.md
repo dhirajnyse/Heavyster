@@ -37,6 +37,7 @@
 - Calm Backend Scaffold for making the production SaaS spine visible: supplier accounts, equipment listings, proof documents, listing subscriptions, direct enquiries, and admin review
 - Calm Proof Card for showing one selected machine, trust score, proof count, availability state, direct enquiry action, and 0% rental take before deeper workflows
 - Calm Action Bar for keeping one role, one proof reason, one money rule, and one next action visible across buyer, supplier, and founder paths
+- Calm Backend Handoff for mapping buyer, supplier, and founder decisions to future backend record paths without adding UI weight
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -160,6 +161,10 @@
 - Calm Proof Card: one selected machine, one trust score, one proof count, one availability status, one direct enquiry action, and 0% rental take before buyer complexity
 - Calm Action Bar: one visible role action, one proof reason, one money rule, and one next move before deeper workflow power
 - Serene Route Planner: one visible route for buyer, supplier, and founder with start, proof, money, and next screen before deeper workflow power
+- Visible Serene Route anchor: `#marketplace` lands above the route planner so buyers see the calm path before hero, search, or workflow drawers
+- Calm Launch Pulse: one role-aware live, blocked, money, and next state before any workflow opens
+- Production Account Scaffold: one calm account path that maps buyer, supplier, and founder screens to production records without adding backend noise to the UI
+- SaaS Launch Gate: one pass, hold, or review rule before buyer traffic, supplier onboarding, paid listing revenue, or backend routing scales
 
 ## Sprint 5: Billing MVP
 
