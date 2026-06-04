@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260601-saas-launch-gate-v151" />
+  <link rel="stylesheet" href="styles.css?v=20260604-production-backend-starter-v152" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v151</strong>
+            <strong>v152</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -283,6 +283,19 @@
         <div class="saas-launch-actions">
           <button type="button" class="solid-button" id="saasLaunchGatePrimaryButton">Open gate</button>
           <button type="button" class="ghost-button" id="copySaasLaunchGateButton">Copy gate</button>
+        </div>
+      </section>
+
+      <section class="production-backend-starter" id="productionBackendStarter" aria-label="Production backend starter">
+        <div class="production-backend-copy">
+          <span id="productionBackendRole">Backend starter</span>
+          <strong id="productionBackendHeadline">Prepare the first real SaaS records.</strong>
+          <small id="productionBackendDetail">One calm business action maps to one production record, with rental payment still outside Heavyster.</small>
+        </div>
+        <div class="production-backend-grid" id="productionBackendGrid" aria-label="Production backend records"></div>
+        <div class="production-backend-actions">
+          <button type="button" class="solid-button" id="productionBackendPrimaryButton">Open starter</button>
+          <button type="button" class="ghost-button" id="copyProductionBackendButton">Copy backend starter</button>
         </div>
       </section>
 
@@ -2261,7 +2274,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v151</span>
+            <span class="build-version-pill">Current version: v152</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2272,13 +2285,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v151 SaaS Launch Gate</strong>
-              <small>One calm gate decides whether buyer traffic, supplier onboarding, paid listing revenue, and backend routing can safely move.</small>
+              <strong>v152 Production Backend Starter</strong>
+              <small>One calm business action now maps to one production record, while rental payment stays outside Heavyster.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Launch gate clarity</strong>
-              <small>Buyer, supplier, and founder should know what can pass, what should hold, and what needs backend work.</small>
+              <strong>Backend starter clarity</strong>
+              <small>Buyer, supplier, and founder should know which real SaaS record gets created next without seeing backend complexity.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2298,8 +2311,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v151</strong>
-              <small>SaaS Launch Gate</small>
+              <strong>v152</strong>
+              <small>Production Backend Starter</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2313,8 +2326,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Production backend starter</strong>
-              <small>Turn launch gate states into supplier accounts, listing records, proof uploads, paid listing status, and direct lead logs.</small>
+              <strong>Backend route handoff</strong>
+              <small>Turn these starter records into account, listing, proof, subscription, and direct lead route handoff states without adding UI weight.</small>
             </article>
           </div>
 
@@ -3715,21 +3728,73 @@
             </article>
           </div>
 
+          <div class="production-backend-starter-contract" id="production-backend-starter-contract" aria-label="Heavyster production backend starter contract">
+            <article class="production-backend-starter-contract-lead">
+              <span>v152 Production Backend Starter</span>
+              <strong>Build the first backend records without adding product weight.</strong>
+              <p>Heavyster should turn visible buyer, supplier, and founder actions into a small SaaS backend contract before real production work starts.</p>
+              <b>Rule: one action, one record</b>
+            </article>
+            <article>
+              <span>SupplierAccount</span>
+              <strong>Company and team identity</strong>
+              <p>Rental company profile, service regions, contacts, approval status, and listing plan stay in one supplier account path.</p>
+              <b>Account first</b>
+            </article>
+            <article>
+              <span>EquipmentListing</span>
+              <strong>Machine record</strong>
+              <p>Category, make, model, location, availability, rate notes, proof links, and listing status become the first searchable unit.</p>
+              <b>Listing unit</b>
+            </article>
+            <article>
+              <span>ProofDocument</span>
+              <strong>Trust record</strong>
+              <p>Photos, license, insurance, inspection, operator certificate, expiry, and review notes keep proof visible before buyer enquiry.</p>
+              <b>Proof before scale</b>
+            </article>
+            <article>
+              <span>DirectEnquiry</span>
+              <strong>Buyer lead record</strong>
+              <p>Buyer note, selected listing, supplier route, proof snapshot, status, and response log support direct supplier contact.</p>
+              <b>No payment rail</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Rental payment routes stay blocked</strong>
+              <p>No rental collection, deposit, escrow, payout, or booking commission route is created in phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="production-backend-starter-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same backend starter.</strong>
+              <p>Docs include the backend starter model in `docs/PRODUCTION_BACKEND_STARTER.json`, and no backend starter action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyProductionBackendStarterContractButton">Copy v152 backend starter</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v151 SaaS Launch Gate</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v152 Production Backend Starter</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>SaaS Launch Gate</strong>
-              <p>Added one role-aware launch gate under the account scaffold so buyer, supplier, and founder each see what can pass, what should hold, and what backend route comes next.</p>
+              <strong>Production Backend Starter</strong>
+              <p>Added one role-aware backend starter under the launch gate so buyer, supplier, and founder each see which production record comes next without adding UI weight.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
+                <li>Header shows Build v152.</li>
+                <li>Build Phase shows Current version: v152.</li>
+                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, and Production Backend Starter before the hero.</li>
+                <li>Production Backend Starter shows records for the active buyer, supplier, or founder role.</li>
+                <li>Copy backend starter explains core records, first API routes, blocked rental-payment routes, listing SaaS, direct rental payment, and 0% rental take.</li>
+                <li>Build Phase shows the Production Backend Starter contract before the Release Ledger.</li>
+                <li>Docs include `docs/PRODUCTION_BACKEND_STARTER.json`.</li>
                 <li>Header shows Build v151.</li>
                 <li>Build Phase shows Current version: v151.</li>
                 <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, and SaaS Launch Gate before the hero.</li>
@@ -3832,8 +3897,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v151 SaaS Launch Gate</strong>
-              <p>Includes the v113 deploy guard through v150 production account scaffold, plus this launch gate release that shows what can pass, hold, or review before scale.</p>
+              <strong>v152 Production Backend Starter</strong>
+              <p>Includes the v113 deploy guard through v151 SaaS launch gate, plus this backend starter release that maps one calm action to one production record.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -3942,6 +4007,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260601-saas-launch-gate-v151" defer></script>
+    <script src="app.js?v=20260604-production-backend-starter-v152" defer></script>
   </body>
 </html>

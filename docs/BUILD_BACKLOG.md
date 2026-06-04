@@ -165,6 +165,7 @@
 - Calm Launch Pulse: one role-aware live, blocked, money, and next state before any workflow opens
 - Production Account Scaffold: one calm account path that maps buyer, supplier, and founder screens to production records without adding backend noise to the UI
 - SaaS Launch Gate: one pass, hold, or review rule before buyer traffic, supplier onboarding, paid listing revenue, or backend routing scales
+- Production Backend Starter: one calm backend contract that maps buyer, supplier, and founder actions into SupplierAccount, EquipmentListing, ProofDocument, DirectEnquiry, ListingSubscription, AdminReview, and MarketSignal while blocking rental-payment rails
 
 ## Sprint 5: Billing MVP
 

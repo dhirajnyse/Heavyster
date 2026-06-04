@@ -384,3 +384,13 @@ SaaS Launch Gate sits above the hero and turns the public product into one calm 
 - Founder gate shows whether demand, supply density, listing ARR, and backend route can scale.
 - The gate keeps one visible next action and one copy-ready note for the active role.
 - Phase one remains listing SaaS only: USD 9/month or USD 99/year per active listing, 0% rental take, and supplier rental payment stays direct.
+
+## v152 Production Backend Starter
+
+Production Backend Starter sits under the SaaS Launch Gate and turns each calm product action into the first backend record contract.
+
+- Buyer path creates DirectEnquiry, ProofDocument snapshot, EquipmentListing link, and an explicit blocked RentalPayment state.
+- Supplier path creates SupplierAccount, EquipmentListing, ListingSubscription, and ProofDocument review state.
+- Founder path creates MarketSignal, AdminReview, ListingSubscription state, and a blocked rental-payment guardrail.
+- First backend routes stay small: supplier accounts, listings, proof documents, direct enquiries, listing subscriptions, admin reviews, and market signals.
+- Phase one blocks rental payment, escrow, payout, deposit, and booking commission routes until booking workflow value is proven.

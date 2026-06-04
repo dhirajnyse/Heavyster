@@ -386,3 +386,16 @@ The monetization move is launch discipline before scale.
 - Backend route stays review-only until real supplier accounts, listing records, proof uploads, and direct lead logs exist.
 
 This keeps Heavyster commercially calm: build listing SaaS revenue first, protect trust, and add any 1% confirmed-booking success fee only after the booking workflow is proven.
+
+## v152 Production Backend Starter
+
+The monetization move is backend clarity without payment custody.
+
+- ListingSubscription is the paid object: USD 9/month or USD 99/year per active equipment listing.
+- DirectEnquiry is the lead object: buyers contact suppliers directly and rental payment stays outside Heavyster.
+- SupplierAccount and EquipmentListing become the first revenue-bearing records, with proof and availability attached before scale.
+- AdminReview protects trust before listings, suppliers, or market pages expand.
+- MarketSignal helps choose the next wedge by demand, verified supply, and modeled listing ARR.
+- RentalPayment, escrow, payout, deposit, and booking commission routes remain blocked in phase one.
+
+This keeps the business model simple enough for global launch: sell verified listing SaaS first, prove direct enquiry value, and postpone any 1% success fee until Heavyster earns the booking workflow.

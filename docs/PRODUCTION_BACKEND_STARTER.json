@@ -1,0 +1,107 @@
+{
+  "version": "v152 Production Backend Starter",
+  "release_date": "2026-06-04",
+  "purpose": "Turn launch gate states into the first production backend contract without adding UI weight.",
+  "rule": "One visible business action maps to one production record.",
+  "phase": "Active prototype moving toward production SaaS",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or booking commission handling in phase one. Buyer pays supplier directly; Heavyster earns paid listing SaaS.",
+  "records": [
+    {
+      "name": "SupplierAccount",
+      "owner": "Supplier",
+      "purpose": "Company profile, regions, contact desk, team users, approval status, and listing plan."
+    },
+    {
+      "name": "EquipmentListing",
+      "owner": "Supplier",
+      "purpose": "Category, make, model, location, availability, rate notes, proof links, visibility, and listing status."
+    },
+    {
+      "name": "ProofDocument",
+      "owner": "Supplier",
+      "purpose": "Photos, license, insurance, inspection, operator certificates, expiry dates, and review notes."
+    },
+    {
+      "name": "DirectEnquiry",
+      "owner": "Buyer",
+      "purpose": "Buyer note, selected listing, supplier route, proof snapshot, status, and response log."
+    },
+    {
+      "name": "ListingSubscription",
+      "owner": "Heavyster",
+      "purpose": "USD 9 monthly or USD 99 yearly active listing state, renewal date, and billing status."
+    },
+    {
+      "name": "AdminReview",
+      "owner": "Founder",
+      "purpose": "Supplier approval, proof gaps, suspicious listing checks, support notes, and visibility decisions."
+    },
+    {
+      "name": "MarketSignal",
+      "owner": "Founder",
+      "purpose": "Region-category demand, supply gap, verified listing count, ARR signal, and next wedge decision."
+    }
+  ],
+  "apis": [
+    {
+      "route": "/api/supplier-accounts",
+      "action": "create and update supplier account records"
+    },
+    {
+      "route": "/api/equipment-listings",
+      "action": "create and update searchable machine listings"
+    },
+    {
+      "route": "/api/proof-documents",
+      "action": "attach proof metadata and upload references"
+    },
+    {
+      "route": "/api/direct-enquiries",
+      "action": "save buyer enquiries and supplier routing status"
+    },
+    {
+      "route": "/api/listing-subscriptions",
+      "action": "track paid listing plan and renewal state"
+    },
+    {
+      "route": "/api/admin-reviews",
+      "action": "record founder approval and support decisions"
+    },
+    {
+      "route": "/api/market-signals",
+      "action": "store region-category demand and supply signals"
+    }
+  ],
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "role_starters": [
+    {
+      "role": "Buyer",
+      "next_record": "DirectEnquiry",
+      "safe_action": "Save enquiry note and proof snapshot; route contact direct to supplier."
+    },
+    {
+      "role": "Supplier",
+      "next_record": "EquipmentListing",
+      "safe_action": "Create first paid listing with proof and availability status."
+    },
+    {
+      "role": "Founder",
+      "next_record": "MarketSignal",
+      "safe_action": "Record demand, supply gap, proof status, ARR signal, and next wedge."
+    }
+  ],
+  "acceptance": [
+    "Header shows Build v152.",
+    "Build Phase shows Current version: v152.",
+    "Marketplace shows Production Backend Starter above the hero.",
+    "Production Backend Starter changes by buyer, supplier, and founder role.",
+    "Copy backend starter names core records, first API routes, blocked rental payment routes, listing SaaS, and 0% rental take.",
+    "Build Phase includes the Production Backend Starter contract.",
+    "No v152 action creates rental payment, escrow, payout, or booking commission handling."
+  ]
+}

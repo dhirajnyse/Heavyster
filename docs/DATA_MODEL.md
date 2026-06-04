@@ -2355,3 +2355,58 @@ Initial launch gates:
 | Backend route | Review | Move next into accounts, listings, proof uploads, direct lead records, and admin review. |
 
 No SaasLaunchGate or SaasLaunchGateState table should collect rental payment, deposit, escrow, payout, booking commission, or supplier settlement data. It can reference listing SaaS billing, direct enquiries, proof readiness, and backend readiness only.
+
+## v152 Production Backend Starter
+
+Use this as the first production backend contract behind the calm static product shell. It names the records the real SaaS must create while keeping payment custody outside Heavyster.
+
+ProductionBackendStarter:
+
+- id
+- role: buyer, supplier, founder
+- headline
+- detail
+- primary_action_label
+- primary_action_anchor
+- copied_at
+- created_at
+- updated_at
+
+ProductionBackendStarterRecord:
+
+- id
+- production_backend_starter_id
+- record_name
+- purpose
+- route
+- status: ready, watch, hold, neutral
+- display_order
+- created_at
+- updated_at
+
+Initial record map:
+
+| Role | Records |
+| --- | --- |
+| Buyer | DirectEnquiry, ProofDocument, EquipmentListing, RentalPayment blocked |
+| Supplier | SupplierAccount, EquipmentListing, ListingSubscription, ProofDocument review |
+| Founder | MarketSignal, AdminReview, ListingSubscription, RentalPayment blocked |
+
+First API routes:
+
+- `/api/supplier-accounts`
+- `/api/equipment-listings`
+- `/api/proof-documents`
+- `/api/direct-enquiries`
+- `/api/listing-subscriptions`
+- `/api/admin-reviews`
+- `/api/market-signals`
+
+Blocked phase-one routes:
+
+- `/api/rental-payments`
+- `/api/escrow`
+- `/api/payouts`
+- `/api/booking-commissions`
+
+No ProductionBackendStarter or ProductionBackendStarterRecord table should collect rental payment, deposit, escrow, payout, booking commission, or supplier settlement data. It can reference listing SaaS billing, direct enquiry routing, proof readiness, supplier accounts, and market signals only.

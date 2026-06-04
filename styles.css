@@ -2127,6 +2127,153 @@ body.simple-mode .market-result-brief {
   color: var(--blue);
 }
 
+.production-backend-starter {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.25fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.98), rgba(238, 246, 252, 0.9) 52%, rgba(232, 248, 245, 0.86));
+}
+
+.production-backend-copy,
+.production-backend-grid span,
+.production-backend-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.production-backend-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.production-backend-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.production-backend-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.production-backend-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.production-backend-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.production-backend-grid span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.production-backend-grid em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.production-backend-grid strong,
+.production-backend-grid small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.production-backend-grid strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.production-backend-grid small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.production-backend-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.production-backend-grid .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.production-backend-grid .hold {
+  border-color: rgba(166, 63, 43, 0.28);
+  background: #fae9e1;
+}
+
+.production-backend-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.production-backend-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.production-backend-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.production-backend-starter[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.production-backend-starter[data-role="supplier"] .production-backend-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.production-backend-starter[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.production-backend-starter[data-role="founder"] .production-backend-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
 .top-actions,
 .hero-actions {
   display: flex;
@@ -18050,7 +18197,8 @@ button.admin-row {
 .calm-backend-handoff-contract,
 .calm-launch-pulse-contract,
 .production-account-scaffold-contract,
-.saas-launch-gate-contract {
+.saas-launch-gate-contract,
+.production-backend-starter-contract {
   display: grid;
   grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
   gap: 10px;
@@ -18139,6 +18287,13 @@ button.admin-row {
     linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 255, 255, 0.95) 48%, rgba(255, 249, 236, 0.9));
 }
 
+.production-backend-starter-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(5, minmax(126px, 0.68fr));
+  border-color: rgba(25, 113, 109, 0.36);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.96), rgba(238, 246, 252, 0.94) 48%, rgba(232, 248, 245, 0.9));
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
 .calm-launch-room article,
@@ -18150,7 +18305,8 @@ button.admin-row {
 .calm-backend-handoff-contract article,
 .calm-launch-pulse-contract article,
 .production-account-scaffold-contract article,
-.saas-launch-gate-contract article {
+.saas-launch-gate-contract article,
+.production-backend-starter-contract article {
   display: grid;
   align-content: start;
   gap: 8px;
@@ -18172,7 +18328,8 @@ button.admin-row {
 .calm-backend-handoff-contract-lead,
 .calm-launch-pulse-contract-lead,
 .production-account-scaffold-contract-lead,
-.saas-launch-gate-contract-lead {
+.saas-launch-gate-contract-lead,
+.production-backend-starter-contract-lead {
   grid-row: span 2;
   border-color: rgba(25, 113, 109, 0.42) !important;
   background: var(--teal-soft) !important;
@@ -18189,7 +18346,8 @@ button.admin-row {
 .calm-backend-handoff-contract-acceptance,
 .calm-launch-pulse-contract-acceptance,
 .production-account-scaffold-contract-acceptance,
-.saas-launch-gate-contract-acceptance {
+.saas-launch-gate-contract-acceptance,
+.production-backend-starter-contract-acceptance {
   grid-column: span 2;
   border-color: rgba(40, 93, 134, 0.42) !important;
   background: var(--blue-soft) !important;
@@ -18250,6 +18408,11 @@ button.admin-row {
   background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 249, 236, 0.92)) !important;
 }
 
+.production-backend-starter-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(232, 248, 245, 0.92)) !important;
+}
+
 .calm-backend-scaffold span,
 .supplier-account-shell span,
 .calm-launch-room span,
@@ -18261,7 +18424,8 @@ button.admin-row {
 .calm-backend-handoff-contract span,
 .calm-launch-pulse-contract span,
 .production-account-scaffold-contract span,
-.saas-launch-gate-contract span {
+.saas-launch-gate-contract span,
+.production-backend-starter-contract span {
   color: var(--teal);
   font-size: 0.72rem;
   font-weight: 950;
@@ -18279,7 +18443,8 @@ button.admin-row {
 .calm-backend-handoff-contract strong,
 .calm-launch-pulse-contract strong,
 .production-account-scaffold-contract strong,
-.saas-launch-gate-contract strong {
+.saas-launch-gate-contract strong,
+.production-backend-starter-contract strong {
   color: var(--ink);
   font-size: 1.02rem;
   line-height: 1.18;
@@ -18297,7 +18462,8 @@ button.admin-row {
 .calm-backend-handoff-contract-lead strong,
 .calm-launch-pulse-contract-lead strong,
 .production-account-scaffold-contract-lead strong,
-.saas-launch-gate-contract-lead strong {
+.saas-launch-gate-contract-lead strong,
+.production-backend-starter-contract-lead strong {
   font-size: 1.22rem;
 }
 
@@ -18312,7 +18478,8 @@ button.admin-row {
 .calm-backend-handoff-contract p,
 .calm-launch-pulse-contract p,
 .production-account-scaffold-contract p,
-.saas-launch-gate-contract p {
+.saas-launch-gate-contract p,
+.production-backend-starter-contract p {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.42;
@@ -18329,7 +18496,8 @@ button.admin-row {
 .calm-backend-handoff-contract b,
 .calm-launch-pulse-contract b,
 .production-account-scaffold-contract b,
-.saas-launch-gate-contract b {
+.saas-launch-gate-contract b,
+.production-backend-starter-contract b {
   width: fit-content;
   margin-top: auto;
   padding: 6px 10px;
@@ -18362,7 +18530,9 @@ button.admin-row {
 .production-account-scaffold-contract-lead b,
 .production-account-scaffold-contract-acceptance b,
 .saas-launch-gate-contract-lead b,
-.saas-launch-gate-contract-acceptance b {
+.saas-launch-gate-contract-acceptance b,
+.production-backend-starter-contract-lead b,
+.production-backend-starter-contract-acceptance b {
   background: var(--coal);
   color: #ffffff;
 }
@@ -18378,7 +18548,8 @@ button.admin-row {
 .calm-backend-handoff-contract-acceptance button,
 .calm-launch-pulse-contract-acceptance button,
 .production-account-scaffold-contract-acceptance button,
-.saas-launch-gate-contract-acceptance button {
+.saas-launch-gate-contract-acceptance button,
+.production-backend-starter-contract-acceptance button {
   min-height: 42px;
   margin-top: auto;
 }
@@ -18948,6 +19119,10 @@ button.admin-row {
     grid-template-columns: 1fr;
   }
 
+  .production-backend-starter {
+    grid-template-columns: 1fr;
+  }
+
   .calm-action-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -19441,6 +19616,7 @@ button.admin-row {
   .calm-launch-pulse-contract,
   .production-account-scaffold-contract,
   .saas-launch-gate-contract,
+  .production-backend-starter-contract,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -19699,7 +19875,10 @@ button.admin-row {
   .production-account-actions,
   .saas-launch-gate,
   .saas-launch-grid,
-  .saas-launch-actions {
+  .saas-launch-actions,
+  .production-backend-starter,
+  .production-backend-grid,
+  .production-backend-actions {
     grid-template-columns: 1fr;
   }
 
@@ -19726,7 +19905,10 @@ button.admin-row {
   .production-account-actions button,
   .saas-launch-grid strong,
   .saas-launch-grid small,
-  .saas-launch-actions button {
+  .saas-launch-actions button,
+  .production-backend-grid strong,
+  .production-backend-grid small,
+  .production-backend-actions button {
     white-space: normal;
   }
 
@@ -20026,6 +20208,7 @@ button.admin-row {
   .calm-launch-pulse-contract,
   .production-account-scaffold-contract,
   .saas-launch-gate-contract,
+  .production-backend-starter-contract,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -20216,7 +20399,9 @@ button.admin-row {
   .production-account-scaffold-contract-lead,
   .production-account-scaffold-contract-acceptance,
   .saas-launch-gate-contract-lead,
-  .saas-launch-gate-contract-acceptance {
+  .saas-launch-gate-contract-acceptance,
+  .production-backend-starter-contract-lead,
+  .production-backend-starter-contract-acceptance {
     grid-row: auto;
     grid-column: auto;
   }

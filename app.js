@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260601-heavyster-saas-launch-gate-v151";
+const DATA_VERSION = "20260604-heavyster-production-backend-starter-v152";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260601-saas-launch-gate-v151";
+const SIMPLE_UX_RELEASE = "20260604-production-backend-starter-v152";
 
 const listings = [
   {
@@ -1001,6 +1001,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalmLaunchPulse();
     renderProductionAccountScaffold();
     renderSaasLaunchGate();
+    renderProductionBackendStarter();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -1910,6 +1911,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyProductionBackendStarterContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildProductionBackendStarterText());
+      showToast("Production backend starter copied.");
+    } catch {
+      showToast("Copy is blocked here, but the backend starter is visible.");
+    }
+  });
+
   document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
     toggleShortlist(getSelectedListing().id);
   });
@@ -1986,6 +1996,12 @@ function bindControls() {
   document.querySelector("#copySaasLaunchGateButton").addEventListener("click", () => {
     handleSaasLaunchGateAction("copy");
   });
+  document.querySelector("#productionBackendPrimaryButton").addEventListener("click", () => {
+    handleProductionBackendStarterAction("primary");
+  });
+  document.querySelector("#copyProductionBackendButton").addEventListener("click", () => {
+    handleProductionBackendStarterAction("copy");
+  });
   document.querySelector("#simplicityModeButton").addEventListener("click", () => {
     state.simpleMode = !state.simpleMode;
     state.simplicityRelease = SIMPLE_UX_RELEASE;
@@ -1999,6 +2015,7 @@ function bindControls() {
     renderCalmLaunchPulse();
     renderProductionAccountScaffold();
     renderSaasLaunchGate();
+    renderProductionBackendStarter();
     document.body.classList.toggle("simple-mode", state.simpleMode);
     syncNavigationState();
     showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
@@ -2175,6 +2192,7 @@ function render() {
   renderCalmLaunchPulse();
   renderProductionAccountScaffold();
   renderSaasLaunchGate();
+  renderProductionBackendStarter();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -2822,6 +2840,7 @@ function handleSimplicityIntent(intentId) {
   renderCalmLaunchPulse();
   renderProductionAccountScaffold();
   renderSaasLaunchGate();
+  renderProductionBackendStarter();
   document.body.classList.add("simple-mode");
   openWorkflowStep(intent.anchor, intent.label, intent.role);
 }
@@ -3751,6 +3770,119 @@ function buildSaasLaunchGateText(model = getSaasLaunchGateModel()) {
   ].join("\n");
 }
 
+function renderProductionBackendStarter() {
+  const root = document.querySelector("#productionBackendStarter");
+  if (!root) return;
+
+  const model = getProductionBackendStarterModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#productionBackendRole").textContent = model.roleLabel;
+  document.querySelector("#productionBackendHeadline").textContent = model.headline;
+  document.querySelector("#productionBackendDetail").textContent = model.detail;
+  document.querySelector("#productionBackendGrid").innerHTML = model.records.map((record) => `
+    <span class="${escapeHtml(record.tone)}">
+      <em>${escapeHtml(record.label)}</em>
+      <strong>${escapeHtml(record.value)}</strong>
+      <small>${escapeHtml(record.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#productionBackendPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getProductionBackendStarterModel() {
+  const gate = getSaasLaunchGateModel();
+  const selected = getSelectedListing();
+  const role = gate.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const region = state.region === "all" ? selected?.region || "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer backend starter",
+      headline: "A direct enquiry becomes one saved record.",
+      detail: `${listingName} can save search context, proof snapshot, enquiry note, and supplier route without changing payment.`,
+      primary: { label: "Open buyer desk", aria: "Open the buyer backend starter", anchor: "#buyer-workbench" },
+      records: [
+        { label: "DirectEnquiry", value: "Ready", detail: "message, supplier, status", tone: "ready" },
+        { label: "ProofDocument", value: "Snapshot", detail: "trust score and docs", tone: "ready" },
+        { label: "EquipmentListing", value: "Linked", detail: "machine and availability", tone: "ready" },
+        { label: "RentalPayment", value: "Blocked", detail: "pay supplier direct", tone: "hold" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier backend starter",
+      headline: "A paid listing becomes the first SaaS record.",
+      detail: `${supplierName} needs supplier account, listing, proof, subscription, and lead route.`,
+      primary: { label: "Open supplier studio", aria: "Open the supplier backend starter", anchor: "#studio" },
+      records: [
+        { label: "SupplierAccount", value: "Ready", detail: "company and team", tone: "ready" },
+        { label: "EquipmentListing", value: "Ready", detail: "machine, region, status", tone: "ready" },
+        { label: "ListingSubscription", value: "Ready", detail: "USD 99/year option", tone: "ready" },
+        { label: "ProofDocument", value: "Review", detail: "freshness before leads", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder backend starter",
+      headline: "Build only the records that protect scale.",
+      detail: `${region} ${category} needs admin review, market signal, paid listing status, and direct enquiry logs before production.`,
+      primary: { label: "Open build phase", aria: "Open the founder backend starter", anchor: "#build-phase" },
+      records: [
+        { label: "MarketSignal", value: "Ready", detail: "demand and supply gap", tone: "ready" },
+        { label: "AdminReview", value: "Ready", detail: "approval and support notes", tone: "ready" },
+        { label: "ListingSubscription", value: "Ready", detail: "paid listing status", tone: "ready" },
+        { label: "RentalPayment", value: "Blocked", detail: "0% rental take", tone: "hold" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    records: config.records
+  };
+}
+
+async function handleProductionBackendStarterAction(action, model = getProductionBackendStarterModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildProductionBackendStarterText(model));
+    showToast("Production backend starter copied.");
+  } catch {
+    showToast("Copy is blocked here, but the backend starter is visible.");
+  }
+}
+
+function buildProductionBackendStarterText(model = getProductionBackendStarterModel()) {
+  return [
+    "Heavyster Production Backend Starter",
+    "Version: v152 Production Backend Starter",
+    "Rule: one visible business action maps to one production record.",
+    "",
+    `Role: ${model.role}`,
+    `Starter path: ${model.records.map((record) => `${record.label} ${record.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Core records: SupplierAccount, EquipmentListing, ProofDocument, DirectEnquiry, ListingSubscription, AdminReview, and MarketSignal.",
+    "First API surface: /api/supplier-accounts, /api/equipment-listings, /api/proof-documents, /api/direct-enquiries, /api/listing-subscriptions, /api/admin-reviews, /api/market-signals.",
+    "Blocked routes: /api/rental-payments, /api/escrow, /api/payouts, and /api/booking-commissions.",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: backend becomes real without adding UI weight."
+  ].join("\n");
+}
+
 function openWorkflowGuideTarget(direction) {
   const button = document.querySelector(direction === "previous" ? "#workflowDockPrevButton" : "#workflowDockNextButton");
   if (!button || button.disabled) return;
@@ -3775,6 +3907,7 @@ function openWorkflowStep(anchor, label, role) {
   renderCalmLaunchPulse();
   renderProductionAccountScaffold();
   renderSaasLaunchGate();
+  renderProductionBackendStarter();
   closeWorkflowMenu();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.location.hash = anchor;
