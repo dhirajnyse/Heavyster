@@ -2410,3 +2410,42 @@ Blocked phase-one routes:
 - `/api/booking-commissions`
 
 No ProductionBackendStarter or ProductionBackendStarterRecord table should collect rental payment, deposit, escrow, payout, booking commission, or supplier settlement data. It can reference listing SaaS billing, direct enquiry routing, proof readiness, supplier accounts, and market signals only.
+
+## v153 Calm Backend Route Handoff
+
+Route handoff keeps the v152 backend starter calm by naming the exact route, record, and blocked payment rail for each role before implementation.
+
+| Role | UI action | Allowed API route | Production record | Blocked route |
+| --- | --- | --- | --- | --- |
+| Buyer | Copy enquiry | `/api/direct-enquiries` | DirectEnquiry | `/api/rental-payments` |
+| Supplier | Use selected machine | `/api/equipment-listings` | ListingSubscription | `/api/payouts` |
+| Founder | Open market command | `/api/market-signals` | AdminReview | `/api/booking-commissions` |
+
+Allowed phase-one routes are supplier accounts, equipment listings, proof documents, direct enquiries, listing subscriptions, admin reviews, and market signals. Rental payments, deposits, escrow, payouts, and booking commissions remain blocked until Heavyster has proven the booking workflow.
+
+## v154 Serene Proof Gate
+
+Serene Proof Gate keeps the backend route handoff proof-led before records are created.
+
+SereneProofGate:
+
+- id
+- role: buyer, supplier, founder
+- proof_score
+- readiness_state
+- money_rule
+- next_action_label
+- next_action_anchor
+- backend_record
+- allowed_route
+- blocked_route
+- created_at
+- updated_at
+
+Initial proof gates:
+
+- Buyer gate maps proof-safe enquiries to DirectEnquiry.
+- Supplier gate maps proof-safe publishing to ListingSubscription.
+- Founder gate maps proof-safe scaling to AdminReview and MarketSignal.
+
+No SereneProofGate table should collect rental payment, deposit, escrow, payout, or booking commission records in phase one.

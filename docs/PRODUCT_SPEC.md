@@ -394,3 +394,23 @@ Production Backend Starter sits under the SaaS Launch Gate and turns each calm p
 - Founder path creates MarketSignal, AdminReview, ListingSubscription state, and a blocked rental-payment guardrail.
 - First backend routes stay small: supplier accounts, listings, proof documents, direct enquiries, listing subscriptions, admin reviews, and market signals.
 - Phase one blocks rental payment, escrow, payout, deposit, and booking commission routes until booking workflow value is proven.
+
+## v153 Calm Backend Route Handoff
+
+Calm Backend Route Handoff sits under the Production Backend Starter and makes each role's next production route explicit without adding product noise.
+
+- Buyer path maps Copy enquiry to `/api/direct-enquiries`, DirectEnquiry, proof snapshot, supplier response route, and a blocked rental-payment route.
+- Supplier path maps selected machine publishing to `/api/equipment-listings`, ListingSubscription, proof links, and listing SaaS billing while blocking payout routes.
+- Founder path maps market command to `/api/market-signals`, AdminReview, demand proof, supply gap, and listing ARR decision while blocking booking commission routes.
+- Allowed backend work stays limited to accounts, listings, proof documents, direct enquiries, listing subscriptions, admin reviews, and market signals.
+- Phase one stays 0% rental take: no rental payment, deposit, escrow, payout, or booking commission handling.
+
+## v154 Serene Proof Gate
+
+Serene Proof Gate sits under the Calm Backend Route Handoff and makes proof the calm decision point before a buyer, supplier, or founder action moves forward.
+
+- Buyer path shows machine fit, proof, availability, payment guardrail, and the proof-safe next action before direct enquiry.
+- Supplier path shows listing readiness, proof cleanliness, availability freshness, listing SaaS, and the proof-safe publish action.
+- Founder path shows demand, supply gap, proof score, listing ARR, and the proof-safe market command action.
+- The gate is deliberately compact: proof, readiness, money rule, and one action only.
+- Phase one stays 0% rental take: no rental payment, deposit, escrow, payout, or booking commission handling.

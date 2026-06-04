@@ -1,0 +1,59 @@
+{
+  "version": "v154 Serene Proof Gate",
+  "release_date": "2026-06-04",
+  "purpose": "Keep every buyer, supplier, and founder action proof-led before it enters production records.",
+  "rule": "Every next action shows one proof score, one readiness state, one money rule, and one calm next move.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or booking commission is handled by Heavyster in phase one.",
+  "role_gates": [
+    {
+      "role": "Buyer",
+      "safe_action": "Send a direct enquiry only when proof, availability, supplier route, and direct payment rule are visible.",
+      "proof_signal": "Cat 320 Excavator has visible proof, availability, supplier route, and direct payment rule.",
+      "backend_record": "DirectEnquiry",
+      "route": "/api/direct-enquiries",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "safe_action": "Publish a paid listing only when machine proof, availability freshness, and lead route are clean.",
+      "proof_signal": "Gulf Lift Services can publish one machine with clean documents and visible SaaS pricing.",
+      "backend_record": "ListingSubscription",
+      "route": "/api/equipment-listings",
+      "blocked_route": "/api/payouts"
+    },
+    {
+      "role": "Founder",
+      "safe_action": "Scale a market only when demand, supply gap, proof score, and listing ARR are visible.",
+      "proof_signal": "UAE Lifting has demand, supply gap, proof, and ARR signal before opening market command.",
+      "backend_record": "AdminReview",
+      "route": "/api/market-signals",
+      "blocked_route": "/api/booking-commissions"
+    }
+  ],
+  "proof_states": [
+    "Machine fit",
+    "Proof visible",
+    "Availability fresh",
+    "Payment direct"
+  ],
+  "backend_handoff": [
+    "DirectEnquiry",
+    "ListingSubscription",
+    "AdminReview"
+  ],
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "acceptance": [
+    "Marketplace shows the Serene Proof Gate before the hero.",
+    "Buyer, supplier, and founder each see a role-specific proof gate.",
+    "Each role shows one proof score, one readiness state, one money rule, and one next action.",
+    "Copy proof gate mentions direct supplier payment and 0% rental take.",
+    "Build Phase includes the v154 Serene Proof Gate contract.",
+    "No proof gate action introduces rental payment handling."
+  ]
+}

@@ -166,6 +166,8 @@
 - Production Account Scaffold: one calm account path that maps buyer, supplier, and founder screens to production records without adding backend noise to the UI
 - SaaS Launch Gate: one pass, hold, or review rule before buyer traffic, supplier onboarding, paid listing revenue, or backend routing scales
 - Production Backend Starter: one calm backend contract that maps buyer, supplier, and founder actions into SupplierAccount, EquipmentListing, ProofDocument, DirectEnquiry, ListingSubscription, AdminReview, and MarketSignal while blocking rental-payment rails
+- Calm Backend Route Handoff: one safe UI action maps to one allowed API route, one production record, and one blocked payment route so implementation stays calm before auth/database work
+- Serene Proof Gate: one proof score, one readiness state, one money rule, and one next move before buyer enquiry, supplier publish, or founder scale actions move to production
 
 ## Sprint 5: Billing MVP
 

@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260604-heavyster-production-backend-starter-v152";
+const DATA_VERSION = "20260604-heavyster-serene-proof-gate-v154";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260604-production-backend-starter-v152";
+const SIMPLE_UX_RELEASE = "20260604-serene-proof-gate-v154";
 
 const listings = [
   {
@@ -1002,6 +1002,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProductionAccountScaffold();
     renderSaasLaunchGate();
     renderProductionBackendStarter();
+    renderCalmBackendRouteHandoff();
+    renderSereneProofGate();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -1920,6 +1922,24 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyCalmBackendRouteContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmBackendRouteContractText());
+      showToast("Calm backend route handoff copied.");
+    } catch {
+      showToast("Copy is blocked here, but the route handoff is visible.");
+    }
+  });
+
+  document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildSereneProofGateContractText());
+      showToast("Serene proof gate copied.");
+    } catch {
+      showToast("Copy is blocked here, but the proof gate is visible.");
+    }
+  });
+
   document.querySelector("#shortlistToggleButton").addEventListener("click", () => {
     toggleShortlist(getSelectedListing().id);
   });
@@ -2002,6 +2022,18 @@ function bindControls() {
   document.querySelector("#copyProductionBackendButton").addEventListener("click", () => {
     handleProductionBackendStarterAction("copy");
   });
+  document.querySelector("#calmBackendRoutePrimaryButton").addEventListener("click", () => {
+    handleCalmBackendRouteHandoffAction("primary");
+  });
+  document.querySelector("#copyCalmBackendRouteButton").addEventListener("click", () => {
+    handleCalmBackendRouteHandoffAction("copy");
+  });
+  document.querySelector("#sereneProofGatePrimaryButton").addEventListener("click", () => {
+    handleSereneProofGateAction("primary");
+  });
+  document.querySelector("#copySereneProofGateButton").addEventListener("click", () => {
+    handleSereneProofGateAction("copy");
+  });
   document.querySelector("#simplicityModeButton").addEventListener("click", () => {
     state.simpleMode = !state.simpleMode;
     state.simplicityRelease = SIMPLE_UX_RELEASE;
@@ -2016,6 +2048,8 @@ function bindControls() {
     renderProductionAccountScaffold();
     renderSaasLaunchGate();
     renderProductionBackendStarter();
+    renderCalmBackendRouteHandoff();
+    renderSereneProofGate();
     document.body.classList.toggle("simple-mode", state.simpleMode);
     syncNavigationState();
     showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
@@ -2193,6 +2227,8 @@ function render() {
   renderProductionAccountScaffold();
   renderSaasLaunchGate();
   renderProductionBackendStarter();
+  renderCalmBackendRouteHandoff();
+  renderSereneProofGate();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -2841,6 +2877,8 @@ function handleSimplicityIntent(intentId) {
   renderProductionAccountScaffold();
   renderSaasLaunchGate();
   renderProductionBackendStarter();
+  renderCalmBackendRouteHandoff();
+  renderSereneProofGate();
   document.body.classList.add("simple-mode");
   openWorkflowStep(intent.anchor, intent.label, intent.role);
 }
@@ -3883,6 +3921,238 @@ function buildProductionBackendStarterText(model = getProductionBackendStarterMo
   ].join("\n");
 }
 
+function renderCalmBackendRouteHandoff() {
+  const root = document.querySelector("#calmBackendRouteHandoff");
+  if (!root) return;
+
+  const model = getCalmBackendRouteHandoffModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#calmBackendRouteRole").textContent = model.roleLabel;
+  document.querySelector("#calmBackendRouteHeadline").textContent = model.headline;
+  document.querySelector("#calmBackendRouteDetail").textContent = model.detail;
+  document.querySelector("#calmBackendRouteGrid").innerHTML = model.routes.map((route) => `
+    <span class="${escapeHtml(route.tone)}">
+      <em>${escapeHtml(route.label)}</em>
+      <strong>${escapeHtml(route.value)}</strong>
+      <small>${escapeHtml(route.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmBackendRoutePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getCalmBackendRouteHandoffModel() {
+  const starter = getProductionBackendStarterModel();
+  const selected = getSelectedListing();
+  const role = starter.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const region = state.region === "all" ? selected?.region || "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer route handoff",
+      headline: "Copy enquiry becomes one backend route.",
+      detail: `${listingName} can create one direct enquiry record, proof snapshot, and supplier response route without any checkout.`,
+      primary: { label: "Open buyer desk", aria: "Open the buyer backend route handoff", anchor: "#buyer-workbench" },
+      routes: [
+        { label: "UI action", value: "Copy enquiry", detail: "one buyer note", tone: "ready" },
+        { label: "API route", value: "/api/direct-enquiries", detail: "save listing and supplier", tone: "ready" },
+        { label: "Record", value: "DirectEnquiry", detail: "proof and response log", tone: "ready" },
+        { label: "Blocked", value: "/api/rental-payments", detail: "pay supplier direct", tone: "hold" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier route handoff",
+      headline: "Selected machine becomes one paid listing route.",
+      detail: `${supplierName} can publish one active listing with proof and SaaS billing while rental payment stays direct.`,
+      primary: { label: "Open supplier studio", aria: "Open the supplier backend route handoff", anchor: "#studio" },
+      routes: [
+        { label: "UI action", value: "Use selected machine", detail: "one publish action", tone: "ready" },
+        { label: "API route", value: "/api/equipment-listings", detail: "machine, region, status", tone: "ready" },
+        { label: "Record", value: "ListingSubscription", detail: "USD 99/year or USD 9/month", tone: "ready" },
+        { label: "Blocked", value: "/api/payouts", detail: "no rental collection", tone: "hold" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder route handoff",
+      headline: "Market command becomes one controlled backend route.",
+      detail: `${region} ${category} can move through market signal, admin review, and listing status without adding commission rails.`,
+      primary: { label: "Open market command", aria: "Open the founder backend route handoff", anchor: "#market-signal-matrix" },
+      routes: [
+        { label: "UI action", value: "Open market command", detail: "one wedge decision", tone: "ready" },
+        { label: "API route", value: "/api/market-signals", detail: "demand, supply, proof", tone: "ready" },
+        { label: "Record", value: "AdminReview", detail: "approve, hold, recruit", tone: "watch" },
+        { label: "Blocked", value: "/api/booking-commissions", detail: "success fee later only", tone: "hold" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    routes: config.routes
+  };
+}
+
+async function handleCalmBackendRouteHandoffAction(action, model = getCalmBackendRouteHandoffModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmBackendRouteHandoffText(model));
+    showToast("Calm backend route handoff copied.");
+  } catch {
+    showToast("Copy is blocked here, but the route handoff is visible.");
+  }
+}
+
+function buildCalmBackendRouteHandoffText(model = getCalmBackendRouteHandoffModel()) {
+  return [
+    "Heavyster Calm Backend Route Handoff",
+    "Version: v153 Calm Backend Route Handoff",
+    "Rule: one visible UI action maps to one allowed API route, one production record, and one blocked payment route.",
+    "",
+    `Role: ${model.role}`,
+    `Route handoff: ${model.routes.map((route) => `${route.label}: ${route.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Allowed routes: /api/direct-enquiries, /api/equipment-listings, /api/listing-subscriptions, /api/proof-documents, /api/supplier-accounts, /api/admin-reviews, and /api/market-signals.",
+    "Blocked payment routes: /api/rental-payments, /api/deposits, /api/escrow, /api/payouts, and /api/booking-commissions.",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Simplicity promise: backend routes become clear without making the UI heavier."
+  ].join("\n");
+}
+
+function buildCalmBackendRouteContractText() {
+  return buildCalmBackendRouteHandoffText();
+}
+
+function renderSereneProofGate() {
+  const root = document.querySelector("#sereneProofGate");
+  if (!root) return;
+
+  const model = getSereneProofGateModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#sereneProofGateRole").textContent = model.roleLabel;
+  document.querySelector("#sereneProofGateHeadline").textContent = model.headline;
+  document.querySelector("#sereneProofGateDetail").textContent = model.detail;
+  document.querySelector("#sereneProofGateGrid").innerHTML = model.proofs.map((proof) => `
+    <span class="${escapeHtml(proof.tone)}">
+      <em>${escapeHtml(proof.label)}</em>
+      <strong>${escapeHtml(proof.value)}</strong>
+      <small>${escapeHtml(proof.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#sereneProofGatePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getSereneProofGateModel() {
+  const route = getCalmBackendRouteHandoffModel();
+  const selected = getSelectedListing();
+  const role = route.role || state.commandRole || "Buyer";
+  const listingName = selected?.name || "Cat 320 Excavator";
+  const supplierName = selected?.supplier || "Gulf Lift Services";
+  const region = state.region === "all" ? selected?.region || "UAE" : state.region;
+  const category = state.category === "all" ? selected?.category || "Lifting" : state.category;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer proof gate",
+      headline: "Ask only when proof feels calm.",
+      detail: `${listingName} is safe to enquire when proof, availability, supplier route, and direct payment rule are visible.`,
+      primary: { label: "Open proof card", aria: "Open the buyer proof gate", anchor: "#passport" },
+      proofs: [
+        { label: "Machine fit", value: "100/100", detail: "selected result", tone: "ready" },
+        { label: "Proof", value: "5/5", detail: "docs visible", tone: "ready" },
+        { label: "Availability", value: "Now", detail: "ready to ask", tone: "ready" },
+        { label: "Payment", value: "0%", detail: "supplier direct", tone: "neutral" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier proof gate",
+      headline: "Publish when the machine can stand on proof.",
+      detail: `${supplierName} should publish one paid listing only when proof, availability, and lead route are clean.`,
+      primary: { label: "Open proof vault", aria: "Open the supplier proof gate", anchor: "#proof-vault" },
+      proofs: [
+        { label: "Listing", value: "Ready", detail: "machine and category", tone: "ready" },
+        { label: "Proof", value: "88/100", detail: "documents clean", tone: "ready" },
+        { label: "Availability", value: "Confirm", detail: "freshness needed", tone: "watch" },
+        { label: "SaaS", value: "USD 99/yr", detail: "paid listing", tone: "neutral" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder proof gate",
+      headline: "Scale only where proof protects trust.",
+      detail: `${region} ${category} should receive traffic only when demand, supply, proof, and listing ARR are visible.`,
+      primary: { label: "Open market matrix", aria: "Open the founder proof gate", anchor: "#market-signal-matrix" },
+      proofs: [
+        { label: "Demand", value: "4 signals", detail: "buyer pull", tone: "ready" },
+        { label: "Supply", value: "21 gap", detail: "recruit first", tone: "watch" },
+        { label: "Proof", value: "100/100", detail: "launch proof", tone: "ready" },
+        { label: "Revenue", value: "USD 2,178", detail: "listing ARR", tone: "neutral" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    proofs: config.proofs
+  };
+}
+
+async function handleSereneProofGateAction(action, model = getSereneProofGateModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildSereneProofGateText(model));
+    showToast("Serene proof gate copied.");
+  } catch {
+    showToast("Copy is blocked here, but the proof gate is visible.");
+  }
+}
+
+function buildSereneProofGateText(model = getSereneProofGateModel()) {
+  return [
+    "Heavyster Serene Proof Gate",
+    "Version: v154 Serene Proof Gate",
+    "Rule: one proof score, one readiness state, one money rule, and one calm next move.",
+    "",
+    `Role: ${model.role}`,
+    `Proof path: ${model.proofs.map((proof) => `${proof.label}: ${proof.value}`).join(" -> ")}`,
+    `Primary action: ${model.primary.label}`,
+    "",
+    "Backend handoff: gate output feeds DirectEnquiry, ListingSubscription, or AdminReview only after proof is visible.",
+    "Payment guardrail: buyer pays supplier directly. Heavyster earns listing SaaS only in phase one.",
+    "Blocked routes: rental payments, deposits, escrow, payouts, and booking commissions.",
+    "Rental take: 0%.",
+    "Simplicity promise: proof decides the route before any production record is created."
+  ].join("\n");
+}
+
+function buildSereneProofGateContractText() {
+  return buildSereneProofGateText();
+}
+
 function openWorkflowGuideTarget(direction) {
   const button = document.querySelector(direction === "previous" ? "#workflowDockPrevButton" : "#workflowDockNextButton");
   if (!button || button.disabled) return;
@@ -3908,6 +4178,8 @@ function openWorkflowStep(anchor, label, role) {
   renderProductionAccountScaffold();
   renderSaasLaunchGate();
   renderProductionBackendStarter();
+  renderCalmBackendRouteHandoff();
+  renderSereneProofGate();
   closeWorkflowMenu();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.location.hash = anchor;

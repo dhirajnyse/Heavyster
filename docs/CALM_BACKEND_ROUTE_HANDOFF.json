@@ -1,0 +1,60 @@
+{
+  "version": "v153 Calm Backend Route Handoff",
+  "release_date": "2026-06-04",
+  "purpose": "Turn the backend starter into one safe route per buyer, supplier, and founder action before production implementation begins.",
+  "rule": "One visible UI action maps to one allowed API route, one production record, and one blocked payment route.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or booking commission handling in phase one. Buyer pays supplier directly; Heavyster earns paid listing SaaS.",
+  "routes": [
+    {
+      "role": "Buyer",
+      "ui_action": "Copy enquiry",
+      "allowed_api_route": "/api/direct-enquiries",
+      "production_record": "DirectEnquiry",
+      "blocked_payment_route": "/api/rental-payments",
+      "owner": "Buyer desk",
+      "notes": "Save selected listing, proof snapshot, supplier route, enquiry note, and response status."
+    },
+    {
+      "role": "Supplier",
+      "ui_action": "Use selected machine",
+      "allowed_api_route": "/api/equipment-listings",
+      "production_record": "ListingSubscription",
+      "blocked_payment_route": "/api/payouts",
+      "owner": "Supplier Studio",
+      "notes": "Publish listing, attach proof, choose monthly or annual listing SaaS, and keep rental payment direct."
+    },
+    {
+      "role": "Founder",
+      "ui_action": "Open market command",
+      "allowed_api_route": "/api/market-signals",
+      "production_record": "AdminReview",
+      "blocked_payment_route": "/api/booking-commissions",
+      "owner": "Founder desk",
+      "notes": "Review demand, supply, proof, paid listing ARR, and blocked commission rails before scale."
+    }
+  ],
+  "allowed_routes": [
+    "/api/supplier-accounts",
+    "/api/equipment-listings",
+    "/api/proof-documents",
+    "/api/direct-enquiries",
+    "/api/listing-subscriptions",
+    "/api/admin-reviews",
+    "/api/market-signals"
+  ],
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "acceptance": [
+    "Marketplace shows the calm route handoff after the production backend starter.",
+    "Buyer route maps Copy enquiry to /api/direct-enquiries and DirectEnquiry while blocking rental payments.",
+    "Supplier route maps selected machine publishing to /api/equipment-listings and ListingSubscription while blocking payouts.",
+    "Founder route maps market command to /api/market-signals and AdminReview while blocking booking commissions.",
+    "Copy text names allowed routes, blocked routes, direct supplier payment, listing SaaS revenue, and 0% rental take.",
+    "Build Phase includes the v153 route handoff contract before the Release Ledger."
+  ]
+}

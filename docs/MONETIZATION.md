@@ -399,3 +399,21 @@ The monetization move is backend clarity without payment custody.
 - RentalPayment, escrow, payout, deposit, and booking commission routes remain blocked in phase one.
 
 This keeps the business model simple enough for global launch: sell verified listing SaaS first, prove direct enquiry value, and postpone any 1% success fee until Heavyster earns the booking workflow.
+
+## v153 Calm Backend Route Handoff
+
+The route handoff keeps monetization simple before billing complexity enters the product.
+
+- Supplier route connects selected machine publishing to ListingSubscription, USD 9/month, or USD 99/year per active listing.
+- Buyer route connects copy enquiry to DirectEnquiry without checkout, deposits, escrow, or rental payment collection.
+- Founder route connects market command to AdminReview and MarketSignal so scale decisions protect listing ARR first.
+- Phase one remains 0% rental take: buyers pay suppliers directly, while Heavyster earns paid listing SaaS.
+
+## v154 Serene Proof Gate
+
+The monetization move is proof confidence before revenue expansion.
+
+- Buyer proof gate keeps the enquiry direct and reminds the market that Heavyster takes 0% of rental payment in phase one.
+- Supplier proof gate makes USD 9/month or USD 99/year per active listing feel earned by proof, freshness, and direct lead routing.
+- Founder proof gate protects listing ARR by scaling only where demand, supply, proof, and revenue signals are visible.
+- Phase two success fees remain optional and should begin only after Heavyster owns confirmed-booking workflow proof.

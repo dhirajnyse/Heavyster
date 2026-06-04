@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260604-production-backend-starter-v152" />
+  <link rel="stylesheet" href="styles.css?v=20260604-serene-proof-gate-v154" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v152</strong>
+            <strong>v154</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -296,6 +296,32 @@
         <div class="production-backend-actions">
           <button type="button" class="solid-button" id="productionBackendPrimaryButton">Open starter</button>
           <button type="button" class="ghost-button" id="copyProductionBackendButton">Copy backend starter</button>
+        </div>
+      </section>
+
+      <section class="calm-backend-route-handoff" id="calmBackendRouteHandoff" aria-label="Calm backend route handoff">
+        <div class="calm-backend-route-copy">
+          <span id="calmBackendRouteRole">Route handoff</span>
+          <strong id="calmBackendRouteHeadline">Send one safe route to production.</strong>
+          <small id="calmBackendRouteDetail">One UI action, one API route, one record, and one blocked payment route.</small>
+        </div>
+        <div class="calm-backend-route-grid" id="calmBackendRouteGrid" aria-label="Calm backend routes"></div>
+        <div class="calm-backend-route-actions">
+          <button type="button" class="solid-button" id="calmBackendRoutePrimaryButton">Open route</button>
+          <button type="button" class="ghost-button" id="copyCalmBackendRouteButton">Copy route handoff</button>
+        </div>
+      </section>
+
+      <section class="serene-proof-gate" id="sereneProofGate" aria-label="Serene proof gate">
+        <div class="serene-proof-copy">
+          <span id="sereneProofGateRole">Proof gate</span>
+          <strong id="sereneProofGateHeadline">Let proof decide the next action.</strong>
+          <small id="sereneProofGateDetail">One proof score, one readiness state, one money rule, and one calm next move.</small>
+        </div>
+        <div class="serene-proof-grid" id="sereneProofGateGrid" aria-label="Serene proof states"></div>
+        <div class="serene-proof-actions">
+          <button type="button" class="solid-button" id="sereneProofGatePrimaryButton">Open proof</button>
+          <button type="button" class="ghost-button" id="copySereneProofGateButton">Copy proof gate</button>
         </div>
       </section>
 
@@ -2274,7 +2300,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v152</span>
+            <span class="build-version-pill">Current version: v154</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2285,13 +2311,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v152 Production Backend Starter</strong>
-              <small>One calm business action now maps to one production record, while rental payment stays outside Heavyster.</small>
+              <strong>v154 Serene Proof Gate</strong>
+              <small>One serene gate now explains whether buyer, supplier, or founder action is proof-safe before the backend route moves.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Backend starter clarity</strong>
-              <small>Buyer, supplier, and founder should know which real SaaS record gets created next without seeing backend complexity.</small>
+              <strong>Proof clarity</strong>
+              <small>Every role should see proof, readiness, money rule, and next move without extra navigation.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2311,8 +2337,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v152</strong>
-              <small>Production Backend Starter</small>
+              <strong>v154</strong>
+              <small>Serene Proof Gate</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2326,8 +2352,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend route handoff</strong>
-              <small>Turn these starter records into account, listing, proof, subscription, and direct lead route handoff states without adding UI weight.</small>
+              <strong>Backend proof records</strong>
+              <small>Turn proof gate outputs into account, listing, proof, and direct lead records without adding UI weight.</small>
             </article>
           </div>
 
@@ -3773,21 +3799,125 @@
             </article>
           </div>
 
+          <div class="calm-backend-route-contract" id="calm-backend-route-contract" aria-label="Heavyster calm backend route handoff contract">
+            <article class="calm-backend-route-contract-lead">
+              <span>v153 Calm Backend Route Handoff</span>
+              <strong>Every calm UI action gets one safe backend route.</strong>
+              <p>Heavyster should make production work obvious: buyer enquiries, supplier listings, and founder commands each map to one allowed route and one blocked payment route.</p>
+              <b>Rule: one route handoff</b>
+            </article>
+            <article>
+              <span>Buyer route</span>
+              <strong>Direct enquiry</strong>
+              <p>Copy enquiry maps to /api/direct-enquiries, a DirectEnquiry record, proof snapshot, and supplier response route.</p>
+              <b>No checkout</b>
+            </article>
+            <article>
+              <span>Supplier route</span>
+              <strong>Paid listing</strong>
+              <p>Use selected machine maps to /api/equipment-listings, ListingSubscription, proof links, and USD 9/month or USD 99/year SaaS billing.</p>
+              <b>Listing revenue</b>
+            </article>
+            <article>
+              <span>Founder route</span>
+              <strong>Market command</strong>
+              <p>Open market command maps to /api/market-signals, AdminReview, demand proof, supply gap, and listing ARR decision.</p>
+              <b>Scale control</b>
+            </article>
+            <article>
+              <span>Allowed routes</span>
+              <strong>Build only calm SaaS rails</strong>
+              <p>Supplier accounts, equipment listings, proof documents, direct enquiries, listing subscriptions, admin reviews, and market signals are allowed.</p>
+              <b>Safe backend</b>
+            </article>
+            <article>
+              <span>Blocked routes</span>
+              <strong>Payment custody stays out</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission route enters phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="calm-backend-route-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same route handoff.</strong>
+              <p>Docs include the route handoff model in `docs/CALM_BACKEND_ROUTE_HANDOFF.json`, and no route handoff action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyCalmBackendRouteContractButton">Copy v153 route handoff</button>
+            </article>
+          </div>
+
+          <div class="serene-proof-gate-contract" id="serene-proof-gate-contract" aria-label="Heavyster serene proof gate contract">
+            <article class="serene-proof-gate-contract-lead">
+              <span>v154 Serene Proof Gate</span>
+              <strong>Let proof decide if the next action is safe.</strong>
+              <p>Heavyster should show one proof score, one readiness state, one money rule, and one next move before buyer, supplier, or founder action moves to production.</p>
+              <b>Rule: proof before route</b>
+            </article>
+            <article>
+              <span>Buyer proof</span>
+              <strong>Direct enquiry only after visible proof</strong>
+              <p>Machine fit, proof count, availability, supplier route, and 0% rental take stay visible before the buyer copies an enquiry.</p>
+              <b>Safe to ask</b>
+            </article>
+            <article>
+              <span>Supplier proof</span>
+              <strong>Paid listing only after proof and freshness</strong>
+              <p>Supplier sees listing readiness, proof cleanliness, availability freshness, and USD 99/year SaaS before publishing.</p>
+              <b>Safe to publish</b>
+            </article>
+            <article>
+              <span>Founder proof</span>
+              <strong>Scale only where proof protects trust</strong>
+              <p>Founder sees demand, supply gap, proof score, and listing ARR before opening market command or supplier hunt.</p>
+              <b>Safe to scale</b>
+            </article>
+            <article>
+              <span>Backend signal</span>
+              <strong>Proof gate feeds the safe record</strong>
+              <p>Gate output maps to DirectEnquiry, ListingSubscription, or AdminReview only after the proof state is visible.</p>
+              <b>Proof first</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>No payment custody enters the gate</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission route is created in phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="serene-proof-gate-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same proof gate.</strong>
+              <p>Docs include the proof gate model in `docs/SERENE_PROOF_GATE.json`, and no proof gate action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copySereneProofGateContractButton">Copy v154 proof gate</button>
+            </article>
+          </div>
+
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v152 Production Backend Starter</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v154 Serene Proof Gate</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Production Backend Starter</strong>
-              <p>Added one role-aware backend starter under the launch gate so buyer, supplier, and founder each see which production record comes next without adding UI weight.</p>
+              <strong>Serene Proof Gate</strong>
+              <p>Added one role-aware proof gate under the backend route handoff so buyer, supplier, and founder each see proof, readiness, money rule, and one safe next action before production records move.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
+                <li>Header shows Build v154.</li>
+                <li>Build Phase shows Current version: v154.</li>
+                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, Production Backend Starter, Calm Backend Route Handoff, and Serene Proof Gate before the hero.</li>
+                <li>Serene Proof Gate shows proof, readiness, money, and next move for the active buyer, supplier, or founder role.</li>
+                <li>Copy proof gate explains proof score, allowed action, backend route, listing SaaS, direct supplier payment, and 0% rental take.</li>
+                <li>Build Phase shows the Serene Proof Gate contract before the Release Ledger.</li>
+                <li>Docs include `docs/SERENE_PROOF_GATE.json`.</li>
+                <li>Header shows Build v153.</li>
+                <li>Build Phase shows Current version: v153.</li>
+                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, Production Backend Starter, and Calm Backend Route Handoff before the hero.</li>
+                <li>Calm Backend Route Handoff shows one UI action, API route, record, and blocked payment route for the active buyer, supplier, or founder role.</li>
+                <li>Copy route handoff explains allowed API routes, blocked payment routes, listing SaaS, direct rental payment, and 0% rental take.</li>
+                <li>Build Phase shows the Calm Backend Route Handoff contract before the Release Ledger.</li>
+                <li>Docs include `docs/CALM_BACKEND_ROUTE_HANDOFF.json`.</li>
                 <li>Header shows Build v152.</li>
                 <li>Build Phase shows Current version: v152.</li>
                 <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, and Production Backend Starter before the hero.</li>
@@ -3897,8 +4027,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v152 Production Backend Starter</strong>
-              <p>Includes the v113 deploy guard through v151 SaaS launch gate, plus this backend starter release that maps one calm action to one production record.</p>
+              <strong>v153 Calm Backend Route Handoff</strong>
+              <p>Includes the v113 deploy guard through v152 production backend starter, plus this route handoff release that maps each visible role action to one safe API route, one production record, and one blocked payment route.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4007,6 +4137,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260604-production-backend-starter-v152" defer></script>
+    <script src="app.js?v=20260604-serene-proof-gate-v154" defer></script>
   </body>
 </html>

@@ -2274,6 +2274,300 @@ body.simple-mode .market-result-brief {
   color: var(--blue);
 }
 
+.calm-backend-route-handoff {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.25fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.98), rgba(249, 253, 252, 0.94) 52%, rgba(238, 246, 252, 0.86));
+}
+
+.calm-backend-route-copy,
+.calm-backend-route-grid span,
+.calm-backend-route-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.calm-backend-route-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.calm-backend-route-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-backend-route-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.calm-backend-route-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.calm-backend-route-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.calm-backend-route-grid span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.calm-backend-route-grid em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.calm-backend-route-grid strong,
+.calm-backend-route-grid small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calm-backend-route-grid strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.calm-backend-route-grid small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.calm-backend-route-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.calm-backend-route-grid .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.calm-backend-route-grid .hold {
+  border-color: rgba(166, 63, 43, 0.28);
+  background: #fae9e1;
+}
+
+.calm-backend-route-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.calm-backend-route-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.calm-backend-route-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.calm-backend-route-handoff[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.calm-backend-route-handoff[data-role="supplier"] .calm-backend-route-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.calm-backend-route-handoff[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.calm-backend-route-handoff[data-role="founder"] .calm-backend-route-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.serene-proof-gate {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.25fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 8px 18px 14px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.16);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.98), rgba(238, 246, 252, 0.9) 50%, rgba(232, 248, 245, 0.88));
+}
+
+.serene-proof-copy,
+.serene-proof-grid span,
+.serene-proof-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.serene-proof-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.serene-proof-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.serene-proof-copy strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.serene-proof-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.serene-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.serene-proof-grid span {
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.serene-proof-grid em {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.serene-proof-grid strong,
+.serene-proof-grid small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.serene-proof-grid strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.serene-proof-grid small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.serene-proof-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.serene-proof-grid .watch {
+  border-color: rgba(181, 109, 22, 0.3);
+  background: var(--amber-soft);
+}
+
+.serene-proof-grid .hold {
+  border-color: rgba(166, 63, 43, 0.28);
+  background: #fae9e1;
+}
+
+.serene-proof-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.serene-proof-actions {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr);
+  gap: 7px;
+}
+
+.serene-proof-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.serene-proof-gate[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.serene-proof-gate[data-role="supplier"] .serene-proof-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.serene-proof-gate[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(249, 253, 252, 0.95) 58%, rgba(232, 248, 245, 0.88));
+}
+
+.serene-proof-gate[data-role="founder"] .serene-proof-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
 .top-actions,
 .hero-actions {
   display: flex;
@@ -18198,7 +18492,9 @@ button.admin-row {
 .calm-launch-pulse-contract,
 .production-account-scaffold-contract,
 .saas-launch-gate-contract,
-.production-backend-starter-contract {
+.production-backend-starter-contract,
+.calm-backend-route-contract,
+.serene-proof-gate-contract {
   display: grid;
   grid-template-columns: minmax(330px, 1.1fr) repeat(5, minmax(132px, 0.72fr));
   gap: 10px;
@@ -18294,6 +18590,20 @@ button.admin-row {
     linear-gradient(135deg, rgba(249, 253, 252, 0.96), rgba(238, 246, 252, 0.94) 48%, rgba(232, 248, 245, 0.9));
 }
 
+.calm-backend-route-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(5, minmax(126px, 0.68fr));
+  border-color: rgba(25, 113, 109, 0.38);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(249, 253, 252, 0.95) 48%, rgba(238, 246, 252, 0.9));
+}
+
+.serene-proof-gate-contract {
+  grid-template-columns: minmax(340px, 1.12fr) repeat(5, minmax(126px, 0.68fr));
+  border-color: rgba(25, 113, 109, 0.4);
+  background:
+    linear-gradient(135deg, rgba(249, 253, 252, 0.96), rgba(232, 248, 245, 0.94) 48%, rgba(238, 246, 252, 0.9));
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
 .calm-launch-room article,
@@ -18306,7 +18616,9 @@ button.admin-row {
 .calm-launch-pulse-contract article,
 .production-account-scaffold-contract article,
 .saas-launch-gate-contract article,
-.production-backend-starter-contract article {
+.production-backend-starter-contract article,
+.calm-backend-route-contract article,
+.serene-proof-gate-contract article {
   display: grid;
   align-content: start;
   gap: 8px;
@@ -18329,7 +18641,9 @@ button.admin-row {
 .calm-launch-pulse-contract-lead,
 .production-account-scaffold-contract-lead,
 .saas-launch-gate-contract-lead,
-.production-backend-starter-contract-lead {
+.production-backend-starter-contract-lead,
+.calm-backend-route-contract-lead,
+.serene-proof-gate-contract-lead {
   grid-row: span 2;
   border-color: rgba(25, 113, 109, 0.42) !important;
   background: var(--teal-soft) !important;
@@ -18347,7 +18661,9 @@ button.admin-row {
 .calm-launch-pulse-contract-acceptance,
 .production-account-scaffold-contract-acceptance,
 .saas-launch-gate-contract-acceptance,
-.production-backend-starter-contract-acceptance {
+.production-backend-starter-contract-acceptance,
+.calm-backend-route-contract-acceptance,
+.serene-proof-gate-contract-acceptance {
   grid-column: span 2;
   border-color: rgba(40, 93, 134, 0.42) !important;
   background: var(--blue-soft) !important;
@@ -18413,6 +18729,16 @@ button.admin-row {
   background: linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(232, 248, 245, 0.92)) !important;
 }
 
+.calm-backend-route-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(238, 246, 252, 0.92)) !important;
+}
+
+.serene-proof-gate-contract-acceptance {
+  border-color: rgba(25, 113, 109, 0.42) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.98), rgba(238, 246, 252, 0.92)) !important;
+}
+
 .calm-backend-scaffold span,
 .supplier-account-shell span,
 .calm-launch-room span,
@@ -18425,7 +18751,9 @@ button.admin-row {
 .calm-launch-pulse-contract span,
 .production-account-scaffold-contract span,
 .saas-launch-gate-contract span,
-.production-backend-starter-contract span {
+.production-backend-starter-contract span,
+.calm-backend-route-contract span,
+.serene-proof-gate-contract span {
   color: var(--teal);
   font-size: 0.72rem;
   font-weight: 950;
@@ -18444,7 +18772,9 @@ button.admin-row {
 .calm-launch-pulse-contract strong,
 .production-account-scaffold-contract strong,
 .saas-launch-gate-contract strong,
-.production-backend-starter-contract strong {
+.production-backend-starter-contract strong,
+.calm-backend-route-contract strong,
+.serene-proof-gate-contract strong {
   color: var(--ink);
   font-size: 1.02rem;
   line-height: 1.18;
@@ -18463,7 +18793,9 @@ button.admin-row {
 .calm-launch-pulse-contract-lead strong,
 .production-account-scaffold-contract-lead strong,
 .saas-launch-gate-contract-lead strong,
-.production-backend-starter-contract-lead strong {
+.production-backend-starter-contract-lead strong,
+.calm-backend-route-contract-lead strong,
+.serene-proof-gate-contract-lead strong {
   font-size: 1.22rem;
 }
 
@@ -18479,7 +18811,9 @@ button.admin-row {
 .calm-launch-pulse-contract p,
 .production-account-scaffold-contract p,
 .saas-launch-gate-contract p,
-.production-backend-starter-contract p {
+.production-backend-starter-contract p,
+.calm-backend-route-contract p,
+.serene-proof-gate-contract p {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.42;
@@ -18497,7 +18831,9 @@ button.admin-row {
 .calm-launch-pulse-contract b,
 .production-account-scaffold-contract b,
 .saas-launch-gate-contract b,
-.production-backend-starter-contract b {
+.production-backend-starter-contract b,
+.calm-backend-route-contract b,
+.serene-proof-gate-contract b {
   width: fit-content;
   margin-top: auto;
   padding: 6px 10px;
@@ -18532,7 +18868,11 @@ button.admin-row {
 .saas-launch-gate-contract-lead b,
 .saas-launch-gate-contract-acceptance b,
 .production-backend-starter-contract-lead b,
-.production-backend-starter-contract-acceptance b {
+.production-backend-starter-contract-acceptance b,
+.calm-backend-route-contract-lead b,
+.calm-backend-route-contract-acceptance b,
+.serene-proof-gate-contract-lead b,
+.serene-proof-gate-contract-acceptance b {
   background: var(--coal);
   color: #ffffff;
 }
@@ -18549,7 +18889,9 @@ button.admin-row {
 .calm-launch-pulse-contract-acceptance button,
 .production-account-scaffold-contract-acceptance button,
 .saas-launch-gate-contract-acceptance button,
-.production-backend-starter-contract-acceptance button {
+.production-backend-starter-contract-acceptance button,
+.calm-backend-route-contract-acceptance button,
+.serene-proof-gate-contract-acceptance button {
   min-height: 42px;
   margin-top: auto;
 }
@@ -19123,6 +19465,14 @@ button.admin-row {
     grid-template-columns: 1fr;
   }
 
+  .calm-backend-route-handoff {
+    grid-template-columns: 1fr;
+  }
+
+  .serene-proof-gate {
+    grid-template-columns: 1fr;
+  }
+
   .calm-action-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -19155,6 +19505,14 @@ button.admin-row {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .calm-backend-route-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .serene-proof-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .calm-action-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -19175,6 +19533,10 @@ button.admin-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .serene-proof-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .calm-launch-pulse-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -19184,6 +19546,10 @@ button.admin-row {
   }
 
   .saas-launch-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calm-backend-route-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -19317,7 +19683,8 @@ button.admin-row {
   }
 
   .calm-backend-handoff,
-  .calm-launch-pulse {
+  .calm-launch-pulse,
+  .serene-proof-gate {
     grid-template-columns: 1fr;
     padding: 10px 12px;
   }
@@ -19339,7 +19706,8 @@ button.admin-row {
   }
 
   .calm-backend-handoff-flow,
-  .calm-launch-pulse-grid {
+  .calm-launch-pulse-grid,
+  .serene-proof-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -19360,7 +19728,8 @@ button.admin-row {
   }
 
   .calm-backend-handoff-actions,
-  .calm-launch-pulse-actions {
+  .calm-launch-pulse-actions,
+  .serene-proof-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -19617,6 +19986,8 @@ button.admin-row {
   .production-account-scaffold-contract,
   .saas-launch-gate-contract,
   .production-backend-starter-contract,
+  .calm-backend-route-contract,
+  .serene-proof-gate-contract,
   .release-ledger,
   .metrics-strip,
   .roadmap-grid,
@@ -19878,7 +20249,13 @@ button.admin-row {
   .saas-launch-actions,
   .production-backend-starter,
   .production-backend-grid,
-  .production-backend-actions {
+  .production-backend-actions,
+  .calm-backend-route-handoff,
+  .calm-backend-route-grid,
+  .calm-backend-route-actions,
+  .serene-proof-gate,
+  .serene-proof-grid,
+  .serene-proof-actions {
     grid-template-columns: 1fr;
   }
 
@@ -19908,7 +20285,13 @@ button.admin-row {
   .saas-launch-actions button,
   .production-backend-grid strong,
   .production-backend-grid small,
-  .production-backend-actions button {
+  .production-backend-actions button,
+  .calm-backend-route-grid strong,
+  .calm-backend-route-grid small,
+  .calm-backend-route-actions button,
+  .serene-proof-grid strong,
+  .serene-proof-grid small,
+  .serene-proof-actions button {
     white-space: normal;
   }
 
@@ -20209,6 +20592,8 @@ button.admin-row {
   .production-account-scaffold-contract,
   .saas-launch-gate-contract,
   .production-backend-starter-contract,
+  .calm-backend-route-contract,
+  .serene-proof-gate-contract,
   .release-ledger,
   .build-phase-grid,
   .build-status-grid,
@@ -20401,7 +20786,11 @@ button.admin-row {
   .saas-launch-gate-contract-lead,
   .saas-launch-gate-contract-acceptance,
   .production-backend-starter-contract-lead,
-  .production-backend-starter-contract-acceptance {
+  .production-backend-starter-contract-acceptance,
+  .calm-backend-route-contract-lead,
+  .calm-backend-route-contract-acceptance,
+  .serene-proof-gate-contract-lead,
+  .serene-proof-gate-contract-acceptance {
     grid-row: auto;
     grid-column: auto;
   }
