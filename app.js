@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260604-heavyster-serene-proof-gate-v154";
+const DATA_VERSION = "20260604-heavyster-calm-focus-lens-v155";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260604-serene-proof-gate-v154";
+const SIMPLE_UX_RELEASE = "20260604-calm-focus-lens-v155";
 
 const listings = [
   {
@@ -993,6 +993,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderWorkflowDock();
     renderWorkflowGuide();
     renderSimplicityBar();
+    renderCalmFocusLens();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1004,6 +1005,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProductionBackendStarter();
     renderCalmBackendRouteHandoff();
     renderSereneProofGate();
+    syncFocusLayerVisibility();
     renderDemoFlightDeck();
     renderBoardroomSnapshot();
     renderPilotPack();
@@ -1070,6 +1072,7 @@ function defaultState() {
     supplierView: false,
     simpleMode: true,
     simplicityRelease: SIMPLE_UX_RELEASE,
+    focusLensExpanded: false,
     trustChecked: [true, true, true, false, false, false]
   };
 }
@@ -1082,11 +1085,13 @@ function loadState() {
     if (!saved || saved.simplicityRelease !== SIMPLE_UX_RELEASE) {
       merged.simpleMode = true;
       merged.simplicityRelease = SIMPLE_UX_RELEASE;
+      merged.focusLensExpanded = false;
     }
     merged.quoteIncludes = { ...base.quoteIncludes, ...(merged.quoteIncludes || {}) };
     merged.responseTracker = { ...base.responseTracker, ...(merged.responseTracker || {}) };
     if (!Array.isArray(merged.demandSignals)) merged.demandSignals = base.demandSignals;
     if (!commandRoles.includes(merged.commandRole)) merged.commandRole = base.commandRole;
+    if (typeof merged.focusLensExpanded !== "boolean") merged.focusLensExpanded = base.focusLensExpanded;
     if (!merged.activeDemandKey && merged.demandSignals.length) merged.activeDemandKey = getDemandKey(merged.demandSignals[0]);
     if (!merged.activeMarketKey) merged.activeMarketKey = getMarketKeyFromSignal(merged.demandSignals[0]);
     if (!merged.activeMatrixKey) merged.activeMatrixKey = merged.activeMarketKey;
@@ -1931,6 +1936,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyCalmFocusLensContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmFocusLensContractText());
+      showToast("Calm focus lens copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm focus lens is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -1973,6 +1987,15 @@ function bindControls() {
   document.querySelector("#simplicitySecondaryButton").addEventListener("click", () => {
     const button = document.querySelector("#simplicitySecondaryButton");
     openSimplicityTarget(button.dataset.simplicityAnchor, button.textContent.trim());
+  });
+  document.querySelector("#calmFocusLensPrimaryButton").addEventListener("click", () => {
+    handleCalmFocusLensAction("primary");
+  });
+  document.querySelector("#calmFocusLensToggleButton").addEventListener("click", () => {
+    handleCalmFocusLensAction("toggle");
+  });
+  document.querySelector("#copyCalmFocusLensButton").addEventListener("click", () => {
+    handleCalmFocusLensAction("copy");
   });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
@@ -2039,6 +2062,7 @@ function bindControls() {
     state.simplicityRelease = SIMPLE_UX_RELEASE;
     saveState();
     renderSimplicityBar();
+    renderCalmFocusLens();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2050,6 +2074,7 @@ function bindControls() {
     renderProductionBackendStarter();
     renderCalmBackendRouteHandoff();
     renderSereneProofGate();
+    syncFocusLayerVisibility();
     document.body.classList.toggle("simple-mode", state.simpleMode);
     syncNavigationState();
     showToast(state.simpleMode ? "Quiet view enabled." : "Full workflow dock restored.");
@@ -2218,6 +2243,7 @@ function render() {
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  renderCalmFocusLens();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2229,6 +2255,7 @@ function render() {
   renderProductionBackendStarter();
   renderCalmBackendRouteHandoff();
   renderSereneProofGate();
+  syncFocusLayerVisibility();
   renderDemoFlightDeck();
   renderBoardroomSnapshot();
   renderPilotPack();
@@ -2868,6 +2895,7 @@ function handleSimplicityIntent(intentId) {
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  renderCalmFocusLens();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2879,6 +2907,7 @@ function handleSimplicityIntent(intentId) {
   renderProductionBackendStarter();
   renderCalmBackendRouteHandoff();
   renderSereneProofGate();
+  syncFocusLayerVisibility();
   document.body.classList.add("simple-mode");
   openWorkflowStep(intent.anchor, intent.label, intent.role);
 }
@@ -2887,6 +2916,179 @@ function openSimplicityTarget(anchor, label) {
   if (!anchor) return;
   const route = getWorkflowRouteForHash(anchor);
   openWorkflowStep(anchor, label, route?.role || state.commandRole);
+}
+
+const focusLayerSelectors = [
+  ".calm-action-bar",
+  ".serene-route-planner",
+  ".global-calm-compass",
+  ".calm-decision-concierge",
+  ".calm-backend-handoff",
+  ".calm-launch-pulse",
+  ".production-account-scaffold",
+  ".saas-launch-gate",
+  ".production-backend-starter",
+  ".calm-backend-route-handoff",
+  ".serene-proof-gate"
+];
+
+function renderCalmFocusLens() {
+  const root = document.querySelector("#calmFocusLens");
+  if (!root) return;
+
+  const model = getCalmFocusLensModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#calmFocusLensRole").textContent = model.roleLabel;
+  document.querySelector("#calmFocusLensHeadline").textContent = model.headline;
+  document.querySelector("#calmFocusLensDetail").textContent = model.detail;
+  document.querySelector("#calmFocusLensGrid").innerHTML = model.states.map((item) => `
+    <span class="${escapeHtml(item.tone)}">
+      <em>${escapeHtml(item.label)}</em>
+      <strong>${escapeHtml(item.value)}</strong>
+      <small>${escapeHtml(item.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmFocusLensPrimaryButton");
+  const toggleButton = document.querySelector("#calmFocusLensToggleButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+  toggleButton.textContent = state.focusLensExpanded ? "Hide build layers" : "Show build layers";
+  toggleButton.setAttribute("aria-pressed", String(state.focusLensExpanded));
+  syncFocusLayerVisibility();
+}
+
+function getCalmFocusLensModel() {
+  const simplicity = getSimplicityBarModel();
+  const guide = getWorkflowGuideModel();
+  const listing = getSelectedListing();
+  const role = simplicity.role || state.commandRole || "Buyer";
+  const current = guide.current?.label || simplicity.primary.label;
+  const next = guide.next?.label || simplicity.primary.label;
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer focus lens",
+      headline: "Start with the cleanest visible supply path.",
+      detail: `${listing.name} gives the fastest calm path: proof visible, supplier route clear, rental payment direct.`,
+      current: "Search",
+      nowDetail: "crane, UAE, availability",
+      primary: { label: "Open buyer desk", anchor: "#buyer-workbench", aria: "Open the buyer focus desk" },
+      states: [
+        { label: "Proof", value: "Trust 88/100", detail: "visible before enquiry", tone: "ready" },
+        { label: "Money", value: "0% rental take", detail: "pay supplier direct", tone: "ready" },
+        { label: "Supply", value: "1 match", detail: "clean path", tone: "ready" }
+      ],
+      next: "Desk",
+      nextDetail: "copy or continue"
+    },
+    Supplier: {
+      roleLabel: "Supplier focus lens",
+      headline: "List one machine with proof and freshness.",
+      detail: "Gulf Lift Services keeps the path calm: one listing, one proof check, one paid SaaS rule.",
+      current: "Listing",
+      nowDetail: "Cat 320 ready",
+      primary: { label: "Open supplier desk", anchor: "#supplier-workbench", aria: "Open the supplier focus desk" },
+      states: [
+        { label: "Proof", value: "88/100", detail: "clean documents", tone: "ready" },
+        { label: "Money", value: "USD 99/yr", detail: "listing SaaS", tone: "ready" },
+        { label: "Freshness", value: "Confirm", detail: "before serious leads", tone: "watch" }
+      ],
+      next: "Lead Desk",
+      nextDetail: "route one enquiry"
+    },
+    Founder: {
+      roleLabel: "Founder focus lens",
+      headline: "Grow one market wedge only when it stays calm.",
+      detail: "UAE Lifting stays focused on demand, proof, listing ARR, and the next supply gap.",
+      current: "Matrix",
+      nowDetail: "UAE Lifting wedge",
+      primary: { label: "Open market command", anchor: "#market-signal-matrix", aria: "Open the founder market command" },
+      states: [
+        { label: "Proof", value: "100/100", detail: "visible proof", tone: "ready" },
+        { label: "Money", value: "USD 6,615 ARR", detail: "listing revenue", tone: "ready" },
+        { label: "Gap", value: "21 supply", detail: "recruit first", tone: "watch" }
+      ],
+      next: "Hunt",
+      nextDetail: "fill supply gap"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    current: config.current || current,
+    next: config.next || next,
+    primary: config.primary,
+    states: [
+      { label: "Role", value: role, detail: "active path", tone: "neutral" },
+      { label: "Now", value: config.current || current, detail: config.nowDetail, tone: "neutral" },
+      ...config.states,
+      { label: "Next", value: config.next || next, detail: config.nextDetail, tone: "watch" }
+    ].slice(0, 6)
+  };
+}
+
+function syncFocusLayerVisibility() {
+  const collapsed = !state.focusLensExpanded;
+  document.body.classList.toggle("focus-layers-collapsed", collapsed);
+  focusLayerSelectors.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((node) => {
+      node.setAttribute("aria-hidden", collapsed ? "true" : "false");
+    });
+  });
+}
+
+function toggleCalmFocusLayers() {
+  state.focusLensExpanded = !state.focusLensExpanded;
+  saveState();
+  renderCalmFocusLens();
+  syncFocusLayerVisibility();
+  showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
+}
+
+async function handleCalmFocusLensAction(action, model = getCalmFocusLensModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  if (action === "toggle") {
+    toggleCalmFocusLayers();
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmFocusLensText(model));
+    showToast("Calm focus copied.");
+  } catch {
+    showToast("Copy is blocked here, but the calm focus is visible.");
+  }
+}
+
+function buildCalmFocusLensText(model = getCalmFocusLensModel()) {
+  return [
+    "Heavyster Calm Focus Lens",
+    "Version: v155 Calm Focus Lens",
+    "Rule: show one calm focus first, then reveal deeper build layers only on request.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    `Current: ${model.current}`,
+    `Proof/Money path: ${model.states.map((item) => `${item.label}: ${item.value}`).join(" -> ")}`,
+    `Next action: ${model.next}`,
+    `Primary button: ${model.primary.label}`,
+    "",
+    "Payment guardrail: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "UI promise: one visible path first; older proof and backend layers stay available behind Show build layers."
+  ].join("\n");
+}
+
+function buildCalmFocusLensContractText() {
+  return buildCalmFocusLensText();
 }
 
 function renderCalmActionBar() {
@@ -4169,6 +4371,7 @@ function openWorkflowStep(anchor, label, role) {
   renderWorkflowDock();
   renderWorkflowGuide();
   renderSimplicityBar();
+  renderCalmFocusLens();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -4180,6 +4383,7 @@ function openWorkflowStep(anchor, label, role) {
   renderProductionBackendStarter();
   renderCalmBackendRouteHandoff();
   renderSereneProofGate();
+  syncFocusLayerVisibility();
   closeWorkflowMenu();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.location.hash = anchor;
@@ -19106,6 +19310,8 @@ async function handleHeavenlyFocusAction(action, model) {
     state.simplicityRelease = SIMPLE_UX_RELEASE;
     saveState();
     renderSimplicityBar();
+    renderCalmFocusLens();
+    syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
     showToast("Heavenly focus enabled.");

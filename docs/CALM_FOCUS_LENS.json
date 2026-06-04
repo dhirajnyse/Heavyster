@@ -1,0 +1,51 @@
+{
+  "version": "v155 Calm Focus Lens",
+  "release_date": "2026-06-04",
+  "rule": "Show one visible focus first, keep deeper build layers available only when the user asks.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or booking commission route is handled by Heavyster in phase one.",
+  "calm_focus": {
+    "buyer": {
+      "visible_focus": "Use the cleanest visible supply path.",
+      "proof": "Trust 88/100 before enquiry",
+      "money": "0% rental take",
+      "next_action": "Open buyer desk or copy one direct enquiry"
+    },
+    "supplier": {
+      "visible_focus": "List one machine with proof and freshness.",
+      "proof": "Documents clean and availability confirmed",
+      "money": "USD 9 monthly or USD 99 yearly per active listing",
+      "next_action": "Open supplier desk or route one lead"
+    },
+    "founder": {
+      "visible_focus": "Grow one market wedge only when it stays calm.",
+      "proof": "Demand, proof, listing ARR, and supply gap visible",
+      "money": "Listing ARR first; no rental custody",
+      "next_action": "Open market command or supplier hunt"
+    }
+  },
+  "hidden_layers": {
+    "default_state": "collapsed",
+    "reveal_action": "Show build layers",
+    "layers": [
+      "Calm Action Bar",
+      "Serene Route Planner",
+      "Calm Global Compass",
+      "Calm Decision Concierge",
+      "Calm Backend Handoff",
+      "Calm Launch Pulse",
+      "Production Account Scaffold",
+      "SaaS Launch Gate",
+      "Production Backend Starter",
+      "Calm Backend Route Handoff",
+      "Serene Proof Gate"
+    ]
+  },
+  "acceptance": [
+    "Header shows Build v155.",
+    "Marketplace opens with Calm Focus Lens visible before deeper route layers.",
+    "Deeper route layers are collapsed by default and can be revealed with Show build layers.",
+    "Buyer, supplier, and founder focus models each show one visible focus, one proof reason, one money rule, and one next action.",
+    "Copy focus includes the direct supplier payment guardrail and 0% rental take.",
+    "Build Phase includes the Calm Focus Lens contract and version record."
+  ]
+}

@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260604-serene-proof-gate-v154" />
+  <link rel="stylesheet" href="styles.css?v=20260604-calm-focus-lens-v155" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v154</strong>
+            <strong>v155</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -195,6 +195,19 @@
         </div>
       </section>
       <span class="page-anchor" id="marketplace" aria-hidden="true"></span>
+      <section class="calm-focus-lens" id="calmFocusLens" aria-label="Calm focus lens">
+        <div class="calm-focus-copy">
+          <span id="calmFocusLensRole">Focus lens</span>
+          <strong id="calmFocusLensHeadline">One visible path.</strong>
+          <small id="calmFocusLensDetail">Older build layers stay available only when needed.</small>
+        </div>
+        <div class="calm-focus-grid" id="calmFocusLensGrid" aria-label="Calm focus states"></div>
+        <div class="calm-focus-actions">
+          <button type="button" class="solid-button" id="calmFocusLensPrimaryButton">Open focus</button>
+          <button type="button" class="ghost-button" id="calmFocusLensToggleButton" aria-pressed="false">Show build layers</button>
+          <button type="button" class="ghost-button" id="copyCalmFocusLensButton">Copy focus</button>
+        </div>
+      </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
         <div class="serene-route-copy">
           <span id="sereneRouteRole">Route planner</span>
@@ -2300,7 +2313,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v154</span>
+            <span class="build-version-pill">Current version: v155</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2311,13 +2324,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v154 Serene Proof Gate</strong>
-              <small>One serene gate now explains whether buyer, supplier, or founder action is proof-safe before the backend route moves.</small>
+              <strong>v155 Calm Focus Lens</strong>
+              <small>Default homepage now shows one calm focus lens while deeper build layers stay tucked behind a deliberate reveal.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Proof clarity</strong>
-              <small>Every role should see proof, readiness, money rule, and next move without extra navigation.</small>
+              <strong>Focus clarity</strong>
+              <small>Buyer, supplier, and founder paths should feel calm: one visible focus, one proof reason, one money rule, and one next action.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2337,8 +2350,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v154</strong>
-              <small>Serene Proof Gate</small>
+              <strong>v155</strong>
+              <small>Calm Focus Lens</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2352,8 +2365,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend proof records</strong>
-              <small>Turn proof gate outputs into account, listing, proof, and direct lead records without adding UI weight.</small>
+              <strong>Backend focus records</strong>
+              <small>Turn the focus lens outputs into account, listing, proof, and direct lead records without adding UI weight.</small>
             </article>
           </div>
 
@@ -3844,6 +3857,51 @@
             </article>
           </div>
 
+          <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
+            <article class="calm-focus-lens-contract-lead">
+              <span>v155 Calm Focus Lens</span>
+              <strong>Show one calm path first, then hide the build stack.</strong>
+              <p>Heavyster should open with one visible focus for buyer, supplier, or founder while older proof layers remain available only when the user asks for build detail.</p>
+              <b>Rule: one visible focus</b>
+            </article>
+            <article>
+              <span>Buyer lens</span>
+              <strong>Search, proof, direct enquiry</strong>
+              <p>Buyer sees the cleanest visible supply path, trust reason, 0% rental take, and one next action before deeper workflow appears.</p>
+              <b>Safe to ask</b>
+            </article>
+            <article>
+              <span>Supplier lens</span>
+              <strong>One listing, proof, freshness</strong>
+              <p>Supplier sees the next paid-listing action, document confidence, freshness check, and listing SaaS rule before advanced tools appear.</p>
+              <b>Safe to list</b>
+            </article>
+            <article>
+              <span>Founder lens</span>
+              <strong>One wedge, trust, ARR</strong>
+              <p>Founder sees the market wedge, proof reason, listing ARR, and supply gap before opening growth or hunt layers.</p>
+              <b>Safe to scale</b>
+            </article>
+            <article>
+              <span>Hidden layers</span>
+              <strong>Power stays available, not loud</strong>
+              <p>Calm Action Bar through Serene Proof Gate are preserved and revealed only through Show build layers.</p>
+              <b>Default collapsed</b>
+            </article>
+            <article>
+              <span>Money rule</span>
+              <strong>Listing SaaS first</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission route enters phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article class="calm-focus-lens-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same focus lens.</strong>
+              <p>Docs include the focus lens model in `docs/CALM_FOCUS_LENS.json`, and default UX shows one calm path before deeper layers.</p>
+              <button type="button" class="solid-button" id="copyCalmFocusLensContractButton">Copy v155 focus lens</button>
+            </article>
+          </div>
+
           <div class="serene-proof-gate-contract" id="serene-proof-gate-contract" aria-label="Heavyster serene proof gate contract">
             <article class="serene-proof-gate-contract-lead">
               <span>v154 Serene Proof Gate</span>
@@ -3892,116 +3950,26 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v154 Serene Proof Gate</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v155 Calm Focus Lens</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Serene Proof Gate</strong>
-              <p>Added one role-aware proof gate under the backend route handoff so buyer, supplier, and founder each see proof, readiness, money rule, and one safe next action before production records move.</p>
+              <strong>Calm Focus Lens</strong>
+              <p>Added one role-aware focus lens above the marketplace so buyer, supplier, and founder see one visible path, proof reason, money rule, and next move before deeper build layers are revealed.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v154.</li>
-                <li>Build Phase shows Current version: v154.</li>
-                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, Production Backend Starter, Calm Backend Route Handoff, and Serene Proof Gate before the hero.</li>
-                <li>Serene Proof Gate shows proof, readiness, money, and next move for the active buyer, supplier, or founder role.</li>
-                <li>Copy proof gate explains proof score, allowed action, backend route, listing SaaS, direct supplier payment, and 0% rental take.</li>
-                <li>Build Phase shows the Serene Proof Gate contract before the Release Ledger.</li>
-                <li>Docs include `docs/SERENE_PROOF_GATE.json`.</li>
-                <li>Header shows Build v153.</li>
-                <li>Build Phase shows Current version: v153.</li>
-                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, Production Backend Starter, and Calm Backend Route Handoff before the hero.</li>
-                <li>Calm Backend Route Handoff shows one UI action, API route, record, and blocked payment route for the active buyer, supplier, or founder role.</li>
-                <li>Copy route handoff explains allowed API routes, blocked payment routes, listing SaaS, direct rental payment, and 0% rental take.</li>
-                <li>Build Phase shows the Calm Backend Route Handoff contract before the Release Ledger.</li>
-                <li>Docs include `docs/CALM_BACKEND_ROUTE_HANDOFF.json`.</li>
-                <li>Header shows Build v152.</li>
-                <li>Build Phase shows Current version: v152.</li>
-                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, SaaS Launch Gate, and Production Backend Starter before the hero.</li>
-                <li>Production Backend Starter shows records for the active buyer, supplier, or founder role.</li>
-                <li>Copy backend starter explains core records, first API routes, blocked rental-payment routes, listing SaaS, direct rental payment, and 0% rental take.</li>
-                <li>Build Phase shows the Production Backend Starter contract before the Release Ledger.</li>
-                <li>Docs include `docs/PRODUCTION_BACKEND_STARTER.json`.</li>
-                <li>Header shows Build v151.</li>
-                <li>Build Phase shows Current version: v151.</li>
-                <li>Opening `#marketplace` shows the Serene Route Planner, Calm Global Compass, Calm Decision Concierge, Calm Backend Handoff, Calm Launch Pulse, Production Account Scaffold, and SaaS Launch Gate before the hero.</li>
-                <li>SaaS Launch Gate shows buyer traffic, supplier onboarding, paid listing, and backend route gates for the active role.</li>
-                <li>Copy launch gate explains pass, hold, review, listing SaaS, direct rental payment, and 0% rental take.</li>
-                <li>Build Phase shows the SaaS Launch Gate contract before the Release Ledger.</li>
-                <li>Docs include `docs/SAAS_LAUNCH_GATE.json`.</li>
-                <li>Production Account Scaffold shows account, proof, money, and next record states for the active role.</li>
-                <li>Copy production scaffold explains account path, backend record, listing SaaS, direct rental payment, and 0% rental take.</li>
-                <li>Build Phase shows the Production Account Scaffold contract before the Release Ledger.</li>
-                <li>Docs include `docs/PRODUCTION_ACCOUNT_SCAFFOLD.json`.</li>
-                <li>Calm Launch Pulse shows live, blocked, money, and next states for the active role.</li>
-                <li>Copy launch pulse explains live, blocked, money guardrail, next action, direct rental payment, and 0% rental take.</li>
-                <li>Build Phase shows the Calm Launch Pulse contract before the Release Ledger.</li>
-                <li>Docs include `docs/CALM_LAUNCH_PULSE.json`.</li>
-                <li>Calm Backend Handoff shows role, backend records, owner path, and next handoff action.</li>
-                <li>Copy backend handoff explains one backend record path, paid listing SaaS, direct rental payment, and 0% rental take.</li>
-                <li>Build Phase shows the Calm Backend Handoff contract before the Release Ledger.</li>
-                <li>Docs include `docs/CALM_BACKEND_HANDOFF.json`.</li>
-                <li>Calm Decision Concierge shows role, decision, proof, money, and next action.</li>
-                <li>Copy decision concierge rule explains one user, one decision, one proof reason, one money rule, one action, and 0% rental take.</li>
-                <li>Build Phase shows the Calm Decision Concierge contract before the Release Ledger.</li>
-                <li>Calm Global Compass shows country, category, proof, money, and next action.</li>
-                <li>Copy global compass rule explains one market at a time and 0% rental take.</li>
-                <li>Calm Action Bar appears directly under the Simplicity Bar.</li>
-                <li>Opening `#marketplace` shows the Serene Route Planner before the hero.</li>
-                <li>The hero no longer owns the Marketplace anchor.</li>
-                <li>Buyer, supplier, and founder route states show start, proof, money, and next screen.</li>
-                <li>Copy route planner rule explains one visible route and 0% rental take.</li>
-                <li>Buyer, supplier, and founder modes each show one best next move.</li>
-                <li>Copy action bar rule explains one role, one proof reason, one money rule, one next action, and 0% rental take.</li>
-                <li>Marketplace shows Calm Proof Card below buyer decision logic.</li>
-                <li>Copy proof card explains one machine, one trust score, one proof count, one direct enquiry action, and 0% rental take.</li>
-                <li>Pricing shows Serenity Mode and Heavenly Focus below the Calm Command Center.</li>
-                <li>Build Phase shows Serenity Mode, Heavenly Focus, Calm Backend Scaffold, Supplier Account Shell, Calm Launch Room, Calm Proof Card, Calm Action Bar, Serene Route Planner, and Calm Global Compass before the Release Ledger.</li>
-                <li>Copy scaffold brief explains SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, DirectEnquiry, AdminReview, and the no-rental-payment guardrail.</li>
-                <li>Copy account shell explains SupplierAccount, SupplierProfile, FirstListing, ProofChecklist, ListingPlan, DirectRoute, AdminReview, and the no-rental-payment guardrail.</li>
-                <li>Copy launch room explains UAE Lifting, anchor suppliers, paid-ready listings, direct enquiries, response checks, calm expansion, and the no-rental-payment guardrail.</li>
-                <li>Copy focus brief explains buyer, supplier, founder, money, AI, and phase-one monetization rules.</li>
-                <li>Copy serenity brief explains buyer, supplier, founder, design, AI, and phase-one monetization rules.</li>
-                <li>SaaS Foundation Blueprint appears before the Release Ledger.</li>
-                <li>Launch Readiness Gate appears between the blueprint and release ledger.</li>
-                <li>Backend Sprint Board appears before the Release Ledger.</li>
-                <li>Copy sprint board produces the supplier account MVP scope.</li>
-                <li>Supplier Account MVP Preview appears before the Release Ledger.</li>
-                <li>Copy MVP brief produces the first supplier account acceptance test.</li>
-                <li>Supplier Onboarding Runway appears before the Release Ledger.</li>
-                <li>Copy onboarding runway produces the one-page supplier launch brief.</li>
-                <li>Backend Data Contract appears before the Release Ledger.</li>
-                <li>Copy data contract produces the first SaaS backend record map.</li>
-                <li>Schema + API Blueprint appears before the Release Ledger.</li>
-                <li>Copy API blueprint produces the first backend route map.</li>
-                <li>API Smoke Console appears before the Release Ledger.</li>
-                <li>Copy smoke console produces the first supplier account API test sequence.</li>
-                <li>Backend Fixture Pack appears before the Release Ledger.</li>
-                <li>Copy fixture pack produces the first JSON seed record set.</li>
-                <li>Backend Implementation Contract appears before the Release Ledger.</li>
-                <li>Copy implementation contract produces the first route-table handoff.</li>
-                <li>Pricing shows the Monetization Command above the pricing cards.</li>
-                <li>Copy monetization command explains free profile, paid listings, private packs, phase-two success fee, and the 0% rental take guardrail.</li>
-                <li>Pricing shows the Pilot Launch Command below the monetization model.</li>
-                <li>Build Phase shows the Pilot Launch Command before the Release Ledger.</li>
-                <li>Copy pilot launch command explains supplier, listing, proof, freshness, enquiry, and no-rental-payment gates.</li>
-                <li>Pricing shows the Global Launch Passport below the pilot command.</li>
-                <li>Build Phase shows the Global Launch Passport before the Release Ledger.</li>
-                <li>Copy global launch passport explains country queue, USD anchor, local proof labels, environment gates, and direct-payment guardrail.</li>
-                <li>Pricing shows the Simple Global UX Guard below the Global Launch Passport.</li>
-                <li>Build Phase shows the Simple Global UX Guard before the Release Ledger.</li>
-                <li>Copy UX guard explains one screen, one role, one next action, nav budget, AI simplification, country reuse, and 0% rental take.</li>
-                <li>Pricing shows the Calm Command Center below the Simple Global UX Guard.</li>
-                <li>Build Phase shows the Calm Command Center before the Release Ledger.</li>
-                <li>Copy calm command explains buyer, supplier, founder, global, AI, and phase-one monetization calm rules.</li>
-                <li>Supplier Studio shows the Supplier Account Starter above the listing starter.</li>
-                <li>Growth shows the Supplier Hunt Queue with ranked supplier targets.</li>
-                <li>Growth shows the Hunt Call Sheet and Outcome Gate for the selected supplier target.</li>
-                <li>Marketplace search still opens cleanly.</li>
-                <li>Supplier Studio, Pricing, and Roadmap remain simple.</li>
+                <li>Header shows Build v155.</li>
+                <li>Build Phase shows Current version: v155.</li>
+                <li>Opening `#marketplace` shows the Calm Focus Lens before the Serene Route Planner and hides deeper build layers until Show build layers is used.</li>
+                <li>Calm Focus Lens shows role, current focus, proof, money, and next move for active buyer, supplier, or founder.</li>
+                <li>Copy focus explains one visible focus, direct supplier payment, and 0% rental take.</li>
+                <li>Build Phase shows the Calm Focus Lens contract before the Release Ledger.</li>
+                <li>Docs include `docs/CALM_FOCUS_LENS.json`.</li>
+                <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
             <article class="release-ledger-card">
@@ -4023,12 +3991,12 @@
                 This page stays visible while we are building Heavyster. It records the current version, what is ready,
                 what is still prototype, and what must be finished before launch.
               </p>
-              <b>Updated May 31, 2026</b>
+              <b>Updated June 4, 2026</b>
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v153 Calm Backend Route Handoff</strong>
-              <p>Includes the v113 deploy guard through v152 production backend starter, plus this route handoff release that maps each visible role action to one safe API route, one production record, and one blocked payment route.</p>
+              <strong>v155 Calm Focus Lens</strong>
+              <p>Includes the v113 deploy guard through v154 Serene Proof Gate, plus this calm focus release that puts one visible buyer, supplier, or founder path first and keeps the deeper build stack available only on request.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4137,6 +4105,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260604-serene-proof-gate-v154" defer></script>
+    <script src="app.js?v=20260604-calm-focus-lens-v155" defer></script>
   </body>
 </html>

@@ -168,6 +168,7 @@
 - Production Backend Starter: one calm backend contract that maps buyer, supplier, and founder actions into SupplierAccount, EquipmentListing, ProofDocument, DirectEnquiry, ListingSubscription, AdminReview, and MarketSignal while blocking rental-payment rails
 - Calm Backend Route Handoff: one safe UI action maps to one allowed API route, one production record, and one blocked payment route so implementation stays calm before auth/database work
 - Serene Proof Gate: one proof score, one readiness state, one money rule, and one next move before buyer enquiry, supplier publish, or founder scale actions move to production
+- Calm Focus Lens: one visible buyer, supplier, or founder focus first while deeper build layers stay hidden until requested
 
 ## Sprint 5: Billing MVP
 
