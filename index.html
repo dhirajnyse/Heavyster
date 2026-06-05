@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260604-calm-focus-lens-v155" />
+  <link rel="stylesheet" href="styles.css?v=20260604-calm-data-room-v156" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v155</strong>
+            <strong>v156</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -206,6 +206,18 @@
           <button type="button" class="solid-button" id="calmFocusLensPrimaryButton">Open focus</button>
           <button type="button" class="ghost-button" id="calmFocusLensToggleButton" aria-pressed="false">Show build layers</button>
           <button type="button" class="ghost-button" id="copyCalmFocusLensButton">Copy focus</button>
+        </div>
+      </section>
+      <section class="calm-data-room" id="calmDataRoom" aria-label="Calm data room">
+        <div class="calm-data-copy">
+          <span id="calmDataRoomRole">Data room</span>
+          <strong id="calmDataRoomHeadline">Turn the calm path into backend records.</strong>
+          <small id="calmDataRoomDetail">One record set will appear here for the active role.</small>
+        </div>
+        <div class="calm-data-grid" id="calmDataRoomGrid" aria-label="Backend-ready records"></div>
+        <div class="calm-data-actions">
+          <button type="button" class="solid-button" id="calmDataRoomPrimaryButton">Open records</button>
+          <button type="button" class="ghost-button" id="copyCalmDataRoomButton">Copy records</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2313,7 +2325,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v155</span>
+            <span class="build-version-pill">Current version: v156</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2324,13 +2336,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v155 Calm Focus Lens</strong>
-              <small>Default homepage now shows one calm focus lens while deeper build layers stay tucked behind a deliberate reveal.</small>
+              <strong>v156 Calm Data Room</strong>
+              <small>The visible calm path now maps to backend records before deeper build layers are revealed.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Focus clarity</strong>
-              <small>Buyer, supplier, and founder paths should feel calm: one visible focus, one proof reason, one money rule, and one next action.</small>
+              <strong>Record clarity</strong>
+              <small>Buyer, supplier, and founder paths should still feel calm while the backend handoff becomes visible and copy-ready.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2350,8 +2362,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v155</strong>
-              <small>Calm Focus Lens</small>
+              <strong>v156</strong>
+              <small>Calm Data Room</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2365,8 +2377,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend focus records</strong>
-              <small>Turn the focus lens outputs into account, listing, proof, and direct lead records without adding UI weight.</small>
+              <strong>Backend record scaffold</strong>
+              <small>Turn data-room outputs into account, listing, proof, lead, and guardrail fixture records without adding UI weight.</small>
             </article>
           </div>
 
@@ -3857,6 +3869,51 @@
             </article>
           </div>
 
+          <div class="calm-data-room-contract" id="calm-data-room-contract" aria-label="Heavyster calm data room contract">
+            <article class="calm-data-room-contract-lead">
+              <span>v156 Calm Data Room</span>
+              <strong>Turn every calm path into backend-ready records.</strong>
+              <p>Heavyster should show which account, listing, proof, lead, money guardrail, and market records each simple path will create before the production backend is built.</p>
+              <b>Rule: records before backend</b>
+            </article>
+            <article>
+              <span>Buyer records</span>
+              <strong>Direct enquiry, proof snapshot, lead packet</strong>
+              <p>Buyer path maps search, proof, supplier route, saved demand, and 0% rental take into copy-ready records.</p>
+              <b>Ask safely</b>
+            </article>
+            <article>
+              <span>Supplier records</span>
+              <strong>Account, listing, proof, subscription</strong>
+              <p>Supplier path maps company account, machine listing, proof document, listing SaaS, and direct route records.</p>
+              <b>List safely</b>
+            </article>
+            <article>
+              <span>Founder records</span>
+              <strong>Admin review, market wedge, launch gate</strong>
+              <p>Founder path maps demand, supplier target, listing ARR, proof gate, and launch readiness without booking custody.</p>
+              <b>Scale safely</b>
+            </article>
+            <article>
+              <span>Money guardrail</span>
+              <strong>Listing SaaS first</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission route enters phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article>
+              <span>Backend handoff</span>
+              <strong>Records are contracts, not extra UI</strong>
+              <p>The Data Room teaches the future backend what to persist while keeping the public experience calm.</p>
+              <b>Build quietly</b>
+            </article>
+            <article class="calm-data-room-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on the same data room.</strong>
+              <p>Docs include the data room model in `docs/CALM_DATA_ROOM.json`, and no data-room action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyCalmDataRoomContractButton">Copy v156 data room</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -3950,25 +4007,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v155 Calm Focus Lens</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v156 Calm Data Room</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Calm Focus Lens</strong>
-              <p>Added one role-aware focus lens above the marketplace so buyer, supplier, and founder see one visible path, proof reason, money rule, and next move before deeper build layers are revealed.</p>
+              <strong>Calm Data Room</strong>
+              <p>Added a compact backend-ready data room after the focus lens so each calm buyer, supplier, or founder path shows the records it will create before production backend work begins.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v155.</li>
-                <li>Build Phase shows Current version: v155.</li>
-                <li>Opening `#marketplace` shows the Calm Focus Lens before the Serene Route Planner and hides deeper build layers until Show build layers is used.</li>
-                <li>Calm Focus Lens shows role, current focus, proof, money, and next move for active buyer, supplier, or founder.</li>
-                <li>Copy focus explains one visible focus, direct supplier payment, and 0% rental take.</li>
-                <li>Build Phase shows the Calm Focus Lens contract before the Release Ledger.</li>
-                <li>Docs include `docs/CALM_FOCUS_LENS.json`.</li>
+                <li>Header shows Build v156.</li>
+                <li>Build Phase shows Current version: v156.</li>
+                <li>Opening `#marketplace` shows the Calm Focus Lens followed by the Calm Data Room before the Serene Route Planner.</li>
+                <li>Calm Data Room shows role-aware buyer, supplier, or founder records.</li>
+                <li>Copy records explains backend records, direct supplier payment, and 0% rental take.</li>
+                <li>Build Phase shows the Calm Data Room contract before the Calm Focus Lens contract.</li>
+                <li>Docs include `docs/CALM_DATA_ROOM.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -3995,8 +4052,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v155 Calm Focus Lens</strong>
-              <p>Includes the v113 deploy guard through v154 Serene Proof Gate, plus this calm focus release that puts one visible buyer, supplier, or founder path first and keeps the deeper build stack available only on request.</p>
+              <strong>v156 Calm Data Room</strong>
+              <p>Includes the v113 deploy guard through v155 Calm Focus Lens, plus this calm data room release that turns the visible buyer, supplier, or founder path into backend-ready records without showing extra complexity by default.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4105,6 +4162,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260604-calm-focus-lens-v155" defer></script>
+    <script src="app.js?v=20260604-calm-data-room-v156" defer></script>
   </body>
 </html>

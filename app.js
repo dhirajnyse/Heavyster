@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260604-heavyster-calm-focus-lens-v155";
+const DATA_VERSION = "20260604-heavyster-calm-data-room-v156";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260604-calm-focus-lens-v155";
+const SIMPLE_UX_RELEASE = "20260604-calm-data-room-v156";
 
 const listings = [
   {
@@ -994,6 +994,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderWorkflowGuide();
     renderSimplicityBar();
     renderCalmFocusLens();
+    renderCalmDataRoom();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1945,6 +1946,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyCalmDataRoomContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildCalmDataRoomContractText());
+      showToast("Calm data room copied.");
+    } catch {
+      showToast("Copy is blocked here, but the calm data room is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -1996,6 +2006,12 @@ function bindControls() {
   });
   document.querySelector("#copyCalmFocusLensButton").addEventListener("click", () => {
     handleCalmFocusLensAction("copy");
+  });
+  document.querySelector("#calmDataRoomPrimaryButton").addEventListener("click", () => {
+    handleCalmDataRoomAction("primary");
+  });
+  document.querySelector("#copyCalmDataRoomButton").addEventListener("click", () => {
+    handleCalmDataRoomAction("copy");
   });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
@@ -2063,6 +2079,7 @@ function bindControls() {
     saveState();
     renderSimplicityBar();
     renderCalmFocusLens();
+    renderCalmDataRoom();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2244,6 +2261,7 @@ function render() {
   renderWorkflowGuide();
   renderSimplicityBar();
   renderCalmFocusLens();
+  renderCalmDataRoom();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2896,6 +2914,7 @@ function handleSimplicityIntent(intentId) {
   renderWorkflowGuide();
   renderSimplicityBar();
   renderCalmFocusLens();
+  renderCalmDataRoom();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2920,6 +2939,7 @@ function openSimplicityTarget(anchor, label) {
 
 const focusLayerSelectors = [
   ".calm-action-bar",
+  ".calm-data-room",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3045,6 +3065,7 @@ function toggleCalmFocusLayers() {
   state.focusLensExpanded = !state.focusLensExpanded;
   saveState();
   renderCalmFocusLens();
+  renderCalmDataRoom();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -3089,6 +3110,120 @@ function buildCalmFocusLensText(model = getCalmFocusLensModel()) {
 
 function buildCalmFocusLensContractText() {
   return buildCalmFocusLensText();
+}
+
+function renderCalmDataRoom() {
+  const root = document.querySelector("#calmDataRoom");
+  if (!root) return;
+
+  const model = getCalmDataRoomModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#calmDataRoomRole").textContent = model.roleLabel;
+  document.querySelector("#calmDataRoomHeadline").textContent = model.headline;
+  document.querySelector("#calmDataRoomDetail").textContent = model.detail;
+  document.querySelector("#calmDataRoomGrid").innerHTML = model.records.map((record) => `
+    <span class="${escapeHtml(record.tone)}">
+      <em>${escapeHtml(record.label)}</em>
+      <strong>${escapeHtml(record.name)}</strong>
+      <small>${escapeHtml(record.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#calmDataRoomPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getCalmDataRoomModel() {
+  const lens = getCalmFocusLensModel();
+  const listing = getSelectedListing();
+  const role = lens.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer data room",
+      headline: "Turn the enquiry path into clean records.",
+      detail: `${listing.name} becomes DirectEnquiry, ProofSnapshot, LeadPacket, PaymentGuardrail, and SavedSearch without taking rental payment.`,
+      primary: { label: "Open buyer records", anchor: "#buyer-workbench", aria: "Open buyer data room records" },
+      records: [
+        { label: "Record", name: "DirectEnquiry", detail: "one buyer message", tone: "ready" },
+        { label: "Record", name: "ProofSnapshot", detail: "visible proof", tone: "ready" },
+        { label: "Record", name: "LeadPacket", detail: "supplier route", tone: "ready" },
+        { label: "Guardrail", name: "PaymentGuardrail", detail: "0% rental take", tone: "ready" },
+        { label: "Signal", name: "SavedSearch", detail: "repeat demand", tone: "neutral" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier data room",
+      headline: "Turn one listing path into SaaS records.",
+      detail: "Al Noor Heavy Rentals becomes SupplierAccount, EquipmentListing, ProofDocument, ListingSubscription, and DirectRoute while rental payment stays direct.",
+      primary: { label: "Open supplier records", anchor: "#supplier-workbench", aria: "Open supplier data room records" },
+      records: [
+        { label: "Record", name: "SupplierAccount", detail: "company profile", tone: "ready" },
+        { label: "Record", name: "EquipmentListing", detail: listing.name, tone: "ready" },
+        { label: "Record", name: "ProofDocument", detail: "photos and docs", tone: "ready" },
+        { label: "Money", name: "ListingSubscription", detail: "USD 99/yr", tone: "ready" },
+        { label: "Route", name: "DirectRoute", detail: "buyer enquiry", tone: "neutral" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder data room",
+      headline: "Turn market focus into launch records.",
+      detail: "UAE Lifting becomes AdminReview, MarketWedge, SupplierTarget, ListingARR, and LaunchGate before scaling traffic.",
+      primary: { label: "Open founder records", anchor: "#market-signal-matrix", aria: "Open founder data room records" },
+      records: [
+        { label: "Record", name: "AdminReview", detail: "trust queue", tone: "ready" },
+        { label: "Market", name: "MarketWedge", detail: "UAE Lifting", tone: "ready" },
+        { label: "Record", name: "SupplierTarget", detail: "close supply", tone: "watch" },
+        { label: "Money", name: "ListingARR", detail: "USD 6,615", tone: "ready" },
+        { label: "Gate", name: "LaunchGate", detail: "scale when ready", tone: "neutral" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    records: config.records
+  };
+}
+
+async function handleCalmDataRoomAction(action, model = getCalmDataRoomModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildCalmDataRoomText(model));
+    showToast("Calm data room copied.");
+  } catch {
+    showToast("Copy is blocked here, but the data room is visible.");
+  }
+}
+
+function buildCalmDataRoomText(model = getCalmDataRoomModel()) {
+  return [
+    "Heavyster Calm Data Room",
+    "Version: v156 Calm Data Room",
+    "Rule: turn one calm path into backend-ready records before production build work begins.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    "Records:",
+    ...model.records.map((record) => `- ${record.name}: ${record.detail}`),
+    "",
+    "Payment guardrail: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Production note: these are record contracts for backend implementation; no rental custody route is created."
+  ].join("\n");
+}
+
+function buildCalmDataRoomContractText() {
+  return buildCalmDataRoomText();
 }
 
 function renderCalmActionBar() {
@@ -4372,6 +4507,7 @@ function openWorkflowStep(anchor, label, role) {
   renderWorkflowGuide();
   renderSimplicityBar();
   renderCalmFocusLens();
+  renderCalmDataRoom();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -19311,6 +19447,7 @@ async function handleHeavenlyFocusAction(action, model) {
     saveState();
     renderSimplicityBar();
     renderCalmFocusLens();
+    renderCalmDataRoom();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

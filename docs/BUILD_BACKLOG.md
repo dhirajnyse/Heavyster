@@ -169,6 +169,7 @@
 - Calm Backend Route Handoff: one safe UI action maps to one allowed API route, one production record, and one blocked payment route so implementation stays calm before auth/database work
 - Serene Proof Gate: one proof score, one readiness state, one money rule, and one next move before buyer enquiry, supplier publish, or founder scale actions move to production
 - Calm Focus Lens: one visible buyer, supplier, or founder focus first while deeper build layers stay hidden until requested
+- Calm Data Room: every calm buyer, supplier, and founder path maps to backend-ready records without making public screens heavier
 
 ## Sprint 5: Billing MVP
 

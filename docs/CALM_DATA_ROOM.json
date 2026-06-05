@@ -1,0 +1,78 @@
+{
+  "version": "v156 Calm Data Room",
+  "rule": "Every calm visible path must map to backend records before production work starts.",
+  "phase": "Active prototype",
+  "phase_one_guardrail": "No rental payment, escrow, deposit, payout, booking commission, or rental money custody in phase one.",
+  "release_goal": "Keep the public UI calm while showing the account, listing, proof, lead, money, and market records that the backend must eventually store.",
+  "records": {
+    "buyer": [
+      {
+        "record": "DirectEnquiry",
+        "purpose": "Store the selected machine, buyer note, region, urgency, and supplier route."
+      },
+      {
+        "record": "ProofSnapshot",
+        "purpose": "Store trust score, proof count, document visibility, and availability state at enquiry time."
+      },
+      {
+        "record": "LeadPacket",
+        "purpose": "Store copied enquiry text, supplier channel, response target, and follow-up state."
+      },
+      {
+        "record": "PaymentGuardrail",
+        "purpose": "Store that rental payment stays supplier-direct with 0% rental take."
+      }
+    ],
+    "supplier": [
+      {
+        "record": "SupplierAccount",
+        "purpose": "Store company profile, service regions, contact desk, and listing plan."
+      },
+      {
+        "record": "EquipmentListing",
+        "purpose": "Store category, make, model, location, availability, rate notes, and public status."
+      },
+      {
+        "record": "ProofDocument",
+        "purpose": "Store photos, license, insurance, inspection, operator proof, and expiry dates."
+      },
+      {
+        "record": "ListingSubscription",
+        "purpose": "Store active listing count, USD 9/month or USD 99/year plan, renewal state, and no rental custody rule."
+      }
+    ],
+    "founder": [
+      {
+        "record": "AdminReview",
+        "purpose": "Store suspicious listings, proof gaps, approval status, and founder support notes."
+      },
+      {
+        "record": "MarketWedge",
+        "purpose": "Store country, category, demand, supply, proof, and ARR readiness."
+      },
+      {
+        "record": "SupplierTarget",
+        "purpose": "Store supplier hunt targets, call status, proof ask, and activation path."
+      },
+      {
+        "record": "ReleaseGate",
+        "purpose": "Store version, test focus, production gaps, and next build."
+      }
+    ]
+  },
+  "ui_principles": [
+    "Show one calm public route before exposing build layers.",
+    "Use data room records as implementation memory, not as extra visual noise.",
+    "Keep buyer and supplier screens focused on one next action.",
+    "Make founder controls explain what to build next without scaling complexity."
+  ],
+  "acceptance": [
+    "Marketplace shows the Calm Data Room after the Calm Focus Lens and before the Serene Route Planner.",
+    "Buyer path maps to direct enquiry, proof snapshot, lead packet, and payment guardrail records.",
+    "Supplier path maps to account, listing, proof document, and listing subscription records.",
+    "Founder path maps to admin review, market wedge, supplier target, and release gate records.",
+    "Copy text states 0% rental take and supplier-direct rental payment.",
+    "Build Phase shows v156 Calm Data Room as the current version.",
+    "Static check verifies the data room UI, contract, and JSON model."
+  ]
+}
