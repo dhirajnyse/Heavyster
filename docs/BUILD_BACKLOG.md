@@ -38,6 +38,7 @@
 - Calm Proof Card for showing one selected machine, trust score, proof count, availability state, direct enquiry action, and 0% rental take before deeper workflows
 - Calm Action Bar for keeping one role, one proof reason, one money rule, and one next action visible across buyer, supplier, and founder paths
 - Calm Backend Handoff for mapping buyer, supplier, and founder decisions to future backend record paths without adding UI weight
+- Launch Country Room for choosing one country/category launch lane with proof, supply gap, listing ARR, direct enquiry, and 0% rental take before scaling traffic
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -81,6 +82,7 @@
 - Listing Activation Room with paid listing shells, activation queue, billing gates, publish readiness, and copy-ready go-live plan
 - Trust & Revenue Ledger with listing ARR, direct pipeline, trust debt, renewal exposure, control gates, and founder brief
 - Market Signal Matrix with region-by-category demand, visible supply, verified supply, proof, gap, ARR, and next action scoring
+- Launch Country Room with one country/category room, proof gate, supplier gap, listing ARR, and direct enquiry route before scaling traffic
 
 ## Sprint 2: Repository Foundation
 

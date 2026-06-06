@@ -1,0 +1,63 @@
+{
+  "version": "v157 Launch Country Room",
+  "rule": "Choose one country launch room with one category wedge, one proof gate, one supplier move, one listing SaaS rule, and one next action before scaling traffic.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, or commission collection in phase one; Heavyster earns listing SaaS only.",
+  "country_rooms": [
+    {
+      "country": "UAE",
+      "category": "Lifting",
+      "readiness": 79,
+      "status": "Launch first",
+      "proof_score": 100,
+      "supplier_gap": 21,
+      "listing_arr_usd": 2178,
+      "next_action": "Open supplier hunt"
+    },
+    {
+      "country": "UAE",
+      "category": "Earthmoving",
+      "readiness": 38,
+      "status": "Protect supply",
+      "proof_score": 100,
+      "supplier_gap": 5,
+      "listing_arr_usd": 792,
+      "next_action": "Recruit anchor suppliers"
+    },
+    {
+      "country": "India",
+      "category": "Roadwork",
+      "readiness": 65,
+      "status": "Fill gap",
+      "proof_score": 100,
+      "supplier_gap": 16,
+      "listing_arr_usd": 1683,
+      "next_action": "Build launch brief"
+    },
+    {
+      "country": "USA",
+      "category": "Power",
+      "readiness": 38,
+      "status": "Recruit supply",
+      "proof_score": 0,
+      "supplier_gap": 24,
+      "listing_arr_usd": 2376,
+      "next_action": "Capture proof first"
+    }
+  ],
+  "records": [
+    "CountryLaunchRoom",
+    "MarketWedge",
+    "SupplierRecruitmentQueue",
+    "ProofGate",
+    "ListingARRSignal",
+    "DirectEnquiryRoute"
+  ],
+  "acceptance": [
+    "Shows one country-category room before route planning.",
+    "Buyer copy stays focused on safest visible supply.",
+    "Supplier copy stays focused on one market account starter.",
+    "Founder copy stays focused on UAE Lifting launch command.",
+    "Every room keeps 0% rental take visible.",
+    "Static check protects version, copy, docs, and contract."
+  ]
+}

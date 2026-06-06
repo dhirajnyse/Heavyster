@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260604-heavyster-calm-data-room-v156";
+const DATA_VERSION = "20260605-heavyster-launch-country-room-v157";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260604-calm-data-room-v156";
+const SIMPLE_UX_RELEASE = "20260605-launch-country-room-v157";
 
 const listings = [
   {
@@ -995,6 +995,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSimplicityBar();
     renderCalmFocusLens();
     renderCalmDataRoom();
+    renderLaunchCountryRoom();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1223,6 +1224,7 @@ function bindControls() {
     renderMonetizationCommand();
     renderPaidListingActivation();
     renderSupplierActivationReceipt();
+    renderLaunchCountryRoom();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -1955,6 +1957,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyLaunchCountryRoomContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLaunchCountryRoomContractText());
+      showToast("Launch country room copied.");
+    } catch {
+      showToast("Copy is blocked here, but the country room is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2012,6 +2023,12 @@ function bindControls() {
   });
   document.querySelector("#copyCalmDataRoomButton").addEventListener("click", () => {
     handleCalmDataRoomAction("copy");
+  });
+  document.querySelector("#launchCountryRoomPrimaryButton").addEventListener("click", () => {
+    handleLaunchCountryRoomAction("primary");
+  });
+  document.querySelector("#copyLaunchCountryRoomButton").addEventListener("click", () => {
+    handleLaunchCountryRoomAction("copy");
   });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
@@ -2080,6 +2097,7 @@ function bindControls() {
     renderSimplicityBar();
     renderCalmFocusLens();
     renderCalmDataRoom();
+    renderLaunchCountryRoom();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2262,6 +2280,7 @@ function render() {
   renderSimplicityBar();
   renderCalmFocusLens();
   renderCalmDataRoom();
+  renderLaunchCountryRoom();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2915,6 +2934,7 @@ function handleSimplicityIntent(intentId) {
   renderSimplicityBar();
   renderCalmFocusLens();
   renderCalmDataRoom();
+  renderLaunchCountryRoom();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2940,6 +2960,7 @@ function openSimplicityTarget(anchor, label) {
 const focusLayerSelectors = [
   ".calm-action-bar",
   ".calm-data-room",
+  ".launch-country-room",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3066,6 +3087,7 @@ function toggleCalmFocusLayers() {
   saveState();
   renderCalmFocusLens();
   renderCalmDataRoom();
+  renderLaunchCountryRoom();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -3224,6 +3246,120 @@ function buildCalmDataRoomText(model = getCalmDataRoomModel()) {
 
 function buildCalmDataRoomContractText() {
   return buildCalmDataRoomText();
+}
+
+function renderLaunchCountryRoom() {
+  const root = document.querySelector("#launchCountryRoom");
+  if (!root) return;
+
+  const model = getLaunchCountryRoomModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#launchCountryRoomRole").textContent = model.roleLabel;
+  document.querySelector("#launchCountryRoomHeadline").textContent = model.headline;
+  document.querySelector("#launchCountryRoomDetail").textContent = model.detail;
+  document.querySelector("#launchCountryRoomGrid").innerHTML = model.rooms.map((room) => `
+    <span class="${escapeHtml(room.tone)}">
+      <em>${escapeHtml(room.label)}</em>
+      <strong>${escapeHtml(room.value)}</strong>
+      <small>${escapeHtml(room.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#launchCountryRoomPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getLaunchCountryRoomModel() {
+  const dataRoom = getCalmDataRoomModel();
+  const listing = getSelectedListing();
+  const role = dataRoom.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer country room",
+      headline: "Use UAE as the first visible supply room.",
+      detail: `${listing.name} should stay simple: one country, one proven supplier route, one direct enquiry, and no rental take.`,
+      primary: { label: "Open buyer route", anchor: "#buyer-workbench", aria: "Open the buyer country route" },
+      rooms: [
+        { label: "Country", value: "UAE", detail: "first search room", tone: "ready" },
+        { label: "Category", value: listing.category, detail: "active result", tone: "neutral" },
+        { label: "Proof", value: "Trust 100/100", detail: "visible before enquiry", tone: "ready" },
+        { label: "Money", value: "0% rental take", detail: "pay supplier direct", tone: "ready" },
+        { label: "Next", value: "Direct enquiry", detail: "one message", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier country room",
+      headline: "Turn one UAE supplier account into paid listings.",
+      detail: "Al Noor Heavy Rentals can launch a calm country room with account, proof, first machine, paid listing, and direct lead route.",
+      primary: { label: "Open supplier desk", anchor: "#supplier-workbench", aria: "Open the supplier country desk" },
+      rooms: [
+        { label: "Country", value: "UAE", detail: "supplier market", tone: "ready" },
+        { label: "Category", value: "Earthmoving", detail: "first paid wedge", tone: "neutral" },
+        { label: "Proof", value: "100/100", detail: "documents clean", tone: "ready" },
+        { label: "Money", value: "USD 1,026", detail: "modeled ARR", tone: "ready" },
+        { label: "Next", value: "Lead Desk", detail: "route direct enquiries", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder country room",
+      headline: "Launch UAE Lifting only after the supply gap is visible.",
+      detail: "The founder room turns global ambition into one country/category launch command with proof, supplier hunt, ARR, and a calm scale gate.",
+      primary: { label: "Open market command", anchor: "#market-signal-matrix", aria: "Open the founder country command" },
+      rooms: [
+        { label: "Country", value: "UAE", detail: "launch room", tone: "ready" },
+        { label: "Category", value: "Lifting", detail: "highest wedge", tone: "neutral" },
+        { label: "Supply", value: "21 gap", detail: "recruit before traffic", tone: "watch" },
+        { label: "Money", value: "USD 2,178", detail: "listing ARR", tone: "ready" },
+        { label: "Next", value: "Hunt", detail: "open supplier hunt", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    rooms: config.rooms
+  };
+}
+
+async function handleLaunchCountryRoomAction(action, model = getLaunchCountryRoomModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildLaunchCountryRoomText(model));
+    showToast("Launch country room copied.");
+  } catch {
+    showToast("Copy is blocked here, but the country room is visible.");
+  }
+}
+
+function buildLaunchCountryRoomText(model = getLaunchCountryRoomModel()) {
+  return [
+    "Heavyster Launch Country Room",
+    "Version: v157 Launch Country Room",
+    "Rule: choose one country, one category wedge, one proof gate, one listing SaaS rule, and one next action before scaling traffic.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    "Country room:",
+    ...model.rooms.map((room) => `- ${room.label}: ${room.value} (${room.detail})`),
+    "",
+    "Payment guardrail: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Launch promise: global expansion stays calm by opening only the country room that has proof, supply logic, and listing revenue clarity."
+  ].join("\n");
+}
+
+function buildLaunchCountryRoomContractText() {
+  return buildLaunchCountryRoomText();
 }
 
 function renderCalmActionBar() {
@@ -4508,6 +4644,7 @@ function openWorkflowStep(anchor, label, role) {
   renderSimplicityBar();
   renderCalmFocusLens();
   renderCalmDataRoom();
+  renderLaunchCountryRoom();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -19448,6 +19585,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderSimplicityBar();
     renderCalmFocusLens();
     renderCalmDataRoom();
+    renderLaunchCountryRoom();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
