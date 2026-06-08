@@ -39,6 +39,9 @@
 - Calm Action Bar for keeping one role, one proof reason, one money rule, and one next action visible across buyer, supplier, and founder paths
 - Calm Backend Handoff for mapping buyer, supplier, and founder decisions to future backend record paths without adding UI weight
 - Launch Country Room for choosing one country/category launch lane with proof, supply gap, listing ARR, direct enquiry, and 0% rental take before scaling traffic
+- Launch Activation Sprint for turning one country room into a buyer, supplier, or founder seven-day activation lane before traffic or paid listings scale
+- Production Sprint Records for turning activation lanes into owner, proof, direct route, listing ARR, decision, and blocked payment records before backend routes are built
+- Production Route Pack for turning production records into allowed API routes, table fields, validations, smoke fixtures, and blocked payment routes before backend code begins
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -83,6 +86,9 @@
 - Trust & Revenue Ledger with listing ARR, direct pipeline, trust debt, renewal exposure, control gates, and founder brief
 - Market Signal Matrix with region-by-category demand, visible supply, verified supply, proof, gap, ARR, and next action scoring
 - Launch Country Room with one country/category room, proof gate, supplier gap, listing ARR, and direct enquiry route before scaling traffic
+- Launch Activation Sprint with one role-aware sprint lane, proof gate, supplier motion, listing ARR signal, direct enquiry route, and go/no-go decision before scaling traffic
+- Production Sprint Records with one role-aware record set, owner, proof state, allowed route, blocked payment route, listing ARR signal, and go/no-go decision before backend implementation
+- Production Route Pack with one role-aware API route set, table, required fields, validations, smoke fixture, allowed routes, and blocked payment endpoints before backend implementation
 
 ## Sprint 2: Repository Foundation
 

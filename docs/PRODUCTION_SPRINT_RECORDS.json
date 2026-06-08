@@ -1,0 +1,79 @@
+{
+  "version": "v159 Production Sprint Records",
+  "rule": "Convert one launch activation sprint into production-safe records with one owner, one proof state, one direct route, one listing SaaS signal, one go/no-go decision, and blocked rental payment custody.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or commission record is created in phase one; Heavyster earns listing SaaS only.",
+  "record_sets": [
+    {
+      "role": "Buyer",
+      "owner": "Buyer",
+      "primary_record": "DirectEnquiry",
+      "supporting_records": [
+        "ProofSnapshot",
+        "SelectedEquipment",
+        "SupplierDirectRoute",
+        "ReplyFollowUp"
+      ],
+      "allowed_route": "/api/direct-enquiries",
+      "blocked_route": "/api/rental-payments",
+      "success_signal": "Supplier reply is tracked without platform payment custody"
+    },
+    {
+      "role": "Supplier",
+      "owner": "Supplier",
+      "primary_record": "EquipmentListing",
+      "supporting_records": [
+        "SupplierAccount",
+        "ProofDocument",
+        "ListingSubscription",
+        "DirectLeadRoute"
+      ],
+      "allowed_route": "/api/equipment-listings",
+      "blocked_route": "/api/payouts",
+      "success_signal": "Paid listing ARR is visible before publish"
+    },
+    {
+      "role": "Founder",
+      "owner": "Founder",
+      "primary_record": "LaunchRoom",
+      "supporting_records": [
+        "SupplierTarget",
+        "ProofGate",
+        "ListingARRSignal",
+        "LaunchGoNoGoDecision"
+      ],
+      "allowed_route": "/api/market-signals",
+      "blocked_route": "/api/booking-commissions",
+      "success_signal": "Scale only after supply, trust, direct route, and ARR are ready"
+    }
+  ],
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "records": [
+    "DirectEnquiry",
+    "ProofSnapshot",
+    "SupplierDirectRoute",
+    "SupplierAccount",
+    "EquipmentListing",
+    "ProofDocument",
+    "ListingSubscription",
+    "DirectLeadRoute",
+    "LaunchRoom",
+    "SupplierTarget",
+    "ProofGate",
+    "ListingARRSignal",
+    "LaunchGoNoGoDecision"
+  ],
+  "acceptance": [
+    "Shows one production record room after the Launch Activation Sprint.",
+    "Buyer records include direct enquiry, proof snapshot, supplier direct route, and reply follow-up.",
+    "Supplier records include account, listing, proof document, listing subscription, and direct lead route.",
+    "Founder records include launch room, supplier target, proof gate, listing ARR, and go/no-go decision.",
+    "Every record set declares an allowed route and a blocked payment route.",
+    "Static check protects version, UI, docs, copy action, route guardrails, and contract."
+  ]
+}

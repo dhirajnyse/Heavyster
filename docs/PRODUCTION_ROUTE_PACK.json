@@ -1,0 +1,99 @@
+{
+  "version": "v160 Production Route Pack",
+  "rule": "Map one production sprint record set into allowed API routes, table fields, validation rules, smoke fixtures, and blocked payment routes before backend implementation starts.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or commission endpoint is created in phase one; Heavyster earns listing SaaS only.",
+  "route_packs": [
+    {
+      "role": "Buyer",
+      "allowed_route": "/api/direct-enquiries",
+      "method": "POST",
+      "table": "direct_enquiries",
+      "required_fields": [
+        "buyer_contact",
+        "equipment_listing_id",
+        "supplier_account_id",
+        "proof_snapshot_id",
+        "message",
+        "direct_route"
+      ],
+      "validations": [
+        "equipment_listing_id must be visible and active",
+        "proof_snapshot_id must exist before enquiry submit",
+        "direct_route must be supplier email, phone, WhatsApp, or copied packet",
+        "payment_intent_id must be absent"
+      ],
+      "smoke_fixture": "buyer_direct_enquiry_create",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "allowed_route": "/api/equipment-listings",
+      "method": "POST",
+      "table": "equipment_listings",
+      "required_fields": [
+        "supplier_account_id",
+        "category",
+        "region",
+        "availability",
+        "proof_document_ids",
+        "listing_subscription_id",
+        "direct_lead_route"
+      ],
+      "validations": [
+        "supplier_account_id must be approved or in admin review",
+        "listing_subscription_id must match USD 9/month or USD 99/year listing SaaS",
+        "proof_document_ids must include at least one photo or document before publish",
+        "payout_account_id must be absent"
+      ],
+      "smoke_fixture": "supplier_listing_publish",
+      "blocked_route": "/api/payouts"
+    },
+    {
+      "role": "Founder",
+      "allowed_route": "/api/market-signals",
+      "method": "POST",
+      "table": "market_signals",
+      "required_fields": [
+        "country",
+        "category",
+        "supplier_gap",
+        "proof_score",
+        "listing_arr_usd",
+        "go_no_go",
+        "owner"
+      ],
+      "validations": [
+        "go_no_go must be pass, hold, or review",
+        "proof_score must be reviewed before scale",
+        "supplier_gap must create or update SupplierTarget records",
+        "booking_commission_id must be absent"
+      ],
+      "smoke_fixture": "founder_market_signal_create",
+      "blocked_route": "/api/booking-commissions"
+    }
+  ],
+  "blocked_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "allowed_routes": [
+    "/api/direct-enquiries",
+    "/api/equipment-listings",
+    "/api/listing-subscriptions",
+    "/api/proof-documents",
+    "/api/supplier-accounts",
+    "/api/admin-reviews",
+    "/api/market-signals"
+  ],
+  "acceptance": [
+    "Shows one production route pack after Production Sprint Records.",
+    "Buyer route pack includes direct enquiry route, table, required fields, validation, fixture, and blocked rental payment route.",
+    "Supplier route pack includes equipment listing route, table, required fields, validation, fixture, and blocked payout route.",
+    "Founder route pack includes market signal route, table, required fields, validation, fixture, and blocked booking commission route.",
+    "Every route pack names one smoke fixture and one blocked payment route.",
+    "Static check protects version, UI, docs, route guardrails, fixture names, and contract."
+  ]
+}

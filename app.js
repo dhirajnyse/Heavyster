@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260605-heavyster-launch-country-room-v157";
+const DATA_VERSION = "20260609-heavyster-production-route-pack-v160";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260605-launch-country-room-v157";
+const SIMPLE_UX_RELEASE = "20260609-production-route-pack-v160";
 
 const listings = [
   {
@@ -996,6 +996,9 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalmFocusLens();
     renderCalmDataRoom();
     renderLaunchCountryRoom();
+    renderLaunchActivationSprint();
+    renderProductionSprintRecords();
+    renderProductionRoutePack();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1225,6 +1228,9 @@ function bindControls() {
     renderPaidListingActivation();
     renderSupplierActivationReceipt();
     renderLaunchCountryRoom();
+    renderLaunchActivationSprint();
+    renderProductionSprintRecords();
+    renderProductionRoutePack();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -1966,6 +1972,33 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyLaunchActivationSprintContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLaunchActivationSprintContractText());
+      showToast("Launch activation sprint copied.");
+    } catch {
+      showToast("Copy is blocked here, but the sprint room is visible.");
+    }
+  });
+
+  document.querySelector("#copyProductionSprintRecordsContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildProductionSprintRecordsContractText());
+      showToast("Production sprint records copied.");
+    } catch {
+      showToast("Copy is blocked here, but the record contract is visible.");
+    }
+  });
+
+  document.querySelector("#copyProductionRoutePackContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildProductionRoutePackContractText());
+      showToast("Production route pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the route pack is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2029,6 +2062,24 @@ function bindControls() {
   });
   document.querySelector("#copyLaunchCountryRoomButton").addEventListener("click", () => {
     handleLaunchCountryRoomAction("copy");
+  });
+  document.querySelector("#launchActivationSprintPrimaryButton").addEventListener("click", () => {
+    handleLaunchActivationSprintAction("primary");
+  });
+  document.querySelector("#copyLaunchActivationSprintButton").addEventListener("click", () => {
+    handleLaunchActivationSprintAction("copy");
+  });
+  document.querySelector("#productionSprintRecordsPrimaryButton").addEventListener("click", () => {
+    handleProductionSprintRecordsAction("primary");
+  });
+  document.querySelector("#copyProductionSprintRecordsButton").addEventListener("click", () => {
+    handleProductionSprintRecordsAction("copy");
+  });
+  document.querySelector("#productionRoutePackPrimaryButton").addEventListener("click", () => {
+    handleProductionRoutePackAction("primary");
+  });
+  document.querySelector("#copyProductionRoutePackButton").addEventListener("click", () => {
+    handleProductionRoutePackAction("copy");
   });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
@@ -2098,6 +2149,9 @@ function bindControls() {
     renderCalmFocusLens();
     renderCalmDataRoom();
     renderLaunchCountryRoom();
+    renderLaunchActivationSprint();
+    renderProductionSprintRecords();
+    renderProductionRoutePack();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2281,6 +2335,9 @@ function render() {
   renderCalmFocusLens();
   renderCalmDataRoom();
   renderLaunchCountryRoom();
+  renderLaunchActivationSprint();
+  renderProductionSprintRecords();
+  renderProductionRoutePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2935,6 +2992,9 @@ function handleSimplicityIntent(intentId) {
   renderCalmFocusLens();
   renderCalmDataRoom();
   renderLaunchCountryRoom();
+  renderLaunchActivationSprint();
+  renderProductionSprintRecords();
+  renderProductionRoutePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2961,6 +3021,9 @@ const focusLayerSelectors = [
   ".calm-action-bar",
   ".calm-data-room",
   ".launch-country-room",
+  ".launch-activation-sprint",
+  ".production-sprint-records",
+  ".production-route-pack",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3088,6 +3151,9 @@ function toggleCalmFocusLayers() {
   renderCalmFocusLens();
   renderCalmDataRoom();
   renderLaunchCountryRoom();
+  renderLaunchActivationSprint();
+  renderProductionSprintRecords();
+  renderProductionRoutePack();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -3360,6 +3426,349 @@ function buildLaunchCountryRoomText(model = getLaunchCountryRoomModel()) {
 
 function buildLaunchCountryRoomContractText() {
   return buildLaunchCountryRoomText();
+}
+
+function renderLaunchActivationSprint() {
+  const root = document.querySelector("#launchActivationSprint");
+  if (!root) return;
+
+  const model = getLaunchActivationSprintModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#launchActivationSprintRole").textContent = model.roleLabel;
+  document.querySelector("#launchActivationSprintHeadline").textContent = model.headline;
+  document.querySelector("#launchActivationSprintDetail").textContent = model.detail;
+  document.querySelector("#launchActivationSprintGrid").innerHTML = model.moves.map((move) => `
+    <span class="${escapeHtml(move.tone)}">
+      <em>${escapeHtml(move.label)}</em>
+      <strong>${escapeHtml(move.value)}</strong>
+      <small>${escapeHtml(move.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#launchActivationSprintPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getLaunchActivationSprintModel() {
+  const countryRoom = getLaunchCountryRoomModel();
+  const listing = getSelectedListing();
+  const role = countryRoom.role || state.commandRole || "Buyer";
+  const supplierArr = Math.max(99, state.listingCount * 99);
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer sprint",
+      headline: "Turn the UAE room into one supplier-ready enquiry.",
+      detail: `${listing.name} becomes a proof-first buyer move: check availability, copy one enquiry, and keep payment direct with the rental company.`,
+      primary: { label: "Copy buyer enquiry", anchor: "#marketplace", aria: "Open the buyer launch sprint enquiry" },
+      moves: [
+        { label: "Day 1", value: "Proof check", detail: "trust before message", tone: "ready" },
+        { label: "Day 2", value: listing.region, detail: "local supply lane", tone: "neutral" },
+        { label: "Day 3", value: "Direct ask", detail: "one supplier note", tone: "ready" },
+        { label: "Money", value: "0% take", detail: "pay supplier direct", tone: "ready" },
+        { label: "Win", value: "Reply tracked", detail: "follow-up path", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier sprint",
+      headline: "Convert one country account into paid listing motion.",
+      detail: `Use ${state.listingCount} active listing slots as the calm sprint target: proof, freshness, direct lead route, and USD ${formatNumber(supplierArr)} annual listing ARR.`,
+      primary: { label: "Open activation room", anchor: "#listing-activation", aria: "Open supplier activation sprint room" },
+      moves: [
+        { label: "Day 1", value: "Profile", detail: "account clean", tone: "ready" },
+        { label: "Day 2", value: "Proof", detail: "docs visible", tone: "ready" },
+        { label: "Day 3", value: "Freshness", detail: "availability live", tone: "watch" },
+        { label: "Money", value: `USD ${formatNumber(supplierArr)}`, detail: "annual listing ARR", tone: "ready" },
+        { label: "Win", value: "Lead route", detail: "direct enquiry", tone: "neutral" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder sprint",
+      headline: "Run the first UAE Lifting activation sprint before scale.",
+      detail: "The founder sprint converts country choice into a seven-day operating lane: close supply, publish proof, activate paid listings, and block rental custody.",
+      primary: { label: "Open founder ledger", anchor: "#trust-revenue-ledger", aria: "Open founder launch activation ledger" },
+      moves: [
+        { label: "Day 1", value: "21 gap", detail: "supplier hunt", tone: "watch" },
+        { label: "Day 3", value: "Proof gate", detail: "trust before traffic", tone: "ready" },
+        { label: "Day 5", value: "6 calls", detail: "anchor suppliers", tone: "neutral" },
+        { label: "Money", value: "USD 2,178", detail: "listing ARR wedge", tone: "ready" },
+        { label: "Win", value: "Go/no-go", detail: "scale decision", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    moves: config.moves
+  };
+}
+
+async function handleLaunchActivationSprintAction(action, model = getLaunchActivationSprintModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildLaunchActivationSprintText(model));
+    showToast("Launch activation sprint copied.");
+  } catch {
+    showToast("Copy is blocked here, but the sprint room is visible.");
+  }
+}
+
+function buildLaunchActivationSprintText(model = getLaunchActivationSprintModel()) {
+  return [
+    "Heavyster Launch Activation Sprint",
+    "Version: v158 Launch Activation Sprint",
+    "Rule: turn one country room into one seven-day activation lane before traffic, supplier onboarding, or paid listings scale.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    "Sprint moves:",
+    ...model.moves.map((move) => `- ${move.label}: ${move.value} (${move.detail})`),
+    "",
+    "Payment guardrail: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Rental take: 0%.",
+    "Activation promise: launch work moves only when proof, supply, direct enquiry, and listing ARR are visible."
+  ].join("\n");
+}
+
+function buildLaunchActivationSprintContractText() {
+  return buildLaunchActivationSprintText();
+}
+
+function renderProductionSprintRecords() {
+  const root = document.querySelector("#productionSprintRecords");
+  if (!root) return;
+
+  const model = getProductionSprintRecordsModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#productionSprintRecordsRole").textContent = model.roleLabel;
+  document.querySelector("#productionSprintRecordsHeadline").textContent = model.headline;
+  document.querySelector("#productionSprintRecordsDetail").textContent = model.detail;
+  document.querySelector("#productionSprintRecordsGrid").innerHTML = model.records.map((record) => `
+    <span class="${escapeHtml(record.tone)}">
+      <em>${escapeHtml(record.label)}</em>
+      <strong>${escapeHtml(record.value)}</strong>
+      <small>${escapeHtml(record.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#productionSprintRecordsPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getProductionSprintRecordsModel() {
+  const sprint = getLaunchActivationSprintModel();
+  const listing = getSelectedListing();
+  const role = sprint.role || state.commandRole || "Buyer";
+  const supplierArr = Math.max(99, state.listingCount * 99);
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer records",
+      headline: "Persist one direct enquiry sprint without payment custody.",
+      detail: `${listing.name} creates enquiry, proof snapshot, reply follow-up, and blocked payment records so the buyer path can become production-safe.`,
+      primary: { label: "Open enquiry records", anchor: "#responseTracker", aria: "Open buyer sprint record route" },
+      records: [
+        { label: "Record", value: "DirectEnquiry", detail: "buyer note", tone: "ready" },
+        { label: "Proof", value: "ProofSnapshot", detail: "trust state", tone: "ready" },
+        { label: "Owner", value: "Buyer", detail: "reply follow-up", tone: "neutral" },
+        { label: "Route", value: "SupplierDirect", detail: "no platform custody", tone: "ready" },
+        { label: "Blocked", value: "PaymentIntent", detail: "not phase one", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier records",
+      headline: "Persist paid-listing activation before supplier scale.",
+      detail: `The supplier sprint becomes account, listing, proof, subscription, and lead-route records with USD ${formatNumber(supplierArr)} annual listing ARR visible.`,
+      primary: { label: "Open listing records", anchor: "#listing-activation", aria: "Open supplier production sprint records" },
+      records: [
+        { label: "Record", value: "SupplierAccount", detail: "profile owner", tone: "ready" },
+        { label: "Record", value: "EquipmentListing", detail: "publish gate", tone: "ready" },
+        { label: "Proof", value: "ProofDocument", detail: "expiry state", tone: "watch" },
+        { label: "Money", value: "ListingSubscription", detail: `USD ${formatNumber(supplierArr)}`, tone: "ready" },
+        { label: "Route", value: "DirectLead", detail: "supplier inbox", tone: "neutral" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder records",
+      headline: "Persist the UAE Lifting go/no-go command.",
+      detail: "The founder sprint becomes launch room, supplier target, proof gate, ARR signal, direct route, and blocked rental-custody records before scale.",
+      primary: { label: "Open launch ledger", anchor: "#trust-revenue-ledger", aria: "Open founder production sprint records" },
+      records: [
+        { label: "Record", value: "LaunchRoom", detail: "UAE Lifting", tone: "ready" },
+        { label: "Record", value: "SupplierTarget", detail: "21 gap", tone: "watch" },
+        { label: "Proof", value: "ProofGate", detail: "trust before traffic", tone: "ready" },
+        { label: "Money", value: "ARRSignal", detail: "USD 2,178", tone: "ready" },
+        { label: "Decision", value: "GoNoGo", detail: "scale gate", tone: "neutral" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    records: config.records
+  };
+}
+
+async function handleProductionSprintRecordsAction(action, model = getProductionSprintRecordsModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildProductionSprintRecordsText(model));
+    showToast("Production sprint records copied.");
+  } catch {
+    showToast("Copy is blocked here, but the record plan is visible.");
+  }
+}
+
+function buildProductionSprintRecordsText(model = getProductionSprintRecordsModel()) {
+  return [
+    "Heavyster Production Sprint Records",
+    "Version: v159 Production Sprint Records",
+    "Rule: convert one activation sprint into production-safe records before backend implementation begins.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    "Records:",
+    ...model.records.map((record) => `- ${record.value}: ${record.detail}`),
+    "",
+    "Payment guardrail: buyer pays the rental company directly. Heavyster earns listing SaaS only in phase one.",
+    "Blocked route: no rental payment, deposit, escrow, payout, or booking commission record is created.",
+    "Production promise: every sprint has an owner, proof state, direct route, ARR signal, and go/no-go decision before scale."
+  ].join("\n");
+}
+
+function buildProductionSprintRecordsContractText() {
+  return buildProductionSprintRecordsText();
+}
+
+function renderProductionRoutePack() {
+  const root = document.querySelector("#productionRoutePack");
+  if (!root) return;
+
+  const model = getProductionRoutePackModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#productionRoutePackRole").textContent = model.roleLabel;
+  document.querySelector("#productionRoutePackHeadline").textContent = model.headline;
+  document.querySelector("#productionRoutePackDetail").textContent = model.detail;
+  document.querySelector("#productionRoutePackGrid").innerHTML = model.routes.map((route) => `
+    <span class="${escapeHtml(route.tone)}">
+      <em>${escapeHtml(route.label)}</em>
+      <strong>${escapeHtml(route.value)}</strong>
+      <small>${escapeHtml(route.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#productionRoutePackPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getProductionRoutePackModel() {
+  const records = getProductionSprintRecordsModel();
+  const role = records.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer route pack",
+      headline: "Turn enquiry records into the first direct-enquiry API.",
+      detail: "Buyer route pack maps direct enquiry, proof snapshot, selected equipment, reply follow-up, and blocked payment intent into a production-safe route.",
+      primary: { label: "Open API console", anchor: "#api-smoke-console", aria: "Open buyer route API console" },
+      routes: [
+        { label: "Route", value: "/api/direct-enquiries", detail: "create enquiry", tone: "ready" },
+        { label: "Table", value: "direct_enquiries", detail: "buyer note", tone: "ready" },
+        { label: "Field", value: "proof_snapshot_id", detail: "trust state", tone: "neutral" },
+        { label: "Validate", value: "supplier route", detail: "direct only", tone: "ready" },
+        { label: "Blocked", value: "/api/rental-payments", detail: "no custody", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier route pack",
+      headline: "Turn listing records into the first paid-listing APIs.",
+      detail: "Supplier route pack maps supplier account, listing, proof document, subscription, and direct lead route into production-safe endpoints.",
+      primary: { label: "Open schema blueprint", anchor: "#schema-api-blueprint", aria: "Open supplier route schema blueprint" },
+      routes: [
+        { label: "Route", value: "/api/equipment-listings", detail: "publish gate", tone: "ready" },
+        { label: "Route", value: "/api/listing-subscriptions", detail: "SaaS billing", tone: "ready" },
+        { label: "Table", value: "proof_documents", detail: "expiry state", tone: "watch" },
+        { label: "Validate", value: "active listing", detail: "paid status", tone: "neutral" },
+        { label: "Blocked", value: "/api/payouts", detail: "no rental flow", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder route pack",
+      headline: "Turn launch records into market signal and go/no-go APIs.",
+      detail: "Founder route pack maps launch room, supplier target, proof gate, ARR signal, and go/no-go decision into backend implementation routes.",
+      primary: { label: "Open implementation contract", anchor: "#backend-implementation-contract", aria: "Open founder backend implementation contract" },
+      routes: [
+        { label: "Route", value: "/api/market-signals", detail: "launch room", tone: "ready" },
+        { label: "Table", value: "supplier_targets", detail: "gap owner", tone: "watch" },
+        { label: "Field", value: "go_no_go", detail: "scale gate", tone: "neutral" },
+        { label: "Validate", value: "proof before traffic", detail: "trust rule", tone: "ready" },
+        { label: "Blocked", value: "/api/booking-commissions", detail: "phase one", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    routes: config.routes
+  };
+}
+
+async function handleProductionRoutePackAction(action, model = getProductionRoutePackModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildProductionRoutePackText(model));
+    showToast("Production route pack copied.");
+  } catch {
+    showToast("Copy is blocked here, but the route pack is visible.");
+  }
+}
+
+function buildProductionRoutePackText(model = getProductionRoutePackModel()) {
+  return [
+    "Heavyster Production Route Pack",
+    "Version: v160 Production Route Pack",
+    "Rule: map one production record set into allowed API routes, table fields, validations, and blocked payment routes before backend implementation starts.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    "Route pack:",
+    ...model.routes.map((route) => `- ${route.label}: ${route.value} (${route.detail})`),
+    "",
+    "Allowed route promise: direct enquiries, supplier accounts, equipment listings, proof documents, listing subscriptions, admin reviews, and market signals.",
+    "Blocked route promise: no rental payments, deposits, escrow, payouts, or booking commissions in phase one.",
+    "Production promise: routes are ready for API smoke fixtures without adding payment custody."
+  ].join("\n");
+}
+
+function buildProductionRoutePackContractText() {
+  return buildProductionRoutePackText();
 }
 
 function renderCalmActionBar() {
@@ -4645,6 +5054,9 @@ function openWorkflowStep(anchor, label, role) {
   renderCalmFocusLens();
   renderCalmDataRoom();
   renderLaunchCountryRoom();
+  renderLaunchActivationSprint();
+  renderProductionSprintRecords();
+  renderProductionRoutePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -19586,6 +19998,9 @@ async function handleHeavenlyFocusAction(action, model) {
     renderCalmFocusLens();
     renderCalmDataRoom();
     renderLaunchCountryRoom();
+    renderLaunchActivationSprint();
+    renderProductionSprintRecords();
+    renderProductionRoutePack();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

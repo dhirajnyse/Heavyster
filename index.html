@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260605-launch-country-room-v157" />
+  <link rel="stylesheet" href="styles.css?v=20260609-production-route-pack-v160" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v157</strong>
+            <strong>v160</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -230,6 +230,42 @@
         <div class="launch-country-actions">
           <button type="button" class="solid-button" id="launchCountryRoomPrimaryButton">Open country plan</button>
           <button type="button" class="ghost-button" id="copyLaunchCountryRoomButton">Copy country brief</button>
+        </div>
+      </section>
+      <section class="launch-activation-sprint" id="launchActivationSprint" aria-label="Launch activation sprint">
+        <div class="launch-activation-copy">
+          <span id="launchActivationSprintRole">Activation sprint</span>
+          <strong id="launchActivationSprintHeadline">Turn one country room into a seven-day sprint.</strong>
+          <small id="launchActivationSprintDetail">One role, one operating lane, one proof gate, one listing SaaS outcome.</small>
+        </div>
+        <div class="launch-activation-grid" id="launchActivationSprintGrid" aria-label="Launch activation moves"></div>
+        <div class="launch-activation-actions">
+          <button type="button" class="solid-button" id="launchActivationSprintPrimaryButton">Open sprint</button>
+          <button type="button" class="ghost-button" id="copyLaunchActivationSprintButton">Copy sprint brief</button>
+        </div>
+      </section>
+      <section class="production-sprint-records" id="productionSprintRecords" aria-label="Production sprint records">
+        <div class="production-record-copy">
+          <span id="productionSprintRecordsRole">Production records</span>
+          <strong id="productionSprintRecordsHeadline">Turn the sprint into production-safe records.</strong>
+          <small id="productionSprintRecordsDetail">One owner, one proof state, one direct route, one blocked payment route.</small>
+        </div>
+        <div class="production-record-grid" id="productionSprintRecordsGrid" aria-label="Production sprint record states"></div>
+        <div class="production-record-actions">
+          <button type="button" class="solid-button" id="productionSprintRecordsPrimaryButton">Open records</button>
+          <button type="button" class="ghost-button" id="copyProductionSprintRecordsButton">Copy records</button>
+        </div>
+      </section>
+      <section class="production-route-pack" id="productionRoutePack" aria-label="Production route pack">
+        <div class="production-route-copy">
+          <span id="productionRoutePackRole">Route pack</span>
+          <strong id="productionRoutePackHeadline">Turn production records into safe API routes.</strong>
+          <small id="productionRoutePackDetail">One allowed route, one table, one validation, one blocked payment route.</small>
+        </div>
+        <div class="production-route-grid" id="productionRoutePackGrid" aria-label="Production route pack states"></div>
+        <div class="production-route-actions">
+          <button type="button" class="solid-button" id="productionRoutePackPrimaryButton">Open route pack</button>
+          <button type="button" class="ghost-button" id="copyProductionRoutePackButton">Copy routes</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2337,7 +2373,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v157</span>
+            <span class="build-version-pill">Current version: v160</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2348,13 +2384,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v157 Launch Country Room</strong>
-              <small>One country room now joins each role to a start point, proof reason, money rule, and next screen.</small>
+              <strong>v160 Production Route Pack</strong>
+              <small>One route pack now turns production records into APIs, tables, validations, and blocked payment routes.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Country clarity</strong>
-              <small>Buyer, supplier, and founder paths should know the safest country/category launch before opening deeper workflow.</small>
+              <strong>API readiness</strong>
+              <small>Buyer, supplier, and founder paths should know exactly which backend route their records create.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2374,8 +2410,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v157</strong>
-              <small>Launch Country Room</small>
+              <strong>v160</strong>
+              <small>Production Route Pack</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2389,8 +2425,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend country record</strong>
-              <small>Turn country-room outputs into launch, supplier, proof, listing ARR, and direct lead records without adding UI weight.</small>
+              <strong>First API smoke build</strong>
+              <small>Turn route pack outputs into runnable endpoint stubs, fixtures, and backend smoke commands.</small>
             </article>
           </div>
 
@@ -3971,6 +4007,141 @@
             </article>
           </div>
 
+          <div class="launch-activation-sprint-contract" id="launch-activation-sprint-contract" aria-label="Heavyster launch activation sprint contract">
+            <article class="launch-activation-sprint-contract-lead">
+              <span>v158 Launch Activation Sprint</span>
+              <strong>Turn one country room into a first-revenue sprint.</strong>
+              <p>Heavyster keeps launch execution calm: one role-aware sprint, one proof gate, one supplier motion, one direct enquiry path, and one listing SaaS outcome.</p>
+              <b>Rule: sprint before scale</b>
+            </article>
+            <article>
+              <span>Buyer sprint</span>
+              <strong>Proof check, direct ask, reply tracking</strong>
+              <p>Buyer sprint converts the selected machine into one supplier-ready enquiry while payment stays direct with the rental company.</p>
+              <b>Ask safely</b>
+            </article>
+            <article>
+              <span>Supplier sprint</span>
+              <strong>Profile, proof, freshness, paid listings</strong>
+              <p>Supplier sprint turns one country account into clean listings, visible proof, direct lead routing, and annual listing ARR.</p>
+              <b>List safely</b>
+            </article>
+            <article>
+              <span>Founder sprint</span>
+              <strong>Supply gap, proof gate, calls, go/no-go</strong>
+              <p>Founder sprint converts UAE Lifting into a seven-day operating lane before traffic or category expansion scales.</p>
+              <b>Scale safely</b>
+            </article>
+            <article>
+              <span>Money rule</span>
+              <strong>Listing SaaS first</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission route enters phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article>
+              <span>Backend signal</span>
+              <strong>Sprint moves become launch records</strong>
+              <p>Activation day, owner, proof state, supplier action, ARR signal, and next decision become the first production sprint records.</p>
+              <b>Build quietly</b>
+            </article>
+            <article class="launch-activation-sprint-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one activation sprint.</strong>
+              <p>Docs include the sprint model in `docs/LAUNCH_ACTIVATION_SPRINT.json`, and no sprint action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyLaunchActivationSprintContractButton">Copy v158 sprint</button>
+            </article>
+          </div>
+
+          <div class="production-sprint-records-contract" id="production-sprint-records-contract" aria-label="Heavyster production sprint records contract">
+            <article class="production-sprint-records-contract-lead">
+              <span>v159 Production Sprint Records</span>
+              <strong>Turn each activation sprint into production-safe state.</strong>
+              <p>Heavyster keeps backend readiness calm: one role-aware record set, one owner, one proof snapshot, one direct route, one ARR signal, and one blocked payment route.</p>
+              <b>Rule: records before routes</b>
+            </article>
+            <article>
+              <span>Buyer records</span>
+              <strong>Direct enquiry, proof snapshot, reply follow-up</strong>
+              <p>Buyer sprint creates production records for enquiry intent, selected machine proof, supplier route, and response tracking.</p>
+              <b>Ask safely</b>
+            </article>
+            <article>
+              <span>Supplier records</span>
+              <strong>Account, listing, proof, subscription, lead route</strong>
+              <p>Supplier sprint creates production records for paid listing activation and direct lead routing without rental payment custody.</p>
+              <b>List safely</b>
+            </article>
+            <article>
+              <span>Founder records</span>
+              <strong>Launch room, supplier target, proof gate, ARR, decision</strong>
+              <p>Founder sprint creates production records for UAE Lifting go/no-go control before category traffic scales.</p>
+              <b>Scale safely</b>
+            </article>
+            <article>
+              <span>Blocked route</span>
+              <strong>No rental payment state</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission record enters phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article>
+              <span>Backend signal</span>
+              <strong>Record contracts become route specs</strong>
+              <p>Owner, proof state, direct route, listing ARR, and go/no-go fields become the next backend route pack.</p>
+              <b>Build quietly</b>
+            </article>
+            <article class="production-sprint-records-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one production record set.</strong>
+              <p>Docs include the record model in `docs/PRODUCTION_SPRINT_RECORDS.json`, and no record action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyProductionSprintRecordsContractButton">Copy v159 records</button>
+            </article>
+          </div>
+
+          <div class="production-route-pack-contract" id="production-route-pack-contract" aria-label="Heavyster production route pack contract">
+            <article class="production-route-pack-contract-lead">
+              <span>v160 Production Route Pack</span>
+              <strong>Turn production-safe records into backend route contracts.</strong>
+              <p>Heavyster keeps backend implementation calm: one allowed route, one table, one validation rule, one smoke fixture, and one blocked payment route per role.</p>
+              <b>Rule: routes before code</b>
+            </article>
+            <article>
+              <span>Buyer route</span>
+              <strong>/api/direct-enquiries</strong>
+              <p>Buyer route creates a direct enquiry with selected equipment, proof snapshot, supplier direct route, and reply follow-up.</p>
+              <b>Ask safely</b>
+            </article>
+            <article>
+              <span>Supplier routes</span>
+              <strong>/api/equipment-listings + subscriptions</strong>
+              <p>Supplier routes create listing, proof document, subscription, and direct lead state without payout routes.</p>
+              <b>List safely</b>
+            </article>
+            <article>
+              <span>Founder route</span>
+              <strong>/api/market-signals</strong>
+              <p>Founder route creates launch room, supplier target, proof gate, ARR signal, and go/no-go state before traffic scales.</p>
+              <b>Scale safely</b>
+            </article>
+            <article>
+              <span>Blocked routes</span>
+              <strong>No payment custody APIs</strong>
+              <p>No rental payment, deposit, escrow, payout, or booking commission endpoint enters phase one.</p>
+              <b>0% rental take</b>
+            </article>
+            <article>
+              <span>Smoke fixture</span>
+              <strong>Every route gets a test payload</strong>
+              <p>Route, table, required fields, validations, allowed status, and blocked payment route become the first API smoke pack.</p>
+              <b>Build quietly</b>
+            </article>
+            <article class="production-route-pack-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one production route pack.</strong>
+              <p>Docs include the route model in `docs/PRODUCTION_ROUTE_PACK.json`, and no route action introduces rental payment handling.</p>
+              <button type="button" class="solid-button" id="copyProductionRoutePackContractButton">Copy v160 route pack</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4064,25 +4235,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v157 Launch Country Room</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v160 Production Route Pack</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Launch Country Room</strong>
-              <p>Added a compact country launch room after the data room so each buyer, supplier, or founder path shows one country, one category wedge, one proof or supply gate, one listing SaaS rule, and one next action before scale.</p>
+              <strong>Production Route Pack</strong>
+              <p>Added a compact route pack after the production records room so each buyer, supplier, or founder path shows API route, table, validation, fixture, and blocked payment state before backend code begins.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v157.</li>
-                <li>Build Phase shows Current version: v157.</li>
-                <li>Opening `#marketplace` shows the Calm Focus Lens, Calm Data Room, Launch Country Room, and Serene Route Planner.</li>
-                <li>Launch Country Room shows role-aware buyer, supplier, or founder country rooms.</li>
-                <li>Copy country brief explains one country, proof/supply gate, direct supplier payment, and 0% rental take.</li>
-                <li>Build Phase shows the Launch Country Room contract after the Calm Data Room contract.</li>
-                <li>Docs include `docs/LAUNCH_COUNTRY_ROOM.json`.</li>
+                <li>Header shows Build v160.</li>
+                <li>Build Phase shows Current version: v160.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, and Serene Route Planner.</li>
+                <li>Production Route Pack shows role-aware buyer, supplier, or founder API route sets.</li>
+                <li>Copy route pack explains allowed route, table, validation, fixture, blocked payment route, and 0% rental take.</li>
+                <li>Build Phase shows the Production Route Pack contract after the Production Sprint Records contract.</li>
+                <li>Docs include `docs/PRODUCTION_ROUTE_PACK.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4105,12 +4276,12 @@
                 This page stays visible while we are building Heavyster. It records the current version, what is ready,
                 what is still prototype, and what must be finished before launch.
               </p>
-              <b>Updated June 5, 2026</b>
+              <b>Updated June 9, 2026</b>
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v157 Launch Country Room</strong>
-              <p>Includes the v113 deploy guard through v156 Calm Data Room, plus this launch country room release that chooses one country/category route before scale without showing extra complexity by default.</p>
+              <strong>v160 Production Route Pack</strong>
+              <p>Includes the v113 deploy guard through v159 Production Sprint Records, plus this production route pack release that converts backend-ready records into API routes, table fields, validations, fixtures, and blocked payment routes.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4219,6 +4390,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260605-launch-country-room-v157" defer></script>
+    <script src="app.js?v=20260609-production-route-pack-v160" defer></script>
   </body>
 </html>

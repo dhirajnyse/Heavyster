@@ -19,8 +19,11 @@ const types = {
 const server = createServer(async (request, response) => {
   try {
     const rawPath = decodeURIComponent((request.url || "/").split("?")[0]);
-    const safePath = normalize(rawPath).replace(/^([.][.][\\/])+/, "");
-    const target = resolve(join(root, safePath === "/" ? "index.html" : safePath));
+    const requestPath = rawPath === "/" ? "index.html" : rawPath;
+    const safePath = normalize(requestPath)
+      .replace(/^([.][.][\\/])+/, "")
+      .replace(/^[\\/]+/, "");
+    const target = resolve(join(root, safePath));
 
     if (!target.startsWith(root)) {
       response.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });

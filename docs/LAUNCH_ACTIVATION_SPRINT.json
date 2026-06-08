@@ -1,0 +1,55 @@
+{
+  "version": "v158 Launch Activation Sprint",
+  "rule": "Turn one country room into one seven-day activation lane with one proof gate, one supplier motion, one listing SaaS outcome, and one go/no-go decision before scaling traffic.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, or commission collection in phase one; Heavyster earns listing SaaS only.",
+  "sprint_lanes": [
+    {
+      "role": "Buyer",
+      "country": "UAE",
+      "category": "Lifting",
+      "days": "1-3",
+      "proof_gate": "Trust score and availability visible before enquiry",
+      "primary_move": "Copy one proof-first direct enquiry",
+      "money_rule": "0% rental take",
+      "success_signal": "Supplier reply is tracked for follow-up"
+    },
+    {
+      "role": "Supplier",
+      "country": "UAE",
+      "category": "Earthmoving",
+      "days": "1-5",
+      "proof_gate": "Profile, documents, photos, and availability freshness checked",
+      "primary_move": "Activate paid listings and direct lead route",
+      "money_rule": "USD 99/year per active listing",
+      "success_signal": "Annual listing ARR visible before publish"
+    },
+    {
+      "role": "Founder",
+      "country": "UAE",
+      "category": "Lifting",
+      "days": "1-7",
+      "proof_gate": "Supplier gap, proof score, calls, and ARR wedge reviewed",
+      "primary_move": "Run supplier hunt and publish go/no-go verdict",
+      "money_rule": "Listing SaaS first, no rental custody",
+      "success_signal": "Scale only after supply, trust, and direct route are ready"
+    }
+  ],
+  "records": [
+    "LaunchActivationSprint",
+    "SprintMove",
+    "SprintOwner",
+    "ProofGateSnapshot",
+    "SupplierActivationMove",
+    "ListingARRSignal",
+    "DirectEnquiryRoute",
+    "LaunchGoNoGoDecision"
+  ],
+  "acceptance": [
+    "Shows one role-aware sprint after the Launch Country Room.",
+    "Buyer sprint protects proof, direct enquiry, reply tracking, and 0% rental take.",
+    "Supplier sprint protects profile, proof, freshness, paid listings, and direct lead route.",
+    "Founder sprint protects supply gap, proof gate, supplier calls, ARR wedge, and go/no-go decision.",
+    "Every sprint keeps phase-one rental payment custody blocked.",
+    "Static check protects version, UI, docs, copy action, and contract."
+  ]
+}
