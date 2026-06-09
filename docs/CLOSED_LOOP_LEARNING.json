@@ -1,0 +1,104 @@
+{
+  "version": "v161 Closed Loop Learning",
+  "rule": "Every completed buyer, supplier, or founder action can create a human-approved feedback event that improves the next recommendation without exposing private organization data.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody feedback route is created in phase one.",
+  "learning_principles": [
+    "Observe real user outcomes before changing recommendation weight.",
+    "Keep private organization memory separate from aggregate network learning.",
+    "Use aggregate, non-customer-specific signals to improve other organizations.",
+    "Keep every AI suggestion human-approved before action.",
+    "Reduce recommendation weight when suggestions are ignored, rejected, stale, or contradicted by proof.",
+    "Never use payment custody, rental value, deposits, escrow, payouts, or booking commissions as a phase-one learning route."
+  ],
+  "learning_loops": [
+    {
+      "role": "Buyer",
+      "route_source": "/api/direct-enquiries",
+      "observed_action": "direct enquiry sent, supplier replied, buyer shortlisted, buyer ignored, or buyer captured demand",
+      "feedback_event": "buyer_enquiry_outcome",
+      "private_memory": "buyer search intent, proof preference, supplier response pattern, and shortlist behavior inside the buyer organization",
+      "aggregate_signal": "equipment category demand, region demand, proof trust trend, and supplier response reliability without customer-specific details",
+      "next_recommendation": "rank verified and responsive suppliers higher for the next matching buyer query",
+      "human_approval": "buyer still chooses whether to enquire, shortlist, widen search, or capture demand",
+      "blocked_routes": ["/api/rental-payments", "/api/deposits", "/api/escrow"]
+    },
+    {
+      "role": "Supplier",
+      "route_source": "/api/equipment-listings",
+      "observed_action": "listing viewed, proof updated, lead answered, lead missed, subscription renewed, or listing archived",
+      "feedback_event": "supplier_listing_outcome",
+      "private_memory": "yard freshness, proof quality, response speed, renewal exposure, and lead close pattern inside the supplier organization",
+      "aggregate_signal": "category supply depth, proof readiness, response reliability, and listing freshness without exposing supplier playbooks",
+      "next_recommendation": "suggest the next proof fix, listing update, or response action most likely to improve trust and lead quality",
+      "human_approval": "supplier still chooses whether to update proof, renew listing, answer lead, or pause inventory",
+      "blocked_routes": ["/api/payouts", "/api/booking-commissions", "/api/rental-payments"]
+    },
+    {
+      "role": "Founder",
+      "route_source": "/api/market-signals",
+      "observed_action": "supplier target contacted, proof gate passed, paid listing ARR moved, direct enquiry arrived, or launch go/no-go changed",
+      "feedback_event": "market_launch_outcome",
+      "private_memory": "market wedge quality, supplier hunt response, proof density, ARR signal, and operator decision inside the founder organization",
+      "aggregate_signal": "country/category opportunity, proof gap, demand-supply imbalance, and launch readiness without exposing organization-specific plans",
+      "next_recommendation": "recommend the next country, category, supplier cohort, or proof gate to test before traffic scales",
+      "human_approval": "founder still approves go/no-go, launch sequence, supplier hunt, and category expansion",
+      "blocked_routes": ["/api/rental-payments", "/api/escrow", "/api/booking-commissions"]
+    }
+  ],
+  "feedback_schema": [
+    {
+      "field": "feedback_event_id",
+      "reason": "Stable id for the learning event"
+    },
+    {
+      "field": "organization_id",
+      "reason": "Private boundary for organization memory"
+    },
+    {
+      "field": "role",
+      "reason": "Buyer, Supplier, or Founder learning path"
+    },
+    {
+      "field": "source_route",
+      "reason": "Allowed API route that produced the outcome"
+    },
+    {
+      "field": "observed_action",
+      "reason": "User action or outcome that was observed"
+    },
+    {
+      "field": "recommendation_weight_delta",
+      "reason": "Positive, neutral, or negative adjustment for future suggestions"
+    },
+    {
+      "field": "human_approval_state",
+      "reason": "Suggested, accepted, ignored, rejected, or expired"
+    },
+    {
+      "field": "aggregate_share_allowed",
+      "reason": "Boolean privacy gate before network learning"
+    }
+  ],
+  "allowed_learning_routes": [
+    "/api/learning-feedback",
+    "/api/recommendation-weights",
+    "/api/organization-memory",
+    "/api/aggregate-market-signals"
+  ],
+  "blocked_learning_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "acceptance": [
+    "Marketplace shows the Closed Loop Learning strip after the Production Route Pack.",
+    "Buyer, supplier, and founder roles each show observe, learn, recommend, organization memory, and aggregate network lift states.",
+    "Build Phase shows the v161 Closed Loop Learning contract after the v160 Production Route Pack contract.",
+    "Copy text explains feedback events, recommendation weights, private organization memory, aggregate network learning, and human approval.",
+    "Docs include allowed learning routes and blocked payment-custody routes.",
+    "Static checks protect the v161 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody route is introduced."
+  ]
+}

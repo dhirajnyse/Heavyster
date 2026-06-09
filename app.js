@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260609-heavyster-production-route-pack-v160";
+const DATA_VERSION = "20260609-heavyster-closed-loop-learning-v161";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260609-production-route-pack-v160";
+const SIMPLE_UX_RELEASE = "20260609-closed-loop-learning-v161";
 
 const listings = [
   {
@@ -999,6 +999,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLaunchActivationSprint();
     renderProductionSprintRecords();
     renderProductionRoutePack();
+    renderClosedLoopLearning();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1231,6 +1232,7 @@ function bindControls() {
     renderLaunchActivationSprint();
     renderProductionSprintRecords();
     renderProductionRoutePack();
+    renderClosedLoopLearning();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -1999,6 +2001,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyClosedLoopLearningContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildClosedLoopLearningContractText());
+      showToast("Closed loop learning copied.");
+    } catch {
+      showToast("Copy is blocked here, but the learning contract is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2081,6 +2092,12 @@ function bindControls() {
   document.querySelector("#copyProductionRoutePackButton").addEventListener("click", () => {
     handleProductionRoutePackAction("copy");
   });
+  document.querySelector("#closedLoopLearningPrimaryButton").addEventListener("click", () => {
+    handleClosedLoopLearningAction("primary");
+  });
+  document.querySelector("#copyClosedLoopLearningButton").addEventListener("click", () => {
+    handleClosedLoopLearningAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2152,6 +2169,7 @@ function bindControls() {
     renderLaunchActivationSprint();
     renderProductionSprintRecords();
     renderProductionRoutePack();
+    renderClosedLoopLearning();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2338,6 +2356,7 @@ function render() {
   renderLaunchActivationSprint();
   renderProductionSprintRecords();
   renderProductionRoutePack();
+  renderClosedLoopLearning();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -2995,6 +3014,7 @@ function handleSimplicityIntent(intentId) {
   renderLaunchActivationSprint();
   renderProductionSprintRecords();
   renderProductionRoutePack();
+  renderClosedLoopLearning();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3024,6 +3044,7 @@ const focusLayerSelectors = [
   ".launch-activation-sprint",
   ".production-sprint-records",
   ".production-route-pack",
+  ".closed-loop-learning",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3154,6 +3175,7 @@ function toggleCalmFocusLayers() {
   renderLaunchActivationSprint();
   renderProductionSprintRecords();
   renderProductionRoutePack();
+  renderClosedLoopLearning();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -3769,6 +3791,122 @@ function buildProductionRoutePackText(model = getProductionRoutePackModel()) {
 
 function buildProductionRoutePackContractText() {
   return buildProductionRoutePackText();
+}
+
+function renderClosedLoopLearning() {
+  const root = document.querySelector("#closedLoopLearning");
+  if (!root) return;
+
+  const model = getClosedLoopLearningModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#closedLoopLearningRole").textContent = model.roleLabel;
+  document.querySelector("#closedLoopLearningHeadline").textContent = model.headline;
+  document.querySelector("#closedLoopLearningDetail").textContent = model.detail;
+  document.querySelector("#closedLoopLearningGrid").innerHTML = model.signals.map((signal) => `
+    <span class="${escapeHtml(signal.tone)}">
+      <em>${escapeHtml(signal.label)}</em>
+      <strong>${escapeHtml(signal.value)}</strong>
+      <small>${escapeHtml(signal.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#closedLoopLearningPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getClosedLoopLearningModel() {
+  const routePack = getProductionRoutePackModel();
+  const role = routePack.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer learning loop",
+      headline: "Turn enquiry outcomes into better next matches.",
+      detail: "Buyer loop records search intent, proof trust, supplier response, and outcome feedback so the next recommendation becomes calmer and sharper.",
+      primary: { label: "Open result intelligence", anchor: "#resultIntelligence", aria: "Open buyer result intelligence" },
+      signals: [
+        { label: "Observe", value: "enquiry outcome", detail: "sent/replied/shortlisted", tone: "ready" },
+        { label: "Learn", value: "match weight", detail: "proof + response", tone: "ready" },
+        { label: "Recommend", value: "next supplier", detail: "better fit", tone: "neutral" },
+        { label: "Org memory", value: "private pattern", detail: "buyer team only", tone: "ready" },
+        { label: "Network lift", value: "aggregate signal", detail: "privacy safe", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier learning loop",
+      headline: "Turn listing outcomes into better lead routing.",
+      detail: "Supplier loop learns from listing freshness, proof quality, lead response, subscription state, and buyer fit without exposing a company's private playbook.",
+      primary: { label: "Open lead desk", anchor: "#lead-desk", aria: "Open supplier lead desk" },
+      signals: [
+        { label: "Observe", value: "lead outcome", detail: "view/enquiry/reply", tone: "ready" },
+        { label: "Learn", value: "listing quality", detail: "proof + freshness", tone: "ready" },
+        { label: "Recommend", value: "next proof fix", detail: "higher trust", tone: "neutral" },
+        { label: "Org memory", value: "yard pattern", detail: "supplier team", tone: "ready" },
+        { label: "Network lift", value: "supply signal", detail: "category safe", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder learning loop",
+      headline: "Turn market outcomes into a stronger launch playbook.",
+      detail: "Founder loop learns from supplier hunt, proof gate, listing ARR, direct enquiry quality, and go/no-go decisions before scaling another country or category.",
+      primary: { label: "Open market matrix", anchor: "#market-signal-matrix", aria: "Open market signal matrix" },
+      signals: [
+        { label: "Observe", value: "market result", detail: "ARR/enquiry/proof", tone: "ready" },
+        { label: "Learn", value: "launch weight", detail: "wedge quality", tone: "ready" },
+        { label: "Recommend", value: "next category", detail: "go/no-go", tone: "neutral" },
+        { label: "Org memory", value: "operator rule", detail: "market team", tone: "ready" },
+        { label: "Network lift", value: "playbook signal", detail: "aggregate only", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    route: routePack.routes?.[0]?.value || "/api/direct-enquiries",
+    signals: config.signals
+  };
+}
+
+async function handleClosedLoopLearningAction(action, model = getClosedLoopLearningModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildClosedLoopLearningText(model));
+    showToast("Closed loop learning copied.");
+  } catch {
+    showToast("Copy is blocked here, but the learning loop is visible.");
+  }
+}
+
+function buildClosedLoopLearningText(model = getClosedLoopLearningModel()) {
+  return [
+    "Heavyster Closed Loop Learning",
+    "Version: v161 Closed Loop Learning",
+    "Rule: every completed action can create a human-approved feedback event that improves the next recommendation without exposing private organization data.",
+    "",
+    `Role: ${model.role}`,
+    `Route source: ${model.route}`,
+    `Focus: ${model.headline}`,
+    "Learning loop:",
+    ...model.signals.map((signal) => `- ${signal.label}: ${signal.value} (${signal.detail})`),
+    "",
+    "Reinforcement promise: accepted outcomes increase future recommendation weight; ignored or rejected suggestions reduce weight until better evidence appears.",
+    "Privacy promise: each organization keeps private memory, and the network only receives aggregate, non-customer-specific learning signals.",
+    "Human approval promise: recommendations stay suggestions until a buyer, supplier, or founder confirms the next action.",
+    "Payment guardrail: no rental payment, deposit, escrow, payout, or booking commission feedback route is introduced in phase one."
+  ].join("\n");
+}
+
+function buildClosedLoopLearningContractText() {
+  return buildClosedLoopLearningText();
 }
 
 function renderCalmActionBar() {
@@ -5057,6 +5195,7 @@ function openWorkflowStep(anchor, label, role) {
   renderLaunchActivationSprint();
   renderProductionSprintRecords();
   renderProductionRoutePack();
+  renderClosedLoopLearning();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20001,6 +20140,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderLaunchActivationSprint();
     renderProductionSprintRecords();
     renderProductionRoutePack();
+    renderClosedLoopLearning();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

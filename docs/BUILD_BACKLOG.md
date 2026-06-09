@@ -42,6 +42,7 @@
 - Launch Activation Sprint for turning one country room into a buyer, supplier, or founder seven-day activation lane before traffic or paid listings scale
 - Production Sprint Records for turning activation lanes into owner, proof, direct route, listing ARR, decision, and blocked payment records before backend routes are built
 - Production Route Pack for turning production records into allowed API routes, table fields, validations, smoke fixtures, and blocked payment routes before backend code begins
+- Closed Loop Learning for turning allowed route outcomes into feedback events, recommendation weights, private organization memory, aggregate network signals, and human-approved next recommendations
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -89,6 +90,7 @@
 - Launch Activation Sprint with one role-aware sprint lane, proof gate, supplier motion, listing ARR signal, direct enquiry route, and go/no-go decision before scaling traffic
 - Production Sprint Records with one role-aware record set, owner, proof state, allowed route, blocked payment route, listing ARR signal, and go/no-go decision before backend implementation
 - Production Route Pack with one role-aware API route set, table, required fields, validations, smoke fixture, allowed routes, and blocked payment endpoints before backend implementation
+- Closed Loop Learning with one role-aware observe, learn, recommend, private-memory, aggregate-signal, and human-approval loop before recommendations scale across organizations
 
 ## Sprint 2: Repository Foundation
 
