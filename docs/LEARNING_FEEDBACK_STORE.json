@@ -1,0 +1,120 @@
+{
+  "version": "v162 Learning Feedback Store",
+  "rule": "Store each human-approved outcome as a traceable feedback event with recommendation weight, private organization memory, and aggregate network signal before AI suggestions scale.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody feedback event is created in phase one.",
+  "store_principles": [
+    "Every learning signal starts as an observed outcome, not a hidden model assumption.",
+    "Every feedback event receives a stable id and source route before it can change recommendation weight.",
+    "Accepted outcomes raise recommendation weight; ignored, stale, rejected, or contradicted outcomes lower it.",
+    "Organization memory remains private to the organization that produced the event.",
+    "Cross-organization improvement uses aggregate, non-customer-specific category, proof, response, and market signals.",
+    "Human approval state is stored with every recommendation before it can influence future suggestions.",
+    "Payment custody, rental value, deposit, escrow, payout, and booking commission events are blocked in phase one."
+  ],
+  "feedback_stores": [
+    {
+      "role": "Buyer",
+      "event_id": "FB-BUY-162",
+      "source_route": "/api/direct-enquiries",
+      "feedback_event": "buyer_enquiry_outcome",
+      "observed_outcome": "proof accepted, direct enquiry sent, supplier replied, buyer shortlisted, ignored, or captured demand",
+      "recommendation_weight_delta": "+8 for accepted proof-matched supplier; -3 for ignored or stale supplier response",
+      "human_approval_state": "suggested, accepted, ignored, rejected, or expired",
+      "private_memory": "buyer search intent, proof preference, supplier response pattern, shortlist behavior, and demand gap inside the buyer organization",
+      "aggregate_network_signal": "category demand, region demand, proof trust trend, and supplier response reliability without customer-specific details",
+      "next_recommendation": "rank verified and responsive suppliers higher for the next matching buyer query",
+      "blocked_events": ["rental_payment_attempted", "deposit_requested", "escrow_started"]
+    },
+    {
+      "role": "Supplier",
+      "event_id": "FB-SUP-162",
+      "source_route": "/api/equipment-listings",
+      "feedback_event": "supplier_lead_outcome",
+      "observed_outcome": "listing viewed, proof updated, lead answered, lead missed, subscription renewed, or listing archived",
+      "recommendation_weight_delta": "+6 for proof and freshness action; -4 for missed lead or stale listing",
+      "human_approval_state": "suggested, accepted, ignored, rejected, or expired",
+      "private_memory": "yard freshness, proof quality, response speed, renewal exposure, and lead close pattern inside the supplier organization",
+      "aggregate_network_signal": "category supply depth, proof readiness, response reliability, and listing freshness without exposing supplier playbooks",
+      "next_recommendation": "suggest the next proof fix, listing update, renewal action, or lead response most likely to improve trust",
+      "blocked_events": ["payout_created", "booking_commission_started", "rental_payment_collected"]
+    },
+    {
+      "role": "Founder",
+      "event_id": "FB-FND-162",
+      "source_route": "/api/market-signals",
+      "feedback_event": "market_launch_outcome",
+      "observed_outcome": "supplier contacted, proof gate passed, paid listing ARR moved, direct enquiry arrived, or go/no-go changed",
+      "recommendation_weight_delta": "+5 for proof-backed ARR signal; -5 for weak supplier response or failed proof gate",
+      "human_approval_state": "suggested, accepted, ignored, rejected, or expired",
+      "private_memory": "market wedge quality, supplier hunt response, proof density, ARR signal, and operator decision inside the founder organization",
+      "aggregate_network_signal": "country/category opportunity, proof gap, demand-supply imbalance, and launch readiness without exposing organization plans",
+      "next_recommendation": "recommend the next country, category, supplier cohort, or proof gate to test before traffic scales",
+      "blocked_events": ["rental_payment_started", "escrow_started", "booking_commission_recorded"]
+    }
+  ],
+  "feedback_event_schema": [
+    {
+      "field": "feedback_event_id",
+      "reason": "Stable id for audit and replay"
+    },
+    {
+      "field": "organization_id",
+      "reason": "Private memory boundary"
+    },
+    {
+      "field": "role",
+      "reason": "Buyer, Supplier, or Founder loop"
+    },
+    {
+      "field": "source_route",
+      "reason": "Allowed route that created the outcome"
+    },
+    {
+      "field": "observed_outcome",
+      "reason": "Human or system-observed result"
+    },
+    {
+      "field": "recommendation_weight_delta",
+      "reason": "Positive, neutral, or negative weight change"
+    },
+    {
+      "field": "human_approval_state",
+      "reason": "Suggested, accepted, ignored, rejected, or expired"
+    },
+    {
+      "field": "private_memory_keys",
+      "reason": "Organization-only learning fields"
+    },
+    {
+      "field": "aggregate_share_allowed",
+      "reason": "Boolean privacy gate before network learning"
+    },
+    {
+      "field": "blocked_payment_event",
+      "reason": "Must remain false in phase one"
+    }
+  ],
+  "allowed_feedback_routes": [
+    "/api/learning-feedback",
+    "/api/feedback-events",
+    "/api/recommendation-weights",
+    "/api/organization-memory",
+    "/api/aggregate-market-signals"
+  ],
+  "blocked_feedback_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "acceptance": [
+    "Marketplace shows the Learning Feedback Store strip after Closed Loop Learning.",
+    "Buyer, supplier, and founder roles each show event, weight, approval, memory, and aggregate share states.",
+    "Build Phase shows the v162 Learning Feedback Store contract after the v161 Closed Loop Learning contract.",
+    "Copy text explains feedback event id, source route, recommendation weight delta, human approval state, private memory, aggregate signal, and blocked payment route.",
+    "Docs include allowed feedback routes and blocked payment-custody routes.",
+    "Static checks protect the v162 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody event is introduced."
+  ]
+}

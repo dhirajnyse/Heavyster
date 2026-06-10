@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260609-heavyster-closed-loop-learning-v161";
+const DATA_VERSION = "20260610-heavyster-learning-feedback-store-v162";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260609-closed-loop-learning-v161";
+const SIMPLE_UX_RELEASE = "20260610-learning-feedback-store-v162";
 
 const listings = [
   {
@@ -1000,6 +1000,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProductionSprintRecords();
     renderProductionRoutePack();
     renderClosedLoopLearning();
+    renderLearningFeedbackStore();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1233,6 +1234,7 @@ function bindControls() {
     renderProductionSprintRecords();
     renderProductionRoutePack();
     renderClosedLoopLearning();
+    renderLearningFeedbackStore();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2010,6 +2012,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyLearningFeedbackStoreContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLearningFeedbackStoreContractText());
+      showToast("Learning feedback store copied.");
+    } catch {
+      showToast("Copy is blocked here, but the feedback store is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2098,6 +2109,12 @@ function bindControls() {
   document.querySelector("#copyClosedLoopLearningButton").addEventListener("click", () => {
     handleClosedLoopLearningAction("copy");
   });
+  document.querySelector("#learningFeedbackStorePrimaryButton").addEventListener("click", () => {
+    handleLearningFeedbackStoreAction("primary");
+  });
+  document.querySelector("#copyLearningFeedbackStoreButton").addEventListener("click", () => {
+    handleLearningFeedbackStoreAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2170,6 +2187,7 @@ function bindControls() {
     renderProductionSprintRecords();
     renderProductionRoutePack();
     renderClosedLoopLearning();
+    renderLearningFeedbackStore();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2357,6 +2375,7 @@ function render() {
   renderProductionSprintRecords();
   renderProductionRoutePack();
   renderClosedLoopLearning();
+  renderLearningFeedbackStore();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3015,6 +3034,7 @@ function handleSimplicityIntent(intentId) {
   renderProductionSprintRecords();
   renderProductionRoutePack();
   renderClosedLoopLearning();
+  renderLearningFeedbackStore();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3045,6 +3065,7 @@ const focusLayerSelectors = [
   ".production-sprint-records",
   ".production-route-pack",
   ".closed-loop-learning",
+  ".learning-feedback-store",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3176,6 +3197,7 @@ function toggleCalmFocusLayers() {
   renderProductionSprintRecords();
   renderProductionRoutePack();
   renderClosedLoopLearning();
+  renderLearningFeedbackStore();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -3907,6 +3929,129 @@ function buildClosedLoopLearningText(model = getClosedLoopLearningModel()) {
 
 function buildClosedLoopLearningContractText() {
   return buildClosedLoopLearningText();
+}
+
+function renderLearningFeedbackStore() {
+  const root = document.querySelector("#learningFeedbackStore");
+  if (!root) return;
+
+  const model = getLearningFeedbackStoreModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#learningFeedbackStoreRole").textContent = model.roleLabel;
+  document.querySelector("#learningFeedbackStoreHeadline").textContent = model.headline;
+  document.querySelector("#learningFeedbackStoreDetail").textContent = model.detail;
+  document.querySelector("#learningFeedbackStoreGrid").innerHTML = model.events.map((event) => `
+    <span class="${escapeHtml(event.tone)}">
+      <em>${escapeHtml(event.label)}</em>
+      <strong>${escapeHtml(event.value)}</strong>
+      <small>${escapeHtml(event.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#learningFeedbackStorePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getLearningFeedbackStoreModel() {
+  const loop = getClosedLoopLearningModel();
+  const selected = getSelectedListing();
+  const role = loop.role || state.commandRole || "Buyer";
+  const listingLabel = selected?.name || "selected machine";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer feedback store",
+      headline: "Store enquiry feedback as a match-weight change.",
+      detail: "Buyer feedback store turns one enquiry result into event id, weight delta, approval state, private memory, and safe aggregate signal.",
+      primary: { label: "Open API console", anchor: "#api-smoke-console", aria: "Open buyer feedback API console" },
+      eventId: "FB-BUY-162",
+      events: [
+        { label: "Event", value: "enquiry_outcome", detail: "proof accepted", tone: "ready" },
+        { label: "Weight", value: "+8 match", detail: listingLabel, tone: "ready" },
+        { label: "Approval", value: "accepted", detail: "human confirmed", tone: "ready" },
+        { label: "Memory", value: "org private", detail: "buyer pattern", tone: "neutral" },
+        { label: "Share", value: "aggregate", detail: "proof trend only", tone: "watch" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier feedback store",
+      headline: "Store lead feedback as a listing-quality weight.",
+      detail: "Supplier feedback store turns lead response, proof fix, freshness, and renewal movement into private memory plus safe category learning.",
+      primary: { label: "Open lead desk", anchor: "#lead-desk", aria: "Open supplier feedback lead desk" },
+      eventId: "FB-SUP-162",
+      events: [
+        { label: "Event", value: "lead_outcome", detail: "reply recorded", tone: "ready" },
+        { label: "Weight", value: "+6 quality", detail: "proof + freshness", tone: "ready" },
+        { label: "Approval", value: "accepted", detail: "supplier action", tone: "ready" },
+        { label: "Memory", value: "org private", detail: "yard pattern", tone: "neutral" },
+        { label: "Share", value: "aggregate", detail: "supply signal", tone: "watch" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder feedback store",
+      headline: "Store market feedback as a launch-weight change.",
+      detail: "Founder feedback store turns supplier hunt, proof gate, ARR, direct enquiry, and go/no-go outcomes into a safer expansion signal.",
+      primary: { label: "Open market matrix", anchor: "#market-signal-matrix", aria: "Open founder feedback market matrix" },
+      eventId: "FB-FND-162",
+      events: [
+        { label: "Event", value: "launch_outcome", detail: "go/no-go saved", tone: "ready" },
+        { label: "Weight", value: "+5 wedge", detail: "ARR + proof", tone: "ready" },
+        { label: "Approval", value: "reviewed", detail: "founder gate", tone: "neutral" },
+        { label: "Memory", value: "org private", detail: "operator rule", tone: "ready" },
+        { label: "Share", value: "aggregate", detail: "market signal", tone: "watch" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    eventId: config.eventId,
+    sourceRoute: loop.route || "/api/learning-feedback",
+    events: config.events
+  };
+}
+
+async function handleLearningFeedbackStoreAction(action, model = getLearningFeedbackStoreModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildLearningFeedbackStoreText(model));
+    showToast("Learning feedback store copied.");
+  } catch {
+    showToast("Copy is blocked here, but the feedback store is visible.");
+  }
+}
+
+function buildLearningFeedbackStoreText(model = getLearningFeedbackStoreModel()) {
+  return [
+    "Heavyster Learning Feedback Store",
+    "Version: v162 Learning Feedback Store",
+    "Rule: store each human-approved outcome as a feedback event with recommendation weight, private organization memory, and aggregate network signal before AI suggestions scale.",
+    "",
+    `Role: ${model.role}`,
+    `Feedback event: ${model.eventId}`,
+    `Source route: ${model.sourceRoute}`,
+    `Focus: ${model.headline}`,
+    "Feedback state:",
+    ...model.events.map((event) => `- ${event.label}: ${event.value} (${event.detail})`),
+    "",
+    "Reinforcement promise: accepted outcomes raise recommendation weight; ignored, stale, or rejected outcomes lower it until better evidence appears.",
+    "Privacy promise: organization memory stays private, while only aggregate category, proof, response, and market signals can improve the wider network.",
+    "Approval promise: AI recommendations remain suggestions until a human approves the next buyer, supplier, or founder action.",
+    "Blocked route promise: no rental payment, deposit, escrow, payout, booking commission, or payment-custody event enters phase one."
+  ].join("\n");
+}
+
+function buildLearningFeedbackStoreContractText() {
+  return buildLearningFeedbackStoreText();
 }
 
 function renderCalmActionBar() {
@@ -5196,6 +5341,7 @@ function openWorkflowStep(anchor, label, role) {
   renderProductionSprintRecords();
   renderProductionRoutePack();
   renderClosedLoopLearning();
+  renderLearningFeedbackStore();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20141,6 +20287,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderProductionSprintRecords();
     renderProductionRoutePack();
     renderClosedLoopLearning();
+    renderLearningFeedbackStore();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
