@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260610-heavyster-learning-feedback-store-v162";
+const DATA_VERSION = "20260610-heavyster-recommendation-weight-simulator-v163";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260610-learning-feedback-store-v162";
+const SIMPLE_UX_RELEASE = "20260610-recommendation-weight-simulator-v163";
 
 const listings = [
   {
@@ -1001,6 +1001,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProductionRoutePack();
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
+    renderRecommendationWeightSimulator();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1235,6 +1236,7 @@ function bindControls() {
     renderProductionRoutePack();
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
+    renderRecommendationWeightSimulator();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2021,6 +2023,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyRecommendationWeightSimulatorContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildRecommendationWeightSimulatorContractText());
+      showToast("Recommendation weight simulator copied.");
+    } catch {
+      showToast("Copy is blocked here, but the weight simulator is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2115,6 +2126,12 @@ function bindControls() {
   document.querySelector("#copyLearningFeedbackStoreButton").addEventListener("click", () => {
     handleLearningFeedbackStoreAction("copy");
   });
+  document.querySelector("#recommendationWeightPrimaryButton").addEventListener("click", () => {
+    handleRecommendationWeightSimulatorAction("primary");
+  });
+  document.querySelector("#copyRecommendationWeightButton").addEventListener("click", () => {
+    handleRecommendationWeightSimulatorAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2188,6 +2205,7 @@ function bindControls() {
     renderProductionRoutePack();
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
+    renderRecommendationWeightSimulator();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2376,6 +2394,7 @@ function render() {
   renderProductionRoutePack();
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
+  renderRecommendationWeightSimulator();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3035,6 +3054,7 @@ function handleSimplicityIntent(intentId) {
   renderProductionRoutePack();
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
+  renderRecommendationWeightSimulator();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3066,6 +3086,7 @@ const focusLayerSelectors = [
   ".production-route-pack",
   ".closed-loop-learning",
   ".learning-feedback-store",
+  ".recommendation-weight-simulator",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3198,6 +3219,7 @@ function toggleCalmFocusLayers() {
   renderProductionRoutePack();
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
+  renderRecommendationWeightSimulator();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4052,6 +4074,127 @@ function buildLearningFeedbackStoreText(model = getLearningFeedbackStoreModel())
 
 function buildLearningFeedbackStoreContractText() {
   return buildLearningFeedbackStoreText();
+}
+
+function renderRecommendationWeightSimulator() {
+  const root = document.querySelector("#recommendationWeightSimulator");
+  if (!root) return;
+
+  const model = getRecommendationWeightSimulatorModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#recommendationWeightRole").textContent = model.roleLabel;
+  document.querySelector("#recommendationWeightHeadline").textContent = model.headline;
+  document.querySelector("#recommendationWeightDetail").textContent = model.detail;
+  document.querySelector("#recommendationWeightGrid").innerHTML = model.outcomes.map((outcome) => `
+    <span class="${escapeHtml(outcome.tone)}">
+      <em>${escapeHtml(outcome.label)}</em>
+      <strong>${escapeHtml(outcome.value)}</strong>
+      <small>${escapeHtml(outcome.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#recommendationWeightPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getRecommendationWeightSimulatorModel() {
+  const store = getLearningFeedbackStoreModel();
+  const role = store.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer weight simulator",
+      headline: "Show how buyer feedback changes the next supplier rank.",
+      detail: "Accepted proof-matched enquiry lifts the supplier; ignored or rejected outcomes reduce the future match score before the next search.",
+      primary: { label: "Open result intelligence", anchor: "#resultIntelligence", aria: "Open buyer result intelligence" },
+      target: "verified supplier",
+      outcomes: [
+        { label: "Base", value: "72 score", detail: "before feedback", tone: "neutral" },
+        { label: "Accepted", value: "+8", detail: "reply + proof", tone: "ready" },
+        { label: "Ignored", value: "-2", detail: "no buyer action", tone: "watch" },
+        { label: "Rejected", value: "-6", detail: "poor fit", tone: "watch" },
+        { label: "Next", value: "80 rank", detail: "show higher", tone: "ready" }
+      ]
+    },
+    Supplier: {
+      roleLabel: "Supplier weight simulator",
+      headline: "Show how lead feedback changes listing priority.",
+      detail: "Answered leads and proof fixes raise listing quality; missed leads and stale proof reduce visibility until the supplier improves.",
+      primary: { label: "Open lead desk", anchor: "#lead-desk", aria: "Open supplier lead desk" },
+      target: "paid listing",
+      outcomes: [
+        { label: "Base", value: "68 score", detail: "before feedback", tone: "neutral" },
+        { label: "Accepted", value: "+6", detail: "lead replied", tone: "ready" },
+        { label: "Ignored", value: "-3", detail: "stale listing", tone: "watch" },
+        { label: "Rejected", value: "-7", detail: "missed lead", tone: "watch" },
+        { label: "Next", value: "74 rank", detail: "route better leads", tone: "ready" }
+      ]
+    },
+    Founder: {
+      roleLabel: "Founder weight simulator",
+      headline: "Show how market feedback changes launch priority.",
+      detail: "Proof-backed ARR and direct enquiry improve the wedge; weak supplier response or failed proof lowers expansion priority.",
+      primary: { label: "Open market matrix", anchor: "#market-signal-matrix", aria: "Open founder market matrix" },
+      target: "launch wedge",
+      outcomes: [
+        { label: "Base", value: "75 score", detail: "before feedback", tone: "neutral" },
+        { label: "Accepted", value: "+5", detail: "ARR + proof", tone: "ready" },
+        { label: "Ignored", value: "-4", detail: "no movement", tone: "watch" },
+        { label: "Rejected", value: "-8", detail: "failed gate", tone: "watch" },
+        { label: "Next", value: "80 rank", detail: "prioritize wedge", tone: "ready" }
+      ]
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    feedbackEvent: store.eventId,
+    target: config.target,
+    outcomes: config.outcomes
+  };
+}
+
+async function handleRecommendationWeightSimulatorAction(action, model = getRecommendationWeightSimulatorModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildRecommendationWeightSimulatorText(model));
+    showToast("Recommendation weight simulator copied.");
+  } catch {
+    showToast("Copy is blocked here, but the weight simulator is visible.");
+  }
+}
+
+function buildRecommendationWeightSimulatorText(model = getRecommendationWeightSimulatorModel()) {
+  return [
+    "Heavyster Recommendation Weight Simulator",
+    "Version: v163 Recommendation Weight Simulator",
+    "Rule: make every accepted, ignored, or rejected feedback outcome visible before it changes future AI recommendations.",
+    "",
+    `Role: ${model.role}`,
+    `Feedback event: ${model.feedbackEvent}`,
+    `Target: ${model.target}`,
+    `Focus: ${model.headline}`,
+    "Weight simulation:",
+    ...model.outcomes.map((outcome) => `- ${outcome.label}: ${outcome.value} (${outcome.detail})`),
+    "",
+    "Reinforcement promise: accepted outcomes raise future ranking, ignored outcomes reduce confidence gently, and rejected outcomes lower priority until new proof appears.",
+    "Explainability promise: users see the weight reason before Heavyster changes the next recommendation.",
+    "Privacy promise: private organization memory and aggregate network signals stay separated.",
+    "Payment guardrail: no rental payment, deposit, escrow, payout, booking commission, or payment-custody signal can affect phase-one weights."
+  ].join("\n");
+}
+
+function buildRecommendationWeightSimulatorContractText() {
+  return buildRecommendationWeightSimulatorText();
 }
 
 function renderCalmActionBar() {
@@ -5342,6 +5485,7 @@ function openWorkflowStep(anchor, label, role) {
   renderProductionRoutePack();
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
+  renderRecommendationWeightSimulator();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20288,6 +20432,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderProductionRoutePack();
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
+    renderRecommendationWeightSimulator();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

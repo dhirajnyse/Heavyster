@@ -44,6 +44,7 @@
 - Production Route Pack for turning production records into allowed API routes, table fields, validations, smoke fixtures, and blocked payment routes before backend code begins
 - Closed Loop Learning for turning allowed route outcomes into feedback events, recommendation weights, private organization memory, aggregate network signals, and human-approved next recommendations
 - Learning Feedback Store for turning human-approved outcomes into event ids, recommendation-weight deltas, approval states, private organization memory, aggregate signals, and blocked payment events
+- Recommendation Weight Simulator for showing accepted lift, ignored fade, rejected reduction, base score, next rank, private memory, and aggregate signal before AI suggestions scale
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -93,6 +94,7 @@
 - Production Route Pack with one role-aware API route set, table, required fields, validations, smoke fixture, allowed routes, and blocked payment endpoints before backend implementation
 - Closed Loop Learning with one role-aware observe, learn, recommend, private-memory, aggregate-signal, and human-approval loop before recommendations scale across organizations
 - Learning Feedback Store with one role-aware event id, source route, weight delta, approval state, private memory, aggregate share gate, and blocked payment event before AI recommendations scale
+- Recommendation Weight Simulator with one role-aware base score, accepted lift, ignored fade, rejected reduction, next rank effect, explainability reason, and blocked payment weight before recommendations scale
 
 ## Sprint 2: Repository Foundation
 

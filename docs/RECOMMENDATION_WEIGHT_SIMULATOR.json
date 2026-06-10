@@ -1,0 +1,83 @@
+{
+  "version": "v163 Recommendation Weight Simulator",
+  "rule": "Make accepted, ignored, and rejected feedback outcomes visible before they change future AI recommendation weights.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody signal can affect phase-one recommendation weights.",
+  "simulator_principles": [
+    "Show the base recommendation score before applying feedback.",
+    "Show the accepted outcome lift, ignored outcome fade, and rejected outcome reduction separately.",
+    "Explain the reason before the next recommendation is re-ranked.",
+    "Keep organization-private memory separate from aggregate network learning.",
+    "Require human approval before feedback changes an operational next action.",
+    "Block payment-custody, rental payment, deposit, escrow, payout, and booking commission signals from weighting."
+  ],
+  "role_simulators": [
+    {
+      "role": "Buyer",
+      "feedback_event": "FB-BUY-162",
+      "target": "verified supplier",
+      "base_score": 72,
+      "accepted_delta": 8,
+      "ignored_delta": -2,
+      "rejected_delta": -6,
+      "next_rank_score": 80,
+      "reason": "Proof-matched supplier replied and buyer accepted the enquiry route.",
+      "private_memory": "buyer search intent, proof preference, shortlist behavior",
+      "aggregate_signal": "proof trust trend and supplier response reliability"
+    },
+    {
+      "role": "Supplier",
+      "feedback_event": "FB-SUP-162",
+      "target": "paid listing",
+      "base_score": 68,
+      "accepted_delta": 6,
+      "ignored_delta": -3,
+      "rejected_delta": -7,
+      "next_rank_score": 74,
+      "reason": "Supplier replied to a direct lead and improved listing proof freshness.",
+      "private_memory": "yard freshness, lead response speed, renewal exposure",
+      "aggregate_signal": "category supply readiness and proof freshness"
+    },
+    {
+      "role": "Founder",
+      "feedback_event": "FB-FND-162",
+      "target": "launch wedge",
+      "base_score": 75,
+      "accepted_delta": 5,
+      "ignored_delta": -4,
+      "rejected_delta": -8,
+      "next_rank_score": 80,
+      "reason": "Proof-backed ARR and direct enquiry improved the launch wedge.",
+      "private_memory": "supplier hunt response, proof density, operator decision",
+      "aggregate_signal": "country/category opportunity and launch readiness"
+    }
+  ],
+  "weight_states": [
+    "base",
+    "accepted",
+    "ignored",
+    "rejected",
+    "next_rank"
+  ],
+  "allowed_weight_routes": [
+    "/api/recommendation-weights",
+    "/api/feedback-events",
+    "/api/organization-memory",
+    "/api/aggregate-market-signals"
+  ],
+  "blocked_weight_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions"
+  ],
+  "acceptance": [
+    "Marketplace shows the Recommendation Weight Simulator strip after Learning Feedback Store.",
+    "Buyer, supplier, and founder roles each show base score, accepted lift, ignored fade, rejected lower, and next rank effect.",
+    "Build Phase shows the v163 Recommendation Weight Simulator contract after the v162 Learning Feedback Store contract.",
+    "Copy text explains recommendation weight, explainability, private organization memory, aggregate network signal, and blocked payment weighting.",
+    "Docs include allowed recommendation weight routes and blocked payment-custody routes.",
+    "Static checks protect the v163 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody signal affects phase-one weights."
+  ]
+}
