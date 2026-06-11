@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260610-heavyster-recommendation-weight-simulator-v163";
+const DATA_VERSION = "20260611-heavyster-organization-learning-boundary-v164";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260610-recommendation-weight-simulator-v163";
+const SIMPLE_UX_RELEASE = "20260611-organization-learning-boundary-v164";
 
 const listings = [
   {
@@ -1002,6 +1002,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
+    renderOrganizationLearningBoundary();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1237,6 +1238,7 @@ function bindControls() {
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
+    renderOrganizationLearningBoundary();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2032,6 +2034,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyOrganizationLearningBoundaryContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildOrganizationLearningBoundaryContractText());
+      showToast("Organization learning boundary copied.");
+    } catch {
+      showToast("Copy is blocked here, but the learning boundary is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2132,6 +2143,12 @@ function bindControls() {
   document.querySelector("#copyRecommendationWeightButton").addEventListener("click", () => {
     handleRecommendationWeightSimulatorAction("copy");
   });
+  document.querySelector("#organizationBoundaryPrimaryButton").addEventListener("click", () => {
+    handleOrganizationLearningBoundaryAction("primary");
+  });
+  document.querySelector("#copyOrganizationBoundaryButton").addEventListener("click", () => {
+    handleOrganizationLearningBoundaryAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2206,6 +2223,7 @@ function bindControls() {
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
+    renderOrganizationLearningBoundary();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2395,6 +2413,7 @@ function render() {
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
+  renderOrganizationLearningBoundary();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3055,6 +3074,7 @@ function handleSimplicityIntent(intentId) {
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
+  renderOrganizationLearningBoundary();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3087,6 +3107,7 @@ const focusLayerSelectors = [
   ".closed-loop-learning",
   ".learning-feedback-store",
   ".recommendation-weight-simulator",
+  ".organization-learning-boundary",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3220,6 +3241,7 @@ function toggleCalmFocusLayers() {
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
+  renderOrganizationLearningBoundary();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4195,6 +4217,118 @@ function buildRecommendationWeightSimulatorText(model = getRecommendationWeightS
 
 function buildRecommendationWeightSimulatorContractText() {
   return buildRecommendationWeightSimulatorText();
+}
+
+function renderOrganizationLearningBoundary() {
+  const root = document.querySelector("#organizationLearningBoundary");
+  if (!root) return;
+
+  const model = getOrganizationLearningBoundaryModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#organizationBoundaryRole").textContent = model.roleLabel;
+  document.querySelector("#organizationBoundaryHeadline").textContent = model.headline;
+  document.querySelector("#organizationBoundaryDetail").textContent = model.detail;
+  document.querySelector("#organizationBoundaryGrid").innerHTML = model.boundaries.map((boundary) => `
+    <span class="${escapeHtml(boundary.tone)}">
+      <em>${escapeHtml(boundary.label)}</em>
+      <strong>${escapeHtml(boundary.value)}</strong>
+      <small>${escapeHtml(boundary.detail)}</small>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#organizationBoundaryPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getOrganizationLearningBoundaryModel() {
+  const simulator = getRecommendationWeightSimulatorModel();
+  const role = simulator.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer learning boundary",
+      headline: "Use network learning without exposing buyer intent.",
+      detail: "Buyer search behavior stays private; only anonymized proof trust and supplier response trends can improve future matches.",
+      primary: { label: "Open result intelligence", anchor: "#resultIntelligence", aria: "Open buyer result intelligence" },
+      privateMemory: "search intent, shortlist, enquiry context",
+      sharedSignal: "proof trust trend",
+      approvalGate: "buyer-visible reason before re-rank",
+      blockedSignal: "payment custody"
+    },
+    Supplier: {
+      roleLabel: "Supplier learning boundary",
+      headline: "Improve listing guidance without leaking supplier strategy.",
+      detail: "Supplier response habits and listing edits stay private; only anonymized proof freshness and category readiness improve the network.",
+      primary: { label: "Open lead desk", anchor: "#lead-desk", aria: "Open supplier lead desk" },
+      privateMemory: "lead replies, proof edits, renewal intent",
+      sharedSignal: "category readiness trend",
+      approvalGate: "supplier approval before visibility change",
+      blockedSignal: "booking commission"
+    },
+    Founder: {
+      roleLabel: "Founder learning boundary",
+      headline: "Learn across markets without mixing tenant decisions.",
+      detail: "Founder launch decisions stay tenant-private; only anonymized category, country, proof, and response patterns can guide expansion.",
+      primary: { label: "Open market matrix", anchor: "#market-signal-matrix", aria: "Open founder market matrix" },
+      privateMemory: "country queue, launch gate, operator notes",
+      sharedSignal: "market readiness pattern",
+      approvalGate: "operator sign-off before rollout",
+      blockedSignal: "rental payout"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    sourceWeight: simulator.target,
+    boundaries: [
+      { label: "Private", value: "tenant only", detail: config.privateMemory, tone: "neutral" },
+      { label: "Shared", value: "anonymous", detail: config.sharedSignal, tone: "ready" },
+      { label: "Approval", value: "human gate", detail: config.approvalGate, tone: "ready" },
+      { label: "Blocked", value: "0% rental take", detail: config.blockedSignal, tone: "watch" }
+    ]
+  };
+}
+
+async function handleOrganizationLearningBoundaryAction(action, model = getOrganizationLearningBoundaryModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildOrganizationLearningBoundaryText(model));
+    showToast("Organization learning boundary copied.");
+  } catch {
+    showToast("Copy is blocked here, but the learning boundary is visible.");
+  }
+}
+
+function buildOrganizationLearningBoundaryText(model = getOrganizationLearningBoundaryModel()) {
+  return [
+    "Heavyster Organization Learning Boundary",
+    "Version: v164 Organization Learning Boundary",
+    "Rule: every cross-organization learning signal must be anonymized, aggregated, permissioned, and explainable before it improves another tenant.",
+    "",
+    `Role: ${model.role}`,
+    `Source recommendation target: ${model.sourceWeight}`,
+    `Focus: ${model.headline}`,
+    "Boundary map:",
+    ...model.boundaries.map((boundary) => `- ${boundary.label}: ${boundary.value} (${boundary.detail})`),
+    "",
+    "Privacy promise: organization-private memory never leaves the tenant boundary.",
+    "Network promise: only anonymized category, proof, response, and market patterns can improve recommendations across organizations.",
+    "Approval promise: human approval stays required before learned behavior changes operational action.",
+    "Payment guardrail: no rental payment, deposit, escrow, payout, booking commission, or payment-custody signal can enter shared learning."
+  ].join("\n");
+}
+
+function buildOrganizationLearningBoundaryContractText() {
+  return buildOrganizationLearningBoundaryText();
 }
 
 function renderCalmActionBar() {
@@ -5486,6 +5620,7 @@ function openWorkflowStep(anchor, label, role) {
   renderClosedLoopLearning();
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
+  renderOrganizationLearningBoundary();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20433,6 +20568,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderClosedLoopLearning();
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
+    renderOrganizationLearningBoundary();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

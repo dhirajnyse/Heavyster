@@ -45,6 +45,7 @@
 - Closed Loop Learning for turning allowed route outcomes into feedback events, recommendation weights, private organization memory, aggregate network signals, and human-approved next recommendations
 - Learning Feedback Store for turning human-approved outcomes into event ids, recommendation-weight deltas, approval states, private organization memory, aggregate signals, and blocked payment events
 - Recommendation Weight Simulator for showing accepted lift, ignored fade, rejected reduction, base score, next rank, private memory, and aggregate signal before AI suggestions scale
+- Organization Learning Boundary for separating tenant-private memory from anonymized aggregate learning before cross-organization recommendations improve
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -95,6 +96,7 @@
 - Closed Loop Learning with one role-aware observe, learn, recommend, private-memory, aggregate-signal, and human-approval loop before recommendations scale across organizations
 - Learning Feedback Store with one role-aware event id, source route, weight delta, approval state, private memory, aggregate share gate, and blocked payment event before AI recommendations scale
 - Recommendation Weight Simulator with one role-aware base score, accepted lift, ignored fade, rejected reduction, next rank effect, explainability reason, and blocked payment weight before recommendations scale
+- Organization Learning Boundary with one role-aware tenant-private memory, anonymized aggregate signal, human approval gate, rollback note, and blocked payment signal before network learning scales
 
 ## Sprint 2: Repository Foundation
 

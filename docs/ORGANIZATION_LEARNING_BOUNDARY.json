@@ -1,0 +1,73 @@
+{
+  "version": "v164 Organization Learning Boundary",
+  "rule": "Every cross-organization learning signal must be anonymized, aggregated, permissioned, and explainable before it improves another tenant.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody signal can enter shared learning or affect phase-one recommendations.",
+  "boundary_principles": [
+    "Keep organization-private memory inside the tenant boundary.",
+    "Share only anonymized aggregate category, proof, response, and market patterns.",
+    "Explain the purpose, route, audience, and anonymization state before network learning is used.",
+    "Require human approval before learned behavior changes an operational buyer, supplier, or founder action.",
+    "Keep rollback notes for every shared learning policy.",
+    "Block rental payment, deposit, escrow, payout, booking commission, and payment-custody signals from shared learning."
+  ],
+  "role_boundaries": [
+    {
+      "role": "Buyer",
+      "private_memory": "search intent, shortlist, enquiry context",
+      "shared_signal": "anonymized proof trust trend and supplier response reliability",
+      "approval_gate": "buyer-visible reason before re-rank",
+      "blocked_signal": "payment custody",
+      "allowed_route": "/api/aggregate-market-signals",
+      "private_route": "/api/organization-memory"
+    },
+    {
+      "role": "Supplier",
+      "private_memory": "lead replies, proof edits, renewal intent",
+      "shared_signal": "anonymized proof freshness and category readiness trend",
+      "approval_gate": "supplier approval before visibility change",
+      "blocked_signal": "booking commission",
+      "allowed_route": "/api/aggregate-market-signals",
+      "private_route": "/api/organization-memory"
+    },
+    {
+      "role": "Founder",
+      "private_memory": "country queue, launch gate, operator notes",
+      "shared_signal": "anonymized market readiness and launch wedge pattern",
+      "approval_gate": "operator sign-off before rollout",
+      "blocked_signal": "rental payout",
+      "allowed_route": "/api/aggregate-market-signals",
+      "private_route": "/api/organization-memory"
+    }
+  ],
+  "boundary_states": [
+    "tenant_private",
+    "anonymized_aggregate",
+    "human_approved",
+    "blocked_payment_signal",
+    "rollback_ready"
+  ],
+  "allowed_boundary_routes": [
+    "/api/organization-memory",
+    "/api/aggregate-market-signals",
+    "/api/learning-feedback",
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events"
+  ],
+  "blocked_boundary_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "acceptance": [
+    "Marketplace shows the Organization Learning Boundary strip after Recommendation Weight Simulator.",
+    "Buyer, supplier, and founder roles each show private memory, anonymized shared signal, human approval, and blocked payment signal.",
+    "Build Phase shows the v164 Organization Learning Boundary contract after the v163 Recommendation Weight Simulator contract.",
+    "Copy text explains tenant-private memory, aggregate network learning, approval, traceability, and blocked payment signals.",
+    "Docs include allowed organization-memory, aggregate-signal, learning-feedback, recommendation-weight, and boundary-audit routes.",
+    "Static checks protect the v164 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody signal enters shared learning."
+  ]
+}
