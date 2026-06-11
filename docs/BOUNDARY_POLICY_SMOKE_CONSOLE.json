@@ -1,0 +1,108 @@
+{
+  "version": "v165 Boundary Policy Smoke Console",
+  "rule": "Every private, aggregate, approval, and blocked payment boundary route must pass a visible smoke probe before network learning scales.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody route can pass shared-learning policy.",
+  "smoke_principles": [
+    "Show the tenant-private route and confirm it stays inside organization memory.",
+    "Show the aggregate route and confirm only anonymized network patterns can be shared.",
+    "Show the approval route and confirm human approval, purpose, audience, anonymization state, and rollback note are present.",
+    "Show the blocked payment route and confirm it fails shared-learning policy.",
+    "Run role-aware buyer, supplier, and founder probes before shared learning scales.",
+    "Keep every smoke result copyable so backend fixtures can mirror the same policy."
+  ],
+  "role_smoke_probes": [
+    {
+      "role": "Buyer",
+      "private_probe": {
+        "route": "/api/organization-memory",
+        "status": "PASS",
+        "detail": "search and shortlist memory stays tenant-private"
+      },
+      "aggregate_probe": {
+        "route": "/api/aggregate-market-signals",
+        "status": "PASS",
+        "detail": "proof trust trend is anonymized"
+      },
+      "approval_probe": {
+        "route": "/api/boundary-audit-events",
+        "status": "PASS",
+        "detail": "buyer-visible reason exists before re-rank"
+      },
+      "blocked_probe": {
+        "route": "/api/rental-payments",
+        "status": "BLOCK",
+        "detail": "payment custody denied"
+      }
+    },
+    {
+      "role": "Supplier",
+      "private_probe": {
+        "route": "/api/organization-memory",
+        "status": "PASS",
+        "detail": "lead and renewal memory stays tenant-private"
+      },
+      "aggregate_probe": {
+        "route": "/api/aggregate-market-signals",
+        "status": "PASS",
+        "detail": "category readiness trend is anonymized"
+      },
+      "approval_probe": {
+        "route": "/api/boundary-audit-events",
+        "status": "PASS",
+        "detail": "supplier approval exists before visibility change"
+      },
+      "blocked_probe": {
+        "route": "/api/booking-commissions",
+        "status": "BLOCK",
+        "detail": "booking commission denied"
+      }
+    },
+    {
+      "role": "Founder",
+      "private_probe": {
+        "route": "/api/organization-memory",
+        "status": "PASS",
+        "detail": "launch notes stay tenant-private"
+      },
+      "aggregate_probe": {
+        "route": "/api/aggregate-market-signals",
+        "status": "PASS",
+        "detail": "market readiness pattern is anonymized"
+      },
+      "approval_probe": {
+        "route": "/api/boundary-audit-events",
+        "status": "PASS",
+        "detail": "operator sign-off exists before rollout"
+      },
+      "blocked_probe": {
+        "route": "/api/payouts",
+        "status": "BLOCK",
+        "detail": "rental payout denied"
+      }
+    }
+  ],
+  "allowed_smoke_routes": [
+    "/api/organization-memory",
+    "/api/aggregate-market-signals",
+    "/api/boundary-audit-events",
+    "/api/learning-feedback",
+    "/api/recommendation-weights"
+  ],
+  "blocked_smoke_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "acceptance": [
+    "Marketplace shows the Boundary Policy Smoke Console strip after Organization Learning Boundary.",
+    "Buyer, supplier, and founder roles each show PASS for private, aggregate, and approval routes.",
+    "Buyer, supplier, and founder roles each show BLOCK for payment-custody, booking-commission, or payout routes.",
+    "Build Phase shows the v165 Boundary Policy Smoke Console contract after the v164 Organization Learning Boundary contract.",
+    "Copy text exports every route, status, role, purpose, and blocked payment signal.",
+    "Static checks protect the v165 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody route can pass shared-learning policy."
+  ]
+}

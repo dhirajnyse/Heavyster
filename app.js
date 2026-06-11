@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260611-heavyster-organization-learning-boundary-v164";
+const DATA_VERSION = "20260611-heavyster-boundary-policy-smoke-console-v165";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260611-organization-learning-boundary-v164";
+const SIMPLE_UX_RELEASE = "20260611-boundary-policy-smoke-console-v165";
 
 const listings = [
   {
@@ -1003,6 +1003,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
+    renderBoundaryPolicySmokeConsole();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1239,6 +1240,7 @@ function bindControls() {
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
+    renderBoundaryPolicySmokeConsole();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2043,6 +2045,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyBoundaryPolicySmokeConsoleContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBoundaryPolicySmokeConsoleContractText());
+      showToast("Boundary policy smoke console copied.");
+    } catch {
+      showToast("Copy is blocked here, but the smoke console is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2149,6 +2160,12 @@ function bindControls() {
   document.querySelector("#copyOrganizationBoundaryButton").addEventListener("click", () => {
     handleOrganizationLearningBoundaryAction("copy");
   });
+  document.querySelector("#boundaryPolicySmokePrimaryButton").addEventListener("click", () => {
+    handleBoundaryPolicySmokeConsoleAction("primary");
+  });
+  document.querySelector("#copyBoundaryPolicySmokeButton").addEventListener("click", () => {
+    handleBoundaryPolicySmokeConsoleAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2224,6 +2241,7 @@ function bindControls() {
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
+    renderBoundaryPolicySmokeConsole();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2414,6 +2432,7 @@ function render() {
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
+  renderBoundaryPolicySmokeConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3075,6 +3094,7 @@ function handleSimplicityIntent(intentId) {
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
+  renderBoundaryPolicySmokeConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3108,6 +3128,7 @@ const focusLayerSelectors = [
   ".learning-feedback-store",
   ".recommendation-weight-simulator",
   ".organization-learning-boundary",
+  ".boundary-policy-smoke-console",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3242,6 +3263,7 @@ function toggleCalmFocusLayers() {
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
+  renderBoundaryPolicySmokeConsole();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4329,6 +4351,122 @@ function buildOrganizationLearningBoundaryText(model = getOrganizationLearningBo
 
 function buildOrganizationLearningBoundaryContractText() {
   return buildOrganizationLearningBoundaryText();
+}
+
+function renderBoundaryPolicySmokeConsole() {
+  const root = document.querySelector("#boundaryPolicySmokeConsole");
+  if (!root) return;
+
+  const model = getBoundaryPolicySmokeConsoleModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#boundaryPolicySmokeRole").textContent = model.roleLabel;
+  document.querySelector("#boundaryPolicySmokeHeadline").textContent = model.headline;
+  document.querySelector("#boundaryPolicySmokeDetail").textContent = model.detail;
+  document.querySelector("#boundaryPolicySmokeGrid").innerHTML = model.probes.map((probe) => `
+    <span class="${escapeHtml(probe.tone)}">
+      <em>${escapeHtml(probe.label)}</em>
+      <strong>${escapeHtml(probe.status)}</strong>
+      <small>${escapeHtml(probe.route)}</small>
+      <b>${escapeHtml(probe.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#boundaryPolicySmokePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getBoundaryPolicySmokeConsoleModel() {
+  const boundary = getOrganizationLearningBoundaryModel();
+  const role = boundary.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer policy smoke",
+      headline: "Prove buyer learning stays private before network lift.",
+      detail: "Smoke probes confirm buyer memory remains tenant-only, aggregate proof trends are anonymous, and payment custody is blocked.",
+      primary: { label: "Open boundary audit", anchor: "#organizationLearningBoundary", aria: "Open buyer organization learning boundary" },
+      privateDetail: "search + shortlist locked",
+      aggregateDetail: "proof trend anonymized",
+      approvalDetail: "reason shown first",
+      blockedDetail: "payment custody denied",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier policy smoke",
+      headline: "Prove supplier learning improves guidance without leaking strategy.",
+      detail: "Smoke probes confirm lead replies stay private, category readiness is anonymous, and booking commission signals are blocked.",
+      primary: { label: "Open boundary audit", anchor: "#organizationLearningBoundary", aria: "Open supplier organization learning boundary" },
+      privateDetail: "lead + renewal locked",
+      aggregateDetail: "readiness anonymized",
+      approvalDetail: "visibility approval",
+      blockedDetail: "commission denied",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder policy smoke",
+      headline: "Prove market learning scales without mixing tenant decisions.",
+      detail: "Smoke probes confirm operator notes stay private, market readiness is anonymous, and rental payout signals are blocked.",
+      primary: { label: "Open boundary audit", anchor: "#organizationLearningBoundary", aria: "Open founder organization learning boundary" },
+      privateDetail: "launch notes locked",
+      aggregateDetail: "market pattern anonymized",
+      approvalDetail: "operator sign-off",
+      blockedDetail: "rental payout denied",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    sourceBoundary: boundary.headline,
+    probes: [
+      { label: "Private", status: "PASS", route: "/api/organization-memory", detail: config.privateDetail, tone: "ready" },
+      { label: "Aggregate", status: "PASS", route: "/api/aggregate-market-signals", detail: config.aggregateDetail, tone: "ready" },
+      { label: "Approval", status: "PASS", route: "/api/boundary-audit-events", detail: config.approvalDetail, tone: "ready" },
+      { label: "Payment", status: "BLOCK", route: config.blockedRoute, detail: config.blockedDetail, tone: "watch" }
+    ]
+  };
+}
+
+async function handleBoundaryPolicySmokeConsoleAction(action, model = getBoundaryPolicySmokeConsoleModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildBoundaryPolicySmokeConsoleText(model));
+    showToast("Boundary policy smoke console copied.");
+  } catch {
+    showToast("Copy is blocked here, but the policy smoke console is visible.");
+  }
+}
+
+function buildBoundaryPolicySmokeConsoleText(model = getBoundaryPolicySmokeConsoleModel()) {
+  return [
+    "Heavyster Boundary Policy Smoke Console",
+    "Version: v165 Boundary Policy Smoke Console",
+    "Rule: every private, aggregate, approval, and blocked payment boundary route must pass a visible smoke probe before network learning scales.",
+    "",
+    `Role: ${model.role}`,
+    `Source boundary: ${model.sourceBoundary}`,
+    `Focus: ${model.headline}`,
+    "Smoke probes:",
+    ...model.probes.map((probe) => `- ${probe.label}: ${probe.status} ${probe.route} (${probe.detail})`),
+    "",
+    "Private route promise: tenant memory stays inside /api/organization-memory.",
+    "Aggregate route promise: network learning only uses anonymized /api/aggregate-market-signals.",
+    "Approval route promise: /api/boundary-audit-events records human approval, purpose, audience, and rollback note.",
+    "Blocked route promise: payment-custody routes fail the smoke console before shared learning can run."
+  ].join("\n");
+}
+
+function buildBoundaryPolicySmokeConsoleContractText() {
+  return buildBoundaryPolicySmokeConsoleText();
 }
 
 function renderCalmActionBar() {
@@ -5621,6 +5759,7 @@ function openWorkflowStep(anchor, label, role) {
   renderLearningFeedbackStore();
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
+  renderBoundaryPolicySmokeConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20569,6 +20708,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderLearningFeedbackStore();
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
+    renderBoundaryPolicySmokeConsole();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
