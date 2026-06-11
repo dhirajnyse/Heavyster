@@ -1,0 +1,82 @@
+{
+  "version": "v166 Boundary Audit Fixture Pack",
+  "rule": "Every boundary smoke probe needs a backend-ready fixture id, route, payload, expected policy result, and rollback note before production learning runs.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody fixture can pass shared-learning policy.",
+  "fixture_principles": [
+    "Give every buyer, supplier, and founder boundary probe a stable audit fixture id.",
+    "Map each fixture to the API route that should accept or block it.",
+    "Name the payload so backend tests can assert the same policy behavior as the UI.",
+    "State the expected policy result before any recommendation weight changes.",
+    "Include a rollback note for every allowed shared-learning result.",
+    "Keep payment-custody, rental payment, deposit, escrow, payout, and booking commission fixtures blocked."
+  ],
+  "role_fixture_packs": [
+    {
+      "role": "Buyer",
+      "fixture_id": "BA-BUY-166",
+      "source_smoke": "buyer policy smoke",
+      "payload": "buyer_proof_trust_trend",
+      "route": "/api/boundary-audit-events",
+      "expected_result": "private pass",
+      "rollback_note": "restore prior supplier rank",
+      "blocked_route": "/api/rental-payments",
+      "blocked_result": "BLOCK"
+    },
+    {
+      "role": "Supplier",
+      "fixture_id": "BA-SUP-166",
+      "source_smoke": "supplier policy smoke",
+      "payload": "supplier_category_readiness",
+      "route": "/api/boundary-audit-events",
+      "expected_result": "aggregate pass",
+      "rollback_note": "restore listing visibility",
+      "blocked_route": "/api/booking-commissions",
+      "blocked_result": "BLOCK"
+    },
+    {
+      "role": "Founder",
+      "fixture_id": "BA-FND-166",
+      "source_smoke": "founder policy smoke",
+      "payload": "founder_market_readiness",
+      "route": "/api/boundary-audit-events",
+      "expected_result": "approval pass",
+      "rollback_note": "restore country queue",
+      "blocked_route": "/api/payouts",
+      "blocked_result": "BLOCK"
+    }
+  ],
+  "fixture_routes": [
+    "/api/organization-memory",
+    "/api/aggregate-market-signals",
+    "/api/boundary-audit-events",
+    "/api/learning-feedback",
+    "/api/recommendation-weights"
+  ],
+  "blocked_fixture_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_fixture_fields": [
+    "fixture_id",
+    "role",
+    "source_smoke",
+    "route",
+    "payload",
+    "expected_result",
+    "rollback_note",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows the Boundary Audit Fixture Pack strip after Boundary Policy Smoke Console.",
+    "Buyer, supplier, and founder roles each show a fixture id, expected policy result, rollback state, and blocked payment route.",
+    "Build Phase shows the v166 Boundary Audit Fixture Pack contract after the v165 Boundary Policy Smoke Console contract.",
+    "Copy text exports every fixture id, route, payload, expected result, rollback note, and blocked payment route.",
+    "Docs include allowed fixture routes, blocked fixture routes, and required fixture fields.",
+    "Static checks protect the v166 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody fixture can pass shared-learning policy."
+  ]
+}

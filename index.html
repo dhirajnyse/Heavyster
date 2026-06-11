@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260611-boundary-policy-smoke-console-v165" />
+  <link rel="stylesheet" href="styles.css?v=20260612-boundary-audit-fixture-pack-v166" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v165</strong>
+            <strong>v166</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -326,6 +326,18 @@
         <div class="boundary-smoke-actions">
           <button type="button" class="solid-button" id="boundaryPolicySmokePrimaryButton">Open smoke console</button>
           <button type="button" class="ghost-button" id="copyBoundaryPolicySmokeButton">Copy smoke report</button>
+        </div>
+      </section>
+      <section class="boundary-audit-fixture-pack" id="boundaryAuditFixturePack" aria-label="Boundary audit fixture pack">
+        <div class="boundary-fixture-copy">
+          <span id="boundaryAuditFixtureRole">Audit fixtures</span>
+          <strong id="boundaryAuditFixtureHeadline">Package each boundary result for backend tests.</strong>
+          <small id="boundaryAuditFixtureDetail">Every pass or block gets a fixture id, route, expected policy result, and rollback note.</small>
+        </div>
+        <div class="boundary-fixture-grid" id="boundaryAuditFixtureGrid" aria-label="Boundary audit fixtures"></div>
+        <div class="boundary-fixture-actions">
+          <button type="button" class="solid-button" id="boundaryAuditFixturePrimaryButton">Open audit fixtures</button>
+          <button type="button" class="ghost-button" id="copyBoundaryAuditFixtureButton">Copy fixture pack</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2433,7 +2445,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v165</span>
+            <span class="build-version-pill">Current version: v166</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2444,13 +2456,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v165 Boundary Policy Smoke Console</strong>
-              <small>One console now proves private, aggregate, approval, and blocked payment routes before shared learning scales.</small>
+              <strong>v166 Boundary Audit Fixture Pack</strong>
+              <small>One fixture pack now turns boundary smoke probes into backend-ready audit examples.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Policy smoke probes</strong>
-              <small>Buyer, supplier, and founder paths should show pass/block outcomes for every learning boundary route.</small>
+              <strong>Audit fixtures</strong>
+              <small>Buyer, supplier, and founder paths should show fixture id, route, expected policy result, and rollback note.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2470,8 +2482,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v165</strong>
-              <small>Boundary Policy Smoke Console</small>
+              <strong>v166</strong>
+              <small>Boundary Audit Fixture Pack</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2485,8 +2497,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Policy route fixtures</strong>
-              <small>Turn the visible pass/block probes into backend route tests and boundary audit records.</small>
+              <strong>Audit route tests</strong>
+              <small>Turn the fixture pack into API smoke tests and persisted boundary audit records.</small>
             </article>
           </div>
 
@@ -4427,6 +4439,51 @@
             </article>
           </div>
 
+          <div class="boundary-audit-fixture-pack-contract" id="boundary-audit-fixture-pack-contract" aria-label="Heavyster boundary audit fixture pack contract">
+            <article class="boundary-audit-fixture-pack-contract-lead">
+              <span>v166 Boundary Audit Fixture Pack</span>
+              <strong>Give every policy probe a backend-ready fixture.</strong>
+              <p>Heavyster now packages smoke results into fixture ids, routes, payload names, expected policy outcomes, and rollback notes so engineering can test the learning boundary without guessing behavior.</p>
+              <b>Rule: fixture before backend</b>
+            </article>
+            <article>
+              <span>Fixture id</span>
+              <strong>Trace every role</strong>
+              <p>Buyer, supplier, and founder packs each get stable audit ids for private, aggregate, approval, and blocked route tests.</p>
+              <b>BA-*-166</b>
+            </article>
+            <article>
+              <span>Route</span>
+              <strong>Use allowed APIs</strong>
+              <p>Fixtures point to organization memory, aggregate market signals, boundary audit events, and explicit blocked payment routes.</p>
+              <b>Route ready</b>
+            </article>
+            <article>
+              <span>Expected result</span>
+              <strong>Pass or block is explicit</strong>
+              <p>Each fixture states the expected policy result so backend smoke tests can assert the same learning boundary.</p>
+              <b>Assertable</b>
+            </article>
+            <article>
+              <span>Rollback</span>
+              <strong>Reversible learning</strong>
+              <p>Every allowed learning fixture includes the prior-state rollback note needed before recommendations change.</p>
+              <b>Safe revert</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment routes fail</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody remain blocked fixture outcomes.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="boundary-audit-fixture-pack-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one boundary audit fixture pack.</strong>
+              <p>Docs include the fixture model in `docs/BOUNDARY_AUDIT_FIXTURE_PACK.json`, and every shared-learning pass has an audit route, payload, expected result, and rollback note.</p>
+              <button type="button" class="solid-button" id="copyBoundaryAuditFixturePackContractButton">Copy v166 fixture pack</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4520,25 +4577,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v165 Boundary Policy Smoke Console</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v166 Boundary Audit Fixture Pack</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Boundary Policy Smoke Console</strong>
-              <p>Added a compact smoke console after the learning boundary so each buyer, supplier, or founder path shows pass/block probes for private, aggregate, approval, and payment-policy routes.</p>
+              <strong>Boundary Audit Fixture Pack</strong>
+              <p>Added a compact fixture pack after the smoke console so each buyer, supplier, or founder path exports fixture id, route, expected result, rollback note, and blocked payment route.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v165.</li>
-                <li>Build Phase shows Current version: v165.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, and Serene Route Planner.</li>
-                <li>Boundary Policy Smoke Console shows PASS for private, aggregate, and approval routes, plus BLOCK for payment routes.</li>
-                <li>Copy smoke report explains route, status, role, purpose, and blocked payment custody.</li>
-                <li>Build Phase shows the Boundary Policy Smoke Console contract after the Organization Learning Boundary contract.</li>
-                <li>Docs include `docs/BOUNDARY_POLICY_SMOKE_CONSOLE.json`.</li>
+                <li>Header shows Build v166.</li>
+                <li>Build Phase shows Current version: v166.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, and Serene Route Planner.</li>
+                <li>Boundary Audit Fixture Pack shows fixture id, expected result, rollback state, and blocked payment route.</li>
+                <li>Copy fixture pack explains route, payload, expected policy result, audit promise, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Boundary Audit Fixture Pack contract after the Boundary Policy Smoke Console contract.</li>
+                <li>Docs include `docs/BOUNDARY_AUDIT_FIXTURE_PACK.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4565,8 +4622,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v165 Boundary Policy Smoke Console</strong>
-              <p>Includes the v113 deploy guard through v164 Organization Learning Boundary, plus this smoke-console release that proves private, aggregate, approval, and blocked payment routes before shared learning scales.</p>
+              <strong>v166 Boundary Audit Fixture Pack</strong>
+              <p>Includes the v113 deploy guard through v165 Boundary Policy Smoke Console, plus this fixture-pack release that gives backend teams copy-ready audit events for safe shared learning.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4675,6 +4732,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260611-boundary-policy-smoke-console-v165" defer></script>
+    <script src="app.js?v=20260612-boundary-audit-fixture-pack-v166" defer></script>
   </body>
 </html>

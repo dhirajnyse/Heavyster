@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260611-heavyster-boundary-policy-smoke-console-v165";
+const DATA_VERSION = "20260612-heavyster-boundary-audit-fixture-pack-v166";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260611-boundary-policy-smoke-console-v165";
+const SIMPLE_UX_RELEASE = "20260612-boundary-audit-fixture-pack-v166";
 
 const listings = [
   {
@@ -1004,6 +1004,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
+    renderBoundaryAuditFixturePack();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1241,6 +1242,7 @@ function bindControls() {
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
+    renderBoundaryAuditFixturePack();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2054,6 +2056,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyBoundaryAuditFixturePackContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBoundaryAuditFixturePackContractText());
+      showToast("Boundary audit fixture pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the audit fixture pack is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2166,6 +2177,12 @@ function bindControls() {
   document.querySelector("#copyBoundaryPolicySmokeButton").addEventListener("click", () => {
     handleBoundaryPolicySmokeConsoleAction("copy");
   });
+  document.querySelector("#boundaryAuditFixturePrimaryButton").addEventListener("click", () => {
+    handleBoundaryAuditFixturePackAction("primary");
+  });
+  document.querySelector("#copyBoundaryAuditFixtureButton").addEventListener("click", () => {
+    handleBoundaryAuditFixturePackAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2242,6 +2259,7 @@ function bindControls() {
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
+    renderBoundaryAuditFixturePack();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2433,6 +2451,7 @@ function render() {
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
+  renderBoundaryAuditFixturePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3095,6 +3114,7 @@ function handleSimplicityIntent(intentId) {
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
+  renderBoundaryAuditFixturePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3129,6 +3149,7 @@ const focusLayerSelectors = [
   ".recommendation-weight-simulator",
   ".organization-learning-boundary",
   ".boundary-policy-smoke-console",
+  ".boundary-audit-fixture-pack",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3264,6 +3285,7 @@ function toggleCalmFocusLayers() {
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
+  renderBoundaryAuditFixturePack();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4467,6 +4489,120 @@ function buildBoundaryPolicySmokeConsoleText(model = getBoundaryPolicySmokeConso
 
 function buildBoundaryPolicySmokeConsoleContractText() {
   return buildBoundaryPolicySmokeConsoleText();
+}
+
+function renderBoundaryAuditFixturePack() {
+  const root = document.querySelector("#boundaryAuditFixturePack");
+  if (!root) return;
+
+  const model = getBoundaryAuditFixturePackModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#boundaryAuditFixtureRole").textContent = model.roleLabel;
+  document.querySelector("#boundaryAuditFixtureHeadline").textContent = model.headline;
+  document.querySelector("#boundaryAuditFixtureDetail").textContent = model.detail;
+  document.querySelector("#boundaryAuditFixtureGrid").innerHTML = model.fixtures.map((fixture) => `
+    <span class="${escapeHtml(fixture.tone)}">
+      <em>${escapeHtml(fixture.label)}</em>
+      <strong>${escapeHtml(fixture.value)}</strong>
+      <small>${escapeHtml(fixture.route)}</small>
+      <b>${escapeHtml(fixture.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#boundaryAuditFixturePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getBoundaryAuditFixturePackModel() {
+  const smoke = getBoundaryPolicySmokeConsoleModel();
+  const role = smoke.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer audit fixtures",
+      headline: "Turn buyer policy probes into backend-ready audit fixtures.",
+      detail: "Buyer private memory, aggregate proof trend, approval event, and payment block now have copy-ready fixture payloads.",
+      primary: { label: "Open policy smoke", anchor: "#boundaryPolicySmokeConsole", aria: "Open buyer boundary policy smoke console" },
+      auditId: "BA-BUY-166",
+      payload: "buyer_proof_trust_trend",
+      expected: "private pass",
+      rollback: "restore prior supplier rank"
+    },
+    Supplier: {
+      roleLabel: "Supplier audit fixtures",
+      headline: "Turn supplier policy probes into backend-ready audit fixtures.",
+      detail: "Supplier lead memory, category readiness, visibility approval, and commission block now have copy-ready fixture payloads.",
+      primary: { label: "Open policy smoke", anchor: "#boundaryPolicySmokeConsole", aria: "Open supplier boundary policy smoke console" },
+      auditId: "BA-SUP-166",
+      payload: "supplier_category_readiness",
+      expected: "aggregate pass",
+      rollback: "restore listing visibility"
+    },
+    Founder: {
+      roleLabel: "Founder audit fixtures",
+      headline: "Turn founder policy probes into backend-ready audit fixtures.",
+      detail: "Founder launch memory, market readiness, operator approval, and payout block now have copy-ready fixture payloads.",
+      primary: { label: "Open policy smoke", anchor: "#boundaryPolicySmokeConsole", aria: "Open founder boundary policy smoke console" },
+      auditId: "BA-FND-166",
+      payload: "founder_market_readiness",
+      expected: "approval pass",
+      rollback: "restore country queue"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+  const blockedProbe = smoke.probes.find((probe) => probe.status === "BLOCK") || smoke.probes[3];
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    sourceSmoke: smoke.headline,
+    fixtures: [
+      { label: "Fixture", value: config.auditId, route: "/api/boundary-audit-events", detail: config.payload, tone: "neutral" },
+      { label: "Expected", value: config.expected, route: "/api/aggregate-market-signals", detail: "policy pass asserted", tone: "ready" },
+      { label: "Rollback", value: "ready", route: "/api/boundary-audit-events", detail: config.rollback, tone: "ready" },
+      { label: "Blocked", value: "BLOCK", route: blockedProbe.route, detail: blockedProbe.detail, tone: "watch" }
+    ]
+  };
+}
+
+async function handleBoundaryAuditFixturePackAction(action, model = getBoundaryAuditFixturePackModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildBoundaryAuditFixturePackText(model));
+    showToast("Boundary audit fixture pack copied.");
+  } catch {
+    showToast("Copy is blocked here, but the audit fixture pack is visible.");
+  }
+}
+
+function buildBoundaryAuditFixturePackText(model = getBoundaryAuditFixturePackModel()) {
+  return [
+    "Heavyster Boundary Audit Fixture Pack",
+    "Version: v166 Boundary Audit Fixture Pack",
+    "Rule: every boundary smoke probe needs a backend-ready fixture id, route, payload, expected policy result, and rollback note before production learning runs.",
+    "",
+    `Role: ${model.role}`,
+    `Source smoke console: ${model.sourceSmoke}`,
+    `Focus: ${model.headline}`,
+    "Audit fixtures:",
+    ...model.fixtures.map((fixture) => `- ${fixture.label}: ${fixture.value} ${fixture.route} (${fixture.detail})`),
+    "",
+    "Fixture promise: backend teams can copy these route fixtures into API smoke tests without inventing policy behavior.",
+    "Audit promise: every shared-learning pass records purpose, audience, anonymization state, approval, and rollback.",
+    "Rollback promise: each learned recommendation path keeps a reversible prior state.",
+    "Blocked route promise: payment-custody routes remain fixture-level failures before shared learning can run."
+  ].join("\n");
+}
+
+function buildBoundaryAuditFixturePackContractText() {
+  return buildBoundaryAuditFixturePackText();
 }
 
 function renderCalmActionBar() {
@@ -5760,6 +5896,7 @@ function openWorkflowStep(anchor, label, role) {
   renderRecommendationWeightSimulator();
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
+  renderBoundaryAuditFixturePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20709,6 +20846,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderRecommendationWeightSimulator();
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
+    renderBoundaryAuditFixturePack();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
