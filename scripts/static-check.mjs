@@ -245,6 +245,7 @@ assert(workflow.includes("actions/configure-pages@v5") && workflow.includes("act
 assert(workflow.includes("npm run check") && workflow.includes('find _site -name "*.zip" -delete') && workflow.includes('find _site -name "*.log" -delete'), "Pages workflow is missing static verification or artifact cleanup.");
 assert(app.includes("localStorage"), "app.js should persist prototype state locally.");
 assert(app.includes("renderListings") && app.includes("renderSupplierTable") && app.includes("getSupplierStudioModel") && app.includes("renderPricingCalculator"), "app.js is missing core renderers.");
+assert(app.includes("function formatNumber") && app.includes("formatNumber(supplierArr)"), "app.js is missing the number formatter used by launch sprint renderers.");
 assert(app.includes("renderMarketplaceSearchAssist") && app.includes("getMarketplaceSearchAssistItems") && app.includes("applyMarketplaceSearchAssist"), "app.js is missing Marketplace Search Assist logic.");
 assert(app.includes("marketplaceQuickPresets") && app.includes("renderMarketplaceQuickPresets") && app.includes("applyMarketplaceQuickPreset") && css.includes(".market-quick-presets"), "app.js is missing Marketplace Quick Presets logic.");
 assert(app.includes("renderMarketplaceResultBrief") && app.includes("getMarketplaceResultBriefModel") && app.includes("handleMarketplaceResultBriefAction") && css.includes(".market-result-brief"), "app.js is missing simple Marketplace Result Brief logic or styling.");

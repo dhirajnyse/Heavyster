@@ -22624,6 +22624,11 @@ function setText(selector, value) {
   document.querySelector(selector).textContent = value;
 }
 
+function formatNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number.toLocaleString("en-US") : "0";
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
