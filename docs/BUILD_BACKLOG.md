@@ -48,6 +48,7 @@
 - Organization Learning Boundary for separating tenant-private memory from anonymized aggregate learning before cross-organization recommendations improve
 - Boundary Policy Smoke Console for proving private, aggregate, approval, and blocked payment routes with visible pass/block probes before shared learning scales
 - Boundary Audit Fixture Pack for turning policy smoke probes into backend-ready fixture ids, routes, payloads, expected results, rollback notes, and blocked payment outcomes
+- Boundary Audit Replay Console for previewing before state, replay delta, after state, rollback state, and blocked payment behavior before learned recommendations change
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -101,6 +102,7 @@
 - Organization Learning Boundary with one role-aware tenant-private memory, anonymized aggregate signal, human approval gate, rollback note, and blocked payment signal before network learning scales
 - Boundary Policy Smoke Console with one role-aware private route pass, aggregate route pass, approval route pass, and payment route block before network learning scales
 - Boundary Audit Fixture Pack with one role-aware fixture id, audit route, payload name, expected result, rollback note, and blocked payment route before backend tests are written
+- Boundary Audit Replay Console with one role-aware before state, replay delta, after state, rollback state, and blocked payment route before production learning applies
 
 ## Sprint 2: Repository Foundation
 

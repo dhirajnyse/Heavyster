@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260612-boundary-audit-fixture-pack-v166" />
+  <link rel="stylesheet" href="styles.css?v=20260612-boundary-audit-replay-console-v167" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v166</strong>
+            <strong>v167</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -338,6 +338,18 @@
         <div class="boundary-fixture-actions">
           <button type="button" class="solid-button" id="boundaryAuditFixturePrimaryButton">Open audit fixtures</button>
           <button type="button" class="ghost-button" id="copyBoundaryAuditFixtureButton">Copy fixture pack</button>
+        </div>
+      </section>
+      <section class="boundary-audit-replay-console" id="boundaryAuditReplayConsole" aria-label="Boundary audit replay console">
+        <div class="boundary-replay-copy">
+          <span id="boundaryAuditReplayRole">Audit replay</span>
+          <strong id="boundaryAuditReplayHeadline">Replay one learning fixture before it changes recommendations.</strong>
+          <small id="boundaryAuditReplayDetail">Before score, replay delta, after score, rollback, and blocked route stay visible before learning applies.</small>
+        </div>
+        <div class="boundary-replay-grid" id="boundaryAuditReplayGrid" aria-label="Boundary audit replay steps"></div>
+        <div class="boundary-replay-actions">
+          <button type="button" class="solid-button" id="boundaryAuditReplayPrimaryButton">Open replay console</button>
+          <button type="button" class="ghost-button" id="copyBoundaryAuditReplayButton">Copy replay</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2445,7 +2457,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v166</span>
+            <span class="build-version-pill">Current version: v167</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2456,13 +2468,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v166 Boundary Audit Fixture Pack</strong>
-              <small>One fixture pack now turns boundary smoke probes into backend-ready audit examples.</small>
+              <strong>v167 Boundary Audit Replay Console</strong>
+              <small>One replay console now shows before/after learning impact and rollback before recommendations change.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Audit fixtures</strong>
-              <small>Buyer, supplier, and founder paths should show fixture id, route, expected policy result, and rollback note.</small>
+              <strong>Audit replay</strong>
+              <small>Buyer, supplier, and founder paths should show before score, replay delta, after score, rollback, and blocked route.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2482,8 +2494,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v166</strong>
-              <small>Boundary Audit Fixture Pack</small>
+              <strong>v167</strong>
+              <small>Boundary Audit Replay Console</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2497,8 +2509,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Audit route tests</strong>
-              <small>Turn the fixture pack into API smoke tests and persisted boundary audit records.</small>
+              <strong>Replay route tests</strong>
+              <small>Turn replay steps into simulated API tests before persisted recommendation changes.</small>
             </article>
           </div>
 
@@ -4484,6 +4496,51 @@
             </article>
           </div>
 
+          <div class="boundary-audit-replay-console-contract" id="boundary-audit-replay-console-contract" aria-label="Heavyster boundary audit replay console contract">
+            <article class="boundary-audit-replay-console-contract-lead">
+              <span>v167 Boundary Audit Replay Console</span>
+              <strong>Replay the learning impact before the AI applies it.</strong>
+              <p>Heavyster now lets operators inspect one audit fixture as a reversible before/after replay, with blocked payment behavior kept visible before any recommendation changes.</p>
+              <b>Rule: replay before apply</b>
+            </article>
+            <article>
+              <span>Before</span>
+              <strong>Prior state visible</strong>
+              <p>Replay starts from the current recommendation score or rank so operators can see what will change.</p>
+              <b>Known state</b>
+            </article>
+            <article>
+              <span>Delta</span>
+              <strong>Fixture impact shown</strong>
+              <p>The replay applies the fixture delta as a simulation tied to the boundary audit event, not as production learning.</p>
+              <b>Simulated</b>
+            </article>
+            <article>
+              <span>After</span>
+              <strong>Approved outcome preview</strong>
+              <p>Operator sees the proposed after-score or after-rank before the recommendation path changes.</p>
+              <b>Preview</b>
+            </article>
+            <article>
+              <span>Rollback</span>
+              <strong>Prior state stays reversible</strong>
+              <p>Every replay keeps a rollback note so learned changes can be reverted before production application.</p>
+              <b>Safe revert</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment route remains blocked</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked during replay.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="boundary-audit-replay-console-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one boundary audit replay console.</strong>
+              <p>Docs include the replay model in `docs/BOUNDARY_AUDIT_REPLAY_CONSOLE.json`, and no replay applies production learning without human approval and rollback visibility.</p>
+              <button type="button" class="solid-button" id="copyBoundaryAuditReplayConsoleContractButton">Copy v167 replay console</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4577,25 +4634,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v166 Boundary Audit Fixture Pack</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v167 Boundary Audit Replay Console</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Boundary Audit Fixture Pack</strong>
-              <p>Added a compact fixture pack after the smoke console so each buyer, supplier, or founder path exports fixture id, route, expected result, rollback note, and blocked payment route.</p>
+              <strong>Boundary Audit Replay Console</strong>
+              <p>Added a replay console after the fixture pack so each buyer, supplier, or founder path previews before state, replay delta, after state, rollback, and blocked route.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v166.</li>
-                <li>Build Phase shows Current version: v166.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, and Serene Route Planner.</li>
-                <li>Boundary Audit Fixture Pack shows fixture id, expected result, rollback state, and blocked payment route.</li>
-                <li>Copy fixture pack explains route, payload, expected policy result, audit promise, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Boundary Audit Fixture Pack contract after the Boundary Policy Smoke Console contract.</li>
-                <li>Docs include `docs/BOUNDARY_AUDIT_FIXTURE_PACK.json`.</li>
+                <li>Header shows Build v167.</li>
+                <li>Build Phase shows Current version: v167.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, and Serene Route Planner.</li>
+                <li>Boundary Audit Replay Console shows before score, replay delta, after score, rollback, and blocked payment route.</li>
+                <li>Copy replay explains fixture id, replay steps, approval promise, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Boundary Audit Replay Console contract after the Boundary Audit Fixture Pack contract.</li>
+                <li>Docs include `docs/BOUNDARY_AUDIT_REPLAY_CONSOLE.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4622,8 +4679,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v166 Boundary Audit Fixture Pack</strong>
-              <p>Includes the v113 deploy guard through v165 Boundary Policy Smoke Console, plus this fixture-pack release that gives backend teams copy-ready audit events for safe shared learning.</p>
+              <strong>v167 Boundary Audit Replay Console</strong>
+              <p>Includes the v113 deploy guard through v166 Boundary Audit Fixture Pack, plus this replay-console release that shows before/after learning impact before production recommendations change.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4732,6 +4789,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260612-boundary-audit-fixture-pack-v166" defer></script>
+    <script src="app.js?v=20260612-boundary-audit-replay-console-v167" defer></script>
   </body>
 </html>

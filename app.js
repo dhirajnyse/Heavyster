@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260612-heavyster-boundary-audit-fixture-pack-v166";
+const DATA_VERSION = "20260612-heavyster-boundary-audit-replay-console-v167";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260612-boundary-audit-fixture-pack-v166";
+const SIMPLE_UX_RELEASE = "20260612-boundary-audit-replay-console-v167";
 
 const listings = [
   {
@@ -1005,6 +1005,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
+    renderBoundaryAuditReplayConsole();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1243,6 +1244,7 @@ function bindControls() {
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
+    renderBoundaryAuditReplayConsole();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2065,6 +2067,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyBoundaryAuditReplayConsoleContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBoundaryAuditReplayConsoleContractText());
+      showToast("Boundary audit replay console copied.");
+    } catch {
+      showToast("Copy is blocked here, but the audit replay console is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2183,6 +2194,12 @@ function bindControls() {
   document.querySelector("#copyBoundaryAuditFixtureButton").addEventListener("click", () => {
     handleBoundaryAuditFixturePackAction("copy");
   });
+  document.querySelector("#boundaryAuditReplayPrimaryButton").addEventListener("click", () => {
+    handleBoundaryAuditReplayConsoleAction("primary");
+  });
+  document.querySelector("#copyBoundaryAuditReplayButton").addEventListener("click", () => {
+    handleBoundaryAuditReplayConsoleAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2260,6 +2277,7 @@ function bindControls() {
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
+    renderBoundaryAuditReplayConsole();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2452,6 +2470,7 @@ function render() {
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
+  renderBoundaryAuditReplayConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3115,6 +3134,7 @@ function handleSimplicityIntent(intentId) {
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
+  renderBoundaryAuditReplayConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3150,6 +3170,7 @@ const focusLayerSelectors = [
   ".organization-learning-boundary",
   ".boundary-policy-smoke-console",
   ".boundary-audit-fixture-pack",
+  ".boundary-audit-replay-console",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3286,6 +3307,7 @@ function toggleCalmFocusLayers() {
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
+  renderBoundaryAuditReplayConsole();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4605,6 +4627,125 @@ function buildBoundaryAuditFixturePackContractText() {
   return buildBoundaryAuditFixturePackText();
 }
 
+function renderBoundaryAuditReplayConsole() {
+  const root = document.querySelector("#boundaryAuditReplayConsole");
+  if (!root) return;
+
+  const model = getBoundaryAuditReplayConsoleModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#boundaryAuditReplayRole").textContent = model.roleLabel;
+  document.querySelector("#boundaryAuditReplayHeadline").textContent = model.headline;
+  document.querySelector("#boundaryAuditReplayDetail").textContent = model.detail;
+  document.querySelector("#boundaryAuditReplayGrid").innerHTML = model.replay.map((step) => `
+    <span class="${escapeHtml(step.tone)}">
+      <em>${escapeHtml(step.label)}</em>
+      <strong>${escapeHtml(step.value)}</strong>
+      <small>${escapeHtml(step.route)}</small>
+      <b>${escapeHtml(step.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#boundaryAuditReplayPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getBoundaryAuditReplayConsoleModel() {
+  const fixture = getBoundaryAuditFixturePackModel();
+  const role = fixture.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer audit replay",
+      headline: "Replay buyer fixture impact before the next supplier rank changes.",
+      detail: "Operator sees prior rank, replay delta, approved after-rank, rollback, and blocked payment route before learning applies.",
+      primary: { label: "Open fixture pack", anchor: "#boundaryAuditFixturePack", aria: "Open buyer boundary audit fixture pack" },
+      before: "72 rank",
+      delta: "+8 replay",
+      after: "80 rank",
+      rollback: "restore 72",
+      block: "rental route blocked"
+    },
+    Supplier: {
+      roleLabel: "Supplier audit replay",
+      headline: "Replay supplier fixture impact before listing visibility changes.",
+      detail: "Operator sees prior listing score, replay delta, approved after-score, rollback, and blocked commission route before learning applies.",
+      primary: { label: "Open fixture pack", anchor: "#boundaryAuditFixturePack", aria: "Open supplier boundary audit fixture pack" },
+      before: "68 score",
+      delta: "+6 replay",
+      after: "74 score",
+      rollback: "restore visibility",
+      block: "commission blocked"
+    },
+    Founder: {
+      roleLabel: "Founder audit replay",
+      headline: "Replay founder fixture impact before launch priority changes.",
+      detail: "Operator sees prior launch score, replay delta, approved after-score, rollback, and blocked payout route before learning applies.",
+      primary: { label: "Open fixture pack", anchor: "#boundaryAuditFixturePack", aria: "Open founder boundary audit fixture pack" },
+      before: "75 score",
+      delta: "+5 replay",
+      after: "80 score",
+      rollback: "restore queue",
+      block: "payout blocked"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+  const fixtureId = fixture.fixtures[0]?.value || "BA-BUY-166";
+  const blockedRoute = fixture.fixtures.find((item) => item.label === "Blocked")?.route || "/api/rental-payments";
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    primary: config.primary,
+    fixtureId,
+    replay: [
+      { label: "Before", value: config.before, route: "/api/recommendation-weights", detail: "prior state", tone: "neutral" },
+      { label: "Replay", value: config.delta, route: "/api/boundary-audit-events", detail: fixtureId, tone: "ready" },
+      { label: "After", value: config.after, route: "/api/aggregate-market-signals", detail: "human approved", tone: "ready" },
+      { label: "Rollback", value: config.rollback, route: "/api/boundary-audit-events", detail: "reversible", tone: "neutral" },
+      { label: "Blocked", value: "BLOCK", route: blockedRoute, detail: config.block, tone: "watch" }
+    ]
+  };
+}
+
+async function handleBoundaryAuditReplayConsoleAction(action, model = getBoundaryAuditReplayConsoleModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildBoundaryAuditReplayConsoleText(model));
+    showToast("Boundary audit replay copied.");
+  } catch {
+    showToast("Copy is blocked here, but the audit replay is visible.");
+  }
+}
+
+function buildBoundaryAuditReplayConsoleText(model = getBoundaryAuditReplayConsoleModel()) {
+  return [
+    "Heavyster Boundary Audit Replay Console",
+    "Version: v167 Boundary Audit Replay Console",
+    "Rule: every boundary audit fixture must replay before/after learning impact, rollback state, and blocked payment behavior before production recommendations change.",
+    "",
+    `Role: ${model.role}`,
+    `Fixture id: ${model.fixtureId}`,
+    `Focus: ${model.headline}`,
+    "Replay steps:",
+    ...model.replay.map((step) => `- ${step.label}: ${step.value} ${step.route} (${step.detail})`),
+    "",
+    "Replay promise: operators can inspect before and after learning impact before AI changes recommendations.",
+    "Approval promise: replay output remains a simulation until human approval applies the learned route.",
+    "Rollback promise: every replay keeps a reversible prior state.",
+    "Blocked route promise: payment-custody behavior remains blocked during replay and cannot become shared learning."
+  ].join("\n");
+}
+
+function buildBoundaryAuditReplayConsoleContractText() {
+  return buildBoundaryAuditReplayConsoleText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -5897,6 +6038,7 @@ function openWorkflowStep(anchor, label, role) {
   renderOrganizationLearningBoundary();
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
+  renderBoundaryAuditReplayConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20847,6 +20989,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderOrganizationLearningBoundary();
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
+    renderBoundaryAuditReplayConsole();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

@@ -1,0 +1,78 @@
+{
+  "version": "v167 Boundary Audit Replay Console",
+  "rule": "Every boundary audit fixture must replay before/after learning impact, rollback state, and blocked payment behavior before production recommendations change.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody replay can apply shared learning.",
+  "replay_principles": [
+    "Show the before recommendation state before applying any fixture delta.",
+    "Replay fixture impact as a simulation tied to a boundary audit event.",
+    "Show the after recommendation state only as a human-approved preview.",
+    "Keep rollback state visible before any production recommendation changes.",
+    "Keep blocked payment routes visible during replay.",
+    "Do not apply shared learning from replay until human approval and rollback visibility are present."
+  ],
+  "role_replays": [
+    {
+      "role": "Buyer",
+      "fixture_id": "BA-BUY-166",
+      "before_state": "72 rank",
+      "replay_delta": "+8 replay",
+      "after_state": "80 rank",
+      "rollback_state": "restore 72",
+      "blocked_route": "/api/rental-payments",
+      "blocked_result": "BLOCK"
+    },
+    {
+      "role": "Supplier",
+      "fixture_id": "BA-SUP-166",
+      "before_state": "68 score",
+      "replay_delta": "+6 replay",
+      "after_state": "74 score",
+      "rollback_state": "restore visibility",
+      "blocked_route": "/api/booking-commissions",
+      "blocked_result": "BLOCK"
+    },
+    {
+      "role": "Founder",
+      "fixture_id": "BA-FND-166",
+      "before_state": "75 score",
+      "replay_delta": "+5 replay",
+      "after_state": "80 score",
+      "rollback_state": "restore country queue",
+      "blocked_route": "/api/payouts",
+      "blocked_result": "BLOCK"
+    }
+  ],
+  "replay_routes": [
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events",
+    "/api/aggregate-market-signals",
+    "/api/learning-feedback"
+  ],
+  "blocked_replay_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_replay_fields": [
+    "fixture_id",
+    "role",
+    "before_state",
+    "replay_delta",
+    "after_state",
+    "rollback_state",
+    "blocked_route",
+    "blocked_result"
+  ],
+  "acceptance": [
+    "Marketplace shows the Boundary Audit Replay Console strip after Boundary Audit Fixture Pack.",
+    "Buyer, supplier, and founder roles each show before state, replay delta, after state, rollback state, and blocked payment route.",
+    "Build Phase shows the v167 Boundary Audit Replay Console contract after the v166 Boundary Audit Fixture Pack contract.",
+    "Copy text exports fixture id, replay steps, approval promise, rollback promise, and blocked payment route.",
+    "Docs include replay routes, blocked replay routes, and required replay fields.",
+    "Static checks protect the v167 cache token, UI ids, app functions, CSS selectors, and JSON model.",
+    "No rental payment, deposit, escrow, payout, booking commission, or payment-custody replay can apply shared learning."
+  ]
+}
