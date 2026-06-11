@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260612-heavyster-boundary-audit-replay-console-v167";
+const DATA_VERSION = "20260612-heavyster-human-approval-replay-gate-v168";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260612-boundary-audit-replay-console-v167";
+const SIMPLE_UX_RELEASE = "20260612-human-approval-replay-gate-v168";
 
 const listings = [
   {
@@ -1006,6 +1006,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
+    renderHumanApprovalReplayGate();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1245,6 +1246,7 @@ function bindControls() {
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
+    renderHumanApprovalReplayGate();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2076,6 +2078,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyHumanApprovalReplayGateContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildHumanApprovalReplayGateContractText());
+      showToast("Human approval replay gate copied.");
+    } catch {
+      showToast("Copy is blocked here, but the approval gate is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2200,6 +2211,12 @@ function bindControls() {
   document.querySelector("#copyBoundaryAuditReplayButton").addEventListener("click", () => {
     handleBoundaryAuditReplayConsoleAction("copy");
   });
+  document.querySelector("#humanApprovalReplayPrimaryButton").addEventListener("click", () => {
+    handleHumanApprovalReplayGateAction("primary");
+  });
+  document.querySelector("#copyHumanApprovalReplayButton").addEventListener("click", () => {
+    handleHumanApprovalReplayGateAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2278,6 +2295,7 @@ function bindControls() {
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
+    renderHumanApprovalReplayGate();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2471,6 +2489,7 @@ function render() {
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
+  renderHumanApprovalReplayGate();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3135,6 +3154,7 @@ function handleSimplicityIntent(intentId) {
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
+  renderHumanApprovalReplayGate();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3171,6 +3191,7 @@ const focusLayerSelectors = [
   ".boundary-policy-smoke-console",
   ".boundary-audit-fixture-pack",
   ".boundary-audit-replay-console",
+  ".human-approval-replay-gate",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3308,6 +3329,7 @@ function toggleCalmFocusLayers() {
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
+  renderHumanApprovalReplayGate();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4746,6 +4768,140 @@ function buildBoundaryAuditReplayConsoleContractText() {
   return buildBoundaryAuditReplayConsoleText();
 }
 
+function renderHumanApprovalReplayGate() {
+  const root = document.querySelector("#humanApprovalReplayGate");
+  if (!root) return;
+
+  const model = getHumanApprovalReplayGateModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#humanApprovalReplayRole").textContent = model.roleLabel;
+  document.querySelector("#humanApprovalReplayHeadline").textContent = model.headline;
+  document.querySelector("#humanApprovalReplayDetail").textContent = model.detail;
+  document.querySelector("#humanApprovalReplayGrid").innerHTML = model.gates.map((gate) => `
+    <span class="${escapeHtml(gate.tone)}">
+      <em>${escapeHtml(gate.label)}</em>
+      <strong>${escapeHtml(gate.value)}</strong>
+      <small>${escapeHtml(gate.route)}</small>
+      <b>${escapeHtml(gate.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#humanApprovalReplayPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getHumanApprovalReplayGateModel() {
+  const replay = getBoundaryAuditReplayConsoleModel();
+  const role = replay.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer replay approval",
+      headline: "Require buyer approval before replay changes supplier rank.",
+      detail: "Buyer approval keeps the replay paused until reason, approver, rollback, and blocked route are visible.",
+      approver: "Buyer operator",
+      reason: "proof-matched supplier accepted",
+      state: "approved",
+      approvedAt: "2026-06-12 09:00 GST",
+      rollback: "restore 72 rank",
+      blocked: "rental payment blocked"
+    },
+    Supplier: {
+      roleLabel: "Supplier replay approval",
+      headline: "Require supplier approval before replay changes listing visibility.",
+      detail: "Supplier approval keeps the replay paused until proof freshness, approval reason, rollback, and blocked commission route are visible.",
+      approver: "Supplier success lead",
+      reason: "lead response and proof freshness confirmed",
+      state: "approved",
+      approvedAt: "2026-06-12 09:00 GST",
+      rollback: "restore listing visibility",
+      blocked: "booking commission blocked"
+    },
+    Founder: {
+      roleLabel: "Founder replay approval",
+      headline: "Require founder approval before replay changes launch priority.",
+      detail: "Founder approval keeps the replay paused until market readiness, approval reason, rollback, and blocked payout route are visible.",
+      approver: "Founder operator",
+      reason: "market readiness and proof density confirmed",
+      state: "approved",
+      approvedAt: "2026-06-12 09:00 GST",
+      rollback: "restore country queue",
+      blocked: "payout route blocked"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+  const replayDelta = replay.replay.find((step) => step.label === "Replay")?.value || "replay delta";
+  const afterState = replay.replay.find((step) => step.label === "After")?.value || "after state";
+  const blockedRoute = replay.replay.find((step) => step.label === "Blocked")?.route || "/api/rental-payments";
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    fixtureId: replay.fixtureId,
+    replaySummary: `${replayDelta} to ${afterState}`,
+    approver: config.approver,
+    reason: config.reason,
+    state: config.state,
+    approvedAt: config.approvedAt,
+    rollback: config.rollback,
+    blockedRoute,
+    blocked: config.blocked,
+    primary: { label: "Open replay console", anchor: "#boundaryAuditReplayConsole", aria: `Open ${role.toLowerCase()} boundary audit replay console` },
+    gates: [
+      { label: "Approver", value: config.approver, route: "/api/boundary-audit-events", detail: replay.fixtureId, tone: "ready" },
+      { label: "Reason", value: config.reason, route: "/api/learning-feedback", detail: replayDelta, tone: "neutral" },
+      { label: "State", value: config.state, route: "/api/recommendation-weights", detail: config.approvedAt, tone: "ready" },
+      { label: "Rollback", value: config.rollback, route: "/api/boundary-audit-events", detail: "reversible", tone: "neutral" },
+      { label: "Blocked", value: "BLOCK", route: blockedRoute, detail: config.blocked, tone: "watch" }
+    ]
+  };
+}
+
+async function handleHumanApprovalReplayGateAction(action, model = getHumanApprovalReplayGateModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildHumanApprovalReplayGateText(model));
+    showToast("Human approval replay gate copied.");
+  } catch {
+    showToast("Copy is blocked here, but the approval gate is visible.");
+  }
+}
+
+function buildHumanApprovalReplayGateText(model = getHumanApprovalReplayGateModel()) {
+  return [
+    "Heavyster Human Approval Replay Gate",
+    "Version: v168 Human Approval Replay Gate",
+    "Rule: replayed learning cannot apply to production recommendations until a named human approval state, reason, rollback note, and blocked payment route are visible.",
+    "",
+    `Role: ${model.role}`,
+    `Fixture id: ${model.fixtureId}`,
+    `Replay summary: ${model.replaySummary}`,
+    `Approver: ${model.approver}`,
+    `Approval state: ${model.state}`,
+    `Approval reason: ${model.reason}`,
+    `Approval timestamp: ${model.approvedAt}`,
+    `Rollback: ${model.rollback}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Approval gate states:",
+    ...model.gates.map((gate) => `- ${gate.label}: ${gate.value} ${gate.route} (${gate.detail})`),
+    "",
+    "Approval promise: replay output remains paused until the named approval state is visible.",
+    "Explainability promise: every approval includes a reason that an operator can read before learning applies.",
+    "Rollback promise: every approved replay keeps a reversible prior state.",
+    "Blocked route promise: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked during approval."
+  ].join("\n");
+}
+
+function buildHumanApprovalReplayGateContractText() {
+  return buildHumanApprovalReplayGateText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -6039,6 +6195,7 @@ function openWorkflowStep(anchor, label, role) {
   renderBoundaryPolicySmokeConsole();
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
+  renderHumanApprovalReplayGate();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -20990,6 +21147,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderBoundaryPolicySmokeConsole();
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
+    renderHumanApprovalReplayGate();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

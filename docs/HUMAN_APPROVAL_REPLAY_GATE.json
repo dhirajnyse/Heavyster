@@ -1,0 +1,84 @@
+{
+  "version": "v168 Human Approval Replay Gate",
+  "rule": "Replayed learning cannot apply to production recommendations until a named human approval state, reason, rollback note, and blocked payment route are visible.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody approval can apply shared learning.",
+  "approval_principles": [
+    "A replay remains simulated until a named approver is visible.",
+    "Approval state must be explicit before recommendation weights can change.",
+    "Approval reason must explain why the replay is safe to apply.",
+    "Approval timestamp must be stored with the fixture and replay delta.",
+    "Rollback state must be visible beside every approved replay.",
+    "Blocked payment routes remain blocked even when the replay is approved.",
+    "Tenant-private memory and anonymized aggregate learning stay separated by the same approval gate."
+  ],
+  "role_approval_gates": [
+    {
+      "role": "Buyer",
+      "fixture_id": "BA-BUY-166",
+      "approver": "Buyer operator",
+      "approval_state": "approved",
+      "approval_reason": "proof-matched supplier accepted",
+      "approved_at": "2026-06-12 09:00 GST",
+      "replay_delta": "+8 replay",
+      "rollback_state": "restore 72 rank",
+      "blocked_route": "/api/rental-payments",
+      "blocked_result": "BLOCK"
+    },
+    {
+      "role": "Supplier",
+      "fixture_id": "BA-SUP-166",
+      "approver": "Supplier success lead",
+      "approval_state": "approved",
+      "approval_reason": "lead response and proof freshness confirmed",
+      "approved_at": "2026-06-12 09:00 GST",
+      "replay_delta": "+6 replay",
+      "rollback_state": "restore listing visibility",
+      "blocked_route": "/api/booking-commissions",
+      "blocked_result": "BLOCK"
+    },
+    {
+      "role": "Founder",
+      "fixture_id": "BA-FND-166",
+      "approver": "Founder operator",
+      "approval_state": "approved",
+      "approval_reason": "market readiness and proof density confirmed",
+      "approved_at": "2026-06-12 09:00 GST",
+      "replay_delta": "+5 replay",
+      "rollback_state": "restore country queue",
+      "blocked_route": "/api/payouts",
+      "blocked_result": "BLOCK"
+    }
+  ],
+  "approval_routes": [
+    "/api/boundary-audit-events",
+    "/api/learning-feedback",
+    "/api/recommendation-weights"
+  ],
+  "blocked_approval_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_approval_fields": [
+    "fixture_id",
+    "role",
+    "approver",
+    "approval_state",
+    "approval_reason",
+    "approved_at",
+    "replay_delta",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows the human approval replay gate after the boundary audit replay console.",
+    "Buyer, supplier, and founder views each show approver, reason, state, rollback, and blocked route.",
+    "Copy output includes fixture id, replay delta, approval state, approval reason, timestamp, rollback, and blocked route.",
+    "Build Phase includes the v168 Human Approval Replay Gate contract.",
+    "Static check fails if the approval gate UI, contract, JSON model, or cache-bust token is missing.",
+    "No blocked payment approval route can become shared learning in phase one."
+  ]
+}

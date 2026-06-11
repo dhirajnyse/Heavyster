@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260612-boundary-audit-replay-console-v167" />
+  <link rel="stylesheet" href="styles.css?v=20260612-human-approval-replay-gate-v168" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v167</strong>
+            <strong>v168</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -350,6 +350,18 @@
         <div class="boundary-replay-actions">
           <button type="button" class="solid-button" id="boundaryAuditReplayPrimaryButton">Open replay console</button>
           <button type="button" class="ghost-button" id="copyBoundaryAuditReplayButton">Copy replay</button>
+        </div>
+      </section>
+      <section class="human-approval-replay-gate" id="humanApprovalReplayGate" aria-label="Human approval replay gate">
+        <div class="approval-replay-copy">
+          <span id="humanApprovalReplayRole">Approval gate</span>
+          <strong id="humanApprovalReplayHeadline">Keep replayed learning paused until a human approves it.</strong>
+          <small id="humanApprovalReplayDetail">Approver, reason, approval state, rollback, and blocked payment route stay visible before learning applies.</small>
+        </div>
+        <div class="approval-replay-grid" id="humanApprovalReplayGrid" aria-label="Human approval replay gate states"></div>
+        <div class="approval-replay-actions">
+          <button type="button" class="solid-button" id="humanApprovalReplayPrimaryButton">Open approval gate</button>
+          <button type="button" class="ghost-button" id="copyHumanApprovalReplayButton">Copy approval gate</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2457,7 +2469,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v167</span>
+            <span class="build-version-pill">Current version: v168</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2468,13 +2480,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v167 Boundary Audit Replay Console</strong>
-              <small>One replay console now shows before/after learning impact and rollback before recommendations change.</small>
+              <strong>v168 Human Approval Replay Gate</strong>
+              <small>One approval gate keeps replayed learning paused until approver, reason, state, rollback, and blocked route are visible.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Audit replay</strong>
-              <small>Buyer, supplier, and founder paths should show before score, replay delta, after score, rollback, and blocked route.</small>
+              <strong>Approval replay gate</strong>
+              <small>Buyer, supplier, and founder paths should show approver, reason, approval state, rollback, and blocked payment route.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2494,8 +2506,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v167</strong>
-              <small>Boundary Audit Replay Console</small>
+              <strong>v168</strong>
+              <small>Human Approval Replay Gate</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2509,8 +2521,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Replay route tests</strong>
-              <small>Turn replay steps into simulated API tests before persisted recommendation changes.</small>
+              <strong>Approval policy ledger</strong>
+              <small>Persist approval decisions, reasons, and rollback notes before learned recommendations apply.</small>
             </article>
           </div>
 
@@ -4541,6 +4553,51 @@
             </article>
           </div>
 
+          <div class="human-approval-replay-gate-contract" id="human-approval-replay-gate-contract" aria-label="Heavyster human approval replay gate contract">
+            <article class="human-approval-replay-gate-contract-lead">
+              <span>v168 Human Approval Replay Gate</span>
+              <strong>Keep replayed learning paused until a named human approves it.</strong>
+              <p>Heavyster now requires the approver, reason, approval state, rollback note, and blocked payment route to stay visible before replayed learning can become a production recommendation.</p>
+              <b>Rule: approve before apply</b>
+            </article>
+            <article>
+              <span>Approver</span>
+              <strong>Named human owner</strong>
+              <p>The gate shows who approved the replay so learning decisions do not hide behind anonymous automation.</p>
+              <b>Accountable</b>
+            </article>
+            <article>
+              <span>Reason</span>
+              <strong>Approval reason visible</strong>
+              <p>Each replay needs a short reason tied to proof freshness, accepted outcome, market readiness, or another explainable signal.</p>
+              <b>Explainable</b>
+            </article>
+            <article>
+              <span>State</span>
+              <strong>Approval state explicit</strong>
+              <p>The replay remains paused unless the visible state says approved, with pending or blocked states kept out of production learning.</p>
+              <b>Paused first</b>
+            </article>
+            <article>
+              <span>Rollback</span>
+              <strong>Prior state preserved</strong>
+              <p>Every approval carries the rollback state needed to restore the previous score, rank, visibility, or launch queue.</p>
+              <b>Reversible</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment route remains blocked</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked by policy while the replay is approved.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="human-approval-replay-gate-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one human approval replay gate.</strong>
+              <p>Docs include the approval gate model in `docs/HUMAN_APPROVAL_REPLAY_GATE.json`, and no replayed learning applies without approver, reason, state, rollback, and blocked route visibility.</p>
+              <button type="button" class="solid-button" id="copyHumanApprovalReplayGateContractButton">Copy v168 approval gate</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4634,25 +4691,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v167 Boundary Audit Replay Console</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v168 Human Approval Replay Gate</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Boundary Audit Replay Console</strong>
-              <p>Added a replay console after the fixture pack so each buyer, supplier, or founder path previews before state, replay delta, after state, rollback, and blocked route.</p>
+              <strong>Human Approval Replay Gate</strong>
+              <p>Added an approval gate after the replay console so each buyer, supplier, or founder path shows approver, reason, state, rollback, and blocked payment route before learning applies.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v167.</li>
-                <li>Build Phase shows Current version: v167.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, and Serene Route Planner.</li>
-                <li>Boundary Audit Replay Console shows before score, replay delta, after score, rollback, and blocked payment route.</li>
-                <li>Copy replay explains fixture id, replay steps, approval promise, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Boundary Audit Replay Console contract after the Boundary Audit Fixture Pack contract.</li>
-                <li>Docs include `docs/BOUNDARY_AUDIT_REPLAY_CONSOLE.json`.</li>
+                <li>Header shows Build v168.</li>
+                <li>Build Phase shows Current version: v168.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, and Serene Route Planner.</li>
+                <li>Human Approval Replay Gate shows approver, reason, approval state, rollback, and blocked payment route.</li>
+                <li>Copy approval gate explains fixture id, replay summary, approval state, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Human Approval Replay Gate contract after the Boundary Audit Replay Console contract.</li>
+                <li>Docs include `docs/HUMAN_APPROVAL_REPLAY_GATE.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4679,8 +4736,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v167 Boundary Audit Replay Console</strong>
-              <p>Includes the v113 deploy guard through v166 Boundary Audit Fixture Pack, plus this replay-console release that shows before/after learning impact before production recommendations change.</p>
+              <strong>v168 Human Approval Replay Gate</strong>
+              <p>Includes the v113 deploy guard through v167 Boundary Audit Replay Console, plus this approval-gate release that requires human approval visibility before replayed learning applies.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4789,6 +4846,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260612-boundary-audit-replay-console-v167" defer></script>
+    <script src="app.js?v=20260612-human-approval-replay-gate-v168" defer></script>
   </body>
 </html>
