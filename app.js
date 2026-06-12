@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260612-heavyster-reinforcement-evaluation-lab-v170";
+const DATA_VERSION = "20260612-heavyster-network-learning-exchange-v171";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260612-reinforcement-evaluation-lab-v170";
+const SIMPLE_UX_RELEASE = "20260612-network-learning-exchange-v171";
 
 const listings = [
   {
@@ -1009,6 +1009,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
+    renderNetworkLearningExchange();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1251,6 +1252,7 @@ function bindControls() {
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
+    renderNetworkLearningExchange();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2109,6 +2111,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyNetworkLearningExchangeContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildNetworkLearningExchangeContractText());
+      showToast("Network learning exchange copied.");
+    } catch {
+      showToast("Copy is blocked here, but the exchange is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2251,6 +2262,12 @@ function bindControls() {
   document.querySelector("#copyReinforcementEvaluationButton").addEventListener("click", () => {
     handleReinforcementEvaluationLabAction("copy");
   });
+  document.querySelector("#networkLearningPrimaryButton").addEventListener("click", () => {
+    handleNetworkLearningExchangeAction("primary");
+  });
+  document.querySelector("#copyNetworkLearningButton").addEventListener("click", () => {
+    handleNetworkLearningExchangeAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2332,6 +2349,7 @@ function bindControls() {
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
+    renderNetworkLearningExchange();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2528,6 +2546,7 @@ function render() {
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
+  renderNetworkLearningExchange();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3195,6 +3214,7 @@ function handleSimplicityIntent(intentId) {
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
+  renderNetworkLearningExchange();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3234,6 +3254,7 @@ const focusLayerSelectors = [
   ".human-approval-replay-gate",
   ".learning-benefit-ledger",
   ".reinforcement-evaluation-lab",
+  ".network-learning-exchange",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3374,6 +3395,7 @@ function toggleCalmFocusLayers() {
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
+  renderNetworkLearningExchange();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -5199,6 +5221,143 @@ function buildReinforcementEvaluationLabContractText() {
   return buildReinforcementEvaluationLabText();
 }
 
+function renderNetworkLearningExchange() {
+  const root = document.querySelector("#networkLearningExchange");
+  if (!root) return;
+
+  const model = getNetworkLearningExchangeModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#networkLearningRole").textContent = model.roleLabel;
+  document.querySelector("#networkLearningHeadline").textContent = model.headline;
+  document.querySelector("#networkLearningDetail").textContent = model.detail;
+  document.querySelector("#networkLearningGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#networkLearningPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getNetworkLearningExchangeModel() {
+  const evaluation = getReinforcementEvaluationLabModel();
+  const role = evaluation.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer network exchange",
+      headline: "Anonymize buyer match lessons before they help another organization.",
+      detail: "Buyer outcomes can lift the next verified route only after local memory stays private, sample threshold passes, consent and approval are visible, and payment routes stay blocked.",
+      event: "buyer_network_match_lesson",
+      local: "intent private",
+      signal: "proof reply",
+      threshold: "5 outcomes",
+      benefit: "cleaner route",
+      consent: "opt-in",
+      approval: "marketplace approved",
+      rollback: "restore rank",
+      blocked: "rental payment zero",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier network exchange",
+      headline: "Anonymize supplier listing lessons before they guide another fleet.",
+      detail: "Supplier outcomes can improve proof guidance only after lead replies and proof edits stay private, aggregate threshold passes, approval is visible, and commission routes stay blocked.",
+      event: "supplier_network_listing_lesson",
+      local: "proof edits private",
+      signal: "fresh proof",
+      threshold: "7 outcomes",
+      benefit: "safer guidance",
+      consent: "opt-in",
+      approval: "success approved",
+      rollback: "restore visibility",
+      blocked: "commission zero",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder network exchange",
+      headline: "Anonymize market lessons before they shape another launch.",
+      detail: "Founder outcomes can improve country/category priority only after launch notes stay private, market sample threshold passes, approval is visible, and payout routes stay blocked.",
+      event: "founder_network_market_lesson",
+      local: "launch notes private",
+      signal: "proof density",
+      threshold: "4 markets",
+      benefit: "safer priority",
+      consent: "opt-in",
+      approval: "founder approved",
+      rollback: "restore queue",
+      blocked: "payout zero",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    exchangeEvent: config.event,
+    sourceEvaluation: evaluation.evaluationEvent,
+    blockedRoute: config.blockedRoute || evaluation.blockedRoute,
+    primary: { label: "Open evaluation lab", anchor: "#reinforcementEvaluationLab", aria: `Open ${role.toLowerCase()} reinforcement evaluation lab` },
+    states: [
+      { label: "Local", value: config.local, route: "/api/organization-memory", detail: "tenant boundary", tone: "neutral" },
+      { label: "Signal", value: config.signal, route: "/api/aggregate-market-signals", detail: config.event, tone: "ready" },
+      { label: "Threshold", value: config.threshold, route: "/api/network-learning-exchange", detail: "minimum sample", tone: "watch" },
+      { label: "Consent", value: config.consent, route: "/api/network-learning-exchange", detail: "tenant allowed", tone: "ready" },
+      { label: "Approval", value: config.approval, route: "/api/boundary-audit-events", detail: "human gate", tone: "ready" },
+      { label: "Rollback", value: "ready", route: "/api/boundary-audit-events", detail: config.rollback, tone: "neutral" },
+      { label: "Blocked", value: "zero cross-org", route: config.blockedRoute, detail: config.blocked, tone: "watch" }
+    ]
+  };
+}
+
+async function handleNetworkLearningExchangeAction(action, model = getNetworkLearningExchangeModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildNetworkLearningExchangeText(model));
+    showToast("Network learning exchange copied.");
+  } catch {
+    showToast("Copy is blocked here, but the exchange is visible.");
+  }
+}
+
+function buildNetworkLearningExchangeText(model = getNetworkLearningExchangeModel()) {
+  return [
+    "Heavyster Network Learning Exchange",
+    "Version: v171 Network Learning Exchange",
+    "Rule: approved evaluation outcomes can help another organization only as anonymized aggregate learning after consent, minimum sample size, tenant isolation, human approval, rollback, and blocked payment-custody routes are visible.",
+    "",
+    `Role: ${model.role}`,
+    `Exchange event: ${model.exchangeEvent}`,
+    `Source evaluation: ${model.sourceEvaluation}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Exchange states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Privacy promise: tenant-specific intent, proof edits, lead replies, renewal plans, launch notes, and operator decisions stay inside the organization.",
+    "Aggregate promise: only anonymized patterns that pass a visible minimum sample can travel across organizations.",
+    "Consent promise: opt-in and named human approval are required before network learning can influence another tenant.",
+    "Benefit promise: the receiving organization sees a safer recommendation, not another tenant's private history.",
+    "Rollback promise: every exchanged lesson keeps a reversible prior state.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from cross-organization learning."
+  ].join("\n");
+}
+
+function buildNetworkLearningExchangeContractText() {
+  return buildNetworkLearningExchangeText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -6495,6 +6654,7 @@ function openWorkflowStep(anchor, label, role) {
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
+  renderNetworkLearningExchange();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -21449,6 +21609,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
+    renderNetworkLearningExchange();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

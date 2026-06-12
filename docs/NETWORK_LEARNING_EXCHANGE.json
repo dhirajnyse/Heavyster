@@ -1,0 +1,99 @@
+{
+  "version": "v171 Network Learning Exchange",
+  "rule": "Approved evaluation outcomes can help another organization only as anonymized aggregate learning after consent, minimum sample size, tenant isolation, human approval, rollback, and blocked payment-custody routes are visible.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or single-organization outcome can cross into another organization in phase one.",
+  "exchange_principles": [
+    "Keep local organization memory private before any network lesson is created.",
+    "Exchange only anonymized aggregate patterns that pass a minimum sample threshold.",
+    "Require explicit consent and human approval before a lesson can influence another tenant.",
+    "Show the cross-organization benefit before recommendation weights move.",
+    "Keep rollback state beside every exchanged lesson so network lift can be reversed.",
+    "Separate buyer, supplier, and founder lessons so each role sees the reason and boundary.",
+    "Block payment custody, rental value, deposits, payouts, escrow, and booking commissions from network learning."
+  ],
+  "role_network_exchanges": [
+    {
+      "role": "Buyer",
+      "exchange_event": "buyer_network_match_lesson",
+      "local_memory": "search intent, shortlist, enquiry message, buyer notes",
+      "anonymized_signal": "proof-matched supplier replied after direct enquiry",
+      "minimum_sample": "5 approved buyer outcomes across 3 organizations",
+      "cross_org_benefit": "next buyer gets a cleaner verified supplier path",
+      "consent_state": "tenant opted in to aggregate learning",
+      "approval_state": "approved by marketplace operator",
+      "rollback_state": "restore prior supplier rank",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "exchange_event": "supplier_network_listing_lesson",
+      "local_memory": "lead replies, proof edits, document gaps, renewal intent",
+      "anonymized_signal": "fresh proof plus fast response improved listing trust",
+      "minimum_sample": "7 approved supplier outcomes across 4 organizations",
+      "cross_org_benefit": "next supplier gets safer listing proof guidance",
+      "consent_state": "tenant opted in to aggregate learning",
+      "approval_state": "approved by supplier success operator",
+      "rollback_state": "restore prior listing visibility",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "exchange_event": "founder_network_market_lesson",
+      "local_memory": "country queue, launch notes, trust debt, operator decisions",
+      "anonymized_signal": "proof density and response reliability increased market confidence",
+      "minimum_sample": "4 approved market outcomes across 3 organizations",
+      "cross_org_benefit": "next market gets safer country/category priority",
+      "consent_state": "tenant opted in to aggregate learning",
+      "approval_state": "approved by founder operator",
+      "rollback_state": "restore prior market queue",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "exchange_states": [
+    "local_private",
+    "anonymized_signal",
+    "minimum_sample",
+    "consent_checked",
+    "approval_ready",
+    "rollback_ready",
+    "blocked_payment_zero"
+  ],
+  "exchange_routes": [
+    "/api/network-learning-exchange",
+    "/api/aggregate-market-signals",
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_exchange_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_exchange_fields": [
+    "exchange_event",
+    "role",
+    "local_memory",
+    "anonymized_signal",
+    "minimum_sample",
+    "cross_org_benefit",
+    "consent_state",
+    "approval_state",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows the Network Learning Exchange after the Reinforcement Evaluation Lab.",
+    "Buyer, supplier, and founder views each show local privacy, anonymized signal, minimum sample, consent, approval, rollback, and blocked payment route.",
+    "Copy output explains what stayed private, what aggregate lesson moved, who benefits, which threshold passed, and which payment route stayed blocked.",
+    "Build Phase shows the v171 Network Learning Exchange contract after the Reinforcement Evaluation Lab contract.",
+    "Docs include exchange states, exchange routes, private routes, blocked payment routes, and required exchange fields.",
+    "Static check fails if the exchange UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No tenant-private memory or payment-custody signal can cross organizations in phase one."
+  ]
+}

@@ -50,6 +50,9 @@
 - Boundary Audit Fixture Pack for turning policy smoke probes into backend-ready fixture ids, routes, payloads, expected results, rollback notes, and blocked payment outcomes
 - Boundary Audit Replay Console for previewing before state, replay delta, after state, rollback state, and blocked payment behavior before learned recommendations change
 - Human Approval Replay Gate for keeping replayed learning paused until approver, reason, approval state, approval timestamp, rollback state, and blocked payment route are visible
+- Learning Benefit Ledger for showing role benefit, private memory, aggregate pattern, approval, rollback, and blocked payment route before network recommendations improve
+- Reinforcement Evaluation Lab for scoring accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
+- Network Learning Exchange for sharing only anonymized aggregate lessons across organizations after minimum sample, consent, approval, rollback, and blocked payment route are visible
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages

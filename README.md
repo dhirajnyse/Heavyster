@@ -44,6 +44,9 @@ This folder contains a static product prototype with:
 - Boundary Audit Fixture Pack that turns policy smoke probes into backend-ready fixture ids, routes, payloads, expected results, and rollback notes
 - Boundary Audit Replay Console that previews before/after learning impact, rollback state, and blocked payment behavior before recommendations change
 - Human Approval Replay Gate that keeps replayed learning paused until approver, reason, state, rollback, and blocked payment route are visible
+- Learning Benefit Ledger that shows who benefits, what stayed private, what aggregate pattern can help the network, and which payment route stayed blocked
+- Reinforcement Evaluation Lab that scores accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
+- Network Learning Exchange that lets approved aggregate lessons help other organizations only after tenant privacy, minimum sample, consent, approval, rollback, and blocked payment routes are visible
 - Marketplace Scale Guard that keeps large-result searches simple by recommending best path, compact rows, widened search, or demand capture before the buyer gets buried in inventory
 - Catalog Focus Bar for one-click best-fit, verified, available, saved, and demand-gap views before buyers scan large equipment lists
 - Catalog Pager that keeps card view and compact rows page-based with simple row-count controls for future large inventories
@@ -150,6 +153,9 @@ This folder contains a static product prototype with:
 - Boundary Audit Fixture Pack for mapping policy smoke probes into fixture ids, routes, payloads, expected results, rollback notes, and blocked payment outcomes before backend implementation
 - Boundary Audit Replay Console for mapping one fixture into before state, replay delta, after state, rollback state, and blocked payment behavior before learning applies
 - Human Approval Replay Gate for mapping replayed fixture into approver, approval reason, approval state, approval timestamp, rollback state, and blocked payment route before production learning applies
+- Learning Benefit Ledger for mapping feedback into role benefit, private memory, aggregate pattern, approval, rollback, and blocked payment route before network recommendations improve
+- Reinforcement Evaluation Lab for mapping approved benefits into accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
+- Network Learning Exchange for mapping approved evaluation outcomes into anonymized aggregate lessons with minimum sample, consent, cross-organization benefit, rollback, and blocked payment route before another tenant benefits
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

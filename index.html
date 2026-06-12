@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260612-reinforcement-evaluation-lab-v170" />
+  <link rel="stylesheet" href="styles.css?v=20260612-network-learning-exchange-v171" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v170</strong>
+            <strong>v171</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -386,6 +386,18 @@
         <div class="reinforcement-lab-actions">
           <button type="button" class="solid-button" id="reinforcementEvaluationPrimaryButton">Open benefit ledger</button>
           <button type="button" class="ghost-button" id="copyReinforcementEvaluationButton">Copy evaluation lab</button>
+        </div>
+      </section>
+      <section class="network-learning-exchange" id="networkLearningExchange" aria-label="Network learning exchange">
+        <div class="network-exchange-copy">
+          <span id="networkLearningRole">Network exchange</span>
+          <strong id="networkLearningHeadline">Share only anonymized lessons across organizations.</strong>
+          <small id="networkLearningDetail">Local memory, aggregate signal, minimum sample, consent, approval, rollback, and blocked payment route stay visible.</small>
+        </div>
+        <div class="network-exchange-grid" id="networkLearningGrid" aria-label="Network learning exchange states"></div>
+        <div class="network-exchange-actions">
+          <button type="button" class="solid-button" id="networkLearningPrimaryButton">Open evaluation lab</button>
+          <button type="button" class="ghost-button" id="copyNetworkLearningButton">Copy exchange</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2493,7 +2505,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v170</span>
+            <span class="build-version-pill">Current version: v171</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2504,13 +2516,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v170 Reinforcement Evaluation Lab</strong>
-              <small>One evaluation lab scores accepted, ignored, rejected, stale, rollback, and blocked outcomes before weights move.</small>
+              <strong>v171 Network Learning Exchange</strong>
+              <small>One exchange layer lets approved aggregate lessons help other organizations without exposing tenant memory.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Outcome scoring</strong>
-              <small>Buyer, supplier, and founder paths should show weight deltas, rollback, approval, and blocked zero-weight payment routes.</small>
+              <strong>Cross-organization safety</strong>
+              <small>Buyer, supplier, and founder paths should show privacy, aggregate signal, threshold, consent, approval, rollback, and blocked payment routes.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2530,8 +2542,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v170</strong>
-              <small>Reinforcement Evaluation Lab</small>
+              <strong>v171</strong>
+              <small>Network Learning Exchange</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2545,8 +2557,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Evaluation policy replay</strong>
-              <small>Replay evaluation deltas against policy fixtures before live recommendation weights change.</small>
+              <strong>Exchange policy audit log</strong>
+              <small>Persist consent, threshold, approval, rollback, and cross-organization benefit decisions before shared learning applies.</small>
             </article>
           </div>
 
@@ -4712,6 +4724,51 @@
             </article>
           </div>
 
+          <div class="network-learning-exchange-contract" id="network-learning-exchange-contract" aria-label="Heavyster network learning exchange contract">
+            <article class="network-learning-exchange-contract-lead">
+              <span>v171 Network Learning Exchange</span>
+              <strong>Let organizations learn from each other without exposing private memory.</strong>
+              <p>Heavyster now exchanges only approved aggregate lessons: local memory stays private, sample thresholds are visible, consent is checked, and rollback remains ready before any cross-organization recommendation lift.</p>
+              <b>Rule: aggregate before exchange</b>
+            </article>
+            <article>
+              <span>Private</span>
+              <strong>Tenant memory stays local</strong>
+              <p>Search intent, lead replies, proof edits, renewal plans, market notes, and operator decisions stay inside the organization.</p>
+              <b>Boundary</b>
+            </article>
+            <article>
+              <span>Aggregate</span>
+              <strong>Only anonymous lessons travel</strong>
+              <p>Proof reliability, response quality, category readiness, and launch confidence can travel only as anonymized aggregate patterns.</p>
+              <b>Pattern</b>
+            </article>
+            <article>
+              <span>Threshold</span>
+              <strong>Minimum sample required</strong>
+              <p>Single-organization outcomes cannot influence another tenant; each exchanged lesson needs a visible sample rule.</p>
+              <b>k-rule</b>
+            </article>
+            <article>
+              <span>Consent</span>
+              <strong>Opt-in and approval visible</strong>
+              <p>Network learning needs tenant consent, named approval, a reason, and a rollback state before recommendations improve.</p>
+              <b>Approved</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment route remains blocked</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody cannot cross organizations.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="network-learning-exchange-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one network learning exchange.</strong>
+              <p>Docs include the exchange model in `docs/NETWORK_LEARNING_EXCHANGE.json`, and no organization-private memory or payment route can become a shared network lesson.</p>
+              <button type="button" class="solid-button" id="copyNetworkLearningExchangeContractButton">Copy v171 exchange</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4805,25 +4862,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v170 Reinforcement Evaluation Lab</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v171 Network Learning Exchange</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Reinforcement Evaluation Lab</strong>
-              <p>Added an evaluation lab after the benefit ledger so each buyer, supplier, or founder path scores accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move.</p>
+              <strong>Network Learning Exchange</strong>
+              <p>Added an exchange layer after the evaluation lab so buyer, supplier, and founder learning can help other organizations only as anonymized aggregate lessons with consent, threshold, approval, rollback, and blocked payment-custody routes visible.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v170.</li>
-                <li>Build Phase shows Current version: v170.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, and Serene Route Planner.</li>
-                <li>Reinforcement Evaluation Lab shows accepted, ignored, rejected, stale, rollback, and blocked zero-weight states.</li>
-                <li>Copy evaluation lab explains evaluation event, weight delta, approval, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Reinforcement Evaluation Lab contract after the Learning Benefit Ledger contract.</li>
-                <li>Docs include `docs/REINFORCEMENT_EVALUATION_LAB.json`.</li>
+                <li>Header shows Build v171.</li>
+                <li>Build Phase shows Current version: v171.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, and Serene Route Planner.</li>
+                <li>Network Learning Exchange shows local privacy, anonymized signal, minimum sample, consent, approval, rollback, and blocked payment route.</li>
+                <li>Copy exchange explains local memory, aggregate lesson, threshold, cross-organization benefit, consent, approval, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Network Learning Exchange contract after the Reinforcement Evaluation Lab contract.</li>
+                <li>Docs include `docs/NETWORK_LEARNING_EXCHANGE.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4850,8 +4907,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v170 Reinforcement Evaluation Lab</strong>
-              <p>Includes the v113 deploy guard through v169 Learning Benefit Ledger, plus this evaluation-lab release that scores outcomes before recommendation weights move.</p>
+              <strong>v171 Network Learning Exchange</strong>
+              <p>Includes the v113 deploy guard through v170 Reinforcement Evaluation Lab, plus this exchange release that lets organizations benefit from approved aggregate learning without exposing tenant memory.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4960,6 +5017,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260612-reinforcement-evaluation-lab-v170" defer></script>
+    <script src="app.js?v=20260612-network-learning-exchange-v171" defer></script>
   </body>
 </html>
