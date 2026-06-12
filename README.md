@@ -47,6 +47,7 @@ This folder contains a static product prototype with:
 - Learning Benefit Ledger that shows who benefits, what stayed private, what aggregate pattern can help the network, and which payment route stayed blocked
 - Reinforcement Evaluation Lab that scores accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
 - Network Learning Exchange that lets approved aggregate lessons help other organizations only after tenant privacy, minimum sample, consent, approval, rollback, and blocked payment routes are visible
+- Exchange Policy Audit Log that records event, lesson reference, sample evidence, consent, approver, rollback, and blocked payment route before exchanged learning applies
 - Marketplace Scale Guard that keeps large-result searches simple by recommending best path, compact rows, widened search, or demand capture before the buyer gets buried in inventory
 - Catalog Focus Bar for one-click best-fit, verified, available, saved, and demand-gap views before buyers scan large equipment lists
 - Catalog Pager that keeps card view and compact rows page-based with simple row-count controls for future large inventories
@@ -156,6 +157,7 @@ This folder contains a static product prototype with:
 - Learning Benefit Ledger for mapping feedback into role benefit, private memory, aggregate pattern, approval, rollback, and blocked payment route before network recommendations improve
 - Reinforcement Evaluation Lab for mapping approved benefits into accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
 - Network Learning Exchange for mapping approved evaluation outcomes into anonymized aggregate lessons with minimum sample, consent, cross-organization benefit, rollback, and blocked payment route before another tenant benefits
+- Exchange Policy Audit Log for mapping each shared lesson into an audit event, lesson reference, sample evidence, consent record, approver, applied route, rollback state, and blocked payment route before recommendation weights move
 - Supplier Studio 2.0 with supplier-specific fleet, profile readiness, storefront publishing, document gaps, freshness, and listing revenue preview
 - Supplier onboarding and listing builder preview
 - Category directory and founder admin board

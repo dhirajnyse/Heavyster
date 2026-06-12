@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260612-heavyster-network-learning-exchange-v171";
+const DATA_VERSION = "20260612-heavyster-exchange-policy-audit-log-v172";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260612-network-learning-exchange-v171";
+const SIMPLE_UX_RELEASE = "20260612-exchange-policy-audit-log-v172";
 
 const listings = [
   {
@@ -1010,6 +1010,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
     renderNetworkLearningExchange();
+    renderExchangePolicyAuditLog();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1253,6 +1254,7 @@ function bindControls() {
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
     renderNetworkLearningExchange();
+    renderExchangePolicyAuditLog();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2120,6 +2122,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyExchangePolicyAuditLogContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildExchangePolicyAuditLogContractText());
+      showToast("Exchange policy audit log copied.");
+    } catch {
+      showToast("Copy is blocked here, but the audit log is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2268,6 +2279,12 @@ function bindControls() {
   document.querySelector("#copyNetworkLearningButton").addEventListener("click", () => {
     handleNetworkLearningExchangeAction("copy");
   });
+  document.querySelector("#exchangePolicyAuditPrimaryButton").addEventListener("click", () => {
+    handleExchangePolicyAuditLogAction("primary");
+  });
+  document.querySelector("#copyExchangePolicyAuditButton").addEventListener("click", () => {
+    handleExchangePolicyAuditLogAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2350,6 +2367,7 @@ function bindControls() {
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
     renderNetworkLearningExchange();
+    renderExchangePolicyAuditLog();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2547,6 +2565,7 @@ function render() {
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
   renderNetworkLearningExchange();
+  renderExchangePolicyAuditLog();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3215,6 +3234,7 @@ function handleSimplicityIntent(intentId) {
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
   renderNetworkLearningExchange();
+  renderExchangePolicyAuditLog();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3255,6 +3275,7 @@ const focusLayerSelectors = [
   ".learning-benefit-ledger",
   ".reinforcement-evaluation-lab",
   ".network-learning-exchange",
+  ".exchange-policy-audit-log",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3396,6 +3417,7 @@ function toggleCalmFocusLayers() {
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
   renderNetworkLearningExchange();
+  renderExchangePolicyAuditLog();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -5358,6 +5380,139 @@ function buildNetworkLearningExchangeContractText() {
   return buildNetworkLearningExchangeText();
 }
 
+function renderExchangePolicyAuditLog() {
+  const root = document.querySelector("#exchangePolicyAuditLog");
+  if (!root) return;
+
+  const model = getExchangePolicyAuditLogModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#exchangePolicyAuditRole").textContent = model.roleLabel;
+  document.querySelector("#exchangePolicyAuditHeadline").textContent = model.headline;
+  document.querySelector("#exchangePolicyAuditDetail").textContent = model.detail;
+  document.querySelector("#exchangePolicyAuditGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#exchangePolicyAuditPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getExchangePolicyAuditLogModel() {
+  const exchange = getNetworkLearningExchangeModel();
+  const role = exchange.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer exchange audit",
+      headline: "Write the buyer match audit before supplier rank improves.",
+      detail: "The audit log records the buyer lesson, sample evidence, consent, approver, applied route, rollback, and blocked rental-payment route.",
+      event: "audit_buyer_network_match_lesson",
+      lesson: "proof reply pattern",
+      evidence: "5 / 3 orgs",
+      consent: "opt-in logged",
+      approver: "marketplace",
+      rollback: "restore rank",
+      blocked: "rental payment",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier exchange audit",
+      headline: "Write the supplier listing audit before visibility improves.",
+      detail: "The audit log records the supplier lesson, sample evidence, consent, approver, applied route, rollback, and blocked commission route.",
+      event: "audit_supplier_network_listing_lesson",
+      lesson: "fresh proof pattern",
+      evidence: "7 / 4 orgs",
+      consent: "opt-in logged",
+      approver: "success",
+      rollback: "restore visibility",
+      blocked: "commission",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder exchange audit",
+      headline: "Write the market lesson audit before launch priority improves.",
+      detail: "The audit log records the founder lesson, sample evidence, consent, approver, applied route, rollback, and blocked payout route.",
+      event: "audit_founder_network_market_lesson",
+      lesson: "market proof pattern",
+      evidence: "4 / 3 orgs",
+      consent: "opt-in logged",
+      approver: "founder",
+      rollback: "restore queue",
+      blocked: "payout",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    auditEvent: config.event,
+    sourceExchange: exchange.exchangeEvent,
+    appliedRoute: "/api/recommendation-weights",
+    blockedRoute: config.blockedRoute || exchange.blockedRoute,
+    primary: { label: "Open network exchange", anchor: "#networkLearningExchange", aria: `Open ${role.toLowerCase()} network learning exchange` },
+    states: [
+      { label: "Event", value: config.event.replace("audit_", ""), route: "/api/exchange-policy-audit-log", detail: "written first", tone: "ready" },
+      { label: "Lesson", value: config.lesson, route: "/api/network-learning-exchange", detail: "anonymous ref", tone: "neutral" },
+      { label: "Evidence", value: config.evidence, route: "/api/exchange-policy-audit-log", detail: "sample proof", tone: "watch" },
+      { label: "Consent", value: config.consent, route: "/api/network-learning-exchange", detail: "tenant allowed", tone: "ready" },
+      { label: "Approver", value: config.approver, route: "/api/boundary-audit-events", detail: "human gate", tone: "ready" },
+      { label: "Rollback", value: "ready", route: "/api/boundary-audit-events", detail: config.rollback, tone: "neutral" },
+      { label: "Blocked", value: config.blocked, route: config.blockedRoute, detail: "not audited", tone: "watch" }
+    ]
+  };
+}
+
+async function handleExchangePolicyAuditLogAction(action, model = getExchangePolicyAuditLogModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildExchangePolicyAuditLogText(model));
+    showToast("Exchange policy audit log copied.");
+  } catch {
+    showToast("Copy is blocked here, but the audit log is visible.");
+  }
+}
+
+function buildExchangePolicyAuditLogText(model = getExchangePolicyAuditLogModel()) {
+  return [
+    "Heavyster Exchange Policy Audit Log",
+    "Version: v172 Exchange Policy Audit Log",
+    "Rule: no network learning exchange can influence another organization until an audit log records source role, anonymized lesson, minimum sample evidence, consent, approval, rollback, and blocked payment-custody route.",
+    "",
+    `Role: ${model.role}`,
+    `Audit event: ${model.auditEvent}`,
+    `Source exchange: ${model.sourceExchange}`,
+    `Applied route: ${model.appliedRoute}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Audit states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Audit promise: exchanged learning writes an audit event before recommendation weights move.",
+    "Privacy promise: audit payloads reference anonymized lessons, not tenant-private memory.",
+    "Evidence promise: minimum sample proof stays attached to the exchange record.",
+    "Approval promise: consent and named human approval remain visible beside the applied route.",
+    "Rollback promise: every applied network lesson keeps a reversible prior state.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from audit payloads."
+  ].join("\n");
+}
+
+function buildExchangePolicyAuditLogContractText() {
+  return buildExchangePolicyAuditLogText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -6655,6 +6810,7 @@ function openWorkflowStep(anchor, label, role) {
   renderLearningBenefitLedger();
   renderReinforcementEvaluationLab();
   renderNetworkLearningExchange();
+  renderExchangePolicyAuditLog();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -21610,6 +21766,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderLearningBenefitLedger();
     renderReinforcementEvaluationLab();
     renderNetworkLearningExchange();
+    renderExchangePolicyAuditLog();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

@@ -1,0 +1,95 @@
+{
+  "version": "v172 Exchange Policy Audit Log",
+  "rule": "No network learning exchange can influence another organization until an audit log records source role, anonymized lesson, minimum sample evidence, consent, approval, rollback, and blocked payment-custody route.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or unlogged exchange can reach recommendation weights in phase one.",
+  "audit_principles": [
+    "Write an audit event before exchanged learning changes a recommendation.",
+    "Record only anonymized lesson references, never tenant-private memory.",
+    "Attach minimum sample evidence to every cross-organization lesson.",
+    "Keep consent and named human approval beside the exchange event.",
+    "Store rollback state so every network learning effect can be reversed.",
+    "Show the blocked payment route as part of the audit record.",
+    "Separate buyer, supplier, and founder audit trails so each role can inspect what changed and why."
+  ],
+  "role_audit_logs": [
+    {
+      "role": "Buyer",
+      "audit_event": "audit_buyer_network_match_lesson",
+      "lesson_reference": "proof-matched supplier reply pattern",
+      "sample_evidence": "5 approved buyer outcomes across 3 organizations",
+      "consent_record": "tenant aggregate opt-in logged",
+      "approver": "marketplace operator",
+      "applied_route": "/api/recommendation-weights",
+      "rollback_state": "restore prior supplier rank",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "audit_event": "audit_supplier_network_listing_lesson",
+      "lesson_reference": "fresh proof plus fast response pattern",
+      "sample_evidence": "7 approved supplier outcomes across 4 organizations",
+      "consent_record": "tenant aggregate opt-in logged",
+      "approver": "supplier success operator",
+      "applied_route": "/api/recommendation-weights",
+      "rollback_state": "restore prior listing visibility",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "audit_event": "audit_founder_network_market_lesson",
+      "lesson_reference": "proof density and response reliability pattern",
+      "sample_evidence": "4 approved market outcomes across 3 organizations",
+      "consent_record": "tenant aggregate opt-in logged",
+      "approver": "founder operator",
+      "applied_route": "/api/recommendation-weights",
+      "rollback_state": "restore prior market queue",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "audit_states": [
+    "event_written",
+    "lesson_reference",
+    "sample_evidence",
+    "consent_logged",
+    "human_approved",
+    "rollback_ready",
+    "blocked_payment_route"
+  ],
+  "audit_routes": [
+    "/api/exchange-policy-audit-log",
+    "/api/network-learning-exchange",
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_audit_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_audit_fields": [
+    "audit_event",
+    "role",
+    "lesson_reference",
+    "sample_evidence",
+    "consent_record",
+    "approver",
+    "applied_route",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows the Exchange Policy Audit Log after the Network Learning Exchange.",
+    "Buyer, supplier, and founder views each show audit event, lesson reference, sample evidence, consent, approver, rollback, and blocked payment route.",
+    "Copy output explains what lesson was logged, what evidence supports it, who approved it, where it applies, and which payment route stayed blocked.",
+    "Build Phase shows the v172 Exchange Policy Audit Log contract after the Network Learning Exchange contract.",
+    "Docs include audit states, audit routes, private routes, blocked payment routes, and required audit fields.",
+    "Static check fails if the audit UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No network exchange can reach recommendation weights without an audit event in phase one."
+  ]
+}

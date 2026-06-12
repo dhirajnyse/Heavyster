@@ -53,6 +53,7 @@
 - Learning Benefit Ledger for showing role benefit, private memory, aggregate pattern, approval, rollback, and blocked payment route before network recommendations improve
 - Reinforcement Evaluation Lab for scoring accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
 - Network Learning Exchange for sharing only anonymized aggregate lessons across organizations after minimum sample, consent, approval, rollback, and blocked payment route are visible
+- Exchange Policy Audit Log for recording every shared lesson with sample evidence, consent, approver, applied route, rollback, and blocked payment route before recommendation weights move
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages

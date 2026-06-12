@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260612-network-learning-exchange-v171" />
+  <link rel="stylesheet" href="styles.css?v=20260612-exchange-policy-audit-log-v172" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v171</strong>
+            <strong>v172</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -398,6 +398,18 @@
         <div class="network-exchange-actions">
           <button type="button" class="solid-button" id="networkLearningPrimaryButton">Open evaluation lab</button>
           <button type="button" class="ghost-button" id="copyNetworkLearningButton">Copy exchange</button>
+        </div>
+      </section>
+      <section class="exchange-policy-audit-log" id="exchangePolicyAuditLog" aria-label="Exchange policy audit log">
+        <div class="exchange-audit-copy">
+          <span id="exchangePolicyAuditRole">Audit log</span>
+          <strong id="exchangePolicyAuditHeadline">Log every exchanged lesson before it changes recommendations.</strong>
+          <small id="exchangePolicyAuditDetail">Audit event, lesson reference, sample evidence, consent, approver, rollback, and blocked payment route stay visible.</small>
+        </div>
+        <div class="exchange-audit-grid" id="exchangePolicyAuditGrid" aria-label="Exchange policy audit states"></div>
+        <div class="exchange-audit-actions">
+          <button type="button" class="solid-button" id="exchangePolicyAuditPrimaryButton">Open network exchange</button>
+          <button type="button" class="ghost-button" id="copyExchangePolicyAuditButton">Copy audit log</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2505,7 +2517,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v171</span>
+            <span class="build-version-pill">Current version: v172</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2516,13 +2528,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v171 Network Learning Exchange</strong>
-              <small>One exchange layer lets approved aggregate lessons help other organizations without exposing tenant memory.</small>
+              <strong>v172 Exchange Policy Audit Log</strong>
+              <small>One audit log records exchange evidence, consent, approval, rollback, and blocked payment route before shared learning applies.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Cross-organization safety</strong>
-              <small>Buyer, supplier, and founder paths should show privacy, aggregate signal, threshold, consent, approval, rollback, and blocked payment routes.</small>
+              <strong>Exchange auditability</strong>
+              <small>Buyer, supplier, and founder paths should show audit event, lesson reference, sample evidence, consent, approver, rollback, and blocked route.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2542,8 +2554,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v171</strong>
-              <small>Network Learning Exchange</small>
+              <strong>v172</strong>
+              <small>Exchange Policy Audit Log</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2557,8 +2569,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Exchange policy audit log</strong>
-              <small>Persist consent, threshold, approval, rollback, and cross-organization benefit decisions before shared learning applies.</small>
+              <strong>Learning quality dashboard</strong>
+              <small>Summarize accepted, reverted, blocked, stale, and improved lessons so operators can tune learning quality.</small>
             </article>
           </div>
 
@@ -4769,6 +4781,51 @@
             </article>
           </div>
 
+          <div class="exchange-policy-audit-log-contract" id="exchange-policy-audit-log-contract" aria-label="Heavyster exchange policy audit log contract">
+            <article class="exchange-policy-audit-log-contract-lead">
+              <span>v172 Exchange Policy Audit Log</span>
+              <strong>Record every exchanged lesson before it changes another organization's recommendations.</strong>
+              <p>Heavyster now writes a visible audit event for each network learning exchange: source role, anonymized lesson, minimum sample evidence, consent, approver, rollback state, and blocked payment route.</p>
+              <b>Rule: audit before apply</b>
+            </article>
+            <article>
+              <span>Event</span>
+              <strong>Audit record first</strong>
+              <p>No exchanged lesson can reach recommendation weights until an audit event exists.</p>
+              <b>Logged</b>
+            </article>
+            <article>
+              <span>Evidence</span>
+              <strong>Sample proof attached</strong>
+              <p>The log stores the minimum sample evidence so one tenant's outcome cannot silently guide another tenant.</p>
+              <b>Threshold</b>
+            </article>
+            <article>
+              <span>Consent</span>
+              <strong>Opt-in stays visible</strong>
+              <p>Each audit record keeps the consent record and named approver beside the exchanged lesson.</p>
+              <b>Allowed</b>
+            </article>
+            <article>
+              <span>Rollback</span>
+              <strong>Reversal remains ready</strong>
+              <p>Every exchange writes the prior rank, visibility, or market queue state needed to reverse the lesson.</p>
+              <b>Reversible</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment route remains blocked</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody cannot enter the audit payload.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="exchange-policy-audit-log-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one exchange policy audit log.</strong>
+              <p>Docs include the audit model in `docs/EXCHANGE_POLICY_AUDIT_LOG.json`, and no shared lesson can influence another organization without an audit event.</p>
+              <button type="button" class="solid-button" id="copyExchangePolicyAuditLogContractButton">Copy v172 audit log</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4862,25 +4919,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v171 Network Learning Exchange</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v172 Exchange Policy Audit Log</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Network Learning Exchange</strong>
-              <p>Added an exchange layer after the evaluation lab so buyer, supplier, and founder learning can help other organizations only as anonymized aggregate lessons with consent, threshold, approval, rollback, and blocked payment-custody routes visible.</p>
+              <strong>Exchange Policy Audit Log</strong>
+              <p>Added an audit log after the network exchange so every shared lesson records its event, anonymized reference, sample evidence, consent, approver, rollback state, and blocked payment route before recommendations move.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v171.</li>
-                <li>Build Phase shows Current version: v171.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, and Serene Route Planner.</li>
-                <li>Network Learning Exchange shows local privacy, anonymized signal, minimum sample, consent, approval, rollback, and blocked payment route.</li>
-                <li>Copy exchange explains local memory, aggregate lesson, threshold, cross-organization benefit, consent, approval, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Network Learning Exchange contract after the Reinforcement Evaluation Lab contract.</li>
-                <li>Docs include `docs/NETWORK_LEARNING_EXCHANGE.json`.</li>
+                <li>Header shows Build v172.</li>
+                <li>Build Phase shows Current version: v172.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, and Serene Route Planner.</li>
+                <li>Exchange Policy Audit Log shows audit event, lesson reference, sample evidence, consent, approver, rollback, and blocked payment route.</li>
+                <li>Copy audit log explains evidence, applied route, approval, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Exchange Policy Audit Log contract after the Network Learning Exchange contract.</li>
+                <li>Docs include `docs/EXCHANGE_POLICY_AUDIT_LOG.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4907,8 +4964,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v171 Network Learning Exchange</strong>
-              <p>Includes the v113 deploy guard through v170 Reinforcement Evaluation Lab, plus this exchange release that lets organizations benefit from approved aggregate learning without exposing tenant memory.</p>
+              <strong>v172 Exchange Policy Audit Log</strong>
+              <p>Includes the v113 deploy guard through v171 Network Learning Exchange, plus this audit release that records every shared lesson before another organization benefits from it.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -5017,6 +5074,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260612-network-learning-exchange-v171" defer></script>
+    <script src="app.js?v=20260612-exchange-policy-audit-log-v172" defer></script>
   </body>
 </html>
