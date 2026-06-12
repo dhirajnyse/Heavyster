@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260612-heavyster-human-approval-replay-gate-v168";
+const DATA_VERSION = "20260612-heavyster-learning-benefit-ledger-v169";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260612-human-approval-replay-gate-v168";
+const SIMPLE_UX_RELEASE = "20260612-learning-benefit-ledger-v169";
 
 const listings = [
   {
@@ -1007,6 +1007,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
+    renderLearningBenefitLedger();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1247,6 +1248,7 @@ function bindControls() {
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
+    renderLearningBenefitLedger();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2087,6 +2089,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyLearningBenefitLedgerContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLearningBenefitLedgerContractText());
+      showToast("Learning benefit ledger copied.");
+    } catch {
+      showToast("Copy is blocked here, but the benefit ledger is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2217,6 +2228,12 @@ function bindControls() {
   document.querySelector("#copyHumanApprovalReplayButton").addEventListener("click", () => {
     handleHumanApprovalReplayGateAction("copy");
   });
+  document.querySelector("#learningBenefitPrimaryButton").addEventListener("click", () => {
+    handleLearningBenefitLedgerAction("primary");
+  });
+  document.querySelector("#copyLearningBenefitButton").addEventListener("click", () => {
+    handleLearningBenefitLedgerAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2296,6 +2313,7 @@ function bindControls() {
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
+    renderLearningBenefitLedger();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2490,6 +2508,7 @@ function render() {
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
+  renderLearningBenefitLedger();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3155,6 +3174,7 @@ function handleSimplicityIntent(intentId) {
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
+  renderLearningBenefitLedger();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3192,6 +3212,7 @@ const focusLayerSelectors = [
   ".boundary-audit-fixture-pack",
   ".boundary-audit-replay-console",
   ".human-approval-replay-gate",
+  ".learning-benefit-ledger",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3330,6 +3351,7 @@ function toggleCalmFocusLayers() {
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
+  renderLearningBenefitLedger();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -4902,6 +4924,132 @@ function buildHumanApprovalReplayGateContractText() {
   return buildHumanApprovalReplayGateText();
 }
 
+function renderLearningBenefitLedger() {
+  const root = document.querySelector("#learningBenefitLedger");
+  if (!root) return;
+
+  const model = getLearningBenefitLedgerModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#learningBenefitRole").textContent = model.roleLabel;
+  document.querySelector("#learningBenefitHeadline").textContent = model.headline;
+  document.querySelector("#learningBenefitDetail").textContent = model.detail;
+  document.querySelector("#learningBenefitGrid").innerHTML = model.cards.map((card) => `
+    <span class="${escapeHtml(card.tone)}">
+      <em>${escapeHtml(card.label)}</em>
+      <strong>${escapeHtml(card.value)}</strong>
+      <small>${escapeHtml(card.route)}</small>
+      <b>${escapeHtml(card.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#learningBenefitPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getLearningBenefitLedgerModel() {
+  const approval = getHumanApprovalReplayGateModel();
+  const boundary = getOrganizationLearningBoundaryModel();
+  const role = approval.role || boundary.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer benefit ledger",
+      headline: "Turn accepted enquiry outcomes into safer future matches.",
+      detail: "Buyer intent stays private while anonymized proof and response patterns improve the next verified route.",
+      contribution: "buyer_enquiry_outcome",
+      privateMemory: "search intent, shortlist, enquiry context",
+      aggregatePattern: "proof-matched supplier accepted and replied",
+      networkBenefit: "next buyer sees cleaner route",
+      benefitMetric: "match trust +8",
+      blockedDetail: "rental payment blocked"
+    },
+    Supplier: {
+      roleLabel: "Supplier benefit ledger",
+      headline: "Turn listing outcomes into better supplier guidance.",
+      detail: "Supplier strategy stays private while anonymized proof freshness and response patterns improve listing recommendations.",
+      contribution: "supplier_listing_outcome",
+      privateMemory: "lead replies, proof edits, renewal intent",
+      aggregatePattern: "fresh proof and fast response lifted trust",
+      networkBenefit: "next supplier sees clearer listing guidance",
+      benefitMetric: "readiness +6",
+      blockedDetail: "booking commission blocked"
+    },
+    Founder: {
+      roleLabel: "Founder benefit ledger",
+      headline: "Turn launch outcomes into safer market expansion.",
+      detail: "Founder launch notes stay private while anonymized proof density and response reliability improve country/category priority.",
+      contribution: "market_launch_outcome",
+      privateMemory: "country queue, launch gate, operator notes",
+      aggregatePattern: "proof density improved launch confidence",
+      networkBenefit: "next market gets safer priority",
+      benefitMetric: "readiness +5",
+      blockedDetail: "payout route blocked"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    sourceApproval: approval.state,
+    approvalReason: approval.reason,
+    rollback: approval.rollback,
+    blockedRoute: approval.blockedRoute,
+    primary: { label: "Open approval gate", anchor: "#humanApprovalReplayGate", aria: `Open ${role.toLowerCase()} human approval replay gate` },
+    cards: [
+      { label: "Contribution", value: config.contribution, route: "/api/learning-feedback", detail: config.benefitMetric, tone: "ready" },
+      { label: "Private", value: "tenant only", route: "/api/organization-memory", detail: config.privateMemory, tone: "neutral" },
+      { label: "Aggregate", value: "anonymous", route: "/api/aggregate-market-signals", detail: config.aggregatePattern, tone: "ready" },
+      { label: "Benefit", value: config.networkBenefit, route: "/api/recommendation-weights", detail: config.benefitMetric, tone: "ready" },
+      { label: "Approval", value: approval.state, route: "/api/boundary-audit-events", detail: approval.reason, tone: "neutral" },
+      { label: "Blocked", value: "BLOCK", route: approval.blockedRoute, detail: config.blockedDetail, tone: "watch" }
+    ]
+  };
+}
+
+async function handleLearningBenefitLedgerAction(action, model = getLearningBenefitLedgerModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildLearningBenefitLedgerText(model));
+    showToast("Learning benefit ledger copied.");
+  } catch {
+    showToast("Copy is blocked here, but the benefit ledger is visible.");
+  }
+}
+
+function buildLearningBenefitLedgerText(model = getLearningBenefitLedgerModel()) {
+  return [
+    "Heavyster Learning Benefit Ledger",
+    "Version: v169 Learning Benefit Ledger",
+    "Rule: every approved feedback event must show who benefits, what aggregate pattern was learned, what stayed private, approval state, rollback, and blocked payment route before network recommendations improve.",
+    "",
+    `Role: ${model.role}`,
+    `Focus: ${model.headline}`,
+    `Approval state: ${model.sourceApproval}`,
+    `Approval reason: ${model.approvalReason}`,
+    `Rollback: ${model.rollback}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Benefit ledger:",
+    ...model.cards.map((card) => `- ${card.label}: ${card.value} ${card.route} (${card.detail})`),
+    "",
+    "Private-memory promise: tenant-specific intent, proof edits, lead replies, renewal plans, launch notes, and operator decisions stay inside the organization.",
+    "Network-benefit promise: only anonymized aggregate proof, response, category, and market-readiness patterns can improve recommendations for another organization.",
+    "Approval promise: the human approval gate remains visible before recommendation weight improves.",
+    "Rollback promise: every network benefit keeps a reversible prior state.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from shared learning."
+  ].join("\n");
+}
+
+function buildLearningBenefitLedgerContractText() {
+  return buildLearningBenefitLedgerText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -6196,6 +6344,7 @@ function openWorkflowStep(anchor, label, role) {
   renderBoundaryAuditFixturePack();
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
+  renderLearningBenefitLedger();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -21148,6 +21297,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderBoundaryAuditFixturePack();
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
+    renderLearningBenefitLedger();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

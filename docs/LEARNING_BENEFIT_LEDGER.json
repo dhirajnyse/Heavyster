@@ -1,0 +1,86 @@
+{
+  "version": "v169 Learning Benefit Ledger",
+  "rule": "Every approved feedback event must show who benefits, what aggregate pattern was learned, which private memory stayed inside the tenant, and which payment route stayed blocked before network recommendations improve.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody signal can become a learning benefit or cross-organization recommendation in phase one.",
+  "benefit_principles": [
+    "Turn real buyer, supplier, and founder outcomes into traceable feedback events.",
+    "Keep organization-private memory inside each tenant boundary.",
+    "Share only anonymized aggregate category, proof, response, and market-readiness patterns.",
+    "Show who benefits from the learned pattern before the recommendation changes.",
+    "Require human approval, reason, timestamp, and rollback state before network lift applies.",
+    "Measure benefit as safer recommendations, cleaner proof paths, and faster direct supplier response.",
+    "Block payment custody, rental value, deposits, payouts, escrow, and booking commissions from shared learning."
+  ],
+  "role_benefit_ledgers": [
+    {
+      "role": "Buyer",
+      "contribution_event": "buyer_enquiry_outcome",
+      "private_memory": "search intent, shortlist, enquiry context",
+      "aggregate_pattern": "proof-matched supplier accepted and replied",
+      "network_benefit": "next buyer sees a cleaner verified route",
+      "approval_state": "approved by buyer operator",
+      "rollback_state": "restore prior supplier rank",
+      "blocked_route": "/api/rental-payments",
+      "benefit_metric": "supplier match trust +8"
+    },
+    {
+      "role": "Supplier",
+      "contribution_event": "supplier_listing_outcome",
+      "private_memory": "lead replies, proof edits, renewal intent",
+      "aggregate_pattern": "fresh proof and fast lead response improved trust",
+      "network_benefit": "next supplier gets clearer listing guidance",
+      "approval_state": "approved by supplier success lead",
+      "rollback_state": "restore listing visibility",
+      "blocked_route": "/api/booking-commissions",
+      "benefit_metric": "listing readiness +6"
+    },
+    {
+      "role": "Founder",
+      "contribution_event": "market_launch_outcome",
+      "private_memory": "country queue, launch gate, operator notes",
+      "aggregate_pattern": "proof density and response reliability improved launch confidence",
+      "network_benefit": "next market gets safer country/category priority",
+      "approval_state": "approved by founder operator",
+      "rollback_state": "restore country queue",
+      "blocked_route": "/api/payouts",
+      "benefit_metric": "market readiness +5"
+    }
+  ],
+  "benefit_routes": [
+    "/api/learning-feedback",
+    "/api/aggregate-market-signals",
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_benefit_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_benefit_fields": [
+    "feedback_event",
+    "role",
+    "private_memory",
+    "aggregate_pattern",
+    "network_benefit",
+    "approval_state",
+    "rollback_state",
+    "blocked_route",
+    "benefit_metric"
+  ],
+  "acceptance": [
+    "Marketplace shows the Learning Benefit Ledger after the Human Approval Replay Gate.",
+    "Buyer, supplier, and founder views each show contribution, private memory, aggregate pattern, network benefit, approval, rollback, and blocked payment route.",
+    "Copy output explains who benefits, what was learned, what stayed private, what was approved, and what payment route stayed blocked.",
+    "Build Phase shows the v169 Learning Benefit Ledger contract after the Human Approval Replay Gate contract.",
+    "Docs include benefit routes, private routes, blocked payment routes, and required benefit fields.",
+    "Static check fails if the benefit ledger UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No payment-custody signal can become a shared learning benefit in phase one."
+  ]
+}
