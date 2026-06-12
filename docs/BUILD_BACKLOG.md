@@ -54,6 +54,7 @@
 - Reinforcement Evaluation Lab for scoring accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move
 - Network Learning Exchange for sharing only anonymized aggregate lessons across organizations after minimum sample, consent, approval, rollback, and blocked payment route are visible
 - Exchange Policy Audit Log for recording every shared lesson with sample evidence, consent, approver, applied route, rollback, and blocked payment route before recommendation weights move
+- Learning Quality Dashboard for showing accepted, improved, reverted, blocked, stale, pending review, and next quality action before shared learning confidence compounds
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages

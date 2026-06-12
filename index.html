@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260612-exchange-policy-audit-log-v172" />
+  <link rel="stylesheet" href="styles.css?v=20260613-learning-quality-dashboard-v173" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v172</strong>
+            <strong>v173</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -410,6 +410,18 @@
         <div class="exchange-audit-actions">
           <button type="button" class="solid-button" id="exchangePolicyAuditPrimaryButton">Open network exchange</button>
           <button type="button" class="ghost-button" id="copyExchangePolicyAuditButton">Copy audit log</button>
+        </div>
+      </section>
+      <section class="learning-quality-dashboard" id="learningQualityDashboard" aria-label="Learning quality dashboard">
+        <div class="learning-quality-copy">
+          <span id="learningQualityRole">Quality dashboard</span>
+          <strong id="learningQualityHeadline">Measure learning quality before confidence compounds.</strong>
+          <small id="learningQualityDetail">Accepted, improved, reverted, blocked, stale, pending review, and next quality action stay visible.</small>
+        </div>
+        <div class="learning-quality-grid" id="learningQualityGrid" aria-label="Learning quality states"></div>
+        <div class="learning-quality-actions">
+          <button type="button" class="solid-button" id="learningQualityPrimaryButton">Open audit log</button>
+          <button type="button" class="ghost-button" id="copyLearningQualityButton">Copy quality brief</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2517,7 +2529,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v172</span>
+            <span class="build-version-pill">Current version: v173</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2528,13 +2540,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v172 Exchange Policy Audit Log</strong>
-              <small>One audit log records exchange evidence, consent, approval, rollback, and blocked payment route before shared learning applies.</small>
+              <strong>v173 Learning Quality Dashboard</strong>
+              <small>One dashboard shows accepted, improved, reverted, blocked, stale, pending, and next quality actions before learning compounds.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Exchange auditability</strong>
-              <small>Buyer, supplier, and founder paths should show audit event, lesson reference, sample evidence, consent, approver, rollback, and blocked route.</small>
+              <strong>Learning quality</strong>
+              <small>Buyer, supplier, and founder paths should show quality state before recommendation confidence increases again.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2554,8 +2566,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v172</strong>
-              <small>Exchange Policy Audit Log</small>
+              <strong>v173</strong>
+              <small>Learning Quality Dashboard</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2569,8 +2581,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Learning quality dashboard</strong>
-              <small>Summarize accepted, reverted, blocked, stale, and improved lessons so operators can tune learning quality.</small>
+              <strong>Learning action queue</strong>
+              <small>Turn weak quality signals into review tasks, rollback actions, supplier nudges, and safer recommendation updates.</small>
             </article>
           </div>
 
@@ -4826,6 +4838,51 @@
             </article>
           </div>
 
+          <div class="learning-quality-dashboard-contract" id="learning-quality-dashboard-contract" aria-label="Heavyster learning quality dashboard contract">
+            <article class="learning-quality-dashboard-contract-lead">
+              <span>v173 Learning Quality Dashboard</span>
+              <strong>Measure whether shared learning is good enough to keep compounding.</strong>
+              <p>Heavyster now shows accepted lessons, improved recommendations, reverted lessons, blocked routes, stale signals, pending reviews, and the next quality action before confidence increases again.</p>
+              <b>Rule: quality before compound</b>
+            </article>
+            <article>
+              <span>Accepted</span>
+              <strong>Approved lessons counted</strong>
+              <p>Only audited and approved lessons count toward quality improvement.</p>
+              <b>Signal</b>
+            </article>
+            <article>
+              <span>Improved</span>
+              <strong>Recommendation lift visible</strong>
+              <p>The dashboard shows whether the exchanged lesson improved trust, readiness, visibility, or launch priority.</p>
+              <b>Lift</b>
+            </article>
+            <article>
+              <span>Reverted</span>
+              <strong>Corrections stay visible</strong>
+              <p>Rollback counts remain visible so operators see where learning was corrected.</p>
+              <b>Reversible</b>
+            </article>
+            <article>
+              <span>Review</span>
+              <strong>Weak signals pause</strong>
+              <p>Stale, contradictory, or low-sample lessons stay in review before weights compound again.</p>
+              <b>Human gate</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Blocked routes protect quality</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody count as blocked quality protections.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="learning-quality-dashboard-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one learning quality dashboard.</strong>
+              <p>Docs include the quality model in `docs/LEARNING_QUALITY_DASHBOARD.json`, and no shared learning keeps compounding without quality visibility.</p>
+              <button type="button" class="solid-button" id="copyLearningQualityDashboardContractButton">Copy v173 quality dashboard</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4919,25 +4976,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v172 Exchange Policy Audit Log</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v173 Learning Quality Dashboard</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Exchange Policy Audit Log</strong>
-              <p>Added an audit log after the network exchange so every shared lesson records its event, anonymized reference, sample evidence, consent, approver, rollback state, and blocked payment route before recommendations move.</p>
+              <strong>Learning Quality Dashboard</strong>
+              <p>Added a quality dashboard after the audit log so operators can see accepted, improved, reverted, blocked, stale, pending, and next quality actions before shared learning compounds again.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v172.</li>
-                <li>Build Phase shows Current version: v172.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, and Serene Route Planner.</li>
-                <li>Exchange Policy Audit Log shows audit event, lesson reference, sample evidence, consent, approver, rollback, and blocked payment route.</li>
-                <li>Copy audit log explains evidence, applied route, approval, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Exchange Policy Audit Log contract after the Network Learning Exchange contract.</li>
-                <li>Docs include `docs/EXCHANGE_POLICY_AUDIT_LOG.json`.</li>
+                <li>Header shows Build v173.</li>
+                <li>Build Phase shows Current version: v173.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, and Serene Route Planner.</li>
+                <li>Learning Quality Dashboard shows accepted, improved, reverted, blocked, stale, pending review, and next quality action.</li>
+                <li>Copy quality brief explains audit source, improved recommendation, rollback, review, and blocked payment custody.</li>
+                <li>Build Phase shows the Learning Quality Dashboard contract after the Exchange Policy Audit Log contract.</li>
+                <li>Docs include `docs/LEARNING_QUALITY_DASHBOARD.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4964,8 +5021,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v172 Exchange Policy Audit Log</strong>
-              <p>Includes the v113 deploy guard through v171 Network Learning Exchange, plus this audit release that records every shared lesson before another organization benefits from it.</p>
+              <strong>v173 Learning Quality Dashboard</strong>
+              <p>Includes the v113 deploy guard through v172 Exchange Policy Audit Log, plus this quality release that monitors whether shared learning should keep compounding.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -5074,6 +5131,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260612-exchange-policy-audit-log-v172" defer></script>
+    <script src="app.js?v=20260613-learning-quality-dashboard-v173" defer></script>
   </body>
 </html>

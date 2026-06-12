@@ -1,0 +1,99 @@
+{
+  "version": "v173 Learning Quality Dashboard",
+  "rule": "Shared learning cannot keep compounding unless a quality dashboard shows accepted lessons, improved recommendations, reverted lessons, blocked routes, stale signals, pending reviews, and the next quality action.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or unaudited lesson can improve learning quality scores in phase one.",
+  "quality_principles": [
+    "Measure learning quality before increasing recommendation confidence.",
+    "Separate accepted lessons from pending, stale, reverted, and blocked lessons.",
+    "Show whether recommendations improved after an exchanged lesson applied.",
+    "Keep reverted lessons visible so operators can see what the system corrected.",
+    "Track blocked payment-custody routes as quality protection, not lost revenue.",
+    "Require human review for weak, contradictory, or low-sample lessons.",
+    "Give each role one next quality action before learning weights compound again."
+  ],
+  "role_quality_dashboards": [
+    {
+      "role": "Buyer",
+      "dashboard_event": "buyer_learning_quality_snapshot",
+      "accepted_lessons": "12 approved buyer lessons",
+      "improved_recommendations": "supplier match trust +8",
+      "reverted_lessons": "2 supplier rank rollbacks",
+      "blocked_lessons": "6 rental payment routes blocked",
+      "stale_lessons": "3 availability signals expired",
+      "pending_review": "1 proof conflict needs review",
+      "next_quality_action": "raise proof freshness weight only after review",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "dashboard_event": "supplier_learning_quality_snapshot",
+      "accepted_lessons": "9 approved supplier lessons",
+      "improved_recommendations": "listing readiness +6",
+      "reverted_lessons": "1 visibility rollback",
+      "blocked_lessons": "4 booking commission routes blocked",
+      "stale_lessons": "2 proof documents expired",
+      "pending_review": "2 response-quality notes need review",
+      "next_quality_action": "send freshness nudge before lifting visibility",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "dashboard_event": "founder_learning_quality_snapshot",
+      "accepted_lessons": "7 approved market lessons",
+      "improved_recommendations": "launch priority +5",
+      "reverted_lessons": "2 country queue rollbacks",
+      "blocked_lessons": "5 payout routes blocked",
+      "stale_lessons": "1 demand signal aged out",
+      "pending_review": "1 weak wedge needs review",
+      "next_quality_action": "hold scale until response quality improves",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "quality_states": [
+    "accepted_lessons",
+    "improved_recommendations",
+    "reverted_lessons",
+    "blocked_lessons",
+    "stale_lessons",
+    "pending_review",
+    "next_quality_action"
+  ],
+  "quality_routes": [
+    "/api/learning-quality-dashboard",
+    "/api/exchange-policy-audit-log",
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_quality_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_quality_fields": [
+    "dashboard_event",
+    "role",
+    "accepted_lessons",
+    "improved_recommendations",
+    "reverted_lessons",
+    "blocked_lessons",
+    "stale_lessons",
+    "pending_review",
+    "next_quality_action",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows the Learning Quality Dashboard after the Exchange Policy Audit Log.",
+    "Buyer, supplier, and founder views each show accepted, improved, reverted, blocked, stale, pending review, and next quality action.",
+    "Copy output explains quality state, audit source, improved recommendation, rollback, review, and blocked payment route.",
+    "Build Phase shows the v173 Learning Quality Dashboard contract after the Exchange Policy Audit Log contract.",
+    "Docs include quality states, quality routes, private routes, blocked payment routes, and required quality fields.",
+    "Static check fails if the dashboard UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No shared learning can keep compounding without quality visibility in phase one."
+  ]
+}
