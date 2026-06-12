@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260612-learning-benefit-ledger-v169" />
+  <link rel="stylesheet" href="styles.css?v=20260612-reinforcement-evaluation-lab-v170" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v169</strong>
+            <strong>v170</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -374,6 +374,18 @@
         <div class="benefit-ledger-actions">
           <button type="button" class="solid-button" id="learningBenefitPrimaryButton">Open approval gate</button>
           <button type="button" class="ghost-button" id="copyLearningBenefitButton">Copy benefit ledger</button>
+        </div>
+      </section>
+      <section class="reinforcement-evaluation-lab" id="reinforcementEvaluationLab" aria-label="Reinforcement evaluation lab">
+        <div class="reinforcement-lab-copy">
+          <span id="reinforcementEvaluationRole">Evaluation lab</span>
+          <strong id="reinforcementEvaluationHeadline">Score outcomes before recommendation weights move.</strong>
+          <small id="reinforcementEvaluationDetail">Accepted, ignored, rejected, stale, rollback, and blocked zero-weight signals stay visible.</small>
+        </div>
+        <div class="reinforcement-lab-grid" id="reinforcementEvaluationGrid" aria-label="Reinforcement evaluation states"></div>
+        <div class="reinforcement-lab-actions">
+          <button type="button" class="solid-button" id="reinforcementEvaluationPrimaryButton">Open benefit ledger</button>
+          <button type="button" class="ghost-button" id="copyReinforcementEvaluationButton">Copy evaluation lab</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2481,7 +2493,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v169</span>
+            <span class="build-version-pill">Current version: v170</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2492,13 +2504,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v169 Learning Benefit Ledger</strong>
-              <small>One benefit ledger shows who learns, who benefits, what stays private, what was approved, and what remains blocked.</small>
+              <strong>v170 Reinforcement Evaluation Lab</strong>
+              <small>One evaluation lab scores accepted, ignored, rejected, stale, rollback, and blocked outcomes before weights move.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Network benefit clarity</strong>
-              <small>Buyer, supplier, and founder paths should show contribution, aggregate benefit, private boundary, approval, rollback, and blocked payment route.</small>
+              <strong>Outcome scoring</strong>
+              <small>Buyer, supplier, and founder paths should show weight deltas, rollback, approval, and blocked zero-weight payment routes.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2518,8 +2530,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v169</strong>
-              <small>Learning Benefit Ledger</small>
+              <strong>v170</strong>
+              <small>Reinforcement Evaluation Lab</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2533,8 +2545,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Reinforcement evaluation lab</strong>
-              <small>Score accepted, ignored, rejected, stale, and rollback outcomes before weights move.</small>
+              <strong>Evaluation policy replay</strong>
+              <small>Replay evaluation deltas against policy fixtures before live recommendation weights change.</small>
             </article>
           </div>
 
@@ -4655,6 +4667,51 @@
             </article>
           </div>
 
+          <div class="reinforcement-evaluation-lab-contract" id="reinforcement-evaluation-lab-contract" aria-label="Heavyster reinforcement evaluation lab contract">
+            <article class="reinforcement-evaluation-lab-contract-lead">
+              <span>v170 Reinforcement Evaluation Lab</span>
+              <strong>Score outcomes before recommendation weights move.</strong>
+              <p>Heavyster now evaluates accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before learned recommendations can change their next weight.</p>
+              <b>Rule: evaluate before weight</b>
+            </article>
+            <article>
+              <span>Accepted</span>
+              <strong>Reward only proven action</strong>
+              <p>Positive deltas require a visible accepted action, proof state, response signal, and human approval.</p>
+              <b>Lift</b>
+            </article>
+            <article>
+              <span>Ignored</span>
+              <strong>Lower quiet misses</strong>
+              <p>Viewed but unused recommendations reduce confidence without exposing private tenant memory.</p>
+              <b>Reduce</b>
+            </article>
+            <article>
+              <span>Rejected</span>
+              <strong>Penalize mismatch</strong>
+              <p>Proof mismatch, route distrust, failed review, or weak market readiness reduces the next recommendation weight.</p>
+              <b>Penalty</b>
+            </article>
+            <article>
+              <span>Stale</span>
+              <strong>Expire old signals</strong>
+              <p>Availability, proof, or market signals that age out before action lose weight until refreshed.</p>
+              <b>Decay</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Blocked stays zero</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody are zero-weight signals.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="reinforcement-evaluation-lab-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one evaluation lab.</strong>
+              <p>Docs include the evaluation model in `docs/REINFORCEMENT_EVALUATION_LAB.json`, and no recommendation weight changes without accepted, ignored, rejected, stale, rollback, approval, and blocked-route visibility.</p>
+              <button type="button" class="solid-button" id="copyReinforcementEvaluationLabContractButton">Copy v170 evaluation lab</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4748,25 +4805,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v169 Learning Benefit Ledger</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v170 Reinforcement Evaluation Lab</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Learning Benefit Ledger</strong>
-              <p>Added a benefit ledger after the approval gate so each buyer, supplier, or founder path shows contribution, private memory, aggregate pattern, approval, rollback, and blocked payment route before network learning improves recommendations.</p>
+              <strong>Reinforcement Evaluation Lab</strong>
+              <p>Added an evaluation lab after the benefit ledger so each buyer, supplier, or founder path scores accepted, ignored, rejected, stale, rollback, and blocked zero-weight outcomes before recommendation weights move.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v169.</li>
-                <li>Build Phase shows Current version: v169.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, and Serene Route Planner.</li>
-                <li>Learning Benefit Ledger shows contribution, private memory, aggregate benefit, approval, rollback, and blocked payment route.</li>
-                <li>Copy benefit ledger explains who benefits, what was learned, what stayed private, and what payment custody remains blocked.</li>
-                <li>Build Phase shows the Learning Benefit Ledger contract after the Human Approval Replay Gate contract.</li>
-                <li>Docs include `docs/LEARNING_BENEFIT_LEDGER.json`.</li>
+                <li>Header shows Build v170.</li>
+                <li>Build Phase shows Current version: v170.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, and Serene Route Planner.</li>
+                <li>Reinforcement Evaluation Lab shows accepted, ignored, rejected, stale, rollback, and blocked zero-weight states.</li>
+                <li>Copy evaluation lab explains evaluation event, weight delta, approval, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Reinforcement Evaluation Lab contract after the Learning Benefit Ledger contract.</li>
+                <li>Docs include `docs/REINFORCEMENT_EVALUATION_LAB.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -4793,8 +4850,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v169 Learning Benefit Ledger</strong>
-              <p>Includes the v113 deploy guard through v168 Human Approval Replay Gate, plus this benefit-ledger release that shows who benefits before shared learning improves recommendations.</p>
+              <strong>v170 Reinforcement Evaluation Lab</strong>
+              <p>Includes the v113 deploy guard through v169 Learning Benefit Ledger, plus this evaluation-lab release that scores outcomes before recommendation weights move.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -4903,6 +4960,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260612-learning-benefit-ledger-v169" defer></script>
+    <script src="app.js?v=20260612-reinforcement-evaluation-lab-v170" defer></script>
   </body>
 </html>

@@ -1,0 +1,95 @@
+{
+  "version": "v170 Reinforcement Evaluation Lab",
+  "rule": "Recommendation weights cannot move until accepted, ignored, rejected, stale, rollback, and blocked outcomes are scored in a visible evaluation lab with human approval and payment-custody routes blocked.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, or payment-custody outcome can change recommendation weights in phase one.",
+  "evaluation_principles": [
+    "Score outcomes before changing recommendation weights.",
+    "Reward accepted actions only when proof, response, and approval are visible.",
+    "Reduce confidence for ignored, rejected, stale, or contradicted recommendations.",
+    "Keep rollback state beside every positive and negative weight delta.",
+    "Separate tenant-private evaluation from anonymized aggregate evaluation.",
+    "Show blocked payment-custody routes as zero-weight signals.",
+    "Require human approval before evaluated learning changes the next operational recommendation."
+  ],
+  "role_evaluation_labs": [
+    {
+      "role": "Buyer",
+      "evaluation_event": "buyer_match_evaluation",
+      "accepted_signal": "direct enquiry copied and supplier replied",
+      "ignored_signal": "verified supplier shown but no buyer action",
+      "rejected_signal": "proof mismatch or route not trusted",
+      "stale_signal": "availability expired before enquiry",
+      "rollback_state": "restore prior supplier rank",
+      "weight_delta": "+8 accepted, -4 ignored, -6 rejected, -5 stale",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "evaluation_event": "supplier_listing_evaluation",
+      "accepted_signal": "proof updated and lead answered",
+      "ignored_signal": "listing guidance viewed but not updated",
+      "rejected_signal": "proof failed review or response route blocked",
+      "stale_signal": "proof or availability expired",
+      "rollback_state": "restore listing visibility",
+      "weight_delta": "+6 accepted, -3 ignored, -5 rejected, -4 stale",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "evaluation_event": "market_launch_evaluation",
+      "accepted_signal": "market wedge approved and supplier route opened",
+      "ignored_signal": "launch recommendation parked",
+      "rejected_signal": "proof density or response reliability failed",
+      "stale_signal": "market signal aged out before approval",
+      "rollback_state": "restore country queue",
+      "weight_delta": "+5 accepted, -3 ignored, -5 rejected, -4 stale",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "evaluation_states": [
+    "accepted",
+    "ignored",
+    "rejected",
+    "stale",
+    "rollback_ready",
+    "blocked_zero_weight"
+  ],
+  "evaluation_routes": [
+    "/api/learning-feedback",
+    "/api/recommendation-weights",
+    "/api/boundary-audit-events",
+    "/api/aggregate-market-signals"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_evaluation_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_evaluation_fields": [
+    "evaluation_event",
+    "role",
+    "accepted_signal",
+    "ignored_signal",
+    "rejected_signal",
+    "stale_signal",
+    "rollback_state",
+    "weight_delta",
+    "blocked_route",
+    "human_approval_state"
+  ],
+  "acceptance": [
+    "Marketplace shows the Reinforcement Evaluation Lab after the Learning Benefit Ledger.",
+    "Buyer, supplier, and founder views each show accepted, ignored, rejected, stale, rollback, and blocked zero-weight states.",
+    "Copy output explains evaluation event, signals, weight delta, rollback, approval, and blocked payment route.",
+    "Build Phase shows the v170 Reinforcement Evaluation Lab contract after the Learning Benefit Ledger contract.",
+    "Docs include evaluation states, evaluation routes, private routes, blocked payment routes, and required evaluation fields.",
+    "Static check fails if the evaluation lab UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No payment-custody route can change recommendation weight in phase one."
+  ]
+}

@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260612-heavyster-learning-benefit-ledger-v169";
+const DATA_VERSION = "20260612-heavyster-reinforcement-evaluation-lab-v170";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260612-learning-benefit-ledger-v169";
+const SIMPLE_UX_RELEASE = "20260612-reinforcement-evaluation-lab-v170";
 
 const listings = [
   {
@@ -1008,6 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
+    renderReinforcementEvaluationLab();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1249,6 +1250,7 @@ function bindControls() {
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
+    renderReinforcementEvaluationLab();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2098,6 +2100,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyReinforcementEvaluationLabContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildReinforcementEvaluationLabContractText());
+      showToast("Reinforcement evaluation lab copied.");
+    } catch {
+      showToast("Copy is blocked here, but the evaluation lab is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2234,6 +2245,12 @@ function bindControls() {
   document.querySelector("#copyLearningBenefitButton").addEventListener("click", () => {
     handleLearningBenefitLedgerAction("copy");
   });
+  document.querySelector("#reinforcementEvaluationPrimaryButton").addEventListener("click", () => {
+    handleReinforcementEvaluationLabAction("primary");
+  });
+  document.querySelector("#copyReinforcementEvaluationButton").addEventListener("click", () => {
+    handleReinforcementEvaluationLabAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2314,6 +2331,7 @@ function bindControls() {
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
+    renderReinforcementEvaluationLab();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2509,6 +2527,7 @@ function render() {
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
+  renderReinforcementEvaluationLab();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3175,6 +3194,7 @@ function handleSimplicityIntent(intentId) {
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
+  renderReinforcementEvaluationLab();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3213,6 +3233,7 @@ const focusLayerSelectors = [
   ".boundary-audit-replay-console",
   ".human-approval-replay-gate",
   ".learning-benefit-ledger",
+  ".reinforcement-evaluation-lab",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3352,6 +3373,7 @@ function toggleCalmFocusLayers() {
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
+  renderReinforcementEvaluationLab();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -5050,6 +5072,133 @@ function buildLearningBenefitLedgerContractText() {
   return buildLearningBenefitLedgerText();
 }
 
+function renderReinforcementEvaluationLab() {
+  const root = document.querySelector("#reinforcementEvaluationLab");
+  if (!root) return;
+
+  const model = getReinforcementEvaluationLabModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#reinforcementEvaluationRole").textContent = model.roleLabel;
+  document.querySelector("#reinforcementEvaluationHeadline").textContent = model.headline;
+  document.querySelector("#reinforcementEvaluationDetail").textContent = model.detail;
+  document.querySelector("#reinforcementEvaluationGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#reinforcementEvaluationPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getReinforcementEvaluationLabModel() {
+  const benefit = getLearningBenefitLedgerModel();
+  const role = benefit.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer evaluation lab",
+      headline: "Score buyer match outcomes before supplier rank moves.",
+      detail: "Accepted enquiries lift rank only when proof, response, approval, rollback, and blocked payment route are visible.",
+      event: "buyer_match_evaluation",
+      accepted: "+8 replied",
+      ignored: "-4 no action",
+      rejected: "-6 mismatch",
+      stale: "-5 expired",
+      rollback: "restore supplier rank",
+      blocked: "rental payment zero"
+    },
+    Supplier: {
+      roleLabel: "Supplier evaluation lab",
+      headline: "Score listing outcomes before visibility moves.",
+      detail: "Supplier guidance lifts only when proof updates, lead response, approval, rollback, and blocked commission route are visible.",
+      event: "supplier_listing_evaluation",
+      accepted: "+6 updated",
+      ignored: "-3 no update",
+      rejected: "-5 failed proof",
+      stale: "-4 expired",
+      rollback: "restore visibility",
+      blocked: "commission zero"
+    },
+    Founder: {
+      roleLabel: "Founder evaluation lab",
+      headline: "Score launch outcomes before market priority moves.",
+      detail: "Founder recommendations lift only when market proof, response reliability, approval, rollback, and blocked payout route are visible.",
+      event: "market_launch_evaluation",
+      accepted: "+5 approved",
+      ignored: "-3 parked",
+      rejected: "-5 failed gate",
+      stale: "-4 aged out",
+      rollback: "restore country queue",
+      blocked: "payout zero"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    evaluationEvent: config.event,
+    sourceBenefit: benefit.headline,
+    blockedRoute: benefit.blockedRoute,
+    primary: { label: "Open benefit ledger", anchor: "#learningBenefitLedger", aria: `Open ${role.toLowerCase()} learning benefit ledger` },
+    states: [
+      { label: "Accepted", value: config.accepted, route: "/api/recommendation-weights", detail: config.event, tone: "ready" },
+      { label: "Ignored", value: config.ignored, route: "/api/learning-feedback", detail: "lower confidence", tone: "neutral" },
+      { label: "Rejected", value: config.rejected, route: "/api/learning-feedback", detail: "penalize mismatch", tone: "watch" },
+      { label: "Stale", value: config.stale, route: "/api/aggregate-market-signals", detail: "decay old signal", tone: "neutral" },
+      { label: "Rollback", value: "ready", route: "/api/boundary-audit-events", detail: config.rollback, tone: "ready" },
+      { label: "Blocked", value: "zero weight", route: benefit.blockedRoute, detail: config.blocked, tone: "watch" }
+    ]
+  };
+}
+
+async function handleReinforcementEvaluationLabAction(action, model = getReinforcementEvaluationLabModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildReinforcementEvaluationLabText(model));
+    showToast("Reinforcement evaluation lab copied.");
+  } catch {
+    showToast("Copy is blocked here, but the evaluation lab is visible.");
+  }
+}
+
+function buildReinforcementEvaluationLabText(model = getReinforcementEvaluationLabModel()) {
+  return [
+    "Heavyster Reinforcement Evaluation Lab",
+    "Version: v170 Reinforcement Evaluation Lab",
+    "Rule: recommendation weights cannot move until accepted, ignored, rejected, stale, rollback, and blocked outcomes are scored with human approval and payment-custody routes blocked.",
+    "",
+    `Role: ${model.role}`,
+    `Evaluation event: ${model.evaluationEvent}`,
+    `Source benefit: ${model.sourceBenefit}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Evaluation states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Accepted promise: only proven action with visible proof, response, approval, and rollback can lift a recommendation.",
+    "Ignored promise: recommendations that do not earn action lose confidence without exposing private tenant memory.",
+    "Rejected promise: mismatches and failed proof reduce future weight.",
+    "Stale promise: old proof, availability, or market signals decay until refreshed.",
+    "Rollback promise: every positive or negative delta keeps a reversible prior state.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay zero-weight."
+  ].join("\n");
+}
+
+function buildReinforcementEvaluationLabContractText() {
+  return buildReinforcementEvaluationLabText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -6345,6 +6494,7 @@ function openWorkflowStep(anchor, label, role) {
   renderBoundaryAuditReplayConsole();
   renderHumanApprovalReplayGate();
   renderLearningBenefitLedger();
+  renderReinforcementEvaluationLab();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -21298,6 +21448,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderBoundaryAuditReplayConsole();
     renderHumanApprovalReplayGate();
     renderLearningBenefitLedger();
+    renderReinforcementEvaluationLab();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
