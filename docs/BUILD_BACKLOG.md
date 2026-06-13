@@ -60,6 +60,7 @@
 - Receipt Audit Export for packaging completion receipts into backend-ready audit records with privacy boundary, storage route, export state, rollback, and blocked payment route before production storage
 - Backend Audit Storage Plan for mapping receipt audit exports into tenant-scoped table, write/read routes, row policy, retention, rollback, and blocked payment routes before backend implementation
 - Storage Write Fixture Pack for turning backend audit storage plans into payload name, tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked payment route before backend implementation
+- Backend Write Smoke Console for turning storage write fixtures into visible smoke event, expected status, validation result, rollback result, and blocked payment probe before backend route tests
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -120,6 +121,7 @@
 - Receipt Audit Export with one role-aware record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback state, and blocked route before production learning storage
 - Backend Audit Storage Plan with one role-aware table, tenant scope, write route, read route, row policy, retention policy, rollback state, and blocked route before audit storage implementation
 - Storage Write Fixture Pack with one role-aware payload name, tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked route before audit write implementation
+- Backend Write Smoke Console with one role-aware smoke event, fixture event, payload, tenant, expected status, validation result, rollback result, and blocked payment probe before route tests
 
 ## Sprint 2: Repository Foundation
 

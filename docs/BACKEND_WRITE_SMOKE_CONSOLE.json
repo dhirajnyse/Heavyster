@@ -1,0 +1,104 @@
+{
+  "version": "v179 Backend Write Smoke Console",
+  "rule": "Every storage write fixture must show a backend write smoke expectation before route tests or backend implementation begin.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or un-smoked write fixture can reach backend implementation in phase one.",
+  "smoke_principles": [
+    "Turn each storage write fixture into a visible smoke expectation.",
+    "Keep smoke event, fixture event, payload name, tenant id, record id, write route, expected status, validation result, rollback result, and blocked payment probe together.",
+    "Show pass, hold, or block before backend route tests are written.",
+    "Keep buyer, supplier, and founder smoke paths role-aware.",
+    "Separate allowed audit-record writes from blocked payment custody probes.",
+    "Require rollback smoke visibility beside every allowed write smoke.",
+    "Use static smoke expectations until real auth, database, and API tests exist."
+  ],
+  "role_smoke_consoles": [
+    {
+      "role": "Buyer",
+      "smoke_event": "buyer_backend_write_smoke",
+      "fixture_event": "buyer_storage_write_fixture",
+      "payload_name": "buyer-proof-audit-write",
+      "tenant_id": "tenant_buyer_demo",
+      "record_id": "receipt-buyer-proof-001",
+      "write_route": "/api/audit-records",
+      "expected_status": "201 created",
+      "validation_result": "tenant and row policy pass",
+      "rollback_result": "buyer proof rollback ready",
+      "blocked_payment_probe": "rental payment route blocked",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "smoke_event": "supplier_backend_write_smoke",
+      "fixture_event": "supplier_storage_write_fixture",
+      "payload_name": "supplier-freshness-audit-write",
+      "tenant_id": "tenant_supplier_demo",
+      "record_id": "receipt-supplier-freshness-001",
+      "write_route": "/api/audit-records",
+      "expected_status": "201 created",
+      "validation_result": "supplier tenant and success role pass",
+      "rollback_result": "freshness rollback ready",
+      "blocked_payment_probe": "booking commission route blocked",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "smoke_event": "founder_backend_write_smoke",
+      "fixture_event": "founder_storage_write_fixture",
+      "payload_name": "founder-wedge-audit-write",
+      "tenant_id": "tenant_founder_demo",
+      "record_id": "receipt-founder-wedge-001",
+      "write_route": "/api/audit-records",
+      "expected_status": "202 review hold",
+      "validation_result": "founder workspace and admin review required",
+      "rollback_result": "market queue rollback ready",
+      "blocked_payment_probe": "payout route blocked",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "smoke_states": [
+    "smoke_event",
+    "fixture_event",
+    "payload_name",
+    "tenant_id",
+    "expected_status",
+    "validation_result",
+    "rollback_result",
+    "blocked_payment_probe"
+  ],
+  "smoke_routes": [
+    "/api/audit-records",
+    "/api/audit-records/:record_id",
+    "/api/boundary-audit-events",
+    "/api/receipt-audit-export"
+  ],
+  "blocked_smoke_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_smoke_fields": [
+    "smoke_event",
+    "fixture_event",
+    "payload_name",
+    "tenant_id",
+    "record_id",
+    "write_route",
+    "expected_status",
+    "validation_result",
+    "rollback_result",
+    "blocked_payment_probe",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows Backend Write Smoke Console after Storage Write Fixture Pack.",
+    "Buyer, supplier, and founder views each show smoke event, fixture event, payload name, tenant id, expected status, validation result, rollback result, and blocked payment probe.",
+    "Copy output explains smoke event, fixture event, payload name, tenant id, record id, write route, expected status, validation result, rollback result, and blocked payment route.",
+    "Build Phase shows the v179 Backend Write Smoke Console contract after the Storage Write Fixture Pack contract.",
+    "Docs include smoke states, smoke routes, blocked smoke routes, and required smoke fields.",
+    "Static check fails if the smoke UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No backend route test starts without a visible smoke expectation or explicit hold."
+  ]
+}

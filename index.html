@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260613-storage-write-fixture-pack-v178" />
+  <link rel="stylesheet" href="styles.css?v=20260614-backend-write-smoke-console-v179" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v178</strong>
+            <strong>v179</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -482,6 +482,18 @@
         <div class="storage-fixture-actions">
           <button type="button" class="solid-button" id="storageFixturePrimaryButton">Open storage plan</button>
           <button type="button" class="ghost-button" id="copyStorageFixtureButton">Copy fixture</button>
+        </div>
+      </section>
+      <section class="backend-write-smoke-console" id="backendWriteSmokeConsole" aria-label="Backend write smoke console">
+        <div class="backend-write-smoke-copy">
+          <span id="backendWriteSmokeRole">Write smoke</span>
+          <strong id="backendWriteSmokeHeadline">Run fixture expectations before backend code.</strong>
+          <small id="backendWriteSmokeDetail">Smoke event, fixture, payload, tenant, expected status, validation, rollback, and blocked payment probe stay visible.</small>
+        </div>
+        <div class="backend-write-smoke-grid" id="backendWriteSmokeGrid" aria-label="Backend write smoke states"></div>
+        <div class="backend-write-smoke-actions">
+          <button type="button" class="solid-button" id="backendWriteSmokePrimaryButton">Open fixture</button>
+          <button type="button" class="ghost-button" id="copyBackendWriteSmokeButton">Copy smoke</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2589,7 +2601,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v178</span>
+            <span class="build-version-pill">Current version: v179</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2600,13 +2612,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v178 Storage Write Fixture Pack</strong>
-              <small>One fixture pack turns audit storage plans into backend-ready write payloads.</small>
+              <strong>v179 Backend Write Smoke Console</strong>
+              <small>One smoke console turns write fixtures into visible pass, hold, rollback, and block probes.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Write fixture readiness</strong>
-              <small>Buyer, supplier, and founder paths should show payload, tenant id, record id, write route, expected result, validation, rollback, and blocked route.</small>
+              <strong>Write smoke readiness</strong>
+              <small>Buyer, supplier, and founder paths should show smoke event, fixture, payload, tenant id, expected status, validation result, rollback, and blocked payment probe.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2626,8 +2638,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v178</strong>
-              <small>Storage Write Fixture Pack</small>
+              <strong>v179</strong>
+              <small>Backend Write Smoke Console</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2641,8 +2653,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend write smoke console</strong>
-              <small>Turn write fixtures into visible pass/block probes before backend implementation.</small>
+              <strong>Backend route test harness</strong>
+              <small>Turn visible write smoke probes into route-level test harness expectations before real APIs.</small>
             </article>
           </div>
 
@@ -5168,6 +5180,51 @@
             </article>
           </div>
 
+          <div class="backend-write-smoke-console-contract" id="backend-write-smoke-console-contract" aria-label="Heavyster backend write smoke console contract">
+            <article class="backend-write-smoke-console-contract-lead">
+              <span>v179 Backend Write Smoke Console</span>
+              <strong>Run fixture expectations before backend code.</strong>
+              <p>Heavyster now shows a smoke verdict for each write fixture: smoke event, fixture event, payload, tenant, expected status, validation result, rollback probe, and blocked payment probe.</p>
+              <b>Rule: smoke before route test</b>
+            </article>
+            <article>
+              <span>Smoke</span>
+              <strong>Pass or hold visible</strong>
+              <p>Each role shows whether the write fixture is ready to move into a future backend route test.</p>
+              <b>Visible</b>
+            </article>
+            <article>
+              <span>Route</span>
+              <strong>Allowed write stays named</strong>
+              <p>The console keeps `/api/audit-records` visible beside the fixture that will test it.</p>
+              <b>Allowed</b>
+            </article>
+            <article>
+              <span>Status</span>
+              <strong>Expected result is explicit</strong>
+              <p>Buyer and supplier writes expect created records while founder writes can hold for review.</p>
+              <b>Expected</b>
+            </article>
+            <article>
+              <span>Rollback</span>
+              <strong>Undo probe travels with smoke</strong>
+              <p>Each smoke path names the rollback result before backend implementation starts.</p>
+              <b>Ready</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment probe must block</strong>
+              <p>Rental payment, commission, payout, and custody routes remain blocked beside the allowed write route.</p>
+              <b>Protected</b>
+            </article>
+            <article class="backend-write-smoke-console-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one backend write smoke console.</strong>
+              <p>Docs include the smoke model in `docs/BACKEND_WRITE_SMOKE_CONSOLE.json`, and no backend route test starts without visible smoke expectations.</p>
+              <button type="button" class="solid-button" id="copyBackendWriteSmokeConsoleContractButton">Copy v179 smoke</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -5261,25 +5318,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v178 Storage Write Fixture Pack</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, backend audit storage, storage write fixture pack, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v179 Backend Write Smoke Console</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, backend audit storage, storage write fixture pack, backend write smoke console, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Storage Write Fixture Pack</strong>
-              <p>Added write fixtures after backend audit storage so each future audit write has a payload name, tenant id, record id, expected result, validation state, rollback fixture, and blocked route before code starts.</p>
+              <strong>Backend Write Smoke Console</strong>
+              <p>Added smoke probes after the storage write fixture pack so each future audit write has a visible smoke event, expected status, validation result, rollback result, and blocked payment probe before route tests start.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v178.</li>
-                <li>Build Phase shows Current version: v178.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, Backend Audit Storage, Storage Write Fixture Pack, and Serene Route Planner.</li>
-                <li>Storage Write Fixture Pack shows payload name, tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked route.</li>
-                <li>Copy fixture explains fixture event, source storage, payload name, tenant id, record id, expected result, validation state, rollback fixture, and blocked payment custody.</li>
-                <li>Build Phase shows the Storage Write Fixture Pack contract after the Backend Audit Storage contract.</li>
-                <li>Docs include `docs/STORAGE_WRITE_FIXTURE_PACK.json`.</li>
+                <li>Header shows Build v179.</li>
+                <li>Build Phase shows Current version: v179.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, Backend Audit Storage, Storage Write Fixture Pack, Backend Write Smoke Console, and Serene Route Planner.</li>
+                <li>Backend Write Smoke Console shows smoke event, fixture, payload, tenant, expected status, validation result, rollback result, and blocked payment probe.</li>
+                <li>Copy smoke explains smoke event, fixture event, payload name, tenant id, record id, write route, expected status, validation result, rollback result, and blocked route.</li>
+                <li>Build Phase shows the Backend Write Smoke Console contract after the Storage Write Fixture Pack contract.</li>
+                <li>Docs include `docs/BACKEND_WRITE_SMOKE_CONSOLE.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -5306,8 +5363,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v178 Storage Write Fixture Pack</strong>
-              <p>Includes the v113 deploy guard through v177 Backend Audit Storage Plan, plus this fixture release that turns storage plans into write-ready backend test payloads.</p>
+              <strong>v179 Backend Write Smoke Console</strong>
+              <p>Includes the v113 deploy guard through v178 Storage Write Fixture Pack, plus this smoke release that turns write fixtures into visible backend pass, hold, rollback, and block probes.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -5416,6 +5473,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260613-storage-write-fixture-pack-v178" defer></script>
+    <script src="app.js?v=20260614-backend-write-smoke-console-v179" defer></script>
   </body>
 </html>

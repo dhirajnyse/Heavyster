@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260613-heavyster-storage-write-fixture-pack-v178";
+const DATA_VERSION = "20260614-heavyster-backend-write-smoke-console-v179";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260613-storage-write-fixture-pack-v178";
+const SIMPLE_UX_RELEASE = "20260614-backend-write-smoke-console-v179";
 
 const listings = [
   {
@@ -1017,6 +1017,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
     renderStorageWriteFixturePack();
+    renderBackendWriteSmokeConsole();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1267,6 +1268,7 @@ function bindControls() {
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
     renderStorageWriteFixturePack();
+    renderBackendWriteSmokeConsole();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2197,6 +2199,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyBackendWriteSmokeConsoleContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBackendWriteSmokeConsoleContractText());
+      showToast("Backend write smoke console copied.");
+    } catch {
+      showToast("Copy is blocked here, but the smoke console is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2387,6 +2398,12 @@ function bindControls() {
   document.querySelector("#copyStorageFixtureButton").addEventListener("click", () => {
     handleStorageWriteFixturePackAction("copy");
   });
+  document.querySelector("#backendWriteSmokePrimaryButton").addEventListener("click", () => {
+    handleBackendWriteSmokeConsoleAction("primary");
+  });
+  document.querySelector("#copyBackendWriteSmokeButton").addEventListener("click", () => {
+    handleBackendWriteSmokeConsoleAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2476,6 +2493,7 @@ function bindControls() {
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
     renderStorageWriteFixturePack();
+    renderBackendWriteSmokeConsole();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2680,6 +2698,7 @@ function render() {
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
   renderStorageWriteFixturePack();
+  renderBackendWriteSmokeConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3355,6 +3374,7 @@ function handleSimplicityIntent(intentId) {
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
   renderStorageWriteFixturePack();
+  renderBackendWriteSmokeConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3402,6 +3422,7 @@ const focusLayerSelectors = [
   ".receipt-audit-export",
   ".backend-audit-storage",
   ".storage-write-fixture-pack",
+  ".backend-write-smoke-console",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3550,6 +3571,7 @@ function toggleCalmFocusLayers() {
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
   renderStorageWriteFixturePack();
+  renderBackendWriteSmokeConsole();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -6439,6 +6461,152 @@ function buildStorageWriteFixturePackContractText() {
   return buildStorageWriteFixturePackText();
 }
 
+function renderBackendWriteSmokeConsole() {
+  const root = document.querySelector("#backendWriteSmokeConsole");
+  if (!root) return;
+
+  const model = getBackendWriteSmokeConsoleModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#backendWriteSmokeRole").textContent = model.roleLabel;
+  document.querySelector("#backendWriteSmokeHeadline").textContent = model.headline;
+  document.querySelector("#backendWriteSmokeDetail").textContent = model.detail;
+  document.querySelector("#backendWriteSmokeGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#backendWriteSmokePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getBackendWriteSmokeConsoleModel() {
+  const fixture = getStorageWriteFixturePackModel();
+  const role = fixture.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer write smoke",
+      headline: "Run the buyer audit write smoke before backend code.",
+      detail: "Buyer smoke checks fixture fields, allowed write route, expected 201 result, rollback readiness, and rental-payment block.",
+      smokeEvent: "buyer_backend_write_smoke",
+      verdict: "Pass",
+      expectedStatus: "201 created",
+      validationResult: "tenant + row policy pass",
+      rollbackResult: "rollback fixture ready",
+      blockedProbe: "rental payment blocked",
+      nextStep: "ready for route test",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier write smoke",
+      headline: "Run the supplier freshness write smoke before backend code.",
+      detail: "Supplier smoke checks tenant role, success access, expected 201 result, rollback readiness, and commission-route block.",
+      smokeEvent: "supplier_backend_write_smoke",
+      verdict: "Pass",
+      expectedStatus: "201 created",
+      validationResult: "supplier + success role pass",
+      rollbackResult: "freshness rollback ready",
+      blockedProbe: "commission route blocked",
+      nextStep: "ready for route test",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder write smoke",
+      headline: "Run the founder market write smoke before backend code.",
+      detail: "Founder smoke checks workspace scope, admin review hold, expected 202 result, rollback readiness, and payout-route block.",
+      smokeEvent: "founder_backend_write_smoke",
+      verdict: "Held",
+      expectedStatus: "202 review hold",
+      validationResult: "admin review required",
+      rollbackResult: "market queue rollback ready",
+      blockedProbe: "payout route blocked",
+      nextStep: "hold for policy",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    smokeEvent: config.smokeEvent,
+    fixtureEvent: fixture.fixtureEvent,
+    payloadName: fixture.payloadName,
+    tenantId: fixture.tenantId,
+    recordId: fixture.recordId,
+    writeRoute: "/api/audit-records",
+    expectedStatus: config.expectedStatus,
+    validationResult: config.validationResult,
+    rollbackResult: config.rollbackResult,
+    blockedProbe: config.blockedProbe,
+    blockedRoute: config.blockedRoute || fixture.blockedRoute,
+    primary: { label: "Open fixture", anchor: "#storageWriteFixturePack", aria: `Open ${role.toLowerCase()} storage write fixture pack` },
+    states: [
+      { label: "Smoke", value: config.verdict, route: "/api/audit-records", detail: config.smokeEvent, tone: config.verdict === "Pass" ? "ready" : "watch" },
+      { label: "Fixture", value: fixture.fixtureEvent, route: "/api/audit-records", detail: "loaded", tone: "ready" },
+      { label: "Payload", value: fixture.payloadName, route: "/api/audit-records", detail: "shape", tone: "ready" },
+      { label: "Tenant", value: fixture.tenantId, route: "/api/organization-memory", detail: "scoped", tone: "neutral" },
+      { label: "Expected", value: config.expectedStatus, route: "/api/audit-records", detail: "status", tone: "ready" },
+      { label: "Validate", value: config.validationResult, route: "/api/boundary-audit-events", detail: "smoke", tone: config.verdict === "Pass" ? "ready" : "watch" },
+      { label: "Rollback", value: config.rollbackResult, route: "/api/boundary-audit-events", detail: "probe", tone: "neutral" },
+      { label: "Blocked", value: config.blockedProbe, route: config.blockedRoute, detail: "guardrail", tone: "watch" }
+    ]
+  };
+}
+
+async function handleBackendWriteSmokeConsoleAction(action, model = getBackendWriteSmokeConsoleModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildBackendWriteSmokeConsoleText(model));
+    showToast("Backend write smoke copied.");
+  } catch {
+    showToast("Copy is blocked here, but the smoke console is visible.");
+  }
+}
+
+function buildBackendWriteSmokeConsoleText(model = getBackendWriteSmokeConsoleModel()) {
+  return [
+    "Heavyster Backend Write Smoke Console",
+    "Version: v179 Backend Write Smoke Console",
+    "Rule: every storage write fixture must pass a visible smoke expectation before backend implementation starts.",
+    "",
+    `Role: ${model.role}`,
+    `Smoke event: ${model.smokeEvent}`,
+    `Fixture event: ${model.fixtureEvent}`,
+    `Payload name: ${model.payloadName}`,
+    `Tenant id: ${model.tenantId}`,
+    `Record id: ${model.recordId}`,
+    `Write route: ${model.writeRoute}`,
+    `Expected status: ${model.expectedStatus}`,
+    `Validation result: ${model.validationResult}`,
+    `Rollback result: ${model.rollbackResult}`,
+    `Blocked payment probe: ${model.blockedProbe}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Smoke states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Smoke promise: static fixture expectations are visible before API code begins.",
+    "Route promise: the allowed write route stays separate from blocked payment routes.",
+    "Validation promise: tenant, role, status, and review expectations are named before implementation.",
+    "Rollback promise: every smoke path carries a rollback probe.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from backend write smoke."
+  ].join("\n");
+}
+
+function buildBackendWriteSmokeConsoleContractText() {
+  return buildBackendWriteSmokeConsoleText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -7743,6 +7911,7 @@ function openWorkflowStep(anchor, label, role) {
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
   renderStorageWriteFixturePack();
+  renderBackendWriteSmokeConsole();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -22705,6 +22874,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
     renderStorageWriteFixturePack();
+    renderBackendWriteSmokeConsole();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
