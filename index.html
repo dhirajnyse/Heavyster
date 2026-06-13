@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260613-learning-quality-dashboard-v173" />
+  <link rel="stylesheet" href="styles.css?v=20260613-learning-action-queue-v174" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v173</strong>
+            <strong>v174</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -422,6 +422,18 @@
         <div class="learning-quality-actions">
           <button type="button" class="solid-button" id="learningQualityPrimaryButton">Open audit log</button>
           <button type="button" class="ghost-button" id="copyLearningQualityButton">Copy quality brief</button>
+        </div>
+      </section>
+      <section class="learning-action-queue" id="learningActionQueue" aria-label="Learning action queue">
+        <div class="learning-action-copy">
+          <span id="learningActionRole">Action queue</span>
+          <strong id="learningActionHeadline">Turn weak learning signals into owned actions.</strong>
+          <small id="learningActionDetail">Owner, source quality, primary action, due state, rollback task, blocked task, and completion gate stay visible.</small>
+        </div>
+        <div class="learning-action-grid" id="learningActionGrid" aria-label="Learning action states"></div>
+        <div class="learning-action-actions">
+          <button type="button" class="solid-button" id="learningActionPrimaryButton">Open quality dashboard</button>
+          <button type="button" class="ghost-button" id="copyLearningActionButton">Copy action queue</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2529,7 +2541,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v173</span>
+            <span class="build-version-pill">Current version: v174</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2540,13 +2552,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v173 Learning Quality Dashboard</strong>
-              <small>One dashboard shows accepted, improved, reverted, blocked, stale, pending, and next quality actions before learning compounds.</small>
+              <strong>v174 Learning Action Queue</strong>
+              <small>One queue turns weak, stale, reverted, blocked, and pending learning signals into owned next actions.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Learning quality</strong>
-              <small>Buyer, supplier, and founder paths should show quality state before recommendation confidence increases again.</small>
+              <strong>Owned learning actions</strong>
+              <small>Buyer, supplier, and founder paths should show owner, source, action, due state, rollback, block, and completion gate.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2566,8 +2578,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v173</strong>
-              <small>Learning Quality Dashboard</small>
+              <strong>v174</strong>
+              <small>Learning Action Queue</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2581,8 +2593,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Learning action queue</strong>
-              <small>Turn weak quality signals into review tasks, rollback actions, supplier nudges, and safer recommendation updates.</small>
+              <strong>Quality completion receipts</strong>
+              <small>Confirm which learning actions finished, which stayed held, and which recommendation updates are now allowed.</small>
             </article>
           </div>
 
@@ -4883,6 +4895,51 @@
             </article>
           </div>
 
+          <div class="learning-action-queue-contract" id="learning-action-queue-contract" aria-label="Heavyster learning action queue contract">
+            <article class="learning-action-queue-contract-lead">
+              <span>v174 Learning Action Queue</span>
+              <strong>Turn weak learning quality signals into owned operator actions.</strong>
+              <p>Heavyster now assigns each weak, stale, reverted, blocked, or pending learning signal to an owner with source quality, next action, due state, rollback task, blocked task, and completion gate.</p>
+              <b>Rule: own before compound</b>
+            </article>
+            <article>
+              <span>Owner</span>
+              <strong>Named operator owns the fix</strong>
+              <p>Buyer, supplier, founder, or marketplace operators own the next quality action before weights move.</p>
+              <b>Assigned</b>
+            </article>
+            <article>
+              <span>Source</span>
+              <strong>Quality signal attached</strong>
+              <p>The queue links every action to the dashboard snapshot and audit trail that created it.</p>
+              <b>Traceable</b>
+            </article>
+            <article>
+              <span>Action</span>
+              <strong>One next move</strong>
+              <p>Review proof, refresh documents, nudge suppliers, restore rank, or hold scale before compounding.</p>
+              <b>Do next</b>
+            </article>
+            <article>
+              <span>Gate</span>
+              <strong>Completion required</strong>
+              <p>Learning confidence cannot increase until the action is completed or explicitly held.</p>
+              <b>Paused</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Blocked payment route stays visible</strong>
+              <p>Rental payments, deposits, escrow, payouts, booking commissions, and payment custody remain blocked tasks.</p>
+              <b>BLOCK</b>
+            </article>
+            <article class="learning-action-queue-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one learning action queue.</strong>
+              <p>Docs include the action model in `docs/LEARNING_ACTION_QUEUE.json`, and no shared learning confidence compounds without an owned action or explicit hold.</p>
+              <button type="button" class="solid-button" id="copyLearningActionQueueContractButton">Copy v174 action queue</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -4976,25 +5033,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v173 Learning Quality Dashboard</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v174 Learning Action Queue</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Learning Quality Dashboard</strong>
-              <p>Added a quality dashboard after the audit log so operators can see accepted, improved, reverted, blocked, stale, pending, and next quality actions before shared learning compounds again.</p>
+              <strong>Learning Action Queue</strong>
+              <p>Added an action queue after the quality dashboard so weak, stale, reverted, blocked, and pending learning signals become owner-visible tasks before recommendation confidence compounds.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v173.</li>
-                <li>Build Phase shows Current version: v173.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, and Serene Route Planner.</li>
-                <li>Learning Quality Dashboard shows accepted, improved, reverted, blocked, stale, pending review, and next quality action.</li>
-                <li>Copy quality brief explains audit source, improved recommendation, rollback, review, and blocked payment custody.</li>
-                <li>Build Phase shows the Learning Quality Dashboard contract after the Exchange Policy Audit Log contract.</li>
-                <li>Docs include `docs/LEARNING_QUALITY_DASHBOARD.json`.</li>
+                <li>Header shows Build v174.</li>
+                <li>Build Phase shows Current version: v174.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, and Serene Route Planner.</li>
+                <li>Learning Action Queue shows owner, source quality, primary action, due state, rollback task, blocked task, and completion gate.</li>
+                <li>Copy action queue explains source quality, owner, next action, due state, rollback, completion gate, and blocked payment custody.</li>
+                <li>Build Phase shows the Learning Action Queue contract after the Learning Quality Dashboard contract.</li>
+                <li>Docs include `docs/LEARNING_ACTION_QUEUE.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -5021,8 +5078,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v173 Learning Quality Dashboard</strong>
-              <p>Includes the v113 deploy guard through v172 Exchange Policy Audit Log, plus this quality release that monitors whether shared learning should keep compounding.</p>
+              <strong>v174 Learning Action Queue</strong>
+              <p>Includes the v113 deploy guard through v173 Learning Quality Dashboard, plus this action release that turns learning quality gaps into owned operator tasks.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -5131,6 +5188,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260613-learning-quality-dashboard-v173" defer></script>
+    <script src="app.js?v=20260613-learning-action-queue-v174" defer></script>
   </body>
 </html>

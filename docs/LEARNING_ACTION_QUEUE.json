@@ -1,0 +1,99 @@
+{
+  "version": "v174 Learning Action Queue",
+  "rule": "Every weak, stale, reverted, blocked, or pending learning-quality signal must become an owner-visible action before recommendation confidence compounds again.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or unowned learning action can reach recommendation weights in phase one.",
+  "action_principles": [
+    "Convert weak learning quality signals into owner-visible tasks.",
+    "Keep one next action beside each accepted, reverted, blocked, stale, or pending quality state.",
+    "Assign each action to a buyer, supplier, founder, or operator owner before weights move.",
+    "Attach the source audit event and rollback state to every action.",
+    "Separate supplier nudges, proof refreshes, review holds, rollback tasks, and scale holds.",
+    "Track blocked payment-custody routes as protection tasks, not monetization opportunities.",
+    "Require completion or explicit hold before shared learning confidence compounds again."
+  ],
+  "role_action_queues": [
+    {
+      "role": "Buyer",
+      "queue_event": "buyer_learning_action_queue",
+      "source_quality": "buyer_learning_quality_snapshot",
+      "primary_action": "review proof conflict before proof freshness weight increases",
+      "owner": "marketplace operator",
+      "due_state": "today",
+      "rollback_task": "restore prior supplier rank if proof stays conflicted",
+      "blocked_task": "keep rental-payment route blocked",
+      "completion_gate": "proof review approved",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "queue_event": "supplier_learning_action_queue",
+      "source_quality": "supplier_learning_quality_snapshot",
+      "primary_action": "send freshness nudge before listing visibility increases",
+      "owner": "supplier success operator",
+      "due_state": "24 hours",
+      "rollback_task": "restore prior listing visibility if proof remains stale",
+      "blocked_task": "keep booking-commission route blocked",
+      "completion_gate": "fresh proof confirmed",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "queue_event": "founder_learning_action_queue",
+      "source_quality": "founder_learning_quality_snapshot",
+      "primary_action": "hold scale until weak wedge response quality improves",
+      "owner": "founder operator",
+      "due_state": "next launch review",
+      "rollback_task": "restore prior market queue if wedge stays weak",
+      "blocked_task": "keep payout route blocked",
+      "completion_gate": "response quality approved",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "action_states": [
+    "owner_assigned",
+    "source_quality",
+    "primary_action",
+    "due_state",
+    "rollback_task",
+    "blocked_task",
+    "completion_gate"
+  ],
+  "action_routes": [
+    "/api/learning-action-queue",
+    "/api/learning-quality-dashboard",
+    "/api/exchange-policy-audit-log",
+    "/api/boundary-audit-events"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_action_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_action_fields": [
+    "queue_event",
+    "role",
+    "source_quality",
+    "primary_action",
+    "owner",
+    "due_state",
+    "rollback_task",
+    "blocked_task",
+    "completion_gate",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows the Learning Action Queue after the Learning Quality Dashboard.",
+    "Buyer, supplier, and founder views each show owner, source quality, primary action, due state, rollback task, blocked task, and completion gate.",
+    "Copy output explains the queue event, owner, source quality, next action, due state, rollback, completion gate, and blocked payment route.",
+    "Build Phase shows the v174 Learning Action Queue contract after the Learning Quality Dashboard contract.",
+    "Docs include action states, action routes, private routes, blocked payment routes, and required action fields.",
+    "Static check fails if the queue UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No shared learning confidence can compound without an owned action or explicit hold in phase one."
+  ]
+}

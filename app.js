@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260613-heavyster-learning-quality-dashboard-v173";
+const DATA_VERSION = "20260613-heavyster-learning-action-queue-v174";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260613-learning-quality-dashboard-v173";
+const SIMPLE_UX_RELEASE = "20260613-learning-action-queue-v174";
 
 const listings = [
   {
@@ -1012,6 +1012,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderNetworkLearningExchange();
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
+    renderLearningActionQueue();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1257,6 +1258,7 @@ function bindControls() {
     renderNetworkLearningExchange();
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
+    renderLearningActionQueue();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2142,6 +2144,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyLearningActionQueueContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildLearningActionQueueContractText());
+      showToast("Learning action queue copied.");
+    } catch {
+      showToast("Copy is blocked here, but the action queue is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2302,6 +2313,12 @@ function bindControls() {
   document.querySelector("#copyLearningQualityButton").addEventListener("click", () => {
     handleLearningQualityDashboardAction("copy");
   });
+  document.querySelector("#learningActionPrimaryButton").addEventListener("click", () => {
+    handleLearningActionQueueAction("primary");
+  });
+  document.querySelector("#copyLearningActionButton").addEventListener("click", () => {
+    handleLearningActionQueueAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2386,6 +2403,7 @@ function bindControls() {
     renderNetworkLearningExchange();
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
+    renderLearningActionQueue();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2585,6 +2603,7 @@ function render() {
   renderNetworkLearningExchange();
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
+  renderLearningActionQueue();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3255,6 +3274,7 @@ function handleSimplicityIntent(intentId) {
   renderNetworkLearningExchange();
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
+  renderLearningActionQueue();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3297,6 +3317,7 @@ const focusLayerSelectors = [
   ".network-learning-exchange",
   ".exchange-policy-audit-log",
   ".learning-quality-dashboard",
+  ".learning-action-queue",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3440,6 +3461,7 @@ function toggleCalmFocusLayers() {
   renderNetworkLearningExchange();
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
+  renderLearningActionQueue();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -5668,6 +5690,139 @@ function buildLearningQualityDashboardContractText() {
   return buildLearningQualityDashboardText();
 }
 
+function renderLearningActionQueue() {
+  const root = document.querySelector("#learningActionQueue");
+  if (!root) return;
+
+  const model = getLearningActionQueueModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#learningActionRole").textContent = model.roleLabel;
+  document.querySelector("#learningActionHeadline").textContent = model.headline;
+  document.querySelector("#learningActionDetail").textContent = model.detail;
+  document.querySelector("#learningActionGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#learningActionPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getLearningActionQueueModel() {
+  const quality = getLearningQualityDashboardModel();
+  const role = quality.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer action queue",
+      headline: "Assign proof review before buyer match confidence compounds.",
+      detail: "Buyer queue turns proof conflicts into one owner, due state, rollback task, blocked payment task, and completion gate.",
+      event: "buyer_learning_action_queue",
+      owner: "marketplace operator",
+      source: "buyer quality",
+      action: "review proof conflict",
+      due: "today",
+      rollback: "restore rank",
+      blocked: "block rental pay",
+      gate: "proof approved",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier action queue",
+      headline: "Assign proof freshness before supplier visibility compounds.",
+      detail: "Supplier queue turns stale proof into one owner, freshness nudge, rollback task, blocked commission task, and completion gate.",
+      event: "supplier_learning_action_queue",
+      owner: "success operator",
+      source: "supplier quality",
+      action: "send freshness nudge",
+      due: "24 hours",
+      rollback: "restore visibility",
+      blocked: "block commission",
+      gate: "proof refreshed",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder action queue",
+      headline: "Assign scale hold before market priority compounds.",
+      detail: "Founder queue turns weak wedge quality into one owner, hold action, rollback task, blocked payout task, and completion gate.",
+      event: "founder_learning_action_queue",
+      owner: "founder operator",
+      source: "founder quality",
+      action: "hold weak wedge",
+      due: "launch review",
+      rollback: "restore queue",
+      blocked: "block payout",
+      gate: "response approved",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    queueEvent: config.event,
+    sourceQuality: quality.dashboardEvent,
+    blockedRoute: config.blockedRoute || quality.blockedRoute,
+    primary: { label: "Open quality dashboard", anchor: "#learningQualityDashboard", aria: `Open ${role.toLowerCase()} learning quality dashboard` },
+    states: [
+      { label: "Owner", value: config.owner, route: "/api/learning-action-queue", detail: "assigned", tone: "ready" },
+      { label: "Source", value: config.source, route: "/api/learning-quality-dashboard", detail: quality.dashboardEvent, tone: "neutral" },
+      { label: "Action", value: config.action, route: "/api/learning-action-queue", detail: "do next", tone: "ready" },
+      { label: "Due", value: config.due, route: "/api/learning-action-queue", detail: "timebox", tone: "watch" },
+      { label: "Rollback", value: config.rollback, route: "/api/boundary-audit-events", detail: "safe revert", tone: "neutral" },
+      { label: "Blocked", value: config.blocked, route: config.blockedRoute, detail: "guardrail", tone: "watch" },
+      { label: "Gate", value: config.gate, route: "/api/boundary-audit-events", detail: "complete first", tone: "ready" }
+    ]
+  };
+}
+
+async function handleLearningActionQueueAction(action, model = getLearningActionQueueModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildLearningActionQueueText(model));
+    showToast("Learning action queue copied.");
+  } catch {
+    showToast("Copy is blocked here, but the action queue is visible.");
+  }
+}
+
+function buildLearningActionQueueText(model = getLearningActionQueueModel()) {
+  return [
+    "Heavyster Learning Action Queue",
+    "Version: v174 Learning Action Queue",
+    "Rule: every weak, stale, reverted, blocked, or pending learning-quality signal must become an owner-visible action before recommendation confidence compounds again.",
+    "",
+    `Role: ${model.role}`,
+    `Queue event: ${model.queueEvent}`,
+    `Source quality: ${model.sourceQuality}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Action states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Ownership promise: weak learning quality signals get an accountable owner before weights move.",
+    "Action promise: each queue item has one next action, due state, completion gate, and rollback task.",
+    "Hold promise: unresolved actions keep confidence from compounding until completion or explicit hold.",
+    "Operator promise: review tasks, supplier nudges, rollbacks, and scale holds are visible instead of hidden tuning.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from action queues."
+  ].join("\n");
+}
+
+function buildLearningActionQueueContractText() {
+  return buildLearningActionQueueText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -6967,6 +7122,7 @@ function openWorkflowStep(anchor, label, role) {
   renderNetworkLearningExchange();
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
+  renderLearningActionQueue();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -21924,6 +22080,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderNetworkLearningExchange();
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
+    renderLearningActionQueue();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

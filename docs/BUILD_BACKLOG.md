@@ -55,6 +55,7 @@
 - Network Learning Exchange for sharing only anonymized aggregate lessons across organizations after minimum sample, consent, approval, rollback, and blocked payment route are visible
 - Exchange Policy Audit Log for recording every shared lesson with sample evidence, consent, approver, applied route, rollback, and blocked payment route before recommendation weights move
 - Learning Quality Dashboard for showing accepted, improved, reverted, blocked, stale, pending review, and next quality action before shared learning confidence compounds
+- Learning Action Queue for turning weak, stale, reverted, blocked, or pending learning quality signals into owner-visible action, rollback, blocked-route, and completion gates before confidence compounds
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -110,6 +111,7 @@
 - Boundary Audit Fixture Pack with one role-aware fixture id, audit route, payload name, expected result, rollback note, and blocked payment route before backend tests are written
 - Boundary Audit Replay Console with one role-aware before state, replay delta, after state, rollback state, and blocked payment route before production learning applies
 - Human Approval Replay Gate with one role-aware approver, approval reason, approval state, approval timestamp, rollback state, and blocked payment route before production learning applies
+- Learning Action Queue with one role-aware owner, source quality, primary action, due state, rollback task, blocked task, and completion gate before production learning confidence compounds
 
 ## Sprint 2: Repository Foundation
 
