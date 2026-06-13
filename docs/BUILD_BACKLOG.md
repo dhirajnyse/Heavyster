@@ -58,6 +58,7 @@
 - Learning Action Queue for turning weak, stale, reverted, blocked, or pending learning quality signals into owner-visible action, rollback, blocked-route, and completion gates before confidence compounds
 - Quality Completion Receipts for proving completed learning actions with approver, proof delta, confidence decision, rollback, and blocked payment route before recommendation weights move
 - Receipt Audit Export for packaging completion receipts into backend-ready audit records with privacy boundary, storage route, export state, rollback, and blocked payment route before production storage
+- Backend Audit Storage Plan for mapping receipt audit exports into tenant-scoped table, write/read routes, row policy, retention, rollback, and blocked payment routes before backend implementation
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -116,6 +117,7 @@
 - Learning Action Queue with one role-aware owner, source quality, primary action, due state, rollback task, blocked task, and completion gate before production learning confidence compounds
 - Quality Completion Receipts with one role-aware receipt event, completed action, approver, proof delta, confidence decision, rollback state, and blocked route before production learning confidence lifts
 - Receipt Audit Export with one role-aware record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback state, and blocked route before production learning storage
+- Backend Audit Storage Plan with one role-aware table, tenant scope, write route, read route, row policy, retention policy, rollback state, and blocked route before audit storage implementation
 
 ## Sprint 2: Repository Foundation
 

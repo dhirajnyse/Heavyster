@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260613-heavyster-receipt-audit-export-v176";
+const DATA_VERSION = "20260613-heavyster-backend-audit-storage-v177";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260613-receipt-audit-export-v176";
+const SIMPLE_UX_RELEASE = "20260613-backend-audit-storage-v177";
 
 const listings = [
   {
@@ -1015,6 +1015,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
+    renderBackendAuditStoragePlan();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1263,6 +1264,7 @@ function bindControls() {
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
+    renderBackendAuditStoragePlan();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2175,6 +2177,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyBackendAuditStorageContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildBackendAuditStoragePlanContractText());
+      showToast("Backend audit storage plan copied.");
+    } catch {
+      showToast("Copy is blocked here, but the storage plan is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2353,6 +2364,12 @@ function bindControls() {
   document.querySelector("#copyReceiptAuditButton").addEventListener("click", () => {
     handleReceiptAuditExportAction("copy");
   });
+  document.querySelector("#backendStoragePrimaryButton").addEventListener("click", () => {
+    handleBackendAuditStoragePlanAction("primary");
+  });
+  document.querySelector("#copyBackendStorageButton").addEventListener("click", () => {
+    handleBackendAuditStoragePlanAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2440,6 +2457,7 @@ function bindControls() {
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
+    renderBackendAuditStoragePlan();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2642,6 +2660,7 @@ function render() {
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
+  renderBackendAuditStoragePlan();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3315,6 +3334,7 @@ function handleSimplicityIntent(intentId) {
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
+  renderBackendAuditStoragePlan();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3360,6 +3380,7 @@ const focusLayerSelectors = [
   ".learning-action-queue",
   ".quality-completion-receipts",
   ".receipt-audit-export",
+  ".backend-audit-storage",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3506,6 +3527,7 @@ function toggleCalmFocusLayers() {
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
+  renderBackendAuditStoragePlan();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -6128,6 +6150,132 @@ function buildReceiptAuditExportContractText() {
   return buildReceiptAuditExportText();
 }
 
+function renderBackendAuditStoragePlan() {
+  const root = document.querySelector("#backendAuditStorage");
+  if (!root) return;
+
+  const model = getBackendAuditStoragePlanModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#backendStorageRole").textContent = model.roleLabel;
+  document.querySelector("#backendStorageHeadline").textContent = model.headline;
+  document.querySelector("#backendStorageDetail").textContent = model.detail;
+  document.querySelector("#backendStorageGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#backendStoragePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getBackendAuditStoragePlanModel() {
+  const auditExport = getReceiptAuditExportModel();
+  const role = auditExport.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer audit storage",
+      headline: "Store buyer proof audit only inside the buyer tenant scope.",
+      detail: "Buyer storage maps proof export records to table, tenant scope, write/read routes, row policy, retention, rollback, and blocked payment route.",
+      storageEvent: "buyer_backend_audit_storage_plan",
+      tenant: "buyer organization",
+      rowPolicy: "buyer-org + trust-reviewer",
+      retention: "24 months",
+      rollback: "restore prior rank",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier audit storage",
+      headline: "Store supplier freshness audit inside supplier tenant scope.",
+      detail: "Supplier storage maps document freshness exports to tenant-safe table rows with row policy, retention, rollback, and blocked commission route.",
+      storageEvent: "supplier_backend_audit_storage_plan",
+      tenant: "supplier organization",
+      rowPolicy: "supplier-org + success-lead",
+      retention: "24 months",
+      rollback: "restore visibility",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder audit storage",
+      headline: "Store market-priority audit inside founder workspace scope.",
+      detail: "Founder storage maps market-priority exports to workspace-safe rows with admin review, longer retention, rollback, and blocked payout route.",
+      storageEvent: "founder_backend_audit_storage_plan",
+      tenant: "founder workspace",
+      rowPolicy: "founder + admin-review",
+      retention: "36 months",
+      rollback: "restore market queue",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    storageEvent: config.storageEvent,
+    sourceExport: auditExport.exportEvent,
+    blockedRoute: config.blockedRoute || auditExport.blockedRoute,
+    primary: { label: "Open export", anchor: "#receiptAuditExport", aria: `Open ${role.toLowerCase()} receipt audit export` },
+    states: [
+      { label: "Table", value: "audit_receipt_exports", route: "/api/audit-records", detail: config.storageEvent, tone: "ready" },
+      { label: "Tenant", value: config.tenant, route: "/api/organization-memory", detail: "scoped", tone: "neutral" },
+      { label: "Write", value: "/api/audit-records", route: "/api/audit-records", detail: "create", tone: "ready" },
+      { label: "Read", value: "/api/audit-records/:id", route: "/api/audit-records/:record_id", detail: "single", tone: "ready" },
+      { label: "Policy", value: config.rowPolicy, route: "/api/audit-records/:record_id", detail: "row access", tone: "neutral" },
+      { label: "Retention", value: config.retention, route: "/api/boundary-audit-events", detail: "storage", tone: "watch" },
+      { label: "Source", value: auditExport.exportEvent, route: "/api/receipt-audit-export", detail: "export", tone: "ready" },
+      { label: "Rollback", value: config.rollback, route: "/api/boundary-audit-events", detail: "attached", tone: "neutral" },
+      { label: "Blocked", value: "payment route", route: config.blockedRoute, detail: "guardrail", tone: "watch" }
+    ]
+  };
+}
+
+async function handleBackendAuditStoragePlanAction(action, model = getBackendAuditStoragePlanModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildBackendAuditStoragePlanText(model));
+    showToast("Backend audit storage plan copied.");
+  } catch {
+    showToast("Copy is blocked here, but the storage plan is visible.");
+  }
+}
+
+function buildBackendAuditStoragePlanText(model = getBackendAuditStoragePlanModel()) {
+  return [
+    "Heavyster Backend Audit Storage Plan",
+    "Version: v177 Backend Audit Storage Plan",
+    "Rule: every receipt audit export must map to a tenant-scoped backend storage record before production learning persistence begins.",
+    "",
+    `Role: ${model.role}`,
+    `Storage event: ${model.storageEvent}`,
+    `Source export: ${model.sourceExport}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Storage states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Storage promise: export-ready receipts map to a table before production persistence.",
+    "Tenant promise: every audit record carries tenant scope and row-level access policy.",
+    "Retention promise: storage duration and rollback remain visible before writes begin.",
+    "Boundary promise: tenant-private proof stays separated from aggregate audit metadata.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from audit storage."
+  ].join("\n");
+}
+
+function buildBackendAuditStoragePlanContractText() {
+  return buildBackendAuditStoragePlanText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -7430,6 +7578,7 @@ function openWorkflowStep(anchor, label, role) {
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
+  renderBackendAuditStoragePlan();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -22390,6 +22539,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
+    renderBackendAuditStoragePlan();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

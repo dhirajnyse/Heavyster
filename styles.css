@@ -4172,6 +4172,149 @@ body.simple-mode .market-result-brief {
   color: var(--teal);
 }
 
+.backend-audit-storage {
+  display: grid;
+  grid-template-columns: minmax(330px, 0.9fr) minmax(900px, 1.62fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px 18px 12px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.25);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.97), rgba(255, 250, 240, 0.91) 48%, rgba(238, 246, 252, 0.9));
+}
+
+.backend-storage-copy,
+.backend-storage-grid span,
+.backend-storage-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.backend-storage-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.3);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.backend-storage-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.backend-storage-copy strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.backend-storage-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.backend-storage-grid {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.backend-storage-grid span {
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  min-height: 78px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.backend-storage-grid em {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.backend-storage-grid strong,
+.backend-storage-grid small,
+.backend-storage-grid b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backend-storage-grid strong {
+  color: var(--ink);
+  font-size: 0.76rem;
+  line-height: 1.12;
+}
+
+.backend-storage-grid small,
+.backend-storage-grid b {
+  color: var(--muted);
+  font-size: 0.62rem;
+}
+
+.backend-storage-grid b {
+  color: var(--ink-2);
+}
+
+.backend-storage-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.backend-storage-grid .watch {
+  border-color: rgba(181, 109, 22, 0.34);
+  background: var(--amber-soft);
+}
+
+.backend-storage-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.backend-storage-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr);
+  gap: 7px;
+}
+
+.backend-storage-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.backend-audit-storage[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(238, 246, 252, 0.92), rgba(255, 250, 240, 0.9));
+}
+
+.backend-audit-storage[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(232, 248, 245, 0.92), rgba(255, 250, 240, 0.9));
+}
+
+.backend-audit-storage[data-role="founder"] .backend-storage-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
 body.focus-layers-collapsed .calm-action-bar,
 body.focus-layers-collapsed .calm-data-room,
 body.focus-layers-collapsed .launch-country-room,
@@ -4194,6 +4337,7 @@ body.focus-layers-collapsed .learning-quality-dashboard,
 body.focus-layers-collapsed .learning-action-queue,
 body.focus-layers-collapsed .quality-completion-receipts,
 body.focus-layers-collapsed .receipt-audit-export,
+body.focus-layers-collapsed .backend-audit-storage,
 body.focus-layers-collapsed .serene-route-planner,
 body.focus-layers-collapsed .global-calm-compass,
 body.focus-layers-collapsed .calm-decision-concierge,
@@ -23151,6 +23295,86 @@ button.admin-row {
   margin-top: auto;
 }
 
+.backend-audit-storage-contract {
+  display: grid;
+  grid-template-columns: minmax(340px, 1.12fr) repeat(5, minmax(126px, 0.68fr));
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.4);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.98), rgba(255, 250, 240, 0.94) 48%, rgba(238, 246, 252, 0.9));
+}
+
+.backend-audit-storage-contract article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 146px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.backend-audit-storage-contract-lead {
+  grid-row: span 2;
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: var(--teal-soft) !important;
+}
+
+.backend-audit-storage-contract-acceptance {
+  grid-column: span 2;
+  border-color: rgba(73, 118, 149, 0.34) !important;
+  background: linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(255, 250, 240, 0.9)) !important;
+}
+
+.backend-audit-storage-contract span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.backend-audit-storage-contract strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.backend-audit-storage-contract-lead strong {
+  font-size: 1.22rem;
+}
+
+.backend-audit-storage-contract p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.backend-audit-storage-contract b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.74rem;
+}
+
+.backend-audit-storage-contract-lead b,
+.backend-audit-storage-contract-acceptance b {
+  background: var(--coal);
+  color: #ffffff;
+}
+
+.backend-audit-storage-contract-acceptance button {
+  min-height: 42px;
+  margin-top: auto;
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
 .calm-launch-room article,
@@ -25716,6 +25940,7 @@ button.admin-row {
   .learning-action-queue,
   .quality-completion-receipts,
   .receipt-audit-export,
+  .backend-audit-storage,
   .launch-country-room-contract,
   .launch-activation-sprint-contract,
   .production-sprint-records-contract,
@@ -25735,7 +25960,8 @@ button.admin-row {
   .learning-quality-dashboard-contract,
   .learning-action-queue-contract,
   .quality-completion-receipts-contract,
-  .receipt-audit-export-contract {
+  .receipt-audit-export-contract,
+  .backend-audit-storage-contract {
     grid-template-columns: 1fr;
   }
 
@@ -25778,7 +26004,9 @@ button.admin-row {
   .quality-receipt-grid,
   .quality-receipt-actions,
   .receipt-audit-grid,
-  .receipt-audit-actions {
+  .receipt-audit-actions,
+  .backend-storage-grid,
+  .backend-storage-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -25821,7 +26049,9 @@ button.admin-row {
   .quality-completion-receipts-contract-lead,
   .quality-completion-receipts-contract-acceptance,
   .receipt-audit-export-contract-lead,
-  .receipt-audit-export-contract-acceptance {
+  .receipt-audit-export-contract-acceptance,
+  .backend-audit-storage-contract-lead,
+  .backend-audit-storage-contract-acceptance {
     grid-column: auto;
     grid-row: auto;
   }
@@ -25867,7 +26097,9 @@ button.admin-row {
   .quality-receipt-grid,
   .quality-receipt-actions,
   .receipt-audit-grid,
-  .receipt-audit-actions {
+  .receipt-audit-actions,
+  .backend-storage-grid,
+  .backend-storage-actions {
     grid-template-columns: 1fr;
   }
 }

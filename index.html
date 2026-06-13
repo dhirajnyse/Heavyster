@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260613-receipt-audit-export-v176" />
+  <link rel="stylesheet" href="styles.css?v=20260613-backend-audit-storage-v177" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v176</strong>
+            <strong>v177</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -458,6 +458,18 @@
         <div class="receipt-audit-actions">
           <button type="button" class="solid-button" id="receiptAuditPrimaryButton">Open receipts</button>
           <button type="button" class="ghost-button" id="copyReceiptAuditButton">Copy export</button>
+        </div>
+      </section>
+      <section class="backend-audit-storage" id="backendAuditStorage" aria-label="Backend audit storage plan">
+        <div class="backend-storage-copy">
+          <span id="backendStorageRole">Storage plan</span>
+          <strong id="backendStorageHeadline">Map audit exports into tenant-scoped storage.</strong>
+          <small id="backendStorageDetail">Table, tenant scope, write route, read route, row policy, retention, rollback, and blocked route stay visible.</small>
+        </div>
+        <div class="backend-storage-grid" id="backendStorageGrid" aria-label="Backend audit storage states"></div>
+        <div class="backend-storage-actions">
+          <button type="button" class="solid-button" id="backendStoragePrimaryButton">Open export</button>
+          <button type="button" class="ghost-button" id="copyBackendStorageButton">Copy storage plan</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2565,7 +2577,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v176</span>
+            <span class="build-version-pill">Current version: v177</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2576,13 +2588,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v176 Receipt Audit Export</strong>
-              <small>One export packages completion receipts into backend-ready audit records.</small>
+              <strong>v177 Backend Audit Storage Plan</strong>
+              <small>One storage plan maps receipt audit exports into tenant-scoped backend records.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Backend-ready audit</strong>
-              <small>Buyer, supplier, and founder paths should show record id, receipt event, privacy boundary, storage route, export state, rollback, and blocked route.</small>
+              <strong>Tenant-scoped storage</strong>
+              <small>Buyer, supplier, and founder paths should show table, tenant scope, write route, read route, row policy, retention, rollback, and blocked route.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2602,8 +2614,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v176</strong>
-              <small>Receipt Audit Export</small>
+              <strong>v177</strong>
+              <small>Backend Audit Storage Plan</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2617,8 +2629,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Backend audit storage</strong>
-              <small>Persist receipt audit export records behind auth, permissions, and tenant boundaries.</small>
+              <strong>Storage write fixture</strong>
+              <small>Turn the storage plan into fixture payloads for the first future backend write test.</small>
             </article>
           </div>
 
@@ -5054,6 +5066,51 @@
             </article>
           </div>
 
+          <div class="backend-audit-storage-contract" id="backend-audit-storage-contract" aria-label="Heavyster backend audit storage contract">
+            <article class="backend-audit-storage-contract-lead">
+              <span>v177 Backend Audit Storage Plan</span>
+              <strong>Map audit exports into tenant-scoped backend records.</strong>
+              <p>Heavyster now defines the first storage contract for receipt audit exports with table, tenant scope, write route, read route, row policy, retention policy, rollback state, and blocked payment route.</p>
+              <b>Rule: scope before store</b>
+            </article>
+            <article>
+              <span>Table</span>
+              <strong>audit_receipt_exports</strong>
+              <p>All receipt audit exports map to one backend table before production implementation begins.</p>
+              <b>Mapped</b>
+            </article>
+            <article>
+              <span>Tenant</span>
+              <strong>Role-safe scope</strong>
+              <p>Buyer, supplier, and founder records each carry tenant scope and read policy.</p>
+              <b>Scoped</b>
+            </article>
+            <article>
+              <span>Routes</span>
+              <strong>Write and read paths</strong>
+              <p>The plan names the future create route and single-record read route before code is written.</p>
+              <b>Ready</b>
+            </article>
+            <article>
+              <span>Retention</span>
+              <strong>Storage duration visible</strong>
+              <p>Retention and rollback stay attached so audit history remains useful and reversible.</p>
+              <b>Tracked</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Payment custody blocked</strong>
+              <p>No rental payment, escrow, payout, or booking commission route can enter audit storage.</p>
+              <b>Protected</b>
+            </article>
+            <article class="backend-audit-storage-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one backend audit storage plan.</strong>
+              <p>Docs include the storage model in `docs/BACKEND_AUDIT_STORAGE.json`, and no production learning persistence begins without tenant-scoped storage rules.</p>
+              <button type="button" class="solid-button" id="copyBackendAuditStorageContractButton">Copy v177 storage</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -5147,25 +5204,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v176 Receipt Audit Export</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v177 Backend Audit Storage Plan</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, backend audit storage, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Receipt Audit Export</strong>
-              <p>Added export-ready audit records after completion receipts so each closed learning task has record id, scope, privacy boundary, storage route, rollback, and blocked route before backend storage.</p>
+              <strong>Backend Audit Storage Plan</strong>
+              <p>Added a storage plan after receipt audit export so each future audit record has a table, tenant scope, write route, read route, row policy, retention, rollback, and blocked route.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v176.</li>
-                <li>Build Phase shows Current version: v176.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, and Serene Route Planner.</li>
-                <li>Receipt Audit Export shows record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback state, and blocked route.</li>
-                <li>Copy export explains receipt event, record id, privacy boundary, storage route, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Receipt Audit Export contract after the Quality Completion Receipts contract.</li>
-                <li>Docs include `docs/RECEIPT_AUDIT_EXPORT.json`.</li>
+                <li>Header shows Build v177.</li>
+                <li>Build Phase shows Current version: v177.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, Backend Audit Storage, and Serene Route Planner.</li>
+                <li>Backend Audit Storage shows table, tenant scope, write route, read route, row policy, retention policy, rollback state, and blocked route.</li>
+                <li>Copy storage plan explains storage event, source export, tenant scope, write route, read route, row policy, retention, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Backend Audit Storage contract after the Receipt Audit Export contract.</li>
+                <li>Docs include `docs/BACKEND_AUDIT_STORAGE.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -5302,6 +5359,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260613-receipt-audit-export-v176" defer></script>
+    <script src="app.js?v=20260613-backend-audit-storage-v177" defer></script>
   </body>
 </html>

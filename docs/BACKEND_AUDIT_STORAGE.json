@@ -1,0 +1,103 @@
+{
+  "version": "v177 Backend Audit Storage Plan",
+  "rule": "Every receipt audit export must map to a tenant-scoped backend storage record before production learning persistence begins.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or unscoped audit record can reach production storage in phase one.",
+  "storage_principles": [
+    "Map every export-ready receipt to a backend audit table before implementation.",
+    "Keep tenant id, record id, receipt event, export scope, storage route, row policy, retention policy, rollback state, and blocked route together.",
+    "Separate tenant-private proof payloads from aggregate-safe audit metadata.",
+    "Require row-level policy before any audit record can be read across roles.",
+    "Store blocked payment-custody routes as guardrails, not monetization signals.",
+    "Make retention and rollback rules visible before storage begins.",
+    "Keep the storage plan static and testable until a real database exists."
+  ],
+  "role_storage_plans": [
+    {
+      "role": "Buyer",
+      "storage_event": "buyer_backend_audit_storage_plan",
+      "source_export": "buyer_receipt_audit_export",
+      "table": "audit_receipt_exports",
+      "tenant_scope": "buyer organization",
+      "write_route": "/api/audit-records",
+      "read_route": "/api/audit-records/:record_id",
+      "row_policy": "buyer-org + trust-reviewer read",
+      "retention_policy": "24 months",
+      "rollback_state": "restore prior rank if proof is disputed",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "storage_event": "supplier_backend_audit_storage_plan",
+      "source_export": "supplier_receipt_audit_export",
+      "table": "audit_receipt_exports",
+      "tenant_scope": "supplier organization",
+      "write_route": "/api/audit-records",
+      "read_route": "/api/audit-records/:record_id",
+      "row_policy": "supplier-org + success-lead read",
+      "retention_policy": "24 months",
+      "rollback_state": "restore prior visibility if proof expires",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "storage_event": "founder_backend_audit_storage_plan",
+      "source_export": "founder_receipt_audit_export",
+      "table": "audit_receipt_exports",
+      "tenant_scope": "founder workspace",
+      "write_route": "/api/audit-records",
+      "read_route": "/api/audit-records/:record_id",
+      "row_policy": "founder + admin-review read",
+      "retention_policy": "36 months",
+      "rollback_state": "restore prior market queue if response drops",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "storage_states": [
+    "table",
+    "tenant_scope",
+    "write_route",
+    "read_route",
+    "row_policy",
+    "retention_policy",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "storage_routes": [
+    "/api/audit-records",
+    "/api/audit-records/:record_id",
+    "/api/receipt-audit-export",
+    "/api/organization-memory"
+  ],
+  "blocked_storage_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_storage_fields": [
+    "storage_event",
+    "role",
+    "tenant_id",
+    "record_id",
+    "source_export",
+    "table",
+    "tenant_scope",
+    "write_route",
+    "read_route",
+    "row_policy",
+    "retention_policy",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows Backend Audit Storage after Receipt Audit Export.",
+    "Buyer, supplier, and founder views each show table, tenant scope, write route, read route, row policy, retention policy, rollback state, and blocked route.",
+    "Copy output explains storage event, source export, tenant scope, write route, read route, row policy, retention, rollback, and blocked payment route.",
+    "Build Phase shows the v177 Backend Audit Storage Plan contract after the Receipt Audit Export contract.",
+    "Docs include storage states, storage routes, blocked payment routes, and required storage fields.",
+    "Static check fails if the storage UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No production learning persistence can begin without a tenant-scoped storage plan or explicit hold."
+  ]
+}
