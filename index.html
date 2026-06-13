@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260613-quality-completion-receipts-v175" />
+  <link rel="stylesheet" href="styles.css?v=20260613-receipt-audit-export-v176" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v175</strong>
+            <strong>v176</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -446,6 +446,18 @@
         <div class="quality-receipt-actions">
           <button type="button" class="solid-button" id="qualityReceiptPrimaryButton">Open action queue</button>
           <button type="button" class="ghost-button" id="copyQualityReceiptButton">Copy receipt</button>
+        </div>
+      </section>
+      <section class="receipt-audit-export" id="receiptAuditExport" aria-label="Receipt audit export">
+        <div class="receipt-audit-copy">
+          <span id="receiptAuditRole">Audit export</span>
+          <strong id="receiptAuditHeadline">Package receipts into backend-ready audit records.</strong>
+          <small id="receiptAuditDetail">Record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback, and blocked route stay visible.</small>
+        </div>
+        <div class="receipt-audit-grid" id="receiptAuditGrid" aria-label="Receipt audit export states"></div>
+        <div class="receipt-audit-actions">
+          <button type="button" class="solid-button" id="receiptAuditPrimaryButton">Open receipts</button>
+          <button type="button" class="ghost-button" id="copyReceiptAuditButton">Copy export</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2553,7 +2565,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v175</span>
+            <span class="build-version-pill">Current version: v176</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2564,13 +2576,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v175 Quality Completion Receipts</strong>
-              <small>One receipt proves which learning action closed before recommendation confidence moves.</small>
+              <strong>v176 Receipt Audit Export</strong>
+              <small>One export packages completion receipts into backend-ready audit records.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Receipt-gated confidence</strong>
-              <small>Buyer, supplier, and founder paths should show completed action, proof delta, approver, confidence decision, rollback, and blocked route.</small>
+              <strong>Backend-ready audit</strong>
+              <small>Buyer, supplier, and founder paths should show record id, receipt event, privacy boundary, storage route, export state, rollback, and blocked route.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2590,8 +2602,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v175</strong>
-              <small>Quality Completion Receipts</small>
+              <strong>v176</strong>
+              <small>Receipt Audit Export</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2605,8 +2617,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Receipt audit export</strong>
-              <small>Package completion receipts into backend-ready audit records for future production storage.</small>
+              <strong>Backend audit storage</strong>
+              <small>Persist receipt audit export records behind auth, permissions, and tenant boundaries.</small>
             </article>
           </div>
 
@@ -4997,6 +5009,51 @@
             </article>
           </div>
 
+          <div class="receipt-audit-export-contract" id="receipt-audit-export-contract" aria-label="Heavyster receipt audit export contract">
+            <article class="receipt-audit-export-contract-lead">
+              <span>v176 Receipt Audit Export</span>
+              <strong>Package receipts into backend-ready audit records.</strong>
+              <p>Heavyster now turns each quality completion receipt into an exportable audit record with record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback, and blocked route.</p>
+              <b>Rule: export before storage</b>
+            </article>
+            <article>
+              <span>Record</span>
+              <strong>Receipt gets an audit id</strong>
+              <p>Every completed learning receipt can become a stable backend record before production storage exists.</p>
+              <b>Identified</b>
+            </article>
+            <article>
+              <span>Scope</span>
+              <strong>Export purpose is visible</strong>
+              <p>The export names which confidence lift or hold the audit record supports.</p>
+              <b>Scoped</b>
+            </article>
+            <article>
+              <span>Privacy</span>
+              <strong>Boundary travels with export</strong>
+              <p>Tenant-private proof and aggregate-safe metadata remain separated before any shared learning use.</p>
+              <b>Bounded</b>
+            </article>
+            <article>
+              <span>Storage</span>
+              <strong>Future endpoint is explicit</strong>
+              <p>The export maps to a backend route while staying static and copy-ready today.</p>
+              <b>Ready</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Rollback and blocked route stay attached</strong>
+              <p>Payment custody remains blocked and rollback remains visible before export readiness.</p>
+              <b>Protected</b>
+            </article>
+            <article class="receipt-audit-export-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one receipt audit export.</strong>
+              <p>Docs include the export model in `docs/RECEIPT_AUDIT_EXPORT.json`, and no production learning storage uses a receipt without an export-ready audit record.</p>
+              <button type="button" class="solid-button" id="copyReceiptAuditExportContractButton">Copy v176 export</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -5090,25 +5147,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v175 Quality Completion Receipts</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v176 Receipt Audit Export</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Quality Completion Receipts</strong>
-              <p>Added completion receipts after the action queue so closed learning tasks prove owner, approver, proof delta, confidence decision, rollback, and blocked route before confidence moves.</p>
+              <strong>Receipt Audit Export</strong>
+              <p>Added export-ready audit records after completion receipts so each closed learning task has record id, scope, privacy boundary, storage route, rollback, and blocked route before backend storage.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v175.</li>
-                <li>Build Phase shows Current version: v175.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, and Serene Route Planner.</li>
-                <li>Quality Completion Receipts show receipt event, completed action, approver, proof delta, completion gate, confidence decision, rollback state, and blocked route.</li>
-                <li>Copy receipt explains source action, proof delta, approver, confidence decision, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Quality Completion Receipts contract after the Learning Action Queue contract.</li>
-                <li>Docs include `docs/QUALITY_COMPLETION_RECEIPTS.json`.</li>
+                <li>Header shows Build v176.</li>
+                <li>Build Phase shows Current version: v176.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, and Serene Route Planner.</li>
+                <li>Receipt Audit Export shows record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback state, and blocked route.</li>
+                <li>Copy export explains receipt event, record id, privacy boundary, storage route, rollback, and blocked payment custody.</li>
+                <li>Build Phase shows the Receipt Audit Export contract after the Quality Completion Receipts contract.</li>
+                <li>Docs include `docs/RECEIPT_AUDIT_EXPORT.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -5245,6 +5302,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260613-quality-completion-receipts-v175" defer></script>
+    <script src="app.js?v=20260613-receipt-audit-export-v176" defer></script>
   </body>
 </html>

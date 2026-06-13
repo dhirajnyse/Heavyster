@@ -57,6 +57,7 @@
 - Learning Quality Dashboard for showing accepted, improved, reverted, blocked, stale, pending review, and next quality action before shared learning confidence compounds
 - Learning Action Queue for turning weak, stale, reverted, blocked, or pending learning quality signals into owner-visible action, rollback, blocked-route, and completion gates before confidence compounds
 - Quality Completion Receipts for proving completed learning actions with approver, proof delta, confidence decision, rollback, and blocked payment route before recommendation weights move
+- Receipt Audit Export for packaging completion receipts into backend-ready audit records with privacy boundary, storage route, export state, rollback, and blocked payment route before production storage
 - Phase-two 1% success fee calculator
 - Buyer Fit Score on cards, compact rows, and selected listing detail
 - Direct Enquiry Composer for quick, proof-first, and quote-ready supplier messages
@@ -114,6 +115,7 @@
 - Human Approval Replay Gate with one role-aware approver, approval reason, approval state, approval timestamp, rollback state, and blocked payment route before production learning applies
 - Learning Action Queue with one role-aware owner, source quality, primary action, due state, rollback task, blocked task, and completion gate before production learning confidence compounds
 - Quality Completion Receipts with one role-aware receipt event, completed action, approver, proof delta, confidence decision, rollback state, and blocked route before production learning confidence lifts
+- Receipt Audit Export with one role-aware record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback state, and blocked route before production learning storage
 
 ## Sprint 2: Repository Foundation
 

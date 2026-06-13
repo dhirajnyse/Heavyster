@@ -1,0 +1,102 @@
+{
+  "version": "v176 Receipt Audit Export",
+  "rule": "Every quality completion receipt must be exportable as a backend-ready audit record before production learning storage or shared confidence updates are allowed.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or unexported receipt can reach recommendation weights in phase one.",
+  "export_principles": [
+    "Package completion receipts into backend-ready audit records.",
+    "Keep receipt id, source action, proof delta, confidence decision, rollback state, and blocked route together.",
+    "Separate private organization memory from exportable aggregate audit metadata.",
+    "Require export readiness before production storage or cross-organization learning uses a receipt.",
+    "Preserve blocked payment-custody routes as audit guardrails.",
+    "Make retry, hold, and rollback states visible before an export is marked ready.",
+    "Keep the export copy-ready until a real backend endpoint exists."
+  ],
+  "role_exports": [
+    {
+      "role": "Buyer",
+      "export_event": "buyer_receipt_audit_export",
+      "receipt_event": "buyer_quality_completion_receipt",
+      "record_id": "receipt-buyer-proof-001",
+      "source_action": "buyer_learning_action_queue",
+      "export_scope": "proof freshness lift audit",
+      "privacy_boundary": "tenant private proof kept local",
+      "storage_route": "/api/receipt-audit-export",
+      "export_state": "ready",
+      "rollback_state": "restore prior rank if proof is disputed",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "export_event": "supplier_receipt_audit_export",
+      "receipt_event": "supplier_quality_completion_receipt",
+      "record_id": "receipt-supplier-freshness-001",
+      "source_action": "supplier_learning_action_queue",
+      "export_scope": "listing visibility lift audit",
+      "privacy_boundary": "supplier document kept private",
+      "storage_route": "/api/receipt-audit-export",
+      "export_state": "ready",
+      "rollback_state": "restore prior visibility if proof expires",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "export_event": "founder_receipt_audit_export",
+      "receipt_event": "founder_quality_completion_receipt",
+      "record_id": "receipt-founder-wedge-001",
+      "source_action": "founder_learning_action_queue",
+      "export_scope": "market priority lift audit",
+      "privacy_boundary": "market notes stay tenant private",
+      "storage_route": "/api/receipt-audit-export",
+      "export_state": "hold for launch review",
+      "rollback_state": "restore prior market queue if response drops",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "export_states": [
+    "record_id",
+    "receipt_event",
+    "source_action",
+    "export_scope",
+    "privacy_boundary",
+    "storage_route",
+    "export_state",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "export_routes": [
+    "/api/receipt-audit-export",
+    "/api/quality-completion-receipts",
+    "/api/boundary-audit-events",
+    "/api/organization-memory"
+  ],
+  "blocked_export_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_export_fields": [
+    "export_event",
+    "role",
+    "record_id",
+    "receipt_event",
+    "source_action",
+    "export_scope",
+    "privacy_boundary",
+    "storage_route",
+    "export_state",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows Receipt Audit Export after Quality Completion Receipts.",
+    "Buyer, supplier, and founder views each show record id, receipt event, source action, export scope, privacy boundary, storage route, export state, rollback state, and blocked route.",
+    "Copy output explains export event, receipt event, record id, privacy boundary, storage route, rollback, and blocked payment route.",
+    "Build Phase shows the v176 Receipt Audit Export contract after the Quality Completion Receipts contract.",
+    "Docs include export states, export routes, blocked payment routes, and required export fields.",
+    "Static check fails if the export UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No production learning storage can use a receipt unless its audit export is ready or explicitly held."
+  ]
+}

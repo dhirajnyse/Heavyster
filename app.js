@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260613-heavyster-quality-completion-receipts-v175";
+const DATA_VERSION = "20260613-heavyster-receipt-audit-export-v176";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260613-quality-completion-receipts-v175";
+const SIMPLE_UX_RELEASE = "20260613-receipt-audit-export-v176";
 
 const listings = [
   {
@@ -1014,6 +1014,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLearningQualityDashboard();
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
+    renderReceiptAuditExport();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1261,6 +1262,7 @@ function bindControls() {
     renderLearningQualityDashboard();
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
+    renderReceiptAuditExport();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2164,6 +2166,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyReceiptAuditExportContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildReceiptAuditExportContractText());
+      showToast("Receipt audit export copied.");
+    } catch {
+      showToast("Copy is blocked here, but the receipt audit export is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2336,6 +2347,12 @@ function bindControls() {
   document.querySelector("#copyQualityReceiptButton").addEventListener("click", () => {
     handleQualityCompletionReceiptsAction("copy");
   });
+  document.querySelector("#receiptAuditPrimaryButton").addEventListener("click", () => {
+    handleReceiptAuditExportAction("primary");
+  });
+  document.querySelector("#copyReceiptAuditButton").addEventListener("click", () => {
+    handleReceiptAuditExportAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2422,6 +2439,7 @@ function bindControls() {
     renderLearningQualityDashboard();
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
+    renderReceiptAuditExport();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2623,6 +2641,7 @@ function render() {
   renderLearningQualityDashboard();
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
+  renderReceiptAuditExport();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3295,6 +3314,7 @@ function handleSimplicityIntent(intentId) {
   renderLearningQualityDashboard();
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
+  renderReceiptAuditExport();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3339,6 +3359,7 @@ const focusLayerSelectors = [
   ".learning-quality-dashboard",
   ".learning-action-queue",
   ".quality-completion-receipts",
+  ".receipt-audit-export",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3484,6 +3505,7 @@ function toggleCalmFocusLayers() {
   renderLearningQualityDashboard();
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
+  renderReceiptAuditExport();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -5975,6 +5997,137 @@ function buildQualityCompletionReceiptsContractText() {
   return buildQualityCompletionReceiptsText();
 }
 
+function renderReceiptAuditExport() {
+  const root = document.querySelector("#receiptAuditExport");
+  if (!root) return;
+
+  const model = getReceiptAuditExportModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#receiptAuditRole").textContent = model.roleLabel;
+  document.querySelector("#receiptAuditHeadline").textContent = model.headline;
+  document.querySelector("#receiptAuditDetail").textContent = model.detail;
+  document.querySelector("#receiptAuditGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#receiptAuditPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getReceiptAuditExportModel() {
+  const receipt = getQualityCompletionReceiptsModel();
+  const role = receipt.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer audit export",
+      headline: "Export proof receipt before backend learning storage.",
+      detail: "Buyer export packages proof receipt id, source action, privacy boundary, storage route, rollback, and blocked payment route.",
+      exportEvent: "buyer_receipt_audit_export",
+      recordId: "receipt-buyer-proof-001",
+      scope: "proof freshness lift",
+      privacy: "private proof local",
+      exportState: "ready",
+      rollback: "restore prior rank",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier audit export",
+      headline: "Export freshness receipt before visibility storage.",
+      detail: "Supplier export packages document freshness receipt, supplier privacy boundary, storage route, rollback, and blocked commission route.",
+      exportEvent: "supplier_receipt_audit_export",
+      recordId: "receipt-supplier-freshness-001",
+      scope: "listing visibility lift",
+      privacy: "supplier doc private",
+      exportState: "ready",
+      rollback: "restore visibility",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder audit export",
+      headline: "Export wedge receipt before market priority storage.",
+      detail: "Founder export packages market-priority receipt, tenant privacy boundary, hold state, rollback, and blocked payout route.",
+      exportEvent: "founder_receipt_audit_export",
+      recordId: "receipt-founder-wedge-001",
+      scope: "market priority lift",
+      privacy: "market notes private",
+      exportState: "hold review",
+      rollback: "restore queue",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    exportEvent: config.exportEvent,
+    receiptEvent: receipt.receiptEvent,
+    sourceAction: receipt.sourceAction,
+    blockedRoute: config.blockedRoute || receipt.blockedRoute,
+    primary: { label: "Open receipts", anchor: "#qualityCompletionReceipts", aria: `Open ${role.toLowerCase()} quality completion receipts` },
+    states: [
+      { label: "Record", value: config.recordId, route: "/api/receipt-audit-export", detail: config.exportEvent, tone: "ready" },
+      { label: "Receipt", value: receipt.receiptEvent, route: "/api/quality-completion-receipts", detail: "source", tone: "ready" },
+      { label: "Action", value: receipt.sourceAction, route: "/api/learning-action-queue", detail: "linked", tone: "neutral" },
+      { label: "Scope", value: config.scope, route: "/api/receipt-audit-export", detail: "purpose", tone: "ready" },
+      { label: "Privacy", value: config.privacy, route: "/api/organization-memory", detail: "boundary", tone: "neutral" },
+      { label: "Storage", value: "/api/receipt-audit-export", route: "/api/receipt-audit-export", detail: "future route", tone: "ready" },
+      { label: "State", value: config.exportState, route: "/api/boundary-audit-events", detail: "export", tone: "watch" },
+      { label: "Rollback", value: config.rollback, route: "/api/boundary-audit-events", detail: "attached", tone: "neutral" },
+      { label: "Blocked", value: "payment route", route: config.blockedRoute, detail: "guardrail", tone: "watch" }
+    ]
+  };
+}
+
+async function handleReceiptAuditExportAction(action, model = getReceiptAuditExportModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildReceiptAuditExportText(model));
+    showToast("Receipt audit export copied.");
+  } catch {
+    showToast("Copy is blocked here, but the receipt audit export is visible.");
+  }
+}
+
+function buildReceiptAuditExportText(model = getReceiptAuditExportModel()) {
+  return [
+    "Heavyster Receipt Audit Export",
+    "Version: v176 Receipt Audit Export",
+    "Rule: every quality completion receipt must be exportable as a backend-ready audit record before production learning storage or shared confidence updates are allowed.",
+    "",
+    `Role: ${model.role}`,
+    `Export event: ${model.exportEvent}`,
+    `Receipt event: ${model.receiptEvent}`,
+    `Source action: ${model.sourceAction}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Export states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Storage promise: completion receipts become backend-ready audit records before production persistence.",
+    "Privacy promise: tenant-private proof stays separate from exportable aggregate metadata.",
+    "Readiness promise: ready, hold, retry, rollback, and blocked states stay visible before storage.",
+    "Rollback promise: the undo path travels with every exported receipt.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from audit exports."
+  ].join("\n");
+}
+
+function buildReceiptAuditExportContractText() {
+  return buildReceiptAuditExportText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -7276,6 +7429,7 @@ function openWorkflowStep(anchor, label, role) {
   renderLearningQualityDashboard();
   renderLearningActionQueue();
   renderQualityCompletionReceipts();
+  renderReceiptAuditExport();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -22235,6 +22389,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderLearningQualityDashboard();
     renderLearningActionQueue();
     renderQualityCompletionReceipts();
+    renderReceiptAuditExport();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();
