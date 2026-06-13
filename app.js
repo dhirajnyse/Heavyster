@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260613-heavyster-backend-audit-storage-v177";
+const DATA_VERSION = "20260613-heavyster-storage-write-fixture-pack-v178";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260613-backend-audit-storage-v177";
+const SIMPLE_UX_RELEASE = "20260613-storage-write-fixture-pack-v178";
 
 const listings = [
   {
@@ -1016,6 +1016,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
+    renderStorageWriteFixturePack();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1265,6 +1266,7 @@ function bindControls() {
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
+    renderStorageWriteFixturePack();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2186,6 +2188,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyStorageWriteFixturePackContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildStorageWriteFixturePackContractText());
+      showToast("Storage write fixture pack copied.");
+    } catch {
+      showToast("Copy is blocked here, but the fixture pack is visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2370,6 +2381,12 @@ function bindControls() {
   document.querySelector("#copyBackendStorageButton").addEventListener("click", () => {
     handleBackendAuditStoragePlanAction("copy");
   });
+  document.querySelector("#storageFixturePrimaryButton").addEventListener("click", () => {
+    handleStorageWriteFixturePackAction("primary");
+  });
+  document.querySelector("#copyStorageFixtureButton").addEventListener("click", () => {
+    handleStorageWriteFixturePackAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2458,6 +2475,7 @@ function bindControls() {
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
+    renderStorageWriteFixturePack();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2661,6 +2679,7 @@ function render() {
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
+  renderStorageWriteFixturePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3335,6 +3354,7 @@ function handleSimplicityIntent(intentId) {
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
+  renderStorageWriteFixturePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3381,6 +3401,7 @@ const focusLayerSelectors = [
   ".quality-completion-receipts",
   ".receipt-audit-export",
   ".backend-audit-storage",
+  ".storage-write-fixture-pack",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3528,6 +3549,7 @@ function toggleCalmFocusLayers() {
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
+  renderStorageWriteFixturePack();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -6276,6 +6298,147 @@ function buildBackendAuditStoragePlanContractText() {
   return buildBackendAuditStoragePlanText();
 }
 
+function renderStorageWriteFixturePack() {
+  const root = document.querySelector("#storageWriteFixturePack");
+  if (!root) return;
+
+  const model = getStorageWriteFixturePackModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#storageFixtureRole").textContent = model.roleLabel;
+  document.querySelector("#storageFixtureHeadline").textContent = model.headline;
+  document.querySelector("#storageFixtureDetail").textContent = model.detail;
+  document.querySelector("#storageFixtureGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#storageFixturePrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getStorageWriteFixturePackModel() {
+  const storage = getBackendAuditStoragePlanModel();
+  const role = storage.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer write fixtures",
+      headline: "Create the buyer proof audit write fixture before backend code.",
+      detail: "Buyer fixture defines payload, tenant id, expected result, validation, rollback fixture, and rental-payment block before implementation.",
+      fixtureEvent: "buyer_storage_write_fixture",
+      payloadName: "buyer-proof-audit-write",
+      tenantId: "tenant_buyer_demo",
+      recordId: "receipt-buyer-proof-001",
+      expectedResult: "201 audit record created",
+      validationState: "tenant and row policy required",
+      rollbackFixture: "buyer-proof-audit-rollback",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier write fixtures",
+      headline: "Create the supplier freshness audit write fixture before backend code.",
+      detail: "Supplier fixture keeps freshness proof tenant-scoped with validation, rollback fixture, and commission-route block visible.",
+      fixtureEvent: "supplier_storage_write_fixture",
+      payloadName: "supplier-freshness-audit-write",
+      tenantId: "tenant_supplier_demo",
+      recordId: "receipt-supplier-freshness-001",
+      expectedResult: "201 audit record created",
+      validationState: "supplier tenant and success role required",
+      rollbackFixture: "supplier-freshness-audit-rollback",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder write fixtures",
+      headline: "Create the founder market audit write fixture before backend code.",
+      detail: "Founder fixture holds market-priority writes for admin review with rollback and payout-route block visible.",
+      fixtureEvent: "founder_storage_write_fixture",
+      payloadName: "founder-wedge-audit-write",
+      tenantId: "tenant_founder_demo",
+      recordId: "receipt-founder-wedge-001",
+      expectedResult: "202 held for review",
+      validationState: "founder workspace and admin review required",
+      rollbackFixture: "founder-wedge-audit-rollback",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    fixtureEvent: config.fixtureEvent,
+    sourceStorage: storage.storageEvent,
+    payloadName: config.payloadName,
+    tenantId: config.tenantId,
+    recordId: config.recordId,
+    expectedResult: config.expectedResult,
+    validationState: config.validationState,
+    rollbackFixture: config.rollbackFixture,
+    blockedRoute: config.blockedRoute || storage.blockedRoute,
+    primary: { label: "Open storage plan", anchor: "#backendAuditStorage", aria: `Open ${role.toLowerCase()} backend audit storage plan` },
+    states: [
+      { label: "Payload", value: config.payloadName, route: "/api/audit-records", detail: config.fixtureEvent, tone: "ready" },
+      { label: "Tenant", value: config.tenantId, route: "/api/organization-memory", detail: "required", tone: "neutral" },
+      { label: "Record", value: config.recordId, route: "/api/audit-records/:record_id", detail: "id", tone: "ready" },
+      { label: "Write", value: "/api/audit-records", route: "/api/audit-records", detail: "allowed", tone: "ready" },
+      { label: "Result", value: config.expectedResult, route: "/api/audit-records", detail: "expected", tone: "ready" },
+      { label: "Validate", value: config.validationState, route: "/api/boundary-audit-events", detail: "required", tone: "watch" },
+      { label: "Rollback", value: config.rollbackFixture, route: "/api/boundary-audit-events", detail: "fixture", tone: "neutral" },
+      { label: "Blocked", value: "payment route", route: config.blockedRoute, detail: "guardrail", tone: "watch" }
+    ]
+  };
+}
+
+async function handleStorageWriteFixturePackAction(action, model = getStorageWriteFixturePackModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildStorageWriteFixturePackText(model));
+    showToast("Storage write fixture copied.");
+  } catch {
+    showToast("Copy is blocked here, but the fixture pack is visible.");
+  }
+}
+
+function buildStorageWriteFixturePackText(model = getStorageWriteFixturePackModel()) {
+  return [
+    "Heavyster Storage Write Fixture Pack",
+    "Version: v178 Storage Write Fixture Pack",
+    "Rule: every backend audit storage plan needs a write fixture before implementation begins.",
+    "",
+    `Role: ${model.role}`,
+    `Fixture event: ${model.fixtureEvent}`,
+    `Source storage: ${model.sourceStorage}`,
+    `Payload name: ${model.payloadName}`,
+    `Tenant id: ${model.tenantId}`,
+    `Record id: ${model.recordId}`,
+    `Expected result: ${model.expectedResult}`,
+    `Validation state: ${model.validationState}`,
+    `Rollback fixture: ${model.rollbackFixture}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Fixture states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Fixture promise: storage plans become copy-ready write payloads before backend implementation.",
+    "Tenant promise: tenant id, record id, write route, and validation state travel together.",
+    "Rollback promise: every allowed write has a rollback fixture beside it.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from write fixtures."
+  ].join("\n");
+}
+
+function buildStorageWriteFixturePackContractText() {
+  return buildStorageWriteFixturePackText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -7579,6 +7742,7 @@ function openWorkflowStep(anchor, label, role) {
   renderQualityCompletionReceipts();
   renderReceiptAuditExport();
   renderBackendAuditStoragePlan();
+  renderStorageWriteFixturePack();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -22540,6 +22704,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderQualityCompletionReceipts();
     renderReceiptAuditExport();
     renderBackendAuditStoragePlan();
+    renderStorageWriteFixturePack();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

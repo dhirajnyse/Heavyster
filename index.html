@@ -25,7 +25,7 @@
       content="A simple global listing SaaS for rental companies. USD 9 per month or USD 99 per year per equipment listing, no rental commission in phase one."
     />
     <meta property="og:image" content="assets/heavyster-social-card.svg" />
-  <link rel="stylesheet" href="styles.css?v=20260613-backend-audit-storage-v177" />
+  <link rel="stylesheet" href="styles.css?v=20260613-storage-write-fixture-pack-v178" />
   </head>
   <body>
     <div class="app-shell">
@@ -124,7 +124,7 @@
         <div class="top-actions">
           <a class="build-badge" href="#build-phase" data-nav-target="#build-phase" aria-label="Open Heavyster build phase page">
             <span>Build</span>
-            <strong>v177</strong>
+            <strong>v178</strong>
           </a>
           <button type="button" class="ghost-button" id="topSecondaryActionButton">Buyer desk</button>
           <a class="solid-button" id="topPrimaryAction" href="#marketplace">Search equipment</a>
@@ -470,6 +470,18 @@
         <div class="backend-storage-actions">
           <button type="button" class="solid-button" id="backendStoragePrimaryButton">Open export</button>
           <button type="button" class="ghost-button" id="copyBackendStorageButton">Copy storage plan</button>
+        </div>
+      </section>
+      <section class="storage-write-fixture-pack" id="storageWriteFixturePack" aria-label="Storage write fixture pack">
+        <div class="storage-fixture-copy">
+          <span id="storageFixtureRole">Write fixtures</span>
+          <strong id="storageFixtureHeadline">Turn storage plans into backend write fixtures.</strong>
+          <small id="storageFixtureDetail">Payload name, tenant id, record id, write route, expected result, validation, rollback fixture, and blocked route stay visible.</small>
+        </div>
+        <div class="storage-fixture-grid" id="storageFixtureGrid" aria-label="Storage write fixture states"></div>
+        <div class="storage-fixture-actions">
+          <button type="button" class="solid-button" id="storageFixturePrimaryButton">Open storage plan</button>
+          <button type="button" class="ghost-button" id="copyStorageFixtureButton">Copy fixture</button>
         </div>
       </section>
       <section class="serene-route-planner" id="sereneRoutePlanner" aria-label="Serene route planner">
@@ -2577,7 +2589,7 @@
               <p class="eyebrow">Temporary build page</p>
               <h2>Heavyster is in active build until the production platform is complete.</h2>
             </div>
-            <span class="build-version-pill">Current version: v177</span>
+            <span class="build-version-pill">Current version: v178</span>
           </div>
 
           <div class="build-control-strip" aria-label="Current build control summary">
@@ -2588,13 +2600,13 @@
             </article>
             <article>
               <span>Version</span>
-              <strong>v177 Backend Audit Storage Plan</strong>
-              <small>One storage plan maps receipt audit exports into tenant-scoped backend records.</small>
+              <strong>v178 Storage Write Fixture Pack</strong>
+              <small>One fixture pack turns audit storage plans into backend-ready write payloads.</small>
             </article>
             <article>
               <span>Test focus</span>
-              <strong>Tenant-scoped storage</strong>
-              <small>Buyer, supplier, and founder paths should show table, tenant scope, write route, read route, row policy, retention, rollback, and blocked route.</small>
+              <strong>Write fixture readiness</strong>
+              <small>Buyer, supplier, and founder paths should show payload, tenant id, record id, write route, expected result, validation, rollback, and blocked route.</small>
             </article>
             <article>
               <span>Not production yet</span>
@@ -2614,8 +2626,8 @@
             </article>
             <article>
               <span>Current version</span>
-              <strong>v177</strong>
-              <small>Backend Audit Storage Plan</small>
+              <strong>v178</strong>
+              <small>Storage Write Fixture Pack</small>
             </article>
             <article>
               <span>Latest package</span>
@@ -2629,8 +2641,8 @@
             </article>
             <article>
               <span>Next build</span>
-              <strong>Storage write fixture</strong>
-              <small>Turn the storage plan into fixture payloads for the first future backend write test.</small>
+              <strong>Backend write smoke console</strong>
+              <small>Turn write fixtures into visible pass/block probes before backend implementation.</small>
             </article>
           </div>
 
@@ -5111,6 +5123,51 @@
             </article>
           </div>
 
+          <div class="storage-write-fixture-pack-contract" id="storage-write-fixture-pack-contract" aria-label="Heavyster storage write fixture pack contract">
+            <article class="storage-write-fixture-pack-contract-lead">
+              <span>v178 Storage Write Fixture Pack</span>
+              <strong>Turn storage plans into backend write fixtures.</strong>
+              <p>Heavyster now gives each backend audit storage plan a fixture payload with tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked payment route.</p>
+              <b>Rule: fixture before code</b>
+            </article>
+            <article>
+              <span>Payload</span>
+              <strong>Write shape is named</strong>
+              <p>Each role gets a copy-ready payload name before the future API write exists.</p>
+              <b>Ready</b>
+            </article>
+            <article>
+              <span>Tenant</span>
+              <strong>Tenant id required</strong>
+              <p>Every fixture carries a tenant id and record id so storage tests stay scoped.</p>
+              <b>Scoped</b>
+            </article>
+            <article>
+              <span>Result</span>
+              <strong>Expected status is visible</strong>
+              <p>The fixture says whether the write should create a row, hold for review, or fail validation.</p>
+              <b>Expected</b>
+            </article>
+            <article>
+              <span>Validation</span>
+              <strong>Policy checks are named</strong>
+              <p>Tenant, row policy, role, and review requirements stay visible before backend code starts.</p>
+              <b>Checked</b>
+            </article>
+            <article>
+              <span>Guardrail</span>
+              <strong>Rollback and payment block included</strong>
+              <p>Each write fixture keeps rollback and blocked payment-route tests beside the allowed route.</p>
+              <b>Protected</b>
+            </article>
+            <article class="storage-write-fixture-pack-contract-acceptance">
+              <span>Acceptance</span>
+              <strong>Marketplace, Supplier Studio, Pricing, Build Phase, and Roadmap agree on one storage write fixture pack.</strong>
+              <p>Docs include the fixture model in `docs/STORAGE_WRITE_FIXTURE_PACK.json`, and no backend implementation starts without a write fixture or explicit hold.</p>
+              <button type="button" class="solid-button" id="copyStorageWriteFixturePackContractButton">Copy v178 fixtures</button>
+            </article>
+          </div>
+
           <div class="calm-focus-lens-contract" id="calm-focus-lens-contract" aria-label="Heavyster calm focus lens contract">
             <article class="calm-focus-lens-contract-lead">
               <span>v155 Calm Focus Lens</span>
@@ -5204,25 +5261,25 @@
           <div class="release-ledger" aria-label="Heavyster release ledger">
             <article class="release-ledger-card release-ledger-primary">
               <span>Current build</span>
-              <strong>v177 Backend Audit Storage Plan</strong>
-              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, backend audit storage, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
+              <strong>v178 Storage Write Fixture Pack</strong>
+              <p>Use this page as the temporary build diary, release control board, production foundation map, launch readiness gate, backend sprint board, supplier account MVP preview, onboarding runway, backend data contract, schema/API blueprint, API smoke console, backend fixture pack, implementation contract, monetization command, pilot launch command, global launch passport, simple UX guard, calm command center, serenity mode, heavenly focus, calm backend scaffold, supplier account shell, calm launch room, calm proof card, calm action bar, serene route planner, calm global compass, calm decision concierge, calm backend handoff, calm launch pulse, production account scaffold, SaaS launch gate, production backend starter, calm backend route handoff, serene proof gate, calm focus lens, calm data room, launch country room, launch activation sprint, production sprint records, production route pack, closed-loop learning, learning feedback store, recommendation weight simulator, organization learning boundary, boundary policy smoke console, boundary audit fixture pack, boundary audit replay console, human approval replay gate, learning benefit ledger, reinforcement evaluation lab, network learning exchange, exchange policy audit log, learning quality dashboard, learning action queue, quality completion receipts, receipt audit export, backend audit storage, storage write fixture pack, supplier setup tracker, founder supplier hunt queue, hunt call sheet, and outcome gate.</p>
               <b>Package target: GitHub Pages upload</b>
             </article>
             <article class="release-ledger-card">
               <span>What changed</span>
-              <strong>Backend Audit Storage Plan</strong>
-              <p>Added a storage plan after receipt audit export so each future audit record has a table, tenant scope, write route, read route, row policy, retention, rollback, and blocked route.</p>
+              <strong>Storage Write Fixture Pack</strong>
+              <p>Added write fixtures after backend audit storage so each future audit write has a payload name, tenant id, record id, expected result, validation state, rollback fixture, and blocked route before code starts.</p>
             </article>
             <article class="release-ledger-card">
               <span>Test this version</span>
               <ul>
-                <li>Header shows Build v177.</li>
-                <li>Build Phase shows Current version: v177.</li>
-                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, Backend Audit Storage, and Serene Route Planner.</li>
-                <li>Backend Audit Storage shows table, tenant scope, write route, read route, row policy, retention policy, rollback state, and blocked route.</li>
-                <li>Copy storage plan explains storage event, source export, tenant scope, write route, read route, row policy, retention, rollback, and blocked payment custody.</li>
-                <li>Build Phase shows the Backend Audit Storage contract after the Receipt Audit Export contract.</li>
-                <li>Docs include `docs/BACKEND_AUDIT_STORAGE.json`.</li>
+                <li>Header shows Build v178.</li>
+                <li>Build Phase shows Current version: v178.</li>
+                <li>Opening `#marketplace` shows Calm Focus Lens, Calm Data Room, Launch Country Room, Launch Activation Sprint, Production Sprint Records, Production Route Pack, Closed Loop Learning, Learning Feedback Store, Recommendation Weight Simulator, Organization Learning Boundary, Boundary Policy Smoke Console, Boundary Audit Fixture Pack, Boundary Audit Replay Console, Human Approval Replay Gate, Learning Benefit Ledger, Reinforcement Evaluation Lab, Network Learning Exchange, Exchange Policy Audit Log, Learning Quality Dashboard, Learning Action Queue, Quality Completion Receipts, Receipt Audit Export, Backend Audit Storage, Storage Write Fixture Pack, and Serene Route Planner.</li>
+                <li>Storage Write Fixture Pack shows payload name, tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked route.</li>
+                <li>Copy fixture explains fixture event, source storage, payload name, tenant id, record id, expected result, validation state, rollback fixture, and blocked payment custody.</li>
+                <li>Build Phase shows the Storage Write Fixture Pack contract after the Backend Audit Storage contract.</li>
+                <li>Docs include `docs/STORAGE_WRITE_FIXTURE_PACK.json`.</li>
                 <li>Earlier release modules stay protected by the static gate without crowding this current test list.</li>
               </ul>
             </article>
@@ -5249,8 +5306,8 @@
             </article>
             <article class="build-phase-card">
               <span>Current release</span>
-              <strong>v174 Learning Action Queue</strong>
-              <p>Includes the v113 deploy guard through v173 Learning Quality Dashboard, plus this action release that turns learning quality gaps into owned operator tasks.</p>
+              <strong>v178 Storage Write Fixture Pack</strong>
+              <p>Includes the v113 deploy guard through v177 Backend Audit Storage Plan, plus this fixture release that turns storage plans into write-ready backend test payloads.</p>
             </article>
             <article class="build-phase-card">
               <span>Launch rule</span>
@@ -5359,6 +5416,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=20260613-backend-audit-storage-v177" defer></script>
+    <script src="app.js?v=20260613-storage-write-fixture-pack-v178" defer></script>
   </body>
 </html>

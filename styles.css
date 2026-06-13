@@ -4315,6 +4315,154 @@ body.simple-mode .market-result-brief {
   color: var(--blue);
 }
 
+.storage-write-fixture-pack {
+  display: grid;
+  grid-template-columns: minmax(330px, 0.9fr) minmax(800px, 1.62fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px 18px 12px;
+  border-bottom: 1px solid rgba(73, 118, 149, 0.24);
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.97), rgba(232, 248, 245, 0.91) 50%, rgba(255, 250, 240, 0.9));
+}
+
+.storage-fixture-copy,
+.storage-fixture-grid span,
+.storage-fixture-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.storage-fixture-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid rgba(73, 118, 149, 0.3);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.storage-fixture-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.storage-fixture-copy strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.storage-fixture-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.storage-fixture-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.storage-fixture-grid span {
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  min-height: 78px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.storage-fixture-grid em {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.storage-fixture-grid strong,
+.storage-fixture-grid small,
+.storage-fixture-grid b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.storage-fixture-grid strong {
+  color: var(--ink);
+  font-size: 0.76rem;
+  line-height: 1.12;
+}
+
+.storage-fixture-grid small,
+.storage-fixture-grid b {
+  color: var(--muted);
+  font-size: 0.62rem;
+}
+
+.storage-fixture-grid b {
+  color: var(--ink-2);
+}
+
+.storage-fixture-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.storage-fixture-grid .watch {
+  border-color: rgba(181, 109, 22, 0.34);
+  background: var(--amber-soft);
+}
+
+.storage-fixture-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.storage-fixture-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr);
+  gap: 7px;
+}
+
+.storage-fixture-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.storage-write-fixture-pack[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 250, 240, 0.92), rgba(238, 246, 252, 0.9));
+}
+
+.storage-write-fixture-pack[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(238, 246, 252, 0.92), rgba(232, 248, 245, 0.9));
+}
+
+.storage-write-fixture-pack[data-role="supplier"] .storage-fixture-copy span {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.storage-write-fixture-pack[data-role="founder"] .storage-fixture-copy span {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
 body.focus-layers-collapsed .calm-action-bar,
 body.focus-layers-collapsed .calm-data-room,
 body.focus-layers-collapsed .launch-country-room,
@@ -4338,6 +4486,7 @@ body.focus-layers-collapsed .learning-action-queue,
 body.focus-layers-collapsed .quality-completion-receipts,
 body.focus-layers-collapsed .receipt-audit-export,
 body.focus-layers-collapsed .backend-audit-storage,
+body.focus-layers-collapsed .storage-write-fixture-pack,
 body.focus-layers-collapsed .serene-route-planner,
 body.focus-layers-collapsed .global-calm-compass,
 body.focus-layers-collapsed .calm-decision-concierge,
@@ -23375,6 +23524,86 @@ button.admin-row {
   margin-top: auto;
 }
 
+.storage-write-fixture-pack-contract {
+  display: grid;
+  grid-template-columns: minmax(340px, 1.12fr) repeat(5, minmax(126px, 0.68fr));
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(73, 118, 149, 0.4);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.98), rgba(232, 248, 245, 0.94) 48%, rgba(255, 250, 240, 0.9));
+}
+
+.storage-write-fixture-pack-contract article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 146px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.storage-write-fixture-pack-contract-lead {
+  grid-row: span 2;
+  border-color: rgba(73, 118, 149, 0.4) !important;
+  background: var(--blue-soft) !important;
+}
+
+.storage-write-fixture-pack-contract-acceptance {
+  grid-column: span 2;
+  border-color: rgba(25, 113, 109, 0.34) !important;
+  background: linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 250, 240, 0.9)) !important;
+}
+
+.storage-write-fixture-pack-contract span {
+  color: var(--blue);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.storage-write-fixture-pack-contract strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.storage-write-fixture-pack-contract-lead strong {
+  font-size: 1.22rem;
+}
+
+.storage-write-fixture-pack-contract p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.storage-write-fixture-pack-contract b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.74rem;
+}
+
+.storage-write-fixture-pack-contract-lead b,
+.storage-write-fixture-pack-contract-acceptance b {
+  background: var(--coal);
+  color: #ffffff;
+}
+
+.storage-write-fixture-pack-contract-acceptance button {
+  min-height: 42px;
+  margin-top: auto;
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
 .calm-launch-room article,
@@ -24905,6 +25134,7 @@ button.admin-row {
   .production-backend-starter-contract,
   .calm-backend-route-contract,
   .calm-focus-lens-contract,
+  .storage-write-fixture-pack-contract,
   .serene-proof-gate-contract,
   .release-ledger,
   .metrics-strip,
@@ -25519,6 +25749,7 @@ button.admin-row {
   .calm-backend-route-contract,
   .calm-focus-lens-contract,
   .calm-data-room-contract,
+  .storage-write-fixture-pack-contract,
   .serene-proof-gate-contract,
   .release-ledger,
   .build-phase-grid,
@@ -25941,6 +26172,7 @@ button.admin-row {
   .quality-completion-receipts,
   .receipt-audit-export,
   .backend-audit-storage,
+  .storage-write-fixture-pack,
   .launch-country-room-contract,
   .launch-activation-sprint-contract,
   .production-sprint-records-contract,
@@ -25961,7 +26193,8 @@ button.admin-row {
   .learning-action-queue-contract,
   .quality-completion-receipts-contract,
   .receipt-audit-export-contract,
-  .backend-audit-storage-contract {
+  .backend-audit-storage-contract,
+  .storage-write-fixture-pack-contract {
     grid-template-columns: 1fr;
   }
 
@@ -26006,7 +26239,9 @@ button.admin-row {
   .receipt-audit-grid,
   .receipt-audit-actions,
   .backend-storage-grid,
-  .backend-storage-actions {
+  .backend-storage-actions,
+  .storage-fixture-grid,
+  .storage-fixture-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -26051,7 +26286,9 @@ button.admin-row {
   .receipt-audit-export-contract-lead,
   .receipt-audit-export-contract-acceptance,
   .backend-audit-storage-contract-lead,
-  .backend-audit-storage-contract-acceptance {
+  .backend-audit-storage-contract-acceptance,
+  .storage-write-fixture-pack-contract-lead,
+  .storage-write-fixture-pack-contract-acceptance {
     grid-column: auto;
     grid-row: auto;
   }
@@ -26099,7 +26336,9 @@ button.admin-row {
   .receipt-audit-grid,
   .receipt-audit-actions,
   .backend-storage-grid,
-  .backend-storage-actions {
+  .backend-storage-actions,
+  .storage-fixture-grid,
+  .storage-fixture-actions {
     grid-template-columns: 1fr;
   }
 }

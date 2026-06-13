@@ -1,0 +1,101 @@
+{
+  "version": "v178 Storage Write Fixture Pack",
+  "rule": "Every backend audit storage plan must include a write fixture with payload, validation, expected result, rollback fixture, and blocked payment-route test before implementation begins.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or unvalidated storage fixture can reach backend implementation in phase one.",
+  "fixture_principles": [
+    "Turn each backend audit storage plan into a copy-ready write fixture.",
+    "Keep payload name, tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked route together.",
+    "Separate fixture metadata from tenant-private proof payloads.",
+    "Require a blocked payment-route test beside every allowed write fixture.",
+    "Make validation and rollback expectations visible before backend code is written.",
+    "Keep fixtures role-aware for buyer, supplier, and founder storage paths.",
+    "Use static fixtures until real auth, database, and API tests exist."
+  ],
+  "role_write_fixtures": [
+    {
+      "role": "Buyer",
+      "fixture_event": "buyer_storage_write_fixture",
+      "source_storage": "buyer_backend_audit_storage_plan",
+      "payload_name": "buyer-proof-audit-write",
+      "tenant_id": "tenant_buyer_demo",
+      "record_id": "receipt-buyer-proof-001",
+      "write_route": "/api/audit-records",
+      "expected_result": "201 audit record created",
+      "validation_state": "tenant and row policy required",
+      "rollback_fixture": "buyer-proof-audit-rollback",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "fixture_event": "supplier_storage_write_fixture",
+      "source_storage": "supplier_backend_audit_storage_plan",
+      "payload_name": "supplier-freshness-audit-write",
+      "tenant_id": "tenant_supplier_demo",
+      "record_id": "receipt-supplier-freshness-001",
+      "write_route": "/api/audit-records",
+      "expected_result": "201 audit record created",
+      "validation_state": "supplier tenant and success role required",
+      "rollback_fixture": "supplier-freshness-audit-rollback",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "fixture_event": "founder_storage_write_fixture",
+      "source_storage": "founder_backend_audit_storage_plan",
+      "payload_name": "founder-wedge-audit-write",
+      "tenant_id": "tenant_founder_demo",
+      "record_id": "receipt-founder-wedge-001",
+      "write_route": "/api/audit-records",
+      "expected_result": "202 held for review",
+      "validation_state": "founder workspace and admin review required",
+      "rollback_fixture": "founder-wedge-audit-rollback",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "fixture_states": [
+    "payload_name",
+    "tenant_id",
+    "record_id",
+    "write_route",
+    "expected_result",
+    "validation_state",
+    "rollback_fixture",
+    "blocked_route"
+  ],
+  "fixture_routes": [
+    "/api/audit-records",
+    "/api/audit-records/:record_id",
+    "/api/receipt-audit-export",
+    "/api/boundary-audit-events"
+  ],
+  "blocked_fixture_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_fixture_fields": [
+    "fixture_event",
+    "role",
+    "source_storage",
+    "payload_name",
+    "tenant_id",
+    "record_id",
+    "write_route",
+    "expected_result",
+    "validation_state",
+    "rollback_fixture",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows Storage Write Fixture Pack after Backend Audit Storage.",
+    "Buyer, supplier, and founder views each show payload name, tenant id, record id, write route, expected result, validation state, rollback fixture, and blocked route.",
+    "Copy output explains fixture event, source storage, payload name, tenant id, record id, expected result, validation state, rollback fixture, and blocked payment route.",
+    "Build Phase shows the v178 Storage Write Fixture Pack contract after the Backend Audit Storage Plan contract.",
+    "Docs include fixture states, fixture routes, blocked payment routes, and required fixture fields.",
+    "Static check fails if the fixture UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No backend implementation starts without a write fixture or explicit hold."
+  ]
+}
