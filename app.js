@@ -1,6 +1,6 @@
-const DATA_VERSION = "20260613-heavyster-learning-action-queue-v174";
+const DATA_VERSION = "20260613-heavyster-quality-completion-receipts-v175";
 const STORAGE_KEY = "heavyster.marketplace.v1";
-const SIMPLE_UX_RELEASE = "20260613-learning-action-queue-v174";
+const SIMPLE_UX_RELEASE = "20260613-quality-completion-receipts-v175";
 
 const listings = [
   {
@@ -1013,6 +1013,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
     renderLearningActionQueue();
+    renderQualityCompletionReceipts();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -1259,6 +1260,7 @@ function bindControls() {
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
     renderLearningActionQueue();
+    renderQualityCompletionReceipts();
   });
 
   bookingValue.addEventListener("input", (event) => {
@@ -2153,6 +2155,15 @@ function bindControls() {
     }
   });
 
+  document.querySelector("#copyQualityCompletionReceiptsContractButton").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(buildQualityCompletionReceiptsContractText());
+      showToast("Quality completion receipts copied.");
+    } catch {
+      showToast("Copy is blocked here, but the completion receipts are visible.");
+    }
+  });
+
   document.querySelector("#copySereneProofGateContractButton").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(buildSereneProofGateContractText());
@@ -2319,6 +2330,12 @@ function bindControls() {
   document.querySelector("#copyLearningActionButton").addEventListener("click", () => {
     handleLearningActionQueueAction("copy");
   });
+  document.querySelector("#qualityReceiptPrimaryButton").addEventListener("click", () => {
+    handleQualityCompletionReceiptsAction("primary");
+  });
+  document.querySelector("#copyQualityReceiptButton").addEventListener("click", () => {
+    handleQualityCompletionReceiptsAction("copy");
+  });
   document.querySelector("#sereneRoutePrimaryButton").addEventListener("click", () => {
     handleSereneRoutePlannerAction("primary");
   });
@@ -2404,6 +2421,7 @@ function bindControls() {
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
     renderLearningActionQueue();
+    renderQualityCompletionReceipts();
     renderCalmActionBar();
     renderSereneRoutePlanner();
     renderGlobalCalmCompass();
@@ -2604,6 +2622,7 @@ function render() {
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
   renderLearningActionQueue();
+  renderQualityCompletionReceipts();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3275,6 +3294,7 @@ function handleSimplicityIntent(intentId) {
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
   renderLearningActionQueue();
+  renderQualityCompletionReceipts();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -3318,6 +3338,7 @@ const focusLayerSelectors = [
   ".exchange-policy-audit-log",
   ".learning-quality-dashboard",
   ".learning-action-queue",
+  ".quality-completion-receipts",
   ".serene-route-planner",
   ".global-calm-compass",
   ".calm-decision-concierge",
@@ -3462,6 +3483,7 @@ function toggleCalmFocusLayers() {
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
   renderLearningActionQueue();
+  renderQualityCompletionReceipts();
   syncFocusLayerVisibility();
   showToast(state.focusLensExpanded ? "Build layers shown." : "Build layers hidden.");
 }
@@ -5823,6 +5845,136 @@ function buildLearningActionQueueContractText() {
   return buildLearningActionQueueText();
 }
 
+function renderQualityCompletionReceipts() {
+  const root = document.querySelector("#qualityCompletionReceipts");
+  if (!root) return;
+
+  const model = getQualityCompletionReceiptsModel();
+  root.dataset.role = model.role.toLowerCase();
+  document.querySelector("#qualityReceiptRole").textContent = model.roleLabel;
+  document.querySelector("#qualityReceiptHeadline").textContent = model.headline;
+  document.querySelector("#qualityReceiptDetail").textContent = model.detail;
+  document.querySelector("#qualityReceiptGrid").innerHTML = model.states.map((stateItem) => `
+    <span class="${escapeHtml(stateItem.tone)}">
+      <em>${escapeHtml(stateItem.label)}</em>
+      <strong>${escapeHtml(stateItem.value)}</strong>
+      <small>${escapeHtml(stateItem.route)}</small>
+      <b>${escapeHtml(stateItem.detail)}</b>
+    </span>
+  `).join("");
+
+  const primaryButton = document.querySelector("#qualityReceiptPrimaryButton");
+  primaryButton.textContent = model.primary.label;
+  primaryButton.setAttribute("aria-label", model.primary.aria);
+}
+
+function getQualityCompletionReceiptsModel() {
+  const action = getLearningActionQueueModel();
+  const role = action.role || state.commandRole || "Buyer";
+  const configs = {
+    Buyer: {
+      roleLabel: "Buyer completion receipts",
+      headline: "Receipt proof review before proof confidence lifts.",
+      detail: "Buyer receipt proves who closed the proof conflict, what proof changed, which gate passed, and which confidence lift is allowed.",
+      receiptEvent: "buyer_quality_completion_receipt",
+      completedAction: "proof conflict reviewed",
+      approver: "trust reviewer",
+      proofDelta: "inspection proof accepted",
+      confidence: "allow freshness lift",
+      rollback: "restore prior rank",
+      blockedRoute: "/api/rental-payments"
+    },
+    Supplier: {
+      roleLabel: "Supplier completion receipts",
+      headline: "Receipt freshness work before visibility lifts.",
+      detail: "Supplier receipt proves who closed the freshness task, what document changed, which gate passed, and which visibility lift is allowed.",
+      receiptEvent: "supplier_quality_completion_receipt",
+      completedAction: "freshness nudge completed",
+      approver: "success lead",
+      proofDelta: "fresh document received",
+      confidence: "allow visibility lift",
+      rollback: "restore visibility",
+      blockedRoute: "/api/booking-commissions"
+    },
+    Founder: {
+      roleLabel: "Founder completion receipts",
+      headline: "Receipt scale review before market priority lifts.",
+      detail: "Founder receipt proves who closed the weak-wedge review, what response quality changed, and which cautious market lift is allowed.",
+      receiptEvent: "founder_quality_completion_receipt",
+      completedAction: "weak wedge reviewed",
+      approver: "founder",
+      proofDelta: "response quality approved",
+      confidence: "allow cautious lift",
+      rollback: "restore market queue",
+      blockedRoute: "/api/payouts"
+    }
+  };
+  const config = configs[role] || configs.Buyer;
+
+  return {
+    role,
+    roleLabel: config.roleLabel,
+    headline: config.headline,
+    detail: config.detail,
+    receiptEvent: config.receiptEvent,
+    sourceAction: action.queueEvent,
+    owner: action.states.find((stateItem) => stateItem.label === "Owner")?.value || "operator",
+    blockedRoute: config.blockedRoute || action.blockedRoute,
+    primary: { label: "Open action queue", anchor: "#learningActionQueue", aria: `Open ${role.toLowerCase()} learning action queue` },
+    states: [
+      { label: "Receipt", value: config.receiptEvent, route: "/api/quality-completion-receipts", detail: "recorded", tone: "ready" },
+      { label: "Completed", value: config.completedAction, route: "/api/learning-action-queue", detail: action.queueEvent, tone: "ready" },
+      { label: "Approver", value: config.approver, route: "/api/boundary-audit-events", detail: "human close", tone: "neutral" },
+      { label: "Proof delta", value: config.proofDelta, route: "/api/learning-quality-dashboard", detail: "changed", tone: "ready" },
+      { label: "Gate", value: action.states.find((stateItem) => stateItem.label === "Gate")?.value || "completion gate", route: "/api/boundary-audit-events", detail: "passed", tone: "ready" },
+      { label: "Confidence", value: config.confidence, route: "/api/recommendation-weights", detail: "allowed", tone: "watch" },
+      { label: "Rollback", value: config.rollback, route: "/api/boundary-audit-events", detail: "attached", tone: "neutral" },
+      { label: "Blocked", value: "payment route", route: config.blockedRoute, detail: "guardrail", tone: "watch" }
+    ]
+  };
+}
+
+async function handleQualityCompletionReceiptsAction(action, model = getQualityCompletionReceiptsModel()) {
+  if (action === "primary") {
+    openSimplicityTarget(model.primary.anchor, model.primary.label);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(buildQualityCompletionReceiptsText(model));
+    showToast("Quality completion receipt copied.");
+  } catch {
+    showToast("Copy is blocked here, but the completion receipt is visible.");
+  }
+}
+
+function buildQualityCompletionReceiptsText(model = getQualityCompletionReceiptsModel()) {
+  return [
+    "Heavyster Quality Completion Receipts",
+    "Version: v175 Quality Completion Receipts",
+    "Rule: no completed learning action can increase recommendation confidence until a receipt shows who closed it, what proof changed, which gate passed, what rollback remains, and which confidence update is allowed.",
+    "",
+    `Role: ${model.role}`,
+    `Receipt event: ${model.receiptEvent}`,
+    `Source action: ${model.sourceAction}`,
+    `Owner: ${model.owner}`,
+    `Focus: ${model.headline}`,
+    `Blocked route: ${model.blockedRoute}`,
+    "Receipt states:",
+    ...model.states.map((stateItem) => `- ${stateItem.label}: ${stateItem.value} ${stateItem.route} (${stateItem.detail})`),
+    "",
+    "Completion promise: learning actions become auditable receipts before weights move.",
+    "Proof promise: every confidence lift names the proof delta and completion gate.",
+    "Approval promise: human closure remains visible so learning cannot quietly self-approve.",
+    "Rollback promise: the undo path stays attached after the action is closed.",
+    "Payment guardrail: rental payments, deposits, escrow, payouts, booking commissions, and payment custody stay blocked from completion receipts."
+  ].join("\n");
+}
+
+function buildQualityCompletionReceiptsContractText() {
+  return buildQualityCompletionReceiptsText();
+}
+
 function renderCalmActionBar() {
   const root = document.querySelector("#calmActionBar");
   if (!root) return;
@@ -7123,6 +7275,7 @@ function openWorkflowStep(anchor, label, role) {
   renderExchangePolicyAuditLog();
   renderLearningQualityDashboard();
   renderLearningActionQueue();
+  renderQualityCompletionReceipts();
   renderCalmActionBar();
   renderSereneRoutePlanner();
   renderGlobalCalmCompass();
@@ -22081,6 +22234,7 @@ async function handleHeavenlyFocusAction(action, model) {
     renderExchangePolicyAuditLog();
     renderLearningQualityDashboard();
     renderLearningActionQueue();
+    renderQualityCompletionReceipts();
     syncFocusLayerVisibility();
     document.body.classList.add("simple-mode");
     syncNavigationState();

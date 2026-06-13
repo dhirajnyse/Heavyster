@@ -1,0 +1,104 @@
+{
+  "version": "v175 Quality Completion Receipts",
+  "rule": "No completed learning action can increase recommendation confidence until a quality completion receipt shows who closed it, what proof changed, which gate passed, what rollback remains, and which confidence update is allowed.",
+  "phase_one_guardrail": "No rental payment, deposit, escrow, payout, booking commission, payment-custody signal, tenant-private memory, or receipt without visible proof can reach recommendation weights in phase one.",
+  "receipt_principles": [
+    "Convert completed learning actions into visible receipts before confidence moves.",
+    "Attach each receipt to the source learning action queue event.",
+    "Show owner, approver, proof delta, completion gate, confidence decision, rollback state, and blocked payment route.",
+    "Keep held or incomplete actions from increasing recommendation weight.",
+    "Preserve rollback instructions after completion so a bad update can be reversed.",
+    "Separate proof improvements from payment-custody routes.",
+    "Require a receipt trail before sharing improvement signals across organizations."
+  ],
+  "role_receipts": [
+    {
+      "role": "Buyer",
+      "receipt_event": "buyer_quality_completion_receipt",
+      "source_action": "buyer_learning_action_queue",
+      "completed_action": "proof conflict reviewed",
+      "owner": "marketplace operator",
+      "approver": "trust reviewer",
+      "proof_delta": "inspection proof accepted",
+      "completion_gate": "proof review approved",
+      "confidence_decision": "allow proof freshness lift",
+      "rollback_state": "restore prior rank if proof is disputed",
+      "blocked_route": "/api/rental-payments"
+    },
+    {
+      "role": "Supplier",
+      "receipt_event": "supplier_quality_completion_receipt",
+      "source_action": "supplier_learning_action_queue",
+      "completed_action": "freshness nudge completed",
+      "owner": "supplier success operator",
+      "approver": "supplier success lead",
+      "proof_delta": "fresh document received",
+      "completion_gate": "fresh proof confirmed",
+      "confidence_decision": "allow listing visibility lift",
+      "rollback_state": "restore prior visibility if proof expires",
+      "blocked_route": "/api/booking-commissions"
+    },
+    {
+      "role": "Founder",
+      "receipt_event": "founder_quality_completion_receipt",
+      "source_action": "founder_learning_action_queue",
+      "completed_action": "weak wedge held and reviewed",
+      "owner": "founder operator",
+      "approver": "founder",
+      "proof_delta": "response quality approved",
+      "completion_gate": "response quality approved",
+      "confidence_decision": "allow cautious market priority lift",
+      "rollback_state": "restore prior market queue if response drops",
+      "blocked_route": "/api/payouts"
+    }
+  ],
+  "receipt_states": [
+    "receipt_event",
+    "completed_action",
+    "approver",
+    "proof_delta",
+    "completion_gate",
+    "confidence_decision",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "receipt_routes": [
+    "/api/quality-completion-receipts",
+    "/api/learning-action-queue",
+    "/api/learning-quality-dashboard",
+    "/api/boundary-audit-events"
+  ],
+  "private_routes": [
+    "/api/organization-memory"
+  ],
+  "blocked_receipt_routes": [
+    "/api/rental-payments",
+    "/api/deposits",
+    "/api/escrow",
+    "/api/payouts",
+    "/api/booking-commissions",
+    "/api/payment-custody"
+  ],
+  "required_receipt_fields": [
+    "receipt_event",
+    "role",
+    "source_action",
+    "completed_action",
+    "owner",
+    "approver",
+    "proof_delta",
+    "completion_gate",
+    "confidence_decision",
+    "rollback_state",
+    "blocked_route"
+  ],
+  "acceptance": [
+    "Marketplace shows Quality Completion Receipts after the Learning Action Queue.",
+    "Buyer, supplier, and founder views each show receipt event, completed action, approver, proof delta, completion gate, confidence decision, rollback state, and blocked route.",
+    "Copy output explains the source action, completion receipt, proof delta, confidence decision, rollback, and blocked payment route.",
+    "Build Phase shows the v175 Quality Completion Receipts contract after the Learning Action Queue contract.",
+    "Docs include receipt states, receipt routes, private routes, blocked payment routes, and required receipt fields.",
+    "Static check fails if the receipt UI, contract, JSON model, cache-bust token, or render functions are missing.",
+    "No recommendation confidence lift can apply without a visible completion receipt or explicit hold in phase one."
+  ]
+}

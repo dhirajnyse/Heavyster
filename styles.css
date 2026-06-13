@@ -3886,6 +3886,149 @@ body.simple-mode .market-result-brief {
   color: var(--blue);
 }
 
+.quality-completion-receipts {
+  display: grid;
+  grid-template-columns: minmax(330px, 0.92fr) minmax(820px, 1.56fr) minmax(190px, max-content);
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px 18px 12px;
+  border-bottom: 1px solid rgba(25, 113, 109, 0.25);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.97), rgba(238, 246, 252, 0.92) 48%, rgba(255, 250, 240, 0.9));
+}
+
+.quality-receipt-copy,
+.quality-receipt-grid span,
+.quality-receipt-actions button {
+  min-width: 0;
+  border-radius: var(--radius);
+}
+
+.quality-receipt-copy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.28);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.quality-receipt-copy span {
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.quality-receipt-copy strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.quality-receipt-copy small {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.quality-receipt-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.quality-receipt-grid span {
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  min-height: 78px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.quality-receipt-grid em {
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.quality-receipt-grid strong,
+.quality-receipt-grid small,
+.quality-receipt-grid b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quality-receipt-grid strong {
+  color: var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.12;
+}
+
+.quality-receipt-grid small {
+  color: var(--muted);
+  font-size: 0.64rem;
+}
+
+.quality-receipt-grid b {
+  color: var(--ink-2);
+  font-size: 0.64rem;
+}
+
+.quality-receipt-grid .ready {
+  border-color: rgba(25, 113, 109, 0.3);
+  background: var(--teal-soft);
+}
+
+.quality-receipt-grid .watch {
+  border-color: rgba(181, 109, 22, 0.34);
+  background: var(--amber-soft);
+}
+
+.quality-receipt-grid .neutral {
+  border-color: rgba(73, 118, 149, 0.24);
+  background: var(--blue-soft);
+}
+
+.quality-receipt-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr);
+  gap: 7px;
+}
+
+.quality-receipt-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.quality-completion-receipts[data-role="supplier"] {
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.96), rgba(255, 250, 240, 0.93), rgba(238, 246, 252, 0.88));
+}
+
+.quality-completion-receipts[data-role="founder"] {
+  background:
+    linear-gradient(135deg, rgba(238, 246, 252, 0.96), rgba(232, 248, 245, 0.92), rgba(255, 250, 240, 0.9));
+}
+
+.quality-completion-receipts[data-role="founder"] .quality-receipt-copy span {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
 body.focus-layers-collapsed .calm-action-bar,
 body.focus-layers-collapsed .calm-data-room,
 body.focus-layers-collapsed .launch-country-room,
@@ -3906,6 +4049,7 @@ body.focus-layers-collapsed .network-learning-exchange,
 body.focus-layers-collapsed .exchange-policy-audit-log,
 body.focus-layers-collapsed .learning-quality-dashboard,
 body.focus-layers-collapsed .learning-action-queue,
+body.focus-layers-collapsed .quality-completion-receipts,
 body.focus-layers-collapsed .serene-route-planner,
 body.focus-layers-collapsed .global-calm-compass,
 body.focus-layers-collapsed .calm-decision-concierge,
@@ -22703,6 +22847,86 @@ button.admin-row {
   margin-top: auto;
 }
 
+.quality-completion-receipts-contract {
+  display: grid;
+  grid-template-columns: minmax(340px, 1.12fr) repeat(5, minmax(126px, 0.68fr));
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(25, 113, 109, 0.38);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(232, 248, 245, 0.98), rgba(238, 246, 252, 0.95) 48%, rgba(255, 250, 240, 0.9));
+}
+
+.quality-completion-receipts-contract article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 146px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.quality-completion-receipts-contract-lead {
+  grid-row: span 2;
+  border-color: rgba(25, 113, 109, 0.4) !important;
+  background: var(--teal-soft) !important;
+}
+
+.quality-completion-receipts-contract-acceptance {
+  grid-column: span 2;
+  border-color: rgba(181, 109, 22, 0.34) !important;
+  background: linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(238, 246, 252, 0.9)) !important;
+}
+
+.quality-completion-receipts-contract span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.quality-completion-receipts-contract strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.quality-completion-receipts-contract-lead strong {
+  font-size: 1.22rem;
+}
+
+.quality-completion-receipts-contract p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.42;
+}
+
+.quality-completion-receipts-contract b {
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.74rem;
+}
+
+.quality-completion-receipts-contract-lead b,
+.quality-completion-receipts-contract-acceptance b {
+  background: var(--coal);
+  color: #ffffff;
+}
+
+.quality-completion-receipts-contract-acceptance button {
+  min-height: 42px;
+  margin-top: auto;
+}
+
 .calm-backend-scaffold article,
 .supplier-account-shell article,
 .calm-launch-room article,
@@ -25266,6 +25490,7 @@ button.admin-row {
   .exchange-policy-audit-log,
   .learning-quality-dashboard,
   .learning-action-queue,
+  .quality-completion-receipts,
   .launch-country-room-contract,
   .launch-activation-sprint-contract,
   .production-sprint-records-contract,
@@ -25283,7 +25508,8 @@ button.admin-row {
   .network-learning-exchange-contract,
   .exchange-policy-audit-log-contract,
   .learning-quality-dashboard-contract,
-  .learning-action-queue-contract {
+  .learning-action-queue-contract,
+  .quality-completion-receipts-contract {
     grid-template-columns: 1fr;
   }
 
@@ -25322,7 +25548,9 @@ button.admin-row {
   .learning-quality-grid,
   .learning-quality-actions,
   .learning-action-grid,
-  .learning-action-actions {
+  .learning-action-actions,
+  .quality-receipt-grid,
+  .quality-receipt-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -25361,7 +25589,9 @@ button.admin-row {
   .learning-quality-dashboard-contract-lead,
   .learning-quality-dashboard-contract-acceptance,
   .learning-action-queue-contract-lead,
-  .learning-action-queue-contract-acceptance {
+  .learning-action-queue-contract-acceptance,
+  .quality-completion-receipts-contract-lead,
+  .quality-completion-receipts-contract-acceptance {
     grid-column: auto;
     grid-row: auto;
   }
@@ -25403,7 +25633,9 @@ button.admin-row {
   .learning-quality-grid,
   .learning-quality-actions,
   .learning-action-grid,
-  .learning-action-actions {
+  .learning-action-actions,
+  .quality-receipt-grid,
+  .quality-receipt-actions {
     grid-template-columns: 1fr;
   }
 }
